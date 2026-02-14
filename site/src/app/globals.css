@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 255, 255, 255;
+  --background-end-rgb: 249, 250, 251;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: white;
+}
+
+/* Prose styling for articles */
+.prose h2 {
+  @apply text-grass-800 mt-10 mb-4 font-bold;
+}
+
+.prose h3 {
+  @apply text-grass-700 mt-8 mb-3 font-semibold;
+}
+
+.prose a {
+  @apply text-grass-600 hover:text-grass-800 underline;
+}
+
+.prose ul {
+  @apply list-disc pl-6 my-4;
+}
+
+.prose ol {
+  @apply list-decimal pl-6 my-4;
+}
+
+.prose li {
+  @apply my-2 text-gray-700;
+}
+
+.prose p {
+  @apply my-4 leading-relaxed text-gray-700;
+}
+
+.prose strong {
+  @apply font-semibold text-grass-900;
+}
+
+/* Rounded corners for images in article content */
+.prose img {
+  @apply rounded-xl shadow-md my-8;
+}
+
+/* Print styles */
+@media print {
+  body {
+    background: white !important;
+    font-size: 12pt;
+    line-height: 1.5;
+    color: #000 !important;
+  }
+
+  /* Hide non-content elements */
+  header, footer, nav,
+  button, iframe, video,
+  [role="progressbar"] {
+    display: none !important;
+  }
+
+  /* Show link URLs */
+  .prose a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    color: #555;
+  }
+
+  /* Prevent orphaned headings */
+  h1, h2, h3, h4 {
+    page-break-after: avoid;
+  }
+
+  /* Keep images and figures together */
+  img, figure, .prose img {
+    page-break-inside: avoid;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    max-width: 100% !important;
+  }
+
+  /* Remove decorative styles */
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Expand details elements */
+  details {
+    display: block !important;
+  }
+  details summary {
+    display: none !important;
+  }
+  details > *:not(summary) {
+    display: block !important;
+  }
+}

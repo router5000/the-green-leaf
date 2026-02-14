@@ -1,0 +1,21 @@
+{
+  "name": "Lawn Care Center",
+  "short_name": "Lawn Care",
+  "description": "Expert lawn care tips, guides, and seasonal advice for the perfect lawn.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#16a34a",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    },
+    {
+      "src": "/images/logo_accent.png",
+      "type": "image/png",
+      "sizes": "200x200"
+    }
+  ]
+}

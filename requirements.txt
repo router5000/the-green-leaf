@@ -1,0 +1,16 @@
+# Core
+anthropic>=0.18.0
+requests>=2.31.0
+python-dotenv>=1.0.0
+Pillow>=10.0.0
+PyYAML>=6.0
+
+# YouTube Integration
+google-api-python-client>=2.100.0
+youtube-transcript-api>=0.6.0
+
+# Keyword Research
+pytrends>=4.9.2
+
+# Google Search Console
+google-auth-oauthlib>=1.0.0

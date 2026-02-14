@@ -1,0 +1,167 @@
+name: Weekly Content Generation
+
+on:
+  # Run Monday and Wednesday at 8am UTC (3am EST / 12am PST)
+  schedule:
+    - cron: '0 8 * * 1'  # Monday
+    - cron: '0 8 * * 3'  # Wednesday
+  
+  # Allow manual trigger from GitHub UI
+  workflow_dispatch:
+    inputs:
+      keyword:
+        description: 'Specific keyword to write about (optional)'
+        required: false
+        type: string
+      count:
+        description: 'Number of articles to generate'
+        required: false
+        default: '1'
+        type: string
+      season:
+        description: 'Force specific season'
+        required: false
+        type: choice
+        options:
+          - auto
+          - spring
+          - summer
+          - fall
+          - winter
+          - evergreen
+      skip_qa:
+        description: 'Skip QA evaluation (faster)'
+        required: false
+        default: false
+        type: boolean
+      dry_run:
+        description: 'Dry run (no changes)'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  generate-content:
+    runs-on: ubuntu-latest
+
+    # Grant write permission to push commits
+    permissions:
+      contents: write
+
+    # Prevent concurrent runs
+    concurrency:
+      group: content-generation
+      cancel-in-progress: false
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Configure Git
+        run: |
+          git config user.name "Lawn Care Bot"
+          git config user.email "bot@lawncare.center"
+      
+      - name: Run content pipeline
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          RUNWARE_API_KEY: ${{ secrets.RUNWARE_API_KEY }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          AMAZON_AFFILIATE_TAG: ${{ secrets.AMAZON_AFFILIATE_TAG }}
+          KEYWORDS_EVERYWHERE_API_KEY: ${{ secrets.KEYWORDS_EVERYWHERE_API_KEY }}
+          SUPADATA_API_KEY: ${{ secrets.SUPADATA_API_KEY }}
+          NOTIFICATION_WEBHOOK_URL: ${{ secrets.NOTIFICATION_WEBHOOK_URL }}
+        run: |
+          # Build command with optional arguments
+          CMD="python weekly_content_pipeline.py --ci"
+          
+          # Add keyword if provided
+          if [ -n "${{ github.event.inputs.keyword }}" ]; then
+            CMD="$CMD --keyword \"${{ github.event.inputs.keyword }}\""
+          fi
+          
+          # Add count
+          if [ -n "${{ github.event.inputs.count }}" ]; then
+            CMD="$CMD --count ${{ github.event.inputs.count }}"
+          fi
+          
+          # Add season if not auto
+          if [ "${{ github.event.inputs.season }}" != "auto" ] && [ -n "${{ github.event.inputs.season }}" ]; then
+            CMD="$CMD --season ${{ github.event.inputs.season }}"
+          fi
+          
+          # Add skip QA flag
+          if [ "${{ github.event.inputs.skip_qa }}" == "true" ]; then
+            CMD="$CMD --no-qa"
+          fi
+          
+          # Add dry run flag
+          if [ "${{ github.event.inputs.dry_run }}" == "true" ]; then
+            CMD="$CMD --dry-run"
+          fi
+          
+          echo "Running: $CMD"
+          eval $CMD
+      
+      - name: Push changes
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        run: |
+          # Check if there are changes to push
+          if [ -n "$(git status --porcelain)" ]; then
+            git add site/content/posts/*.md || true
+            git add site/public/images/articles/* || true
+            git commit -m "🤖 Auto-generated content [skip ci]" || true
+            git push origin main
+          else
+            echo "No changes to push"
+          fi
+      
+      - name: Upload logs as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-logs
+          path: .logs/
+          retention-days: 30
+          if-no-files-found: ignore
+
+  # Optional: Notify on failure
+  notify-failure:
+    runs-on: ubuntu-latest
+    needs: generate-content
+    if: failure()
+    
+    steps:
+      - name: Send failure notification
+        env:
+          WEBHOOK_URL: ${{ secrets.NOTIFICATION_WEBHOOK_URL }}
+        run: |
+          if [ -n "$WEBHOOK_URL" ]; then
+            curl -X POST "$WEBHOOK_URL" \
+              -H "Content-Type: application/json" \
+              -d '{
+                "embeds": [{
+                  "title": "❌ Weekly Content Pipeline Failed",
+                  "description": "The automated content generation workflow failed. Check GitHub Actions for details.",
+                  "color": 16711680,
+                  "timestamp": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"
+                }]
+              }'
+          fi

@@ -1,0 +1,85 @@
+# robots.txt for lawncare.center
+# Optimized for both traditional search engines and AI crawlers
+
+# Default rules for all bots
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+
+# Sitemap locations
+Sitemap: https://lawncare.center/sitemap.xml
+Sitemap: https://lawncare.center/image-sitemap.xml
+Sitemap: https://lawncare.center/video-sitemap.xml
+
+# AI Crawlers - Explicitly allow and welcome
+# ChatGPT (OpenAI)
+User-agent: GPTBot
+Allow: /
+Allow: /articles/
+
+# Claude (Anthropic)
+User-agent: Claude-Web
+Allow: /
+Allow: /articles/
+
+# Google AI (Bard, Gemini)
+User-agent: Google-Extended
+Allow: /
+Allow: /articles/
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+Allow: /articles/
+
+# Common Crawl (used by many AI models)
+User-agent: CCBot
+Allow: /
+Allow: /articles/
+
+# Meta AI
+User-agent: FacebookBot
+Allow: /
+Allow: /articles/
+
+# Bing AI / Copilot
+User-agent: Bingbot
+Allow: /
+Allow: /articles/
+
+# Traditional Search Engines
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+# SEO Tools (allow for analysis)
+User-agent: AhrefsBot
+Allow: /
+Crawl-delay: 2
+
+User-agent: SemrushBot
+Allow: /
+Crawl-delay: 2
+
+# Performance optimization
+# Allow caching of static assets
+User-agent: *
+Allow: /images/
+Allow: /fonts/
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.png$
+Allow: /*.webp$
+Allow: /*.svg$
+Allow: /*.css$
+Allow: /*.js$

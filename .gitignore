@@ -1,0 +1,65 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Environment variables
+.env
+.env.local
+
+# Node
+node_modules/
+.next/
+out/
+.vercel
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing
+coverage/
+.pytest_cache/
+
+# Drafts (optional - keep drafts local for review)
+drafts/*.md
+drafts/json/
+
+# Keep directory structure
+!drafts/.gitkeep
+!drafts/json/.gitkeep
+
+# Cache
+.cache/
+
+# Pipeline logs
+.logs/
+
+# GSC credentials
+gsc_credentials.json
+.gsc_token.json
+reports/
+
+# Google OAuth credentials (never commit these)
+client_secret*.json
