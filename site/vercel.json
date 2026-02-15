@@ -36,14 +36,9 @@
   ],
   "redirects": [
     {
-      "source": "/articles/best-time-apply-fungicide-lawn",
-      "destination": "/articles/best-time-to-apply-fungicide",
-      "permanent": true
-    },
-    {
       "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.lawncare.center" }],
-      "destination": "https://lawncare.center/:path*",
+      "has": [{ "type": "host", "value": "www.thegreenleaf.com" }],
+      "destination": "https://thegreenleaf.com/:path*",
       "permanent": true
     }
   ]

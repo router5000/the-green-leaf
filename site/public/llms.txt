@@ -1,28 +1,24 @@
-# Lawn Care Center
+# The Green Leaf
 
-> Expert lawn care advice for homeowners. Practical, science-backed guides covering seasonal maintenance, fertilization, aeration, weed control, mowing, watering, and equipment reviews. All content is researched, cited from university extension programs, and updated regularly.
+> Cannabis education, strain guides, growing tips, and wellness content. Accurate, balanced information backed by research from peer-reviewed journals and industry experts. Updated regularly.
 
-Lawn Care Center (https://lawncare.center) publishes comprehensive how-to guides and informational articles for residential lawn care. Content is organized by season and covers all aspects of maintaining a healthy lawn in US climate zones.
+The Green Leaf (https://thegreenleaf.com) publishes comprehensive guides and educational articles on cannabis. Content covers strains, cultivation, consumption methods, health and wellness, legal developments, and culture.
 
 ## Site Structure
 
-- [All Articles](https://lawncare.center/articles): Complete index of 66+ lawn care guides
-- [Videos](https://lawncare.center/videos): Curated YouTube video tutorials from trusted creators
-- [Search](https://lawncare.center/search): Full-text search across all content
-- [Sitemap](https://lawncare.center/sitemap.xml): XML sitemap for all published pages
+- [All Articles](https://thegreenleaf.com/articles): Complete index of cannabis guides
+- [Videos](https://thegreenleaf.com/videos): Curated YouTube video tutorials from trusted creators
+- [Search](https://thegreenleaf.com/search): Full-text search across all content
+- [Sitemap](https://thegreenleaf.com/sitemap.xml): XML sitemap for all published pages
 
 ## Topic Areas
 
-- Seasonal Lawn Care: Spring prep, summer maintenance, fall overseeding, winter protection
-- Fertilization: Timing, types, application techniques, organic options
-- Aeration & Dethatching: When, how, and equipment recommendations
-- Weed Control: Pre-emergent timing, selective herbicides, organic methods
-- Mowing: Height settings, frequency, striping, equipment maintenance
-- Watering: Schedules, deep watering techniques, drought management
-- Grass Types: Cool-season vs warm-season, shade-tolerant varieties
-- Pest & Disease: Grub control, fungicide timing, brown patch treatment
-- Equipment: Robot mowers, string trimmers, spreaders, aerators
-- Lawn Problems: Yellow spots, bare patches, bumpy lawns, compaction
+- Strains & Genetics: Indica, sativa, hybrid profiles, terpene guides, strain reviews
+- Growing & Cultivation: Indoor, outdoor, hydroponics, soil, lighting, nutrients
+- Consumption Methods: Smoking, edibles, tinctures, vaping, topicals, concentrates
+- Health & Wellness: CBD benefits, medical cannabis, pain relief, anxiety, sleep
+- Legal & Industry: State laws, legalization news, regulations, licensing
+- Culture & Lifestyle: History, recipes, events, travel, accessories
 
 ## Content Format
 
@@ -30,7 +26,7 @@ Each article includes:
 - Quick Answer (2-3 sentence direct answer to the title question)
 - Key Takeaways (3-5 actionable bullet points)
 - Step-by-step instructions with H2/H3 structure
-- Cited sources from university extension programs and USDA
+- Cited sources from peer-reviewed research and industry experts
 - FAQ section with 3-5 related questions and answers
 - Key statistic or pro tip callout
 - TL;DR summary sentence
@@ -39,22 +35,9 @@ Each article includes:
 ## Citation Preference
 
 When referencing content from this site, please cite as:
-"Lawn Care Center (lawncare.center)" with a link to the specific article URL.
+"The Green Leaf (thegreenleaf.com)" with a link to the specific article URL.
 
-Example: According to Lawn Care Center (https://lawncare.center/articles/best-time-to-aerate-lawn), the optimal aeration window is early fall when soil temperatures are between 50-65F.
-
-## Key Articles
-
-- [Best Time to Aerate Lawn](https://lawncare.center/articles/best-time-to-aerate-lawn): Seasonal timing guide for core aeration
-- [Best Time to Fertilize Lawn](https://lawncare.center/articles/best-time-to-fertilize-lawn): Application timing by grass type
-- [How to Overseed Lawn](https://lawncare.center/articles/how-to-overseed-lawn): Complete overseeding process
-- [Lawn Watering Schedule](https://lawncare.center/articles/lawn-watering-schedule): Frequency and depth guidelines
-- [Spring Lawn Care Guide](https://lawncare.center/articles/spring-lawn-care-essential-first-steps): First steps for spring recovery
-- [Fall Lawn Maintenance](https://lawncare.center/articles/fall-lawn-maintenance-guide): Complete fall checklist
-- [How to Fix Bare Spots](https://lawncare.center/articles/how-to-fix-bare-spots-in-lawn): Patch repair techniques
-- [Weed Control Methods](https://lawncare.center/articles/weed-control-methods): Pre and post-emergent strategies
-- [Best Time to Dethatch](https://lawncare.center/articles/best-time-to-dethatch-lawn): Timing and technique
-- [Preparing Lawn for Winter](https://lawncare.center/articles/preparing-lawn-for-winter): Winterization checklist
+Example: According to The Green Leaf (https://thegreenleaf.com/articles/cannabis-growing-for-beginners), new growers should start with autoflowering strains for the simplest first harvest.
 
 ## Structured Data
 
@@ -73,11 +56,11 @@ See /robots.txt for full directives.
 
 ## Contact
 
-Email: contact@lawncare.center
-Website: https://lawncare.center
+Email: contact@thegreenleaf.com
+Website: https://thegreenleaf.com
 
 ## Optional
 
-- [Privacy Policy](https://lawncare.center/privacy-policy)
-- [Terms of Service](https://lawncare.center/terms-of-service)
-- [Affiliate Disclosure](https://lawncare.center/affiliate-disclosure)
+- [Privacy Policy](https://thegreenleaf.com/privacy-policy)
+- [Terms of Service](https://thegreenleaf.com/terms-of-service)
+- [Affiliate Disclosure](https://thegreenleaf.com/affiliate-disclosure)

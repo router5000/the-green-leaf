@@ -13,7 +13,7 @@ from collections import defaultdict
 
 # Directories
 POSTS_DIR = Path(__file__).parent / "site" / "content" / "posts"
-SITE_URL = "https://lawncare.center"
+SITE_URL = "https://thegreenleaf.com"
 
 
 def load_article_index() -> List[Dict]:
@@ -99,7 +99,7 @@ def extract_key_phrases(text: str) -> List[str]:
 
     # Terms too generic for anchor text (would create poor UX)
     generic_terms = {
-        'lawn', 'grass', 'yard', 'lawn care', 'your lawn', 'the lawn',
+        'cannabis', 'grass', 'yard', 'cannabis', 'your cannabis', 'the cannabis',
         'small', 'large', 'keep', 'to keep', 'for small'
     }
 
@@ -120,8 +120,8 @@ def extract_key_phrases(text: str) -> List[str]:
     # Three-word phrases for specific patterns
     for i in range(len(words) - 2):
         trigram = f"{words[i]} {words[i+1]} {words[i+2]}"
-        # Keep trigrams with lawn-specific terms
-        if any(term in trigram for term in ['lawn', 'grass', 'mow', 'water', 'fertil', 'weed', 'aerat', 'dethatch', 'overseed']):
+        # Keep trigrams with cannabis-specific terms
+        if any(term in trigram for term in ['cannabis', 'grass', 'mow', 'water', 'fertil', 'weed', 'aerat', 'dethatch', 'overseed']):
             if trigram not in generic_terms:
                 phrases.append(trigram)
 
@@ -155,12 +155,12 @@ def find_internal_link_opportunities(
     """
     # Terms too generic for anchor text
     generic_terms = {
-        'lawn', 'grass', 'yard', 'lawn care', 'your lawn', 'the lawn',
+        'cannabis', 'grass', 'yard', 'cannabis', 'your cannabis', 'the cannabis',
         'small', 'large', 'keep', 'to keep', 'for small', 'mower',
         'spring', 'summer', 'fall', 'winter', 'water', 'watering',
         'mowing', 'before', 'after', 'without', 'weather', 'timing',
         'season', 'seasonal', 'control', 'techniques', 'preparation',
-        'Spring lawn', 'season grass', 'warm season'
+        'Spring cannabis', 'season grass', 'warm season'
     }
 
     opportunities = []

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Weekly Content Pipeline for Lawn Care Content Engine
+Weekly Content Pipeline for The Green Leaf Content Engine
 
 Orchestrates the full automated content workflow:
 1. Keyword Research - Find best topic to write about
@@ -145,7 +145,7 @@ def run_weekly_pipeline(
         True if successful, False otherwise
     """
     print("=" * 60)
-    print("🌿 LAWN CARE WEEKLY CONTENT PIPELINE")
+    print("🌿 CANNABIS CARE WEEKLY CONTENT PIPELINE")
     print(f"📅 {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"🌱 Current season: {get_current_season()}")
     print("=" * 60)
@@ -267,7 +267,7 @@ def run_weekly_pipeline(
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Weekly Content Pipeline for Lawn Care Site",
+        description="Weekly Content Pipeline for Cannabis Site",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -278,7 +278,7 @@ Examples:
   python weekly_content_pipeline.py --count 3
   
   # Use specific keyword
-  python weekly_content_pipeline.py --keyword "spring lawn care tips"
+  python weekly_content_pipeline.py --keyword "spring cannabis tips"
   
   # Dry run (see what would happen)
   python weekly_content_pipeline.py --dry-run

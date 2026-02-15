@@ -159,7 +159,7 @@ def weekly_pipeline(mode: str = "keyword"):
 ## File Structure After Implementation
 
 ```
-lawncare-content-engine/
+cannabiscare-content-engine/
 ├── content_generator.py          # UNCHANGED - keyword-first process
 ├── youtube_content_agent.py      # NEW - video-first process
 ├── youtube_search.py             # Existing module (reused)
@@ -186,7 +186,7 @@ python youtube_content_agent.py
 python youtube_content_agent.py --count 3
 
 # Only consider videos from specific channel
-python youtube_content_agent.py --channel "Lawn Care Nut"
+python youtube_content_agent.py --channel "Cannabis Nut"
 
 # Full pipeline (generate + images + affiliates + QA)
 python youtube_content_agent.py --run-pipeline

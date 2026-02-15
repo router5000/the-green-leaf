@@ -5,29 +5,29 @@ import VideosTabs from '@/components/VideosTabs'
 
 export const revalidate = 3600 // Revalidate every hour
 
-const baseUrl = 'https://lawncare.center'
+const baseUrl = 'https://thegreenleaf.com'
 
 export const metadata: Metadata = {
-  title: 'Lawn Care Videos - Expert Tutorials & Seasonal Tips',
-  description: 'Watch expert lawn care video tutorials covering aeration, fertilizing, mowing techniques, weed control strategies, and seasonal maintenance from top YouTube lawn care professionals.',
+  title: 'Cannabis Videos - Expert Tutorials & Seasonal Tips',
+  description: 'Watch expert cannabis video tutorials covering aeration, fertilizing, mowing techniques, weed control strategies, and seasonal maintenance from top YouTube cannabis professionals.',
   openGraph: {
-    title: 'Lawn Care Videos - Expert Tutorials & Seasonal Tips',
-    description: 'Watch expert lawn care videos with tips on aeration, fertilizing, mowing, weed control, and seasonal maintenance.',
+    title: 'Cannabis Videos - Expert Tutorials & Seasonal Tips',
+    description: 'Watch expert cannabis videos with tips on aeration, fertilizing, mowing, weed control, and seasonal maintenance.',
     url: `${baseUrl}/videos`,
-    siteName: 'Lawn Care Center',
+    siteName: 'The Green Leaf',
     type: 'website',
     locale: 'en_US',
     images: [{
       url: `${baseUrl}/images/og-default.jpg`,
       width: 1200,
       height: 630,
-      alt: 'Lawn Care Center - Expert Videos',
+      alt: 'The Green Leaf - Expert Videos',
     }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Lawn Care Videos - Expert Tips & Tutorials',
-    description: 'Watch expert lawn care videos with tips and tutorials.',
+    title: 'Cannabis Videos - Expert Tips & Tutorials',
+    description: 'Watch expert cannabis videos with tips and tutorials.',
     images: [`${baseUrl}/images/og-default.jpg`],
   },
   alternates: {
@@ -46,11 +46,11 @@ export default function VideosPage() {
       {/* Page Header */}
       <div className="text-center mb-12">
         <h1 className="text-4xl md:text-5xl font-serif text-gray-900 mb-8">
-          Lawn Care Videos
+          Cannabis Videos
         </h1>
         <p className="text-gray-600 text-lg max-w-2xl mx-auto mb-4">
-          Expert tutorials and tips from top lawn care YouTubers.
-          Watch and learn how to maintain a beautiful, healthy lawn.
+          Expert tutorials and tips from top cannabis YouTubers.
+          Watch and learn how to maintain a beautiful, healthy cannabis.
         </p>
         <span className="text-sm text-gray-500">{allVideos.length} videos from {uniqueChannels.length} channels</span>
       </div>
@@ -83,7 +83,7 @@ export default function VideosPage() {
       {/* Channels Section */}
       {uniqueChannels.length > 0 && (
         <div className="mt-16 pt-12 border-t border-gray-200">
-          <h2 className="text-2xl font-bold text-grass-900 mb-6 text-center">
+          <h2 className="text-2xl font-bold text-leaf-900 mb-6 text-center">
             Featured Channels
           </h2>
           <div className="flex flex-wrap justify-center gap-3">

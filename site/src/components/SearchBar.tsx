@@ -71,7 +71,7 @@ export default function SearchBar() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search articles & videos..."
-            className="w-64 pl-10 pr-4 py-2 text-sm border border-gray-200 rounded-lg bg-gray-50 focus:bg-white focus:border-grass-500 focus:ring-1 focus:ring-grass-500 focus:outline-none transition-all"
+            className="w-64 pl-10 pr-4 py-2 text-sm border border-gray-200 rounded-lg bg-gray-50 focus:bg-white focus:border-leaf-500 focus:ring-1 focus:ring-leaf-500 focus:outline-none transition-all"
           />
           <svg
             className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
@@ -96,7 +96,7 @@ export default function SearchBar() {
             key="search"
             type="button"
             onClick={handleSearchClick}
-            className="xl:hidden p-2 text-gray-600 hover:text-grass-600 transition-colors"
+            className="xl:hidden p-2 text-gray-600 hover:text-leaf-600 transition-colors"
             aria-label="Search"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -146,7 +146,7 @@ export default function SearchBar() {
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}
                       placeholder="Search articles & videos..."
-                      className="w-full pl-10 pr-4 py-3 text-base border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:border-grass-500 focus:ring-2 focus:ring-grass-500/20 focus:outline-none transition-all"
+                      className="w-full pl-10 pr-4 py-3 text-base border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:border-leaf-500 focus:ring-2 focus:ring-leaf-500/20 focus:outline-none transition-all"
                     />
                     <svg
                       className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
@@ -178,7 +178,7 @@ export default function SearchBar() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
               >
-                Search for lawn care tips, guides, and videos
+                Search for cannabis tips, guides, and videos
               </motion.p>
             </motion.div>
           </>

@@ -1,6 +1,6 @@
 # Learnings & Lessons Learned
 
-This document captures key learnings from developing and maintaining the Lawn Care Content Engine.
+This document captures key learnings from developing and maintaining the The Green Leaf Content Engine.
 
 ---
 
@@ -270,7 +270,7 @@ from content_generator import generate_hero_image, generate_section_image
 | Published articles | `site/content/posts/` |
 | Draft articles | `drafts/` |
 | Article images | `site/public/images/articles/` |
-| Affiliate products | `products/lawn_care_products.json` |
+| Affiliate products | `products/cannabis_products.json` |
 | YouTube cache | `.cache/youtube_agent/` |
 
 ---

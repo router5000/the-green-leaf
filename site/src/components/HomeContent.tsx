@@ -47,7 +47,7 @@ export default function HomeContent({ featuredPost, bottomPosts, monthlyPosts, m
                   </>
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-32 h-32 rounded-full bg-grass-300 opacity-60"></div>
+                    <div className="w-32 h-32 rounded-full bg-leaf-300 opacity-60"></div>
                   </div>
                 )}
               </div>
@@ -56,10 +56,10 @@ export default function HomeContent({ featuredPost, bottomPosts, monthlyPosts, m
                 <div className="flex items-center gap-3 text-sm text-gray-500 uppercase tracking-wide">
                   <span>{new Date(featuredPost.generated_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                   <span>IN</span>
-                  <span className="text-grass-600">{featuredPost.season.toUpperCase()}</span>
+                  <span className="text-leaf-600">{featuredPost.season.toUpperCase()}</span>
                 </div>
 
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif text-gray-900 leading-tight group-hover:text-grass-700 transition">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif text-gray-900 leading-tight group-hover:text-leaf-700 transition">
                   {featuredPost.title}
                 </h2>
 
@@ -84,7 +84,7 @@ export default function HomeContent({ featuredPost, bottomPosts, monthlyPosts, m
               >
                 <Link href={`/articles/${post.slug}`}>
                   {/* Article image */}
-                  <div className="relative h-64 mb-4 overflow-hidden rounded-xl bg-gradient-to-br from-grass-100 via-emerald-50 to-teal-100 shadow-md">
+                  <div className="relative h-64 mb-4 overflow-hidden rounded-xl bg-gradient-to-br from-leaf-100 via-emerald-50 to-teal-100 shadow-md">
                     {post.featured_image ? (
                       <>
                         <Image
@@ -100,7 +100,7 @@ export default function HomeContent({ featuredPost, bottomPosts, monthlyPosts, m
                         />
                       </>
                     ) : (
-                      <div className="absolute top-4 left-4 w-16 h-16 rounded-full bg-grass-300 opacity-40"></div>
+                      <div className="absolute top-4 left-4 w-16 h-16 rounded-full bg-leaf-300 opacity-40"></div>
                     )}
                   </div>
 
@@ -108,10 +108,10 @@ export default function HomeContent({ featuredPost, bottomPosts, monthlyPosts, m
                     <div className="flex items-center gap-2 text-xs text-gray-500 uppercase tracking-wide">
                       <span>{new Date(post.generated_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                       <span>IN</span>
-                      <span className="text-grass-600">{post.season.toUpperCase()}</span>
+                      <span className="text-leaf-600">{post.season.toUpperCase()}</span>
                     </div>
 
-                    <h3 className="text-2xl font-serif text-gray-900 leading-tight group-hover:text-grass-700 transition line-clamp-3">
+                    <h3 className="text-2xl font-serif text-gray-900 leading-tight group-hover:text-leaf-700 transition line-clamp-3">
                       {post.title}
                     </h3>
                   </div>
@@ -132,8 +132,8 @@ export default function HomeContent({ featuredPost, bottomPosts, monthlyPosts, m
       >
         <div className="sticky top-8">
           <Link href="/articles?tab=monthly" className="flex items-center justify-between mb-8 group">
-            <h3 className="text-sm uppercase tracking-widest text-gray-900 font-semibold group-hover:text-grass-700 transition">Things to Know in {monthName}</h3>
-            <span className="text-grass-600 group-hover:text-grass-800 transition">
+            <h3 className="text-sm uppercase tracking-widest text-gray-900 font-semibold group-hover:text-leaf-700 transition">Things to Know in {monthName}</h3>
+            <span className="text-leaf-600 group-hover:text-leaf-800 transition">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
@@ -151,7 +151,7 @@ export default function HomeContent({ featuredPost, bottomPosts, monthlyPosts, m
               >
                 <Link href={`/articles/${post.slug}`} className="block">
                   {/* Sidebar thumbnail */}
-                  <div className="relative h-48 mb-4 overflow-hidden rounded-lg bg-gradient-to-br from-grass-100 via-emerald-50 to-teal-100 shadow-md">
+                  <div className="relative h-48 mb-4 overflow-hidden rounded-lg bg-gradient-to-br from-leaf-100 via-emerald-50 to-teal-100 shadow-md">
                     {post.featured_image ? (
                       <>
                         <Image
@@ -167,15 +167,15 @@ export default function HomeContent({ featuredPost, bottomPosts, monthlyPosts, m
                         />
                       </>
                     ) : (
-                      <div className="absolute bottom-4 right-4 w-12 h-12 rounded-full bg-grass-300 opacity-50"></div>
+                      <div className="absolute bottom-4 right-4 w-12 h-12 rounded-full bg-leaf-300 opacity-50"></div>
                     )}
                   </div>
 
                   <div className="space-y-2">
-                    <h4 className="text-lg font-serif text-gray-900 leading-tight group-hover:text-grass-700 transition line-clamp-2">
+                    <h4 className="text-lg font-serif text-gray-900 leading-tight group-hover:text-leaf-700 transition line-clamp-2">
                       {post.title}
                     </h4>
-                    <p className="text-xs text-grass-600 uppercase tracking-wide font-medium">
+                    <p className="text-xs text-leaf-600 uppercase tracking-wide font-medium">
                       {post.season.toUpperCase()}
                     </p>
                   </div>

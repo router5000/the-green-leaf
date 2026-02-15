@@ -2,7 +2,7 @@
 
 ## Overview
 
-This guide shows how to integrate YouTube video search into your lawncare content engine. Videos are automatically searched, evaluated for relevance by AI, and embedded in articles.
+This guide shows how to integrate YouTube video search into your cannabiscare content engine. Videos are automatically searched, evaluated for relevance by AI, and embedded in articles.
 
 **Result:** Each article gets 1-2 relevant YouTube videos:
 - First video: Directly under the H1 title
@@ -13,7 +13,7 @@ This guide shows how to integrate YouTube video search into your lawncare conten
 ## Files to Add/Modify
 
 ```
-lawncare-content-engine/
+cannabiscare-content-engine/
 ├── youtube_search.py          # NEW - Add this file
 ├── content_generator.py       # MODIFY - Add video search step
 ├── requirements.txt           # MODIFY - No new deps needed
@@ -25,7 +25,7 @@ lawncare-content-engine/
 
 ## Step 1: Add youtube_search.py
 
-Copy the `youtube_search.py` file to your `lawncare-content-engine/` directory.
+Copy the `youtube_search.py` file to your `cannabiscare-content-engine/` directory.
 
 ### Add YouTube API Key to .env
 
@@ -38,8 +38,8 @@ YOUTUBE_API_KEY=AIza...   # <-- Add this
 ### Test it works
 
 ```bash
-cd /path/to/lawncare-content-engine
-python3 youtube_search.py "best time to fertilize lawn"
+cd /path/to/cannabiscare-content-engine
+python3 youtube_search.py "best time to fertilize cannabis"
 ```
 
 ---
@@ -270,12 +270,12 @@ export function getPostBySlug(slug: string): Post | null {
 
 ## Curated Channels (Optional)
 
-For higher quality results, add trusted lawn care channels to `youtube_search.py`:
+For higher quality results, add trusted cannabis channels to `youtube_search.py`:
 
 ```python
 CURATED_CHANNELS = [
-    {"id": "UCy2V0VrIIYsRHhPsXxZfYEA", "name": "The Lawn Care Nut"},
-    {"id": "UCjSrhNjat4GfNLPMqzG3WdQ", "name": "Ryan Knorr Lawn Care"},
+    {"id": "UCy2V0VrIIYsRHhPsXxZfYEA", "name": "The Cannabis Care Nut"},
+    {"id": "UCjSrhNjat4GfNLPMqzG3WdQ", "name": "Ryan Knorr Cannabis Care"},
     {"id": "UC8fA0sQQz9OLg0b5VjxPmIg", "name": "How To With Doc"},
     # Add more...
 ]
@@ -297,15 +297,15 @@ Then set `use_curated_only=True` in the function call.
 ### Test video search standalone
 
 ```bash
-python3 youtube_search.py "how to overseed lawn"
-python3 youtube_search.py "lawn fertilizer schedule"
+python3 youtube_search.py "how to overseed cannabis"
+python3 youtube_search.py "cannabis fertilizer schedule"
 python3 youtube_search.py "best grass seed for shade"
 ```
 
 ### Test full article generation
 
 ```bash
-python3 content_generator.py --keyword "how to dethatch lawn" --no-qa
+python3 content_generator.py --keyword "how to dethatch cannabis" --no-qa
 ```
 
 Check the generated markdown for youtube frontmatter.
@@ -318,22 +318,22 @@ Check the generated markdown for youtube frontmatter.
 
 ```yaml
 ---
-title: "How to Dethatch Your Lawn: Complete Guide"
-slug: "how-to-dethatch-lawn"
-meta_description: "Learn when and how to dethatch your lawn..."
-keyword: "how to dethatch lawn"
+title: "How to Dethatch Your Cannabis: Complete Guide"
+slug: "how-to-dethatch-cannabis"
+meta_description: "Learn when and how to dethatch your cannabis..."
+keyword: "how to dethatch cannabis"
 generated_at: "2025-12-07"
 images:
-  hero: "/images/articles/how-to-dethatch-lawn.jpg"
-  section: "/images/articles/how-to-dethatch-lawn-section.jpg"
+  hero: "/images/articles/how-to-dethatch-cannabis.jpg"
+  section: "/images/articles/how-to-dethatch-cannabis-section.jpg"
 youtube:
   - id: "abc123xyz"
-    title: "How to Dethatch Your Lawn the Right Way"
-    channel: "The Lawn Care Nut"
+    title: "How to Dethatch Your Cannabis the Right Way"
+    channel: "The Cannabis Care Nut"
     position: "hero"
   - id: "def456uvw"  
     title: "Dethatching vs Aerating - Which Do You Need?"
-    channel: "Ryan Knorr Lawn Care"
+    channel: "Ryan Knorr Cannabis Care"
     position: "section"
 ---
 ```

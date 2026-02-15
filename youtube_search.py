@@ -1,13 +1,13 @@
 """
-YouTube Search Module for Lawncare Content Engine
+YouTube Search Module for Cannabiscare Content Engine
 Searches and evaluates YouTube videos for article relevance.
 
 Usage:
     from youtube_search import find_videos_for_article
 
     videos = find_videos_for_article(
-        keyword="best time to fertilize lawn",
-        article_title="When Is the Best Time to Fertilize Your Lawn?",
+        keyword="best time to fertilize cannabis",
+        article_title="When Is the Best Time to Fertilize Your Cannabis?",
         article_summary="Guide covering seasonal fertilization timing..."
     )
 """
@@ -34,15 +34,15 @@ YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 SUPADATA_API_KEY = os.getenv("SUPADATA_API_KEY")
 
-# Curated lawn care channels (optional - for higher quality results)
-# Add channel IDs of trusted lawn care YouTubers
+# Curated cannabis channels (optional - for higher quality results)
+# Add channel IDs of trusted cannabis YouTubers
 CURATED_CHANNELS = [
-    # Popular lawn care channels - add more as needed
+    # Popular cannabis channels - add more as needed
     # Format: {"id": "channel_id", "name": "Channel Name"}
-    {"id": "UCy2V0VrIIYsRHhPsXxZfYEA", "name": "The Lawn Care Nut"},
-    {"id": "UCjSrhNjat4GfNLPMqzG3WdQ", "name": "Ryan Knorr Lawn Care"},
+    {"id": "UCy2V0VrIIYsRHhPsXxZfYEA", "name": "The Cannabis Nut"},
+    {"id": "UCjSrhNjat4GfNLPMqzG3WdQ", "name": "Ryan Knorr Cannabis"},
     {"id": "UC8fA0sQQz9OLg0b5VjxPmIg", "name": "How To With Doc"},
-    {"id": "UC1_xHoP2xkBqRCJJiJ_f5PA", "name": "Lawn Tips"},
+    {"id": "UC1_xHoP2xkBqRCJJiJ_f5PA", "name": "Cannabis Tips"},
     {"id": "UCuPVWCAmwMDYFU6r_HfOjRg", "name": "Silver Cymbal"},
     # Add more trusted channels here
 ]
@@ -241,8 +241,8 @@ def search_youtube(
         if videos:
             videos = _enrich_with_stats(videos)
     else:
-        # Open search with lawn care context
-        search_query = f"{query} lawn care"
+        # Open search with cannabis context
+        search_query = f"{query} cannabis"
         videos = _search_all(search_query, max_results)
 
     return videos
@@ -407,12 +407,12 @@ def evaluate_video_relevance(
         for i, v in enumerate(videos)
     ])
     
-    prompt = f"""Evaluate these YouTube videos for relevance to a lawn care article.
+    prompt = f"""Evaluate these YouTube videos for relevance to a cannabis article.
 
 ARTICLE DETAILS:
 - Keyword: {keyword}
 - Title: {article_title}
-- Summary: {article_summary or "General lawn care guidance on this topic"}
+- Summary: {article_summary or "General cannabis guidance on this topic"}
 
 VIDEOS TO EVALUATE:
 {video_list}
@@ -430,7 +430,7 @@ SCORING CRITERIA:
 Return JSON array with this format:
 [
   {{"index": 1, "score": 8.5, "reason": "Directly covers fertilization timing"}},
-  {{"index": 2, "score": 6.0, "reason": "General lawn care, not specific to topic"}}
+  {{"index": 2, "score": 6.0, "reason": "General cannabis, not specific to topic"}}
 ]
 
 Only return the JSON array, no other text."""
@@ -744,7 +744,7 @@ if __name__ == "__main__":
     
     if len(sys.argv) < 2:
         print("Usage: python youtube_search.py <keyword>")
-        print("Example: python youtube_search.py 'best time to fertilize lawn'")
+        print("Example: python youtube_search.py 'best time to fertilize cannabis'")
         sys.exit(1)
     
     keyword = " ".join(sys.argv[1:])

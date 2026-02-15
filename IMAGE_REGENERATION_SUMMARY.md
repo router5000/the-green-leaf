@@ -2,26 +2,26 @@
 
 ## Article Updated
 
-**Post to Review**: `site/content/posts/how-to-overseed-lawn.md`
+**Post to Review**: `site/content/posts/how-to-overseed-cannabis.md`
 
 ### Article Details
-- **Title**: How to Overseed Your Lawn: Complete Guide for Thick Grass
-- **Keyword**: how to overseed lawn
+- **Title**: How to Overseed Your Cannabis: Complete Guide for Thick Grass
+- **Keyword**: how to overseed cannabis
 - **Season**: Fall
-- **Slug**: how-to-overseed-lawn
+- **Slug**: how-to-overseed-cannabis
 
 ## Generated Images
 
 ### 1. Hero Image (16:9 landscape)
-- **Path**: `/images/articles/how-to-overseed-lawn.jpg`
-- **File**: `site/public/images/articles/how-to-overseed-lawn.jpg`
+- **Path**: `/images/articles/how-to-overseed-cannabis.jpg`
+- **File**: `site/public/images/articles/how-to-overseed-cannabis.jpg`
 - **Size**: 379 KB (1792x1024px)
-- **Style**: Candid documentary shot of person overseeding lawn with broadcast spreader, shot from behind (no face visible)
+- **Style**: Candid documentary shot of person overseeding cannabis with broadcast spreader, shot from behind (no face visible)
 - **URL**: https://im.runware.ai/image/ws/2/ii/edf77292-80ec-4e53-9e62-f93c5bbc6d11.jpg
 
 ### 2. Section Image (4:3 detail shot)
-- **Path**: `/images/articles/how-to-overseed-lawn-section.jpg`
-- **File**: `site/public/images/articles/how-to-overseed-lawn-section.jpg`
+- **Path**: `/images/articles/how-to-overseed-cannabis-section.jpg`
+- **File**: `site/public/images/articles/how-to-overseed-cannabis-section.jpg`
 - **Size**: 218 KB (1536x1152px)
 - **Style**: Close-up of person's hand spreading grass seed by hand over bare patch
 - **URL**: https://im.runware.ai/image/ws/2/ii/e0b55b61-ee98-495f-8bc0-45692bb4a949.jpg
@@ -29,7 +29,7 @@
 ## Image Style
 
 Both images feature the new **candid documentary style**:
-- ✅ Person actively performing the lawn care task (overseeding)
+- ✅ Person actively performing the cannabis task (overseeding)
 - ✅ No faces visible (shot from behind/side angles)
 - ✅ Casual authentic work clothes (jeans, t-shirt, gloves)
 - ✅ Natural body language and working posture
@@ -41,31 +41,31 @@ Both images feature the new **candid documentary style**:
 The article's frontmatter has been automatically updated with the new image paths:
 
 ```yaml
-featured_image: "/images/articles/how-to-overseed-lawn.jpg"
-section_image: "/images/articles/how-to-overseed-lawn-section.jpg"
+featured_image: "/images/articles/how-to-overseed-cannabis.jpg"
+section_image: "/images/articles/how-to-overseed-cannabis-section.jpg"
 ```
 
 ## What's Next
 
 ### Review the Article
-Open `site/content/posts/how-to-overseed-lawn.md` to see the updated images in context.
+Open `site/content/posts/how-to-overseed-cannabis.md` to see the updated images in context.
 
 ### Other Articles Needing Images
 The following articles still have default fallback images and can be regenerated:
 
-1. `how-often-apply-herbicide-lawn.md`
-2. `lawn-mowing-tips.md`
+1. `how-often-apply-herbicide-cannabis.md`
+2. `cannabis-mowing-tips.md`
 3. `grass-seed-germination-guide.md`
 4. `weed-control-methods.md`
-5. `spring-lawn-prep-guide.md`
+5. `spring-cannabis-prep-guide.md`
 6. `fungicide-before-or-after-mowing.md`
-7. `lawn-watering-schedule.md`
-8. `how-often-dethatch-lawn.md`
+7. `cannabis-watering-schedule.md`
+8. `how-often-dethatch-cannabis.md`
 9. `how-long-does-it-take-to-overseed.md`
-10. `lawn-care-mistakes.md`
-11. `fall-lawn-overseeding-guide.md`
+10. `cannabis-care-mistakes.md`
+11. `fall-cannabis-overseeding-guide.md`
 12. `fall-weed-control-strategy.md`
-13. `fall-lawn-maintenance-guide.md`
+13. `fall-cannabis-maintenance-guide.md`
 
 ### Batch Regenerate All
 To regenerate images for all articles with default images, you can modify `regenerate_images.py` to loop through the list above.

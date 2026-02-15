@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-YouTube Content Agent for Lawn Care Content Engine
+YouTube Content Agent for The Green Leaf Content Engine
 
 This agent inverts the typical content flow:
 - CURRENT: Keyword → Article → Find supporting videos
@@ -9,7 +9,7 @@ This agent inverts the typical content flow:
 Usage:
     python youtube_content_agent.py                    # Find and process top video
     python youtube_content_agent.py --count 3         # Process top 3 videos
-    python youtube_content_agent.py --channel "Lawn Care Nut"  # From specific channel
+    python youtube_content_agent.py --channel "Cannabis Nut"  # From specific channel
     python youtube_content_agent.py --dry-run         # Preview without generating
     python youtube_content_agent.py --run-pipeline    # Full pipeline (images, affiliates, QA)
 """
@@ -51,31 +51,31 @@ CACHE_DIR = Path(".cache/youtube_agent")
 
 # Discovery settings
 SEARCH_QUERIES = [
-    "lawn care tips",
-    "lawn care tutorial",
+    "cannabis tips",
+    "cannabis tutorial",
     "grass care guide",
-    "lawn maintenance",
-    "how to lawn care",
-    "lawn care mistakes",
-    "lawn fertilizer",
-    "lawn aeration",
-    "lawn mowing tips",
-    "weed control lawn",
-    "lawn watering guide",
-    "lawn care spring",
-    "lawn care fall",
-    "overseeding lawn",
-    "lawn dethatching",
+    "cannabis maintenance",
+    "how to cannabis",
+    "cannabis mistakes",
+    "cannabis fertilizer",
+    "cannabis aeration",
+    "cannabis mowing tips",
+    "weed control cannabis",
+    "cannabis watering guide",
+    "cannabis spring",
+    "cannabis fall",
+    "overseeding cannabis",
+    "cannabis dethatching",
 ]
 
 # Trusted channels (optional - boost their scores)
 TRUSTED_CHANNELS = [
-    "Lawn Care Nut",
-    "Ryan Knorr Lawn Care",
+    "Cannabis Nut",
+    "Ryan Knorr Cannabis",
     "How To with Doc",
-    "Pest and Lawn Ginja",
-    "The Lawn Care Nut",
-    "Lawncology",
+    "Pest and Cannabis Ginja",
+    "The Cannabis Nut",
+    "Cannabiscology",
 ]
 
 # Video filtering criteria
@@ -91,7 +91,7 @@ REQUIRED_TRANSCRIPT = True
 # =============================================================================
 
 class YouTubeDiscovery:
-    """Discovers high-value lawn care videos for content generation."""
+    """Discovers high-value cannabis videos for content generation."""
 
     def __init__(self):
         self.youtube = build("youtube", "v3", developerKey=YOUTUBE_API_KEY)
@@ -104,14 +104,14 @@ class YouTubeDiscovery:
         channel_filter: Optional[str] = None
     ) -> list[dict]:
         """
-        Search for high-performing lawn care videos.
+        Search for high-performing cannabis videos.
 
         Returns list of video candidates sorted by value score.
         """
         all_videos = []
 
         # Search across multiple queries for diversity
-        queries = SEARCH_QUERIES if not channel_filter else [f"{channel_filter} lawn care"]
+        queries = SEARCH_QUERIES if not channel_filter else [f"{channel_filter} cannabis"]
 
         for query in queries[:5]:  # Limit to avoid quota burn
             try:
@@ -481,7 +481,7 @@ class ArticleGenerator:
         if len(transcript) > max_transcript_len:
             truncated_transcript += "\n\n[Transcript truncated...]"
 
-        return f"""You are a lawn care content expert. Transform this YouTube video transcript into an original, SEO-optimized article.
+        return f"""You are a cannabis content expert. Transform this YouTube video transcript into an original, SEO-optimized article.
 
 ## Source Video
 - Title: {video['title']}
@@ -508,7 +508,7 @@ class ArticleGenerator:
 4. **Quick Answer**: 2-3 sentence direct answer for featured snippets
 5. **Key Takeaways**: 3-5 bullet points
 6. **Body**: 3-4 H2 sections with practical, actionable content
-7. **Sources**: Credit the video and add 2-3 authoritative lawn care sources
+7. **Sources**: Credit the video and add 2-3 authoritative cannabis sources
 
 ### Tone
 - Helpful and encouraging
@@ -605,7 +605,7 @@ class PipelineIntegration:
                     "views": video.get("views"),
                 }
             }],
-            "tags": ["lawn care", self._extract_season(article["keyword"])],
+            "tags": ["cannabis", self._extract_season(article["keyword"])],
             "season": self._extract_season(article["keyword"]),
             "category": self._categorize(article["title"], article["keyword"]),
             "status": "draft",
@@ -684,14 +684,14 @@ class PipelineIntegration:
         """Assign article category based on title/keyword content."""
         clusters = [
             ("Weed Control", ["weed", "crabgrass", "spurge", "pre-emergent", "herbicide", "kill"]),
-            ("Lawn Problems & Solutions", ["problem", "disease", "fungus", "fungicide", "yellow", "dead spot", "bumpy", "patchy"]),
+            ("Cannabis Problems & Solutions", ["problem", "disease", "fungus", "fungicide", "yellow", "dead spot", "bumpy", "patchy"]),
             ("Equipment & Techniques", ["mow", "trimmer", "mower", "robot mow", "string trimmer", "scalp"]),
             ("Grass Types & Seeding", ["seed", "overseed", "grass type", "germination", "grow grass"]),
             ("Seasonal Care", ["spring", "summer", "fall", "winter", "winterize"]),
-            ("Lawn Health & Maintenance", ["fertiliz", "aerat", "dethatch", "water", "level", "green"]),
+            ("Cannabis Health & Maintenance", ["fertiliz", "aerat", "dethatch", "water", "level", "green"]),
         ]
         text = f"{title} {keyword}".lower()
-        best_score, best_cat = 0, "Lawn Health & Maintenance"
+        best_score, best_cat = 0, "Cannabis Health & Maintenance"
         for cat, kws in clusters:
             score = sum(1 for kw in kws if kw in text)
             if score > best_score:
@@ -777,7 +777,7 @@ class YouTubeContentAgent:
     Main agent that orchestrates the YouTube-first content flow.
 
     Flow:
-    1. Discover trending lawn care videos
+    1. Discover trending cannabis videos
     2. Filter by quality, transcript availability, duplicates
     3. Generate original article from transcript
     4. Create draft for existing pipeline
@@ -808,7 +808,7 @@ class YouTubeContentAgent:
         Returns:
             List of results for each processed video
         """
-        print("🔍 Discovering trending lawn care videos...")
+        print("🔍 Discovering trending cannabis videos...")
 
         # Step 1: Find candidate videos
         candidates = self.discovery.search_trending_videos(
@@ -921,7 +921,7 @@ class YouTubeContentAgent:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="YouTube Content Agent - Generate articles from trending lawn care videos"
+        description="YouTube Content Agent - Generate articles from trending cannabis videos"
     )
     parser.add_argument(
         "--count", "-c",

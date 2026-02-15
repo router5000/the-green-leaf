@@ -1,24 +1,24 @@
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Lawn Care Topics & Guides - Lawn Care Center',
-  description: 'Explore comprehensive lawn care guides organized by topic: seasonal care, weed control, lawn health, equipment, and more. Expert advice for a beautiful lawn.',
-  keywords: 'lawn care topics, lawn care guides, seasonal lawn care, weed control, lawn maintenance, grass care, lawn equipment',
+  title: 'Cannabis Topics & Guides - The Green Leaf',
+  description: 'Explore comprehensive cannabis guides organized by topic: strains & genetics, growing & cultivation, consumption methods, health & wellness, legal updates, and culture.',
+  keywords: 'cannabis topics, cannabis guides, cannabis strains, growing cannabis, CBD wellness, cannabis edibles, cannabis cultivation',
   openGraph: {
-    title: 'Lawn Care Topics & Guides',
-    description: 'Explore comprehensive lawn care guides organized by topic: seasonal care, weed control, lawn health, equipment, and more.',
-    url: 'https://lawncare.center/topics',
-    siteName: 'Lawn Care Center',
+    title: 'Cannabis Topics & Guides',
+    description: 'Explore comprehensive cannabis guides organized by topic: strains, growing, consumption, health, legal, and culture.',
+    url: 'https://thegreenleaf.com/topics',
+    siteName: 'The Green Leaf',
     locale: 'en_US',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Lawn Care Topics & Guides',
-    description: 'Explore comprehensive lawn care guides organized by topic.',
+    title: 'Cannabis Topics & Guides',
+    description: 'Explore comprehensive cannabis guides organized by topic.',
   },
   alternates: {
-    canonical: 'https://lawncare.center/topics',
+    canonical: 'https://thegreenleaf.com/topics',
   },
 }
 

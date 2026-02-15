@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Auto-Publish Module for Lawn Care Content Engine
+Auto-Publish Module for The Green Leaf Content Engine
 
 Handles automatic Git operations after content generation:
 - Commits new articles and images
@@ -308,8 +308,8 @@ def setup_git_for_ci():
     Configure git for CI environment (GitHub Actions).
     """
     # Set git user for commits
-    run_git_command(["config", "user.email", "bot@lawncare.center"])
-    run_git_command(["config", "user.name", "Lawn Care Bot"])
+    run_git_command(["config", "user.email", "bot@thegreenleaf.com"])
+    run_git_command(["config", "user.name", "Cannabis Bot"])
     
     print("✅ Git configured for CI environment")
 

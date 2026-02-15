@@ -2,7 +2,7 @@ import { getSortedPostsData } from '@/lib/posts'
 
 export async function GET() {
   const posts = getSortedPostsData()
-  const baseUrl = 'https://lawncare.center'
+  const baseUrl = 'https://thegreenleaf.com'
 
   const urlEntries = posts
     .filter(post => post.youtube && post.youtube.length > 0)

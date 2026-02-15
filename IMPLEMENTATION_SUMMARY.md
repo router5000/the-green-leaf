@@ -156,7 +156,7 @@ All moved to site/content/posts/ for publishing
    - Initialize git repository
    - Push to GitHub
    - Deploy via Vercel
-   - Connect lawncare.center domain
+   - Connect thegreenleaf.com domain
 
 2. **Submit to Search Engines**
    - Google Search Console
@@ -302,7 +302,7 @@ All moved to site/content/posts/ for publishing
 
 ## Conclusion
 
-The Lawn Care Content Engine is now **production-ready** with:
+The The Green Leaf Content Engine is now **production-ready** with:
 - ✅ 36 high-quality articles with dual images
 - ✅ Modern, professional light theme UI
 - ✅ Complete legal pages for monetization

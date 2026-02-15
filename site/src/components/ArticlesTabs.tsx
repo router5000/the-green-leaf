@@ -95,8 +95,8 @@ export default function ArticlesTabs({ posts }: ArticlesTabsProps) {
               onClick={() => handleTabClick(tab.id)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                 activeTab === tab.id
-                  ? 'bg-grass-600 text-white'
-                  : 'bg-grass-100 text-grass-700 hover:bg-grass-200'
+                  ? 'bg-leaf-600 text-white'
+                  : 'bg-leaf-100 text-leaf-700 hover:bg-leaf-200'
               }`}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -113,11 +113,11 @@ export default function ArticlesTabs({ posts }: ArticlesTabsProps) {
       {/* Articles List */}
       {filteredPosts.length === 0 ? (
         <motion.div
-          className="bg-grass-50 rounded-lg p-8 text-center"
+          className="bg-leaf-50 rounded-lg p-8 text-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
-          <p className="text-grass-700 text-lg">
+          <p className="text-leaf-700 text-lg">
             No articles found for this filter.
           </p>
         </motion.div>
@@ -167,8 +167,8 @@ export default function ArticlesTabs({ posts }: ArticlesTabsProps) {
 
                   {/* Content */}
                   <div className="p-6 flex-1">
-                    <div className="flex flex-wrap items-center gap-3 text-sm text-grass-600 mb-3">
-                      <span className="bg-grass-100 px-3 py-1 rounded-full font-medium">
+                    <div className="flex flex-wrap items-center gap-3 text-sm text-leaf-600 mb-3">
+                      <span className="bg-leaf-100 px-3 py-1 rounded-full font-medium">
                         {post.season}
                       </span>
                       {post.last_updated && (Date.now() - new Date(post.last_updated).getTime()) < 14 * 86400000 && (
@@ -179,10 +179,10 @@ export default function ArticlesTabs({ posts }: ArticlesTabsProps) {
                       <span>{post.estimated_read_time}</span>
                     </div>
 
-                    <h2 className="text-2xl font-semibold text-grass-900 mb-3 line-clamp-1">
+                    <h2 className="text-2xl font-semibold text-leaf-900 mb-3 line-clamp-1">
                       <Link
                         href={`/articles/${post.slug}`}
-                        className="hover:text-grass-600 transition"
+                        className="hover:text-leaf-600 transition"
                       >
                         {post.title}
                       </Link>
@@ -195,7 +195,7 @@ export default function ArticlesTabs({ posts }: ArticlesTabsProps) {
                     <div className="flex items-center justify-end">
                       <Link
                         href={`/articles/${post.slug}`}
-                        className="text-grass-600 hover:text-grass-800 font-medium text-sm whitespace-nowrap"
+                        className="text-leaf-600 hover:text-leaf-800 font-medium text-sm whitespace-nowrap"
                         aria-label={`Read full article: ${post.title}`}
                       >
                         Read More →
@@ -216,7 +216,7 @@ export default function ArticlesTabs({ posts }: ArticlesTabsProps) {
             >
               <button
                 onClick={() => setVisibleCount(prev => prev + ARTICLES_PER_PAGE)}
-                className="px-8 py-3 bg-grass-600 text-white rounded-full font-medium hover:bg-grass-700 transition-colors"
+                className="px-8 py-3 bg-leaf-600 text-white rounded-full font-medium hover:bg-leaf-700 transition-colors"
               >
                 Show More Articles ({filteredPosts.length - visibleCount} remaining)
               </button>

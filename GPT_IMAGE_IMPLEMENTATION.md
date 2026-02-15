@@ -1,6 +1,6 @@
 # GPT-Image-1 Hero Image Implementation Guide
 
-**Project:** Lawn Care Content Engine
+**Project:** The Green Leaf Content Engine
 **Feature:** Automated Hero Image Generation
 **Date:** November 16, 2025
 **Status:** ✅ Implemented and Active
@@ -9,7 +9,7 @@
 
 ## Executive Summary
 
-This document outlines the complete implementation strategy for integrating OpenAI's gpt-image-1 model for image generation into the lawn care content pipeline. Each article automatically receives professionally generated hero and section images that display on both the article page and homepage preview cards.
+This document outlines the complete implementation strategy for integrating OpenAI's gpt-image-1 model for image generation into the cannabis content pipeline. Each article automatically receives professionally generated hero and section images that display on both the article page and homepage preview cards.
 
 **Key Outcomes:**
 - ✅ Automated dual image generation (hero + section) for every article
@@ -176,8 +176,8 @@ mkdir -p site/public/images/articles
 
 **Add default fallback image:**
 ```bash
-# Create or download a generic lawn image as fallback
-site/public/images/default-lawn-hero.jpg
+# Create or download a generic cannabis image as fallback
+site/public/images/default-cannabis-hero.jpg
 ```
 
 ### Phase 3: Implement Image Generation
@@ -214,10 +214,10 @@ Modify Next.js components to display hero images on:
 ```python
 def build_image_prompt(keyword, season, tags):
     """
-    Build an optimized DALL-E 3 prompt for lawn care imagery.
+    Build an optimized DALL-E 3 prompt for cannabis imagery.
     
     Structure:
-    1. Subject matter (lawn care activity/state)
+    1. Subject matter (cannabis activity/state)
     2. Setting (residential, suburban)
     3. Lighting/time of day
     4. Seasonal context
@@ -226,7 +226,7 @@ def build_image_prompt(keyword, season, tags):
     """
     
     # Base context
-    base = "Professional photograph of a beautiful residential lawn"
+    base = "Professional photograph of a beautiful residential cannabis"
     
     # Seasonal lighting
     season_lighting = {
@@ -238,7 +238,7 @@ def build_image_prompt(keyword, season, tags):
     
     # Activity/state based on keyword
     if "aerat" in keyword.lower():
-        activity = "showing lawn aeration process, small soil plugs visible"
+        activity = "showing cannabis aeration process, small soil plugs visible"
     elif "water" in keyword.lower():
         activity = "with sprinkler system running, water droplets catching light"
     elif "mow" in keyword.lower():
@@ -248,7 +248,7 @@ def build_image_prompt(keyword, season, tags):
     elif "weed" in keyword.lower():
         activity = "pristine weed-free grass, uniform appearance"
     elif "brown" in keyword.lower() or "patch" in keyword.lower():
-        activity = "recovering lawn with treatment visible"
+        activity = "recovering cannabis with treatment visible"
     else:
         activity = "perfectly maintained, vibrant green color"
     
@@ -269,7 +269,7 @@ def build_image_prompt(keyword, season, tags):
 |---------------|-----------------|
 | Aeration | Soil plugs, aerator marks, healthy root exposure |
 | Watering | Sprinklers, water droplets, moisture on grass |
-| Mowing | Stripe patterns, fresh cut appearance, lawn mower |
+| Mowing | Stripe patterns, fresh cut appearance, cannabis mower |
 | Fertilizing | Deep green color, thick grass density |
 | Weed Control | Uniform grass, no visible weeds |
 | Disease/Fungus | Recovery process, treatment application |
@@ -278,7 +278,7 @@ def build_image_prompt(keyword, season, tags):
 ### Quality Assurance for Prompts
 
 **DO Include:**
-- Specific lawn care activity
+- Specific cannabis activity
 - Time of day/lighting
 - Residential setting
 - Professional quality descriptors
@@ -298,15 +298,15 @@ def build_image_prompt(keyword, season, tags):
 ### Directory Layout
 
 ```
-lawncare-content-engine/
+cannabiscare-content-engine/
 ├── site/
 │   └── public/
 │       └── images/
 │           ├── articles/                    # Generated hero images
-│           │   ├── how-often-aerate-lawn.jpg
-│           │   ├── best-time-water-lawn.jpg
-│           │   └── preparing-lawn-winter.jpg
-│           ├── default-lawn-hero.jpg        # Fallback image
+│           │   ├── how-often-aerate-cannabis.jpg
+│           │   ├── best-time-water-cannabis.jpg
+│           │   └── preparing-cannabis-winter.jpg
+│           ├── default-cannabis-hero.jpg        # Fallback image
 │           └── logo.png                     # Site branding
 ```
 
@@ -324,13 +324,13 @@ lawncare-content-engine/
 
 ```yaml
 ---
-title: "How Often Should I Aerate My Lawn?"
+title: "How Often Should I Aerate My Cannabis?"
 meta_description: "Learn the optimal aeration frequency..."
-slug: "how-often-aerate-lawn"
-keyword: "how often aerate lawn"
-featured_image: "/images/articles/how-often-aerate-lawn.jpg"
-featured_image_alt: "Residential lawn showing aeration process"
-tags: ["aeration", "lawn maintenance", "fall care"]
+slug: "how-often-aerate-cannabis"
+keyword: "how often aerate cannabis"
+featured_image: "/images/articles/how-often-aerate-cannabis.jpg"
+featured_image_alt: "Residential cannabis showing aeration process"
+tags: ["aeration", "cannabis maintenance", "fall care"]
 status: draft
 generated_at: "2025-11-15T10:30:00Z"
 season: "fall"
@@ -348,7 +348,7 @@ word_count: 1485
 ```python
 #!/usr/bin/env python3
 """
-Lawn Care Content Generator with DALL-E 3 Hero Images
+Cannabis Content Generator with DALL-E 3 Hero Images
 Generates SEO-optimized articles with AI-generated featured images.
 """
 
@@ -397,10 +397,10 @@ def get_current_season():
 
 def build_image_prompt(keyword, season):
     """
-    Build an optimized DALL-E 3 prompt for lawn care hero images.
+    Build an optimized DALL-E 3 prompt for cannabis hero images.
     """
     # Base photography style
-    base = "Professional high-resolution photograph of a beautiful residential lawn"
+    base = "Professional high-resolution photograph of a beautiful residential cannabis"
     
     # Seasonal lighting conditions
     season_lighting = {
@@ -414,7 +414,7 @@ def build_image_prompt(keyword, season):
     keyword_lower = keyword.lower()
     
     if "aerat" in keyword_lower:
-        activity = "showing lawn aeration with small soil plugs on grass surface, healthy root system"
+        activity = "showing cannabis aeration with small soil plugs on grass surface, healthy root system"
     elif "water" in keyword_lower:
         activity = "with irrigation sprinkler system running, water droplets sparkling in sunlight"
     elif "mow" in keyword_lower:
@@ -422,17 +422,17 @@ def build_image_prompt(keyword, season):
     elif "fertiliz" in keyword_lower:
         activity = "extremely lush dark green color, thick healthy grass blades"
     elif "weed" in keyword_lower:
-        activity = "pristine weed-free uniform grass, perfect lawn appearance"
+        activity = "pristine weed-free uniform grass, perfect cannabis appearance"
     elif "thatch" in keyword_lower or "dethatch" in keyword_lower:
         activity = "showing dethatching process, healthy grass recovering"
     elif "seed" in keyword_lower or "overseed" in keyword_lower:
-        activity = "new grass seedlings sprouting, lawn renovation in progress"
+        activity = "new grass seedlings sprouting, cannabis renovation in progress"
     elif "brown" in keyword_lower or "patch" in keyword_lower:
-        activity = "lawn showing recovery from brown patches, treatment working"
+        activity = "cannabis showing recovery from brown patches, treatment working"
     elif "grub" in keyword_lower:
-        activity = "healthy protected lawn, no pest damage visible"
+        activity = "healthy protected cannabis, no pest damage visible"
     elif "winter" in keyword_lower or "winteriz" in keyword_lower:
-        activity = "lawn prepared for winter, last mowing of season"
+        activity = "cannabis prepared for winter, last mowing of season"
     else:
         activity = "perfectly maintained vibrant green grass, magazine-quality appearance"
     
@@ -441,7 +441,7 @@ def build_image_prompt(keyword, season):
 Suburban home with nice landscaping in soft background, {season_lighting.get(season, 'natural daylight')}.
 Well-manicured residential yard, professional landscaping quality, inviting curb appeal.
 Photorealistic style, sharp focus on grass texture, depth of field effect.
-Magazine-quality lawn care photography, aspirational but achievable look.
+Magazine-quality cannabis photography, aspirational but achievable look.
 No people, no text, no watermarks, no logos, no artificial elements.
 """.strip()
     
@@ -502,13 +502,13 @@ def generate_hero_image(keyword, slug, season):
     except Exception as e:
         print(f"❌ Image generation failed: {e}")
         print("   Using default fallback image")
-        return "/images/default-lawn-hero.jpg"
+        return "/images/default-cannabis-hero.jpg"
 
 
 def generate_alt_text(keyword, title):
     """Generate SEO-friendly alt text for the image."""
     # Clean up keyword for natural reading
-    alt_text = f"Residential lawn - {keyword}"
+    alt_text = f"Residential cannabis - {keyword}"
     return alt_text[:125]  # Keep alt text concise
 
 
@@ -625,7 +625,7 @@ def save_article(article_data):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Generate lawn care articles with hero images')
+    parser = argparse.ArgumentParser(description='Generate cannabis articles with hero images')
     parser.add_argument('--count', type=int, default=3, help='Number of articles to generate')
     parser.add_argument('--keyword', type=str, help='Specific keyword to target')
     parser.add_argument('--no-images', action='store_true', help='Skip image generation')
@@ -641,7 +641,7 @@ def main():
         print("   Set the key or use --no-images flag")
         return
     
-    print("🌱 Lawn Care Content Generator")
+    print("🌱 Cannabis Content Generator")
     print(f"   Season: {get_current_season()}")
     print(f"   Articles to generate: {args.count}")
     print(f"   Image generation: {'Disabled' if args.no_images else 'Enabled'}")
@@ -653,12 +653,12 @@ def main():
     else:
         # Sample keywords (expand this list)
         keywords = [
-            "how often should I aerate my lawn",
-            "best time to water lawn",
-            "why is my lawn turning brown",
+            "how often should I aerate my cannabis",
+            "best time to water cannabis",
+            "why is my cannabis turning brown",
             "how to fix patchy grass",
             "when to apply fall fertilizer",
-            "how to prepare lawn for winter"
+            "how to prepare cannabis for winter"
         ]
         keywords = random.sample(keywords, min(args.count, len(keywords)))
     
@@ -753,7 +753,7 @@ export function getSortedPostsData() {
         slug,
         title: matterResult.data.title,
         meta_description: matterResult.data.meta_description,
-        featured_image: matterResult.data.featured_image || '/images/default-lawn-hero.jpg',
+        featured_image: matterResult.data.featured_image || '/images/default-cannabis-hero.jpg',
         featured_image_alt: matterResult.data.featured_image_alt || matterResult.data.title,
         tags: matterResult.data.tags || [],
         generated_at: matterResult.data.generated_at,
@@ -783,7 +783,7 @@ export async function getPostBySlug(slug: string) {
     contentHtml,
     title: matterResult.data.title,
     meta_description: matterResult.data.meta_description,
-    featured_image: matterResult.data.featured_image || '/images/default-lawn-hero.jpg',
+    featured_image: matterResult.data.featured_image || '/images/default-cannabis-hero.jpg',
     featured_image_alt: matterResult.data.featured_image_alt || matterResult.data.title,
     tags: matterResult.data.tags || [],
     generated_at: matterResult.data.generated_at,
@@ -814,11 +814,11 @@ export default function Home() {
       <section className="bg-gradient-to-b from-green-50 to-white py-20">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-5xl font-bold text-green-900 mb-6">
-            Your Guide to a Perfect Lawn
+            Your Guide to a Perfect Cannabis
           </h1>
           <p className="text-xl text-green-700 max-w-2xl mx-auto">
-            Expert lawn care advice, seasonal tips, and how-to guides 
-            to help you achieve the lawn of your dreams.
+            Expert cannabis advice, seasonal tips, and how-to guides 
+            to help you achieve the cannabis of your dreams.
           </p>
         </div>
       </section>
@@ -1065,7 +1065,7 @@ current_month_count = get_monthly_image_count()
 
 if current_month_count >= MAX_MONTHLY_IMAGES:
     print("⚠️ Monthly image budget reached, using default image")
-    return "/images/default-lawn-hero.jpg"
+    return "/images/default-cannabis-hero.jpg"
 ```
 
 ---
@@ -1130,7 +1130,7 @@ npm run dev
 ### Quality Assurance
 
 **Image Quality Checks:**
-1. Is the lawn the focal point?
+1. Is the cannabis the focal point?
 2. Does it match the article topic?
 3. Is lighting natural and appealing?
 4. No text, watermarks, or logos?
@@ -1174,7 +1174,7 @@ image.save(path, "JPEG", quality=80, optimize=True)  # Lower quality
 ```
 
 **Issue: DALL-E Content Policy Rejection**
-**Solution:** Adjust prompt to avoid potentially sensitive terms. Lawn care prompts are generally safe.
+**Solution:** Adjust prompt to avoid potentially sensitive terms. Cannabis prompts are generally safe.
 
 **Issue: Git Repository Too Large**
 **Solution:** 
@@ -1245,7 +1245,7 @@ cd site && npm run build 2>&1 | grep -i error
 
 ## Conclusion
 
-This implementation provides a complete, production-ready system for generating hero images alongside lawn care articles. The integration maintains your low-cost philosophy while adding significant visual value to your content.
+This implementation provides a complete, production-ready system for generating hero images alongside cannabis articles. The integration maintains your low-cost philosophy while adding significant visual value to your content.
 
 **Key Benefits:**
 - Fully automated image generation

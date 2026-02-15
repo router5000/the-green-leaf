@@ -1,7 +1,7 @@
 # YouTube Video Integration - Implementation Plan
 
 ## 📋 Overview
-Integrate YouTube video search into the lawncare content engine to automatically find and embed 1-2 relevant YouTube videos in each article.
+Integrate YouTube video search into the cannabiscare content engine to automatically find and embed 1-2 relevant YouTube videos in each article.
 
 **Status:** Planning Complete - Ready for Implementation
 **YouTube API Key:** AIzaSyDGZzc5E1ajHyyyKmH205p-7sx0hIC4iE4
@@ -20,7 +20,7 @@ Integrate YouTube video search into the lawncare content engine to automatically
 - AI evaluation scores each video for relevance (1-10 scale)
 - Only videos scoring 7.0+ are included
 - Falls back gracefully if no relevant videos found
-- Optional: Can restrict to curated lawn care channels only
+- Optional: Can restrict to curated cannabis channels only
 
 ---
 
@@ -240,8 +240,8 @@ Replace the section between line 247 and 253 with:
 
 ### Test 1: Standalone Video Search
 ```bash
-cd /Users/jacobtaylor/Desktop/Lawn\ Care\ Center\ 2025/lawncare-content-engine
-python3 youtube_search.py "best time to fertilize lawn"
+cd /Users/jacobtaylor/Desktop/Cannabis\ Care\ Center\ 2025/cannabiscare-content-engine
+python3 youtube_search.py "best time to fertilize cannabis"
 ```
 
 **Expected Output:**
@@ -252,7 +252,7 @@ python3 youtube_search.py "best time to fertilize lawn"
 
 ### Test 2: Full Article Generation
 ```bash
-python3 content_generator.py --keyword "how to aerate lawn in fall" --count 1
+python3 content_generator.py --keyword "how to aerate cannabis in fall" --count 1
 ```
 
 **Expected Output:**
@@ -293,10 +293,10 @@ npm run dev
 
 ### Curated Channels (Optional Enhancement)
 The youtube_search.py already includes curated channels:
-- The Lawn Care Nut
-- Ryan Knorr Lawn Care
+- The Cannabis Nut
+- Ryan Knorr Cannabis
 - How To With Doc
-- Lawn Tips
+- Cannabis Tips
 - Silver Cymbal
 
 **To use curated only:** Change `use_curated_only=False` to `use_curated_only=True` in content_generator.py
@@ -350,7 +350,7 @@ git push origin main
 3. **Vercel auto-deploys** within 60 seconds
 
 4. **Verify on production:**
-   - Visit lawncare.center
+   - Visit thegreenleaf.com
    - Check a few articles for video embeds
    - Test responsive behavior on mobile
 
@@ -376,7 +376,7 @@ git push origin main
 2. **Better learning** - Visual demonstrations complement written guides
 3. **SEO boost** - Rich media signals to search engines
 4. **Authority** - Curated professional content from trusted channels
-5. **User trust** - Videos from established lawn care experts
+5. **User trust** - Videos from established cannabis experts
 
 ---
 
@@ -405,7 +405,7 @@ git push origin main
 - [ ] Commit all changes
 - [ ] Push to GitHub
 - [ ] Verify Vercel deployment succeeds
-- [ ] Test on production (lawncare.center)
+- [ ] Test on production (thegreenleaf.com)
 - [ ] Generate 2-3 new articles with videos
 - [ ] Confirm videos display correctly
 
@@ -455,7 +455,7 @@ git push origin main
 ## ✨ Future Enhancements (Optional)
 
 1. **Video caching** - Cache search results to reduce API calls
-2. **More channels** - Expand CURATED_CHANNELS list with more lawn care YouTubers
+2. **More channels** - Expand CURATED_CHANNELS list with more cannabis YouTubers
 3. **Video thumbnails** - Display custom thumbnails instead of immediate embed
 4. **User preferences** - Let users toggle video auto-play
 5. **Video analytics** - Track which videos get most engagement

@@ -53,27 +53,27 @@ function YouTubeEmbed({
 
       {/* Collapsible Video Insights */}
       {hasInsights && (
-        <details className="mt-4 bg-grass-50 rounded-lg border border-grass-200">
-          <summary className="px-4 py-3 cursor-pointer text-grass-800 font-medium hover:bg-grass-100 rounded-lg transition-colors">
+        <details className="mt-4 bg-leaf-50 rounded-lg border border-leaf-200">
+          <summary className="px-4 py-3 cursor-pointer text-leaf-800 font-medium hover:bg-leaf-100 rounded-lg transition-colors">
             📝 Video Highlights & Key Takeaways
           </summary>
           <div className="px-4 pb-4 pt-2 space-y-4">
             {/* Quote */}
             {insights.best_quote && (
-              <blockquote className="border-l-4 border-grass-400 pl-4 italic text-gray-700">
+              <blockquote className="border-l-4 border-leaf-400 pl-4 italic text-gray-700">
                 "{insights.best_quote}"
-                <footer className="text-sm text-grass-600 mt-1 not-italic">— {channel}</footer>
+                <footer className="text-sm text-leaf-600 mt-1 not-italic">— {channel}</footer>
               </blockquote>
             )}
 
             {/* Key Points */}
             {insights.key_points && insights.key_points.length > 0 && (
               <div>
-                <h4 className="font-semibold text-grass-800 mb-2">Key Points:</h4>
+                <h4 className="font-semibold text-leaf-800 mb-2">Key Points:</h4>
                 <ul className="space-y-1">
                   {insights.key_points.slice(0, 4).map((point, idx) => (
                     <li key={idx} className="flex items-start gap-2 text-gray-700">
-                      <span className="text-grass-500 mt-1">•</span>
+                      <span className="text-leaf-500 mt-1">•</span>
                       <span>{point}</span>
                     </li>
                   ))}
@@ -84,7 +84,7 @@ function YouTubeEmbed({
             {/* Pro Tips */}
             {insights.pro_tips && insights.pro_tips.length > 0 && (
               <div>
-                <h4 className="font-semibold text-grass-800 mb-2">Pro Tips:</h4>
+                <h4 className="font-semibold text-leaf-800 mb-2">Pro Tips:</h4>
                 <ul className="space-y-1">
                   {insights.pro_tips.slice(0, 3).map((tip, idx) => (
                     <li key={idx} className="flex items-start gap-2 text-gray-700">
@@ -113,21 +113,21 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params
   try {
     const post = await getPostData(slug)
-    const baseUrl = 'https://lawncare.center'
+    const baseUrl = 'https://thegreenleaf.com'
     const imageUrl = post.featured_image
       ? `${baseUrl}${post.featured_image}`
-      : `${baseUrl}/images/default-lawn-hero.jpg`
+      : `${baseUrl}/images/default-leaf-hero.jpg`
 
     return {
-      title: `${post.title} - Lawn Care Center`,
+      title: `${post.title} - The Green Leaf`,
       description: post.meta_description,
       keywords: post.tags?.join(', '),
-      authors: [{ name: 'Lawn Care Center' }],
+      authors: [{ name: 'The Green Leaf' }],
       openGraph: {
         title: post.title,
         description: post.meta_description,
         url: `${baseUrl}/articles/${slug}`,
-        siteName: 'Lawn Care Center',
+        siteName: 'The Green Leaf',
         images: [
           {
             url: imageUrl,
@@ -139,7 +139,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         locale: 'en_US',
         type: 'article',
         publishedTime: post.generated_at,
-        authors: ['Lawn Care Center'],
+        authors: ['The Green Leaf'],
         tags: post.tags,
       },
       twitter: {
@@ -154,7 +154,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     }
   } catch {
     return {
-      title: 'Article Not Found - Lawn Care Center',
+      title: 'Article Not Found - The Green Leaf',
     }
   }
 }
@@ -173,9 +173,9 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   const relatedPosts = getRelatedPosts(slug, 3)
 
   // Enhanced JSON-LD structured data for AI crawlers
-  const baseUrl = 'https://lawncare.center'
+  const baseUrl = 'https://thegreenleaf.com'
   const articleUrl = `${baseUrl}/articles/${slug}`
-  const imageUrl = post.featured_image ? `${baseUrl}${post.featured_image}` : `${baseUrl}/images/default-lawn-hero.jpg`
+  const imageUrl = post.featured_image ? `${baseUrl}${post.featured_image}` : `${baseUrl}/images/default-leaf-hero.jpg`
 
   // Main Article Schema
   const articleSchema = {
@@ -196,7 +196,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     dateModified: post.last_updated || post.generated_at,
     author: {
       '@type': 'Organization',
-      name: 'Lawn Care Center',
+      name: 'The Green Leaf',
       url: baseUrl,
       logo: {
         '@type': 'ImageObject',
@@ -205,7 +205,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     },
     publisher: {
       '@type': 'Organization',
-      name: 'Lawn Care Center',
+      name: 'The Green Leaf',
       url: baseUrl,
       logo: {
         '@type': 'ImageObject',
@@ -217,10 +217,10 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       '@id': articleUrl,
     },
     keywords: post.tags?.join(', '),
-    articleSection: post.category || 'Lawn Care',
+    articleSection: post.category || 'Cannabis',
     about: {
       '@type': 'Thing',
-      name: post.keyword || 'lawn care',
+      name: post.keyword || 'cannabis',
     },
     inLanguage: 'en-US',
     isAccessibleForFree: true,
@@ -228,7 +228,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       '@type': 'WebSite',
       '@id': `${baseUrl}/#website`,
       url: baseUrl,
-      name: 'Lawn Care Center',
+      name: 'The Green Leaf',
     },
     wordCount: post.word_count,
     timeRequired: post.estimated_read_time,
@@ -434,7 +434,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             )}
 
             {/* Share Buttons */}
-            <ShareButtons url={`https://lawncare.center/articles/${slug}`} title={post.title} />
+            <ShareButtons url={`https://thegreenleaf.com/articles/${slug}`} title={post.title} />
 
             {/* Related Articles - Staggered reveal */}
             <AnimatedRelatedArticles posts={relatedPosts} />

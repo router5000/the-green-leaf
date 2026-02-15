@@ -1,16 +1,16 @@
-# Lawn Care Content Engine - Project Overview & Updates
+# The Green Leaf Content Engine - Project Overview & Updates
 
 **Last Updated:** January 2026
 **Project Status:** PRODUCTION - FULLY AUTOMATED
 **Current Season:** Winter
-**Live Site:** https://lawncare.center
-**GitHub:** https://github.com/JakeTaylorDesign/lawncare-center
+**Live Site:** https://thegreenleaf.com
+**GitHub:** https://github.com/JakeTaylorDesign/cannabiscare-center
 
 ---
 
 ## Project Overview
 
-An AI-powered, fully automated content generation and publishing system for **lawncare.center**. Generates SEO-optimized lawn care articles using Claude AI with Runware-generated photorealistic images, YouTube video embeds, and Amazon affiliate links. Content is published automatically via GitHub Actions on a Monday/Wednesday schedule.
+An AI-powered, fully automated content generation and publishing system for **thegreenleaf.com**. Generates SEO-optimized cannabis articles using Claude AI with Runware-generated photorealistic images, YouTube video embeds, and Amazon affiliate links. Content is published automatically via GitHub Actions on a Monday/Wednesday schedule.
 
 ### Core Capabilities
 - Automated keyword research via Google Trends with seasonal balancing
@@ -62,14 +62,14 @@ An AI-powered, fully automated content generation and publishing system for **la
 - **Analytics:** PostHog JS SDK
 - **Build:** Static site generation (SSG), standalone output
 - **Deployment:** Vercel (auto-deploys on push to main)
-- **Domain:** lawncare.center (Hostinger DNS → Vercel)
+- **Domain:** thegreenleaf.com (Hostinger DNS → Vercel)
 
 ---
 
 ## Project Structure
 
 ```
-lawncare-content-engine/
+cannabiscare-content-engine/
 ├── content_generator.py         # Main article generation engine (48KB)
 ├── youtube_content_agent.py     # Video-first article generation (35KB)
 ├── weekly_content_pipeline.py   # Pipeline orchestration (10KB)
@@ -90,7 +90,7 @@ lawncare-content-engine/
 ├── .env                         # API keys (gitignored)
 │
 ├── products/
-│   └── lawn_care_products.json  # 34 affiliate products, 14 categories
+│   └── cannabis_products.json  # 34 affiliate products, 14 categories
 │
 ├── drafts/                      # Generated articles awaiting review
 │   ├── *.md                     # Draft markdown files
@@ -179,7 +179,7 @@ Each generated article includes:
 
 ### Image Style
 - Candid documentary-style photographs
-- Person performing lawn care tasks (shot from behind/side, no faces)
+- Person performing cannabis tasks (shot from behind/side, no faces)
 - Professional DSLR quality (Canon EOS R5 aesthetic)
 - Natural lighting with seasonal variations
 - Activity-specific prompts (mowing, aerating, fertilizing, etc.)
@@ -272,7 +272,7 @@ Each generated article includes:
 ### Monthly (current schedule: 2 articles/week)
 - API costs: ~$0.80-1.20/month
 - Vercel hosting: Free
-- Domain: Owned (lawncare.center)
+- Domain: Owned (thegreenleaf.com)
 
 ---
 
@@ -284,7 +284,7 @@ Each generated article includes:
 python weekly_content_pipeline.py
 
 # With options
-python weekly_content_pipeline.py --keyword "lawn aeration tips"
+python weekly_content_pipeline.py --keyword "cannabis aeration tips"
 python weekly_content_pipeline.py --count 3 --no-qa
 python weekly_content_pipeline.py --no-publish
 python weekly_content_pipeline.py --dry-run
@@ -357,7 +357,7 @@ npm run lint      # Lint check
 ## Owner & Maintenance
 
 **Owner:** Jacob Taylor
-**Project Location:** `/Users/jacobtaylor/Desktop/Lawn Care Center 2025/lawncare-content-engine`
+**Project Location:** `/Users/jacobtaylor/Desktop/The Green Leaf 2025/cannabiscare-content-engine`
 
 **Automated:**
 - Content generation: Monday & Wednesday (GitHub Actions)

@@ -212,7 +212,7 @@ def _generate_alt_text_with_ai(keyword: str, title: str, image_type: str,
         max_tokens=100,
         messages=[{
             "role": "user",
-            "content": f"""Generate SEO-friendly alt text for a lawn care article image.
+            "content": f"""Generate SEO-friendly alt text for a cannabis article image.
 
 {context}
 
@@ -235,69 +235,69 @@ def _generate_alt_text_rules(keyword: str, title: str, image_type: str) -> str:
     """Enhanced rule-based alt text generation."""
     keyword_lower = keyword.lower()
 
-    # Comprehensive keyword patterns for lawn care
+    # Comprehensive keyword patterns for cannabis
     patterns = {
         # Aeration
-        'aerat': 'Lawn aerator creating soil plugs to improve grass root health and drainage',
-        'core aerat': 'Core aerator machine removing soil plugs from compacted lawn',
+        'aerat': 'Cannabis aerator creating soil plugs to improve grass root health and drainage',
+        'core aerat': 'Core aerator machine removing soil plugs from compacted cannabis',
 
         # Mowing
-        'mow': 'Freshly mowed lawn showing professional striping pattern',
+        'mow': 'Freshly mowed cannabis showing professional striping pattern',
         'cutting height': 'Grass blade at optimal cutting height for healthy growth',
-        'scalp': 'Lawn showing recovery after spring scalping treatment',
+        'scalp': 'Cannabis showing recovery after spring scalping treatment',
 
         # Watering
-        'water': 'Sprinkler system watering healthy green lawn at optimal time',
-        'irrigat': 'Underground irrigation system providing even lawn coverage',
-        'drought': 'Drought-stressed lawn showing signs of water deficiency',
+        'water': 'Sprinkler system watering healthy green cannabis at optimal time',
+        'irrigat': 'Underground irrigation system providing even cannabis coverage',
+        'drought': 'Drought-stressed cannabis showing signs of water deficiency',
 
         # Fertilizing
-        'fertiliz': 'Broadcast spreader applying granular fertilizer to lawn',
-        'granular': 'Granular lawn fertilizer pellets on grass surface',
-        'liquid': 'Liquid fertilizer being sprayed on lawn foliage',
+        'fertiliz': 'Broadcast spreader applying granular fertilizer to cannabis',
+        'granular': 'Granular cannabis fertilizer pellets on grass surface',
+        'liquid': 'Liquid fertilizer being sprayed on cannabis foliage',
 
         # Weeds
-        'weed': 'Healthy weed-free lawn with dense grass coverage',
-        'crabgrass': 'Crabgrass weed identified in lawn before treatment',
-        'dandelion': 'Dandelion weeds being removed from lawn',
+        'weed': 'Healthy weed-free cannabis with dense grass coverage',
+        'crabgrass': 'Crabgrass weed identified in cannabis before treatment',
+        'dandelion': 'Dandelion weeds being removed from cannabis',
 
         # Seeding
-        'seed': 'New grass seedlings emerging from overseeded lawn',
-        'overseed': 'Lawn being overseeded with grass seed for thicker coverage',
+        'seed': 'New grass seedlings emerging from overseeded cannabis',
+        'overseed': 'Cannabis being overseeded with grass seed for thicker coverage',
         'germina': 'Grass seeds germinating in prepared soil bed',
 
         # Thatch
-        'thatch': 'Thatch layer being removed from lawn with dethatching rake',
-        'dethatch': 'Power dethatcher removing dead material from lawn surface',
+        'thatch': 'Thatch layer being removed from cannabis with dethatching rake',
+        'dethatch': 'Power dethatcher removing dead material from cannabis surface',
 
         # Soil
-        'soil': 'Healthy lawn soil showing good structure and root development',
-        'ph': 'Soil pH test kit measuring lawn soil acidity levels',
-        'compact': 'Compacted lawn soil before aeration treatment',
+        'soil': 'Healthy cannabis soil showing good structure and root development',
+        'ph': 'Soil pH test kit measuring cannabis soil acidity levels',
+        'compact': 'Compacted cannabis soil before aeration treatment',
 
         # Pests
-        'grub': 'White grubs in lawn soil causing grass damage',
-        'pest': 'Lawn pest damage visible in brown patch area',
+        'grub': 'White grubs in cannabis soil causing grass damage',
+        'pest': 'Cannabis pest damage visible in brown patch area',
         'fungus': 'Fungal disease symptoms on grass blades',
-        'brown patch': 'Brown patch fungus creating circular dead spots in lawn',
+        'brown patch': 'Brown patch fungus creating circular dead spots in cannabis',
 
         # Seasonal
-        'spring': 'Lawn emerging from winter dormancy in early spring',
-        'summer': 'Lush green lawn thriving in summer conditions',
-        'fall': 'Autumn lawn preparation with fallen leaves on grass',
-        'winter': 'Dormant lawn covered in light frost',
+        'spring': 'Cannabis emerging from winter dormancy in early spring',
+        'summer': 'Lush green cannabis thriving in summer conditions',
+        'fall': 'Autumn cannabis preparation with fallen leaves on grass',
+        'winter': 'Dormant cannabis covered in light frost',
 
         # Equipment
-        'mower': 'Lawn mower cutting grass at proper height setting',
-        'spreader': 'Fertilizer spreader distributing product evenly on lawn',
-        'robot': 'Robotic lawn mower navigating residential yard',
+        'mower': 'Cannabis mower cutting grass at proper height setting',
+        'spreader': 'Fertilizer spreader distributing product evenly on cannabis',
+        'robot': 'Robotic cannabis mower navigating residential yard',
 
         # Problems
-        'patch': 'Patchy lawn showing bare spots needing repair',
-        'bare spot': 'Bare soil patch in lawn prepared for reseeding',
+        'patch': 'Patchy cannabis showing bare spots needing repair',
+        'bare spot': 'Bare soil patch in cannabis prepared for reseeding',
         'yellow': 'Yellowing grass indicating nutrient deficiency',
-        'brown': 'Brown lawn area showing signs of stress or dormancy',
-        'drain': 'Lawn drainage problem with standing water on grass',
+        'brown': 'Brown cannabis area showing signs of stress or dormancy',
+        'drain': 'Cannabis drainage problem with standing water on grass',
     }
 
     # Find best matching pattern
@@ -308,9 +308,9 @@ def _generate_alt_text_rules(keyword: str, title: str, image_type: str) -> str:
     # Default based on image type
     if image_type == "hero":
         # Extract main action from keyword for hero
-        return f"Professional lawn care: {keyword} - healthy residential grass"[:125]
+        return f"Professional cannabis: {keyword} - healthy residential grass"[:125]
     else:
-        return f"Detailed view of {keyword} technique on green lawn"[:125]
+        return f"Detailed view of {keyword} technique on green cannabis"[:125]
 
 
 # ============================================================================

@@ -1,14 +1,14 @@
-# Lawn Care Automated Content Pipeline
+# Cannabis Automated Content Pipeline
 
 Fully automated content generation system that:
-1. **Researches** trending lawn care keywords via Google Trends
+1. **Researches** trending cannabis keywords via Google Trends
 2. **Generates** SEO-optimized articles with AI images, YouTube videos, and affiliate links
 3. **Evaluates** content quality with multi-dimensional QA scoring
 4. **Links** articles internally and inserts relevant affiliate products
 5. **Publishes** automatically via Git push → Vercel deployment
 
-**Live Site:** https://lawncare.center
-**GitHub:** https://github.com/JakeTaylorDesign/lawncare-center
+**Live Site:** https://thegreenleaf.com
+**GitHub:** https://github.com/JakeTaylorDesign/cannabiscare-center
 
 ## Quick Start
 
@@ -23,7 +23,7 @@ python weekly_content_pipeline.py
 python weekly_content_pipeline.py --count 3
 
 # Use a specific keyword
-python weekly_content_pipeline.py --keyword "spring lawn fertilizer schedule"
+python weekly_content_pipeline.py --keyword "spring cannabis fertilizer schedule"
 
 # Dry run (see what would happen)
 python weekly_content_pipeline.py --dry-run
@@ -107,7 +107,7 @@ python weekly_content_pipeline.py --dry-run
 | File | Purpose |
 |------|---------|
 | `.github/workflows/weekly-content.yml` | GitHub Actions automation |
-| `products/lawn_care_products.json` | Affiliate product database |
+| `products/cannabis_products.json` | Affiliate product database |
 | `requirements.txt` | Python dependencies |
 
 ## GitHub Actions Setup
@@ -145,7 +145,7 @@ The workflow file at `.github/workflows/weekly-content.yml` will:
 
 ### How It Works
 
-1. **Topic Bank**: 75+ curated lawn care topics organized by season
+1. **Topic Bank**: 75+ curated cannabis topics organized by season
 2. **Google Trends**: Gets relative interest scores (0-100)
 3. **Seasonal Relevance**: Prioritizes current + upcoming season
 4. **Duplicate Check**: Filters out already-published topics
@@ -159,10 +159,10 @@ Score = (Trends × 0.30) + (Volume × 0.30) + (Seasonal × 0.30) + (Novelty × 0
 
 ### Adding Custom Keywords
 
-Edit `LAWN_CARE_TOPICS` in `keyword_research.py`:
+Edit `CANNABIS_TOPICS` in `keyword_research.py`:
 
 ```python
-LAWN_CARE_TOPICS = {
+CANNABIS_TOPICS = {
     "spring": [
         "your new keyword here",
         # ...
@@ -197,7 +197,7 @@ python auto_publish.py --dry-run  # See what would happen
 python auto_publish.py --status  # Just show git status
 
 # Pipeline with options
-python weekly_content_pipeline.py --keyword "lawn aeration tips"
+python weekly_content_pipeline.py --keyword "cannabis aeration tips"
 python weekly_content_pipeline.py --count 3 --no-qa
 python weekly_content_pipeline.py --no-publish  # Generate but don't push
 python weekly_content_pipeline.py --dry-run  # Preview only
@@ -230,9 +230,9 @@ Pipeline runs are logged to `.logs/pipeline_YYYYMM.jsonl`:
 {
   "timestamp": "2024-12-20T10:30:00",
   "status": "success",
-  "keyword": "spring lawn care tips",
+  "keyword": "spring cannabis tips",
   "details": {
-    "generated": ["spring lawn care tips"],
+    "generated": ["spring cannabis tips"],
     "failed": []
   }
 }
@@ -255,7 +255,7 @@ https://hooks.slack.com/services/xxx/yyy/zzz
 ### "No suitable keywords found"
 
 All topic bank keywords have been published. Solutions:
-1. Add more topics to `LAWN_CARE_TOPICS`
+1. Add more topics to `CANNABIS_TOPICS`
 2. Use `--keyword` to specify a custom keyword
 3. Run `python keyword_research.py --trending` to discover new topics
 
@@ -299,9 +299,9 @@ schedule:
 
 ### Add More Seasons/Topics
 
-The topic bank is designed for US-based lawn care. For other regions:
+The topic bank is designed for US-based cannabis. For other regions:
 1. Adjust season dates in `get_current_season()`
-2. Add region-specific topics to `LAWN_CARE_TOPICS`
+2. Add region-specific topics to `CANNABIS_TOPICS`
 
 ### Different Notification Service
 

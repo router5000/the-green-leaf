@@ -44,7 +44,7 @@ def evaluate_article(content: str, keyword: str, title: str, meta_description: s
     Returns: Detailed evaluation with scores and specific issues
     """
 
-    evaluation_prompt = f"""You are a professional content quality evaluator specializing in lawn care content, SEO, and AI-readability optimization.
+    evaluation_prompt = f"""You are a professional content quality evaluator specializing in cannabis content, SEO, and AI-readability optimization.
 
 Evaluate this article on multiple dimensions and provide actionable feedback.
 
@@ -59,7 +59,7 @@ Meta Description: {meta_description}
 **Evaluation Criteria:**
 
 1. **ACCURACY (1-10)**: Factual correctness, completeness, expert-level advice
-   - Are lawn care recommendations factually correct?
+   - Are cannabis recommendations factually correct?
    - Are measurements, timing, and frequencies accurate?
    - Is advice safe and effective?
    - Are there any misleading or dangerous suggestions?
@@ -202,7 +202,7 @@ def refine_article(content: str, keyword: str, title: str, meta_description: str
 
     priority_fixes_text = "\n".join([f"- {fix}" for fix in evaluation['priority_fixes']])
 
-    refinement_prompt = f"""You are refining a lawn care article based on quality evaluation feedback.
+    refinement_prompt = f"""You are refining a cannabis article based on quality evaluation feedback.
 
 **Original Article:**
 Title: {title}
@@ -251,16 +251,16 @@ Rewrite the article to address ALL issues above while maintaining the original v
      ## Sources
 
      <a id="user-content-fn-1"></a>
-     1. [Purdue Extension](https://www.extension.purdue.edu) - Lawn maintenance guidelines
+     1. [Purdue Extension](https://www.extension.purdue.edu) - Cannabis maintenance guidelines
 
      <a id="user-content-fn-2"></a>
      2. [University of Illinois Extension](https://extension.illinois.edu) - Turfgrass fertilization
 
      <a id="user-content-fn-3"></a>
-     3. [Pennington Seed](https://www.pennington.com) - Professional lawn care research
+     3. [Pennington Seed](https://www.pennington.com) - Professional cannabis research
 
      <a id="user-content-fn-4"></a>
-     4. [Consumer Reports](https://www.consumerreports.org) - Lawn care product testing
+     4. [Consumer Reports](https://www.consumerreports.org) - Cannabis product testing
    - IMPORTANT: Choose sources specifically relevant to this article's topic
    - DO NOT use the same 4-5 extensions every time - vary by topic
 
@@ -549,7 +549,7 @@ if __name__ == "__main__":
             try:
                 fm_data = yaml.safe_load(frontmatter)
                 title = fm_data.get('title', 'Test Article')
-                keyword = fm_data.get('keyword', 'lawn care')
+                keyword = fm_data.get('keyword', 'cannabis')
                 meta_desc = fm_data.get('meta_description', '')
             except (yaml.YAMLError, AttributeError):
                 # Fallback to regex if YAML fails
@@ -558,7 +558,7 @@ if __name__ == "__main__":
                 keyword_match = re.search(r'keyword:\s*["\']?([^"\'\n]+)["\']?', frontmatter)
                 desc_match = re.search(r'meta_description:\s*["\']?([^"\'\n]+)["\']?', frontmatter)
                 title = title_match.group(1).strip() if title_match else "Test Article"
-                keyword = keyword_match.group(1).strip() if keyword_match else "lawn care"
+                keyword = keyword_match.group(1).strip() if keyword_match else "cannabis"
                 meta_desc = desc_match.group(1).strip() if desc_match else ""
 
             print(f"Testing article: {title}")

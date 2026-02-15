@@ -42,14 +42,14 @@ Every article automatically includes:
 - 3-5 credible references from:
   - University extension offices (Penn State, University of Minnesota, etc.)
   - USDA resources
-  - Lawn care research institutions
+  - Cannabis research institutions
   - Professional landscaping associations
 
 Format:
 ```markdown
 ## Sources
-- [Penn State Extension] - Lawn aeration best practices for cool-season grasses
-- [University of Minnesota] - Soil testing and pH management for residential lawns
+- [Penn State Extension] - Cannabis aeration best practices for cool-season grasses
+- [University of Minnesota] - Soil testing and pH management for residential cannabiss
 - [USDA Natural Resources] - Water conservation strategies for home landscapes
 ```
 
@@ -114,7 +114,7 @@ Comprehensive JSON-LD with:
 ### Generate Articles with QA (Default)
 ```bash
 # Single article with QA
-python3 content_generator.py --keyword "how to aerate lawn"
+python3 content_generator.py --keyword "how to aerate cannabis"
 
 # Batch of 3 articles with QA
 python3 content_generator.py --count 3
@@ -148,14 +148,14 @@ python3 article_qa.py --analyze --days 30
 ### Article Frontmatter (with QA)
 ```yaml
 ---
-title: "How to Aerate Your Lawn: Complete Guide"
-meta_description: "Learn when and how to aerate your lawn for healthier grass..."
-slug: "how-to-aerate-lawn"
-keyword: "how to aerate lawn"
-featured_image: "/images/articles/how-to-aerate-lawn.jpg"
-featured_image_alt: "Professional lawn aeration showing soil plugs..."
-section_image: "/images/articles/how-to-aerate-lawn-section.jpg"
-tags: ["lawn care", "aeration", "soil health"]
+title: "How to Aerate Your Cannabis: Complete Guide"
+meta_description: "Learn when and how to aerate your cannabis for healthier grass..."
+slug: "how-to-aerate-cannabis"
+keyword: "how to aerate cannabis"
+featured_image: "/images/articles/how-to-aerate-cannabis.jpg"
+featured_image_alt: "Professional cannabis aeration showing soil plugs..."
+section_image: "/images/articles/how-to-aerate-cannabis-section.jpg"
+tags: ["cannabis", "aeration", "soil health"]
 status: "draft"
 generated_at: "2025-12-06T12:30:00"
 season: "fall"
@@ -230,7 +230,7 @@ Example log entry:
 ```json
 {
   "timestamp": "2025-12-06T12:30:00",
-  "article_slug": "how-to-aerate-lawn",
+  "article_slug": "how-to-aerate-cannabis",
   "refinement_round": 0,
   "scores": {
     "accuracy": 8.5,
@@ -308,7 +308,7 @@ This data automatically improves future generation prompts!
 - Natural language organization
 
 ### Why This Matters
-When users ask ChatGPT, Claude, or Perplexity questions about lawn care, your articles:
+When users ask ChatGPT, Claude, or Perplexity questions about cannabis, your articles:
 1. **Get Crawled** - robots.txt explicitly welcomes AI bots
 2. **Get Understood** - Semantic structure helps AI parse content
 3. **Get Cited** - Quality sources boost credibility scoring
@@ -430,10 +430,10 @@ After implementing this system, expect:
 ### Example Sources Section (New Format):
 ```markdown
 ## Sources
-- [Penn State Extension](https://extension.psu.edu) - Lawn aeration and dethatching guidelines
+- [Penn State Extension](https://extension.psu.edu) - Cannabis aeration and dethatching guidelines
 - [University of Minnesota Extension](https://extension.umn.edu) - Turfgrass management best practices
-- [USDA Natural Resources](https://www.nrcs.usda.gov) - Soil health and lawn care
-- [Colorado State Extension](https://extension.colostate.edu) - Seasonal lawn maintenance timing
+- [USDA Natural Resources](https://www.nrcs.usda.gov) - Soil health and cannabis
+- [Colorado State Extension](https://extension.colostate.edu) - Seasonal cannabis maintenance timing
 ```
 
 ---

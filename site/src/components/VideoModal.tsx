@@ -109,7 +109,7 @@ export default function VideoModal({ video, articleSlug, articleTitle, onClose }
             <span className="text-gray-300">|</span>
             <Link
               href={`/articles/${articleSlug}`}
-              className="text-grass-600 hover:text-grass-700 font-medium hover:underline"
+              className="text-leaf-600 hover:text-leaf-700 font-medium hover:underline"
               onClick={onClose}
             >
               View full article: {articleTitle}
@@ -125,7 +125,7 @@ export default function VideoModal({ video, articleSlug, articleTitle, onClose }
 
               {/* Best Quote */}
               {video.insights?.best_quote && (
-                <blockquote className="bg-grass-50 border-l-4 border-grass-500 px-4 py-3 rounded-r-lg">
+                <blockquote className="bg-leaf-50 border-l-4 border-leaf-500 px-4 py-3 rounded-r-lg">
                   <p className="text-gray-700 italic">
                     "{video.insights.best_quote}"
                   </p>
@@ -141,7 +141,7 @@ export default function VideoModal({ video, articleSlug, articleTitle, onClose }
                   <ul className="space-y-2">
                     {video.insights.key_points.slice(0, 4).map((point, i) => (
                       <li key={i} className="flex gap-2 text-gray-700">
-                        <span className="text-grass-600 mt-1">•</span>
+                        <span className="text-leaf-600 mt-1">•</span>
                         <span>{point}</span>
                       </li>
                     ))}

@@ -1,12 +1,12 @@
-# Lawn Care Content Engine
+# The Green Leaf Content Engine
 
-Automated content generation for [lawncare.center](https://lawncare.center).
+Automated content generation for [thegreenleaf.com](https://thegreenleaf.com).
 
 ## Quick Start
 
 ```bash
 pip install -r requirements.txt
-python content_generator.py --keyword "spring lawn care tips"
+python content_generator.py --keyword "spring cannabis tips"
 ```
 
 ## Documentation

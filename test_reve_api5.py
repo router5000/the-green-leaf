@@ -17,15 +17,15 @@ endpoint = "https://api.reve.com/v1/image/create"
 # Try different payload structures
 payloads = [
     {
-        "prompt": "A beautiful lawn",
+        "prompt": "A beautiful cannabis",
         "aspect_ratio": "16:9"
     },
     {
-        "prompt": "A beautiful lawn",
+        "prompt": "A beautiful cannabis",
         "aspectRatio": "16:9"
     },
     {
-        "prompt": "A beautiful lawn"
+        "prompt": "A beautiful cannabis"
     }
 ]
 

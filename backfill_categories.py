@@ -21,16 +21,16 @@ CLUSTERS = [
         "tags": ["weed control", "pre-emergent", "post-emergent", "crabgrass"],
     },
     {
-        "id": "lawn-problems",
-        "category": "Lawn Problems & Solutions",
+        "id": "cannabis-problems",
+        "category": "Cannabis Problems & Solutions",
         "title_keywords": ["problem", "disease", "fungus", "fungicide", "yellow", "dead spot", "brown spot", "bumpy", "patchy", "bare spot", "not growing"],
-        "tags": ["lawn problems", "disease prevention", "fungicide", "lawn diseases", "dead grass"],
+        "tags": ["cannabis problems", "disease prevention", "fungicide", "cannabis diseases", "dead grass"],
     },
     {
         "id": "equipment",
         "category": "Equipment & Techniques",
         "title_keywords": ["mow", "trimmer", "mower", "robot mow", "string trimmer", "equipment", "scalp"],
-        "tags": ["lawn mowing", "mowing tips"],
+        "tags": ["cannabis mowing", "mowing tips"],
     },
     {
         "id": "grass-types",
@@ -42,18 +42,18 @@ CLUSTERS = [
         "id": "seasonal-care",
         "category": "Seasonal Care",
         "title_keywords": ["spring", "summer", "fall", "winter", "winterize", "preparation", "seasonal"],
-        "tags": ["spring lawn care", "fall lawn care", "winter lawn care", "seasonal lawn care"],
+        "tags": ["spring cannabis", "fall cannabis", "winter cannabis", "seasonal cannabis"],
     },
     {
-        "id": "lawn-health",
-        "category": "Lawn Health & Maintenance",
+        "id": "cannabis-health",
+        "category": "Cannabis Health & Maintenance",
         "title_keywords": ["fertiliz", "aerat", "dethatch", "water", "level", "green"],
-        "tags": ["fertilizing", "lawn aeration", "dethatching", "lawn watering", "soil health", "soil compaction"],
+        "tags": ["fertilizing", "cannabis aeration", "dethatching", "cannabis watering", "soil health", "soil compaction"],
     },
 ]
 
 # Tags too generic to use for matching
-GENERIC_TAGS = {"lawn care", "seasonal", "grass care", "yard work"}
+GENERIC_TAGS = {"cannabis", "seasonal", "grass care", "yard work"}
 
 
 def match_category(title: str, keyword: str, tags: list[str]) -> str:
@@ -63,7 +63,7 @@ def match_category(title: str, keyword: str, tags: list[str]) -> str:
     meaningful_tags = [t.lower() for t in tags if t.lower() not in GENERIC_TAGS]
 
     best_score = 0
-    best_category = "Lawn Health & Maintenance"  # default fallback
+    best_category = "Cannabis Health & Maintenance"  # default fallback
 
     for cluster in CLUSTERS:
         score = 0

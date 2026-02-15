@@ -1,4 +1,5 @@
-# robots.txt for lawncare.center
+# robots.txt for thegreenleaf.com
+# Cannabis education content site
 # Optimized for both traditional search engines and AI crawlers
 
 # Default rules for all bots
@@ -9,9 +10,9 @@ Disallow: /_next/
 Disallow: /admin/
 
 # Sitemap locations
-Sitemap: https://lawncare.center/sitemap.xml
-Sitemap: https://lawncare.center/image-sitemap.xml
-Sitemap: https://lawncare.center/video-sitemap.xml
+Sitemap: https://thegreenleaf.com/sitemap.xml
+Sitemap: https://thegreenleaf.com/image-sitemap.xml
+Sitemap: https://thegreenleaf.com/video-sitemap.xml
 
 # AI Crawlers - Explicitly allow and welcome
 # ChatGPT (OpenAI)

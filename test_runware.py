@@ -17,15 +17,15 @@ RUNWARE_API_KEY = "aSGjkn0N1yQ019hlPP62INlzuwryN1vA"
 RUNWARE_ENDPOINT = "https://api.runware.ai/v1"
 
 def test_runware_image_generation():
-    """Test Runware API with a sample lawn care prompt"""
+    """Test Runware API with a sample cannabis prompt"""
 
     print("🧪 Testing Runware API Integration")
     print(f"Endpoint: {RUNWARE_ENDPOINT}")
     print(f"API Key: {RUNWARE_API_KEY[:10]}...")
     print()
 
-    # Sample candid lawn care prompt (mowing example)
-    test_prompt = """Candid documentary-style photograph of person performing lawn care, Candid action shot of person pushing walk-behind lawn mower across yard, photographed from behind or side angle (face not visible), wearing casual outdoor clothes, fresh mowing stripes visible behind them, mid-stride natural movement.
+    # Sample candid cannabis prompt (mowing example)
+    test_prompt = """Candid documentary-style photograph of person performing cannabis, Candid action shot of person pushing walk-behind cannabis mower across yard, photographed from behind or side angle (face not visible), wearing casual outdoor clothes, fresh mowing stripes visible behind them, mid-stride natural movement.
 
 Shot with professional DSLR camera, Canon EOS R5 with 24-70mm f/2.8 lens, candid documentary photography style. Wide environmental shot showing person in their yard, authentic moment. Eye level candid angle perspective.
 
@@ -35,15 +35,15 @@ Lighting: warm golden hour backlight (late afternoon sun), clear azure blue sky,
 
 Photography style: natural shallow depth of field, candid authentic moment, rule of thirds composition, natural moment captured, authentic real-life scene, ultra-sharp focus.
 
-Casual authentic work clothes appropriate for lawn care - jeans, t-shirt, work gloves, boots - realistic worn-in appearance.
+Casual authentic work clothes appropriate for cannabis - jeans, t-shirt, work gloves, boots - realistic worn-in appearance.
 
-Suburban residential setting, well-maintained yard, real homeowner doing their own lawn care.
+Suburban residential setting, well-maintained yard, real homeowner doing their own cannabis.
 
 Candid documentary feel: person mid-action, natural body language, unposed authentic moment, real work in progress.
 
 Color grading: natural realistic tones, vibrant greens, slight warmth, authentic documentary style.
 
-Photorealistic quality: looks like real candid photograph from home improvement blog or lawn care guide, genuine moment captured.
+Photorealistic quality: looks like real candid photograph from home improvement blog or cannabis guide, genuine moment captured.
 
 Ultra-high resolution, lifestyle photography quality, relatable and aspirational.
 
@@ -151,7 +151,7 @@ Absolutely no text, no watermarks, no logos, no graphics, no artificial overlays
         test_dir.mkdir(exist_ok=True)
 
         # Save original
-        test_image_path = test_dir / "test_runware_lawn_mowing.jpg"
+        test_image_path = test_dir / "test_runware_cannabis_mowing.jpg"
 
         # Open and optimize with Pillow
         image = Image.open(io.BytesIO(image_response.content))

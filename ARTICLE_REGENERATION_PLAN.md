@@ -140,9 +140,9 @@ Replace 5-10 articles per week over 4 weeks.
    from content_generator import generate_article, save_to_notion_format
 
    keywords = [
-       "how often should I aerate my lawn",
-       "best time to mow lawn",
-       "fall lawn aeration timing",
+       "how often should I aerate my cannabis",
+       "best time to mow cannabis",
+       "fall cannabis aeration timing",
        # ... all 37 keywords
    ]
 

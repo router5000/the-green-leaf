@@ -77,7 +77,7 @@ export default function VideosGrid({ videos }: VideosGridProps) {
 
             {/* Video Info */}
             <div className="p-4">
-              <h2 className="font-semibold text-gray-900 line-clamp-2 group-hover:text-grass-600 transition-colors mb-2">
+              <h2 className="font-semibold text-gray-900 line-clamp-2 group-hover:text-leaf-600 transition-colors mb-2">
                 {video.title}
               </h2>
 
@@ -89,12 +89,12 @@ export default function VideosGrid({ videos }: VideosGridProps) {
               </div>
 
               {/* Article Link */}
-              <div className="bg-grass-50 rounded-lg px-3 py-2">
+              <div className="bg-leaf-50 rounded-lg px-3 py-2">
                 <div className="flex items-center gap-2">
-                  <svg className="w-4 h-4 text-grass-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 text-leaf-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
-                  <span className="text-sm text-grass-700 font-medium line-clamp-1">
+                  <span className="text-sm text-leaf-700 font-medium line-clamp-1">
                     {video.articleTitle}
                   </span>
                 </div>
@@ -109,7 +109,7 @@ export default function VideosGrid({ videos }: VideosGridProps) {
 
               {/* Season Tag */}
               <div className="mt-3 flex items-center gap-2">
-                <span className="text-xs bg-grass-100 text-grass-700 px-2 py-1 rounded-full capitalize">
+                <span className="text-xs bg-leaf-100 text-leaf-700 px-2 py-1 rounded-full capitalize">
                   {video.articleSeason}
                 </span>
               </div>

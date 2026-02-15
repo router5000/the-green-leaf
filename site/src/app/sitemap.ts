@@ -3,7 +3,7 @@ import { getSortedPostsData } from '@/lib/posts'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getSortedPostsData()
-  const baseUrl = 'https://lawncare.center'
+  const baseUrl = 'https://thegreenleaf.com'
 
   // Static pages
   const staticPages = [

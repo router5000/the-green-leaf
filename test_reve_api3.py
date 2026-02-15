@@ -30,7 +30,7 @@ try:
             "Content-Type": "application/json"
         },
         json={
-            "prompt": "A beautiful lawn",
+            "prompt": "A beautiful cannabis",
             "aspectRatio": "16:9"  # Try camelCase
         },
         timeout=15
@@ -51,7 +51,7 @@ try:
             "x-api-key": reve_api_key,
             "Content-Type": "application/json"
         },
-        json={"prompt": "A beautiful lawn"},
+        json={"prompt": "A beautiful cannabis"},
         timeout=15
     )
     print(f"   Status: {response.status_code}")
@@ -73,7 +73,7 @@ try:
             "Authorization": f"Bearer {reve_api_key}",
             "Content-Type": "application/json"
         },
-        json={"prompt": "A beautiful lawn"},
+        json={"prompt": "A beautiful cannabis"},
         timeout=15
     )
     print(f"   Status: {response.status_code}")

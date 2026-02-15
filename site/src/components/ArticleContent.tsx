@@ -73,17 +73,17 @@ export function AnimatedBreadcrumb({ title, category }: { title: string; categor
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.4, delay: 0.2 }}
     >
-      <Link href="/" className="hover:text-grass-600">Home</Link>
+      <Link href="/" className="hover:text-leaf-600">Home</Link>
       <span className="mx-2">/</span>
-      <Link href="/articles" className="hover:text-grass-600">Articles</Link>
+      <Link href="/articles" className="hover:text-leaf-600">Articles</Link>
       {category && (
         <>
           <span className="mx-2">/</span>
-          <Link href="/topics" className="hover:text-grass-600">{category}</Link>
+          <Link href="/topics" className="hover:text-leaf-600">{category}</Link>
         </>
       )}
       <span className="mx-2">/</span>
-      <span className="text-grass-700">{title}</span>
+      <span className="text-leaf-700">{title}</span>
     </motion.nav>
   )
 }
@@ -146,7 +146,7 @@ function InlineShareIcons({ url, title }: { url: string; title: string }) {
         aria-label={copied ? 'Link copied' : 'Copy link'}
       >
         {copied ? (
-          <svg className="w-4 h-4 text-grass-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/></svg>
+          <svg className="w-4 h-4 text-leaf-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/></svg>
         ) : (
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
         )}
@@ -180,9 +180,9 @@ export function AnimatedHeader({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.3 }}
     >
-      <div className="flex flex-wrap items-center gap-3 text-sm text-grass-600 mb-4">
+      <div className="flex flex-wrap items-center gap-3 text-sm text-leaf-600 mb-4">
         <motion.span
-          className="bg-grass-100 px-3 py-1 rounded-full font-medium"
+          className="bg-leaf-100 px-3 py-1 rounded-full font-medium"
           itemProp="articleSection"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -193,11 +193,11 @@ export function AnimatedHeader({
         <time itemProp="timeRequired">{readTime}</time>
         <span className="text-gray-400">•</span>
         <span itemProp="wordCount">{wordCount} words</span>
-        <InlineShareIcons url={`https://lawncare.center/articles/${slug}`} title={title} />
+        <InlineShareIcons url={`https://thegreenleaf.com/articles/${slug}`} title={title} />
       </div>
 
       <motion.h1
-        className="text-2xl sm:text-3xl md:text-4xl font-bold text-grass-900 mb-4"
+        className="text-2xl sm:text-3xl md:text-4xl font-bold text-leaf-900 mb-4"
         itemProp="headline"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -220,7 +220,7 @@ export function AnimatedHeader({
       <meta itemProp="datePublished" content={generatedAt} />
       <meta itemProp="dateModified" content={generatedAt} />
       <meta itemProp="inLanguage" content="en-US" />
-      <meta itemProp="author" content="Lawn Care Center" />
+      <meta itemProp="author" content="The Green Leaf" />
     </motion.header>
   )
 }
@@ -248,7 +248,7 @@ export function AnimatedTags({ tags }: { tags: string[] }) {
           {tags?.map((tag, index) => (
             <motion.span
               key={tag}
-              className="bg-grass-100 text-grass-700 px-3 py-1 rounded-full text-sm"
+              className="bg-leaf-100 text-leaf-700 px-3 py-1 rounded-full text-sm"
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
@@ -280,7 +280,7 @@ export function AnimatedRelatedArticles({ posts }: { posts: RelatedPost[] }) {
   return (
     <ScrollReveal delay={0.15}>
       <div className="mb-8">
-        <h3 className="text-xl font-bold text-grass-900 mb-6">
+        <h3 className="text-xl font-bold text-leaf-900 mb-6">
           Related Articles
         </h3>
         <div className="grid md:grid-cols-3 gap-5">
@@ -294,7 +294,7 @@ export function AnimatedRelatedArticles({ posts }: { posts: RelatedPost[] }) {
             >
               <Link
                 href={`/articles/${post.slug}`}
-                className="group block bg-white border border-gray-200 rounded-xl overflow-hidden hover:border-grass-500 hover:shadow-lg transition-all"
+                className="group block bg-white border border-gray-200 rounded-xl overflow-hidden hover:border-leaf-500 hover:shadow-lg transition-all"
               >
                 {post.featured_image && (
                   <div className="relative aspect-[16/9] overflow-hidden bg-gray-100">
@@ -309,14 +309,14 @@ export function AnimatedRelatedArticles({ posts }: { posts: RelatedPost[] }) {
                 )}
                 <div className="p-4">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="bg-grass-100 text-grass-700 px-2 py-0.5 rounded text-xs font-medium capitalize">
+                    <span className="bg-leaf-100 text-leaf-700 px-2 py-0.5 rounded text-xs font-medium capitalize">
                       {post.season}
                     </span>
                     <span className="text-xs text-gray-500">
                       {post.estimated_read_time}
                     </span>
                   </div>
-                  <h4 className="font-semibold text-grass-900 group-hover:text-grass-700 mb-2 line-clamp-2 text-sm">
+                  <h4 className="font-semibold text-leaf-900 group-hover:text-leaf-700 mb-2 line-clamp-2 text-sm">
                     {post.title}
                   </h4>
                   <p className="text-xs text-gray-600 line-clamp-2">
@@ -336,16 +336,16 @@ export function AnimatedRelatedArticles({ posts }: { posts: RelatedPost[] }) {
 export function AnimatedCTA() {
   return (
     <ScrollReveal delay={0.2}>
-      <div className="bg-grass-50 rounded-lg p-6">
-        <h3 className="font-semibold text-grass-900 mb-2">
-          Keep Your Lawn Thriving
+      <div className="bg-leaf-50 rounded-lg p-6">
+        <h3 className="font-semibold text-leaf-900 mb-2">
+          Keep Your Cannabis Thriving
         </h3>
         <p className="text-gray-600 mb-4">
-          Explore more expert guides and seasonal tips to maintain your perfect lawn.
+          Explore more expert guides and seasonal tips to maintain your perfect cannabis.
         </p>
         <Link
           href="/articles"
-          className="text-grass-600 hover:text-grass-800 font-medium"
+          className="text-leaf-600 hover:text-leaf-800 font-medium"
         >
           ← Browse All Articles
         </Link>
@@ -372,7 +372,7 @@ export function ScrollRevealYouTube({ children }: { children: ReactNode }) {
   return (
     <ScrollReveal delay={0.1}>
       <div className="mt-8 min-h-[280px]">
-        <h3 className="text-lg font-semibold text-grass-800 mb-4">Related Video</h3>
+        <h3 className="text-lg font-semibold text-leaf-800 mb-4">Related Video</h3>
         {children}
       </div>
     </ScrollReveal>
@@ -400,7 +400,7 @@ export function TableOfContents({ items }: { items: TocItem[] }) {
             <li key={item.id} className={item.level === 3 ? 'pl-4' : ''}>
               <a
                 href={`#${item.id}`}
-                className="text-sm text-grass-700 hover:text-grass-900 hover:underline transition-colors block py-0.5"
+                className="text-sm text-leaf-700 hover:text-leaf-900 hover:underline transition-colors block py-0.5"
               >
                 {item.text}
               </a>
@@ -423,8 +423,8 @@ export function KeyStatCallout({ stat }: { stat: string }) {
 
   return (
     <ScrollReveal>
-      <div className="my-8 bg-gradient-to-r from-grass-50 to-emerald-50 border-l-4 border-grass-500 rounded-r-lg p-6 shadow-sm">
-        <p className="text-sm font-semibold text-grass-700 uppercase tracking-wide mb-2">
+      <div className="my-8 bg-gradient-to-r from-leaf-50 to-emerald-50 border-l-4 border-leaf-500 rounded-r-lg p-6 shadow-sm">
+        <p className="text-sm font-semibold text-leaf-700 uppercase tracking-wide mb-2">
           {label}
         </p>
         <p className="text-lg font-medium text-gray-800 leading-relaxed">
@@ -524,13 +524,13 @@ export function PrintableChecklist({ title, steps }: { title: string; steps: Che
     <ScrollReveal>
       <div className="my-10 border border-gray-200 rounded-xl overflow-hidden print:border-none print:my-0">
         {/* Screen header */}
-        <div className="flex items-center justify-between bg-grass-50 px-5 py-4 border-b border-gray-200 print:bg-white print:border-b-2 print:border-black print:py-2">
-          <h3 className="font-bold text-grass-900 text-lg print:text-black print:text-xl">
+        <div className="flex items-center justify-between bg-leaf-50 px-5 py-4 border-b border-gray-200 print:bg-white print:border-b-2 print:border-black print:py-2">
+          <h3 className="font-bold text-leaf-900 text-lg print:text-black print:text-xl">
             Checklist: {title}
           </h3>
           <button
             onClick={handlePrint}
-            className="flex items-center gap-2 bg-grass-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-grass-700 transition-colors print:hidden"
+            className="flex items-center gap-2 bg-leaf-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-leaf-700 transition-colors print:hidden"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
@@ -544,10 +544,10 @@ export function PrintableChecklist({ title, steps }: { title: string; steps: Che
             <label key={index} className="flex items-start gap-3 cursor-pointer group">
               <input
                 type="checkbox"
-                className="mt-1 w-5 h-5 rounded border-gray-300 text-grass-600 focus:ring-grass-500 print:w-4 print:h-4 shrink-0"
+                className="mt-1 w-5 h-5 rounded border-gray-300 text-leaf-600 focus:ring-leaf-500 print:w-4 print:h-4 shrink-0"
               />
               <div>
-                <span className="font-semibold text-gray-900 group-hover:text-grass-700 transition-colors print:text-black">
+                <span className="font-semibold text-gray-900 group-hover:text-leaf-700 transition-colors print:text-black">
                   {index + 1}. {step.name}
                 </span>
                 <StepText text={step.text} />
@@ -557,7 +557,7 @@ export function PrintableChecklist({ title, steps }: { title: string; steps: Che
         </div>
         {/* Print footer */}
         <div className="hidden print:block border-t border-gray-300 pt-3 mt-4 text-xs text-gray-500">
-          <p>lawncare.center - Your complete lawn care resource</p>
+          <p>thegreenleaf.com - Your complete cannabis resource</p>
         </div>
       </div>
     </ScrollReveal>
@@ -576,7 +576,7 @@ export function FAQSection({ faqs }: { faqs: FAQItem[] }) {
   return (
     <ScrollReveal>
       <div className="my-10 bg-gray-50 rounded-xl p-6 md:p-8">
-        <h2 className="text-2xl font-bold text-grass-900 mb-6">
+        <h2 className="text-2xl font-bold text-leaf-900 mb-6">
           Frequently Asked Questions
         </h2>
         <div className="space-y-4">
@@ -589,9 +589,9 @@ export function FAQSection({ faqs }: { faqs: FAQItem[] }) {
               viewport={{ once: true }}
               transition={{ duration: 0.3, delay: index * 0.1 }}
             >
-              <summary className="flex items-center justify-between cursor-pointer p-4 hover:bg-grass-50 transition-colors">
+              <summary className="flex items-center justify-between cursor-pointer p-4 hover:bg-leaf-50 transition-colors">
                 <h3 className="font-semibold text-gray-900 pr-4">{faq.question}</h3>
-                <span className="text-grass-600 group-open:rotate-180 transition-transform">
+                <span className="text-leaf-600 group-open:rotate-180 transition-transform">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>

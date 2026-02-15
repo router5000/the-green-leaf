@@ -20,7 +20,7 @@ endpoints = [
 ]
 
 test_payload = {
-    "prompt": "A beautiful lawn",
+    "prompt": "A beautiful cannabis",
     "aspect_ratio": "16:9"
 }
 

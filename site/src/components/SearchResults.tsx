@@ -55,7 +55,7 @@ export default function SearchResults({ articles, videos, query }: SearchResults
           onClick={() => setActiveTab('articles')}
           className={`flex items-center gap-2 px-6 py-3 font-medium text-sm transition-colors relative ${
             activeTab === 'articles'
-              ? 'text-grass-600'
+              ? 'text-leaf-600'
               : 'text-gray-500 hover:text-gray-700'
           }`}
         >
@@ -65,13 +65,13 @@ export default function SearchResults({ articles, videos, query }: SearchResults
           Articles
           <span className={`px-2 py-0.5 rounded-full text-xs ${
             activeTab === 'articles'
-              ? 'bg-grass-100 text-grass-700'
+              ? 'bg-leaf-100 text-leaf-700'
               : 'bg-gray-100 text-gray-600'
           }`}>
             {articles.length}
           </span>
           {activeTab === 'articles' && (
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-grass-600" />
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-leaf-600" />
           )}
         </button>
 
@@ -79,7 +79,7 @@ export default function SearchResults({ articles, videos, query }: SearchResults
           onClick={() => setActiveTab('videos')}
           className={`flex items-center gap-2 px-6 py-3 font-medium text-sm transition-colors relative ${
             activeTab === 'videos'
-              ? 'text-grass-600'
+              ? 'text-leaf-600'
               : 'text-gray-500 hover:text-gray-700'
           }`}
         >
@@ -89,13 +89,13 @@ export default function SearchResults({ articles, videos, query }: SearchResults
           Videos
           <span className={`px-2 py-0.5 rounded-full text-xs ${
             activeTab === 'videos'
-              ? 'bg-grass-100 text-grass-700'
+              ? 'bg-leaf-100 text-leaf-700'
               : 'bg-gray-100 text-gray-600'
           }`}>
             {videos.length}
           </span>
           {activeTab === 'videos' && (
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-grass-600" />
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-leaf-600" />
           )}
         </button>
       </div>
@@ -109,7 +109,7 @@ export default function SearchResults({ articles, videos, query }: SearchResults
               {videos.length > 0 && (
                 <button
                   onClick={() => setActiveTab('videos')}
-                  className="mt-2 text-grass-600 hover:text-grass-700 font-medium"
+                  className="mt-2 text-leaf-600 hover:text-leaf-700 font-medium"
                 >
                   View {videos.length} video{videos.length !== 1 ? 's' : ''} instead →
                 </button>
@@ -137,14 +137,14 @@ export default function SearchResults({ articles, videos, query }: SearchResults
                       </div>
                     )}
                     <div className="p-6 flex-1">
-                      <div className="flex flex-wrap items-center gap-2 text-sm text-grass-600 mb-2">
-                        <span className="bg-grass-100 px-2 py-0.5 rounded-full text-xs font-medium">
+                      <div className="flex flex-wrap items-center gap-2 text-sm text-leaf-600 mb-2">
+                        <span className="bg-leaf-100 px-2 py-0.5 rounded-full text-xs font-medium">
                           {article.season}
                         </span>
                         <span className="text-gray-400">•</span>
                         <span className="text-gray-500">{article.estimated_read_time}</span>
                       </div>
-                      <h3 className="text-xl font-semibold text-grass-900 mb-2 group-hover:text-grass-600 transition">
+                      <h3 className="text-xl font-semibold text-leaf-900 mb-2 group-hover:text-leaf-600 transition">
                         <HighlightMatch text={article.title} query={query} />
                       </h3>
                       <p className="text-gray-600 text-sm line-clamp-2">
@@ -158,7 +158,7 @@ export default function SearchResults({ articles, videos, query }: SearchResults
                 <div className="text-center pt-4">
                   <button
                     onClick={() => setVisibleArticles(v => v + RESULTS_PER_PAGE)}
-                    className="px-6 py-3 bg-grass-600 text-white rounded-full font-medium hover:bg-grass-700 transition-colors"
+                    className="px-6 py-3 bg-leaf-600 text-white rounded-full font-medium hover:bg-leaf-700 transition-colors"
                   >
                     Show More Articles ({articles.length - visibleArticles} remaining)
                   </button>
@@ -178,7 +178,7 @@ export default function SearchResults({ articles, videos, query }: SearchResults
               {articles.length > 0 && (
                 <button
                   onClick={() => setActiveTab('articles')}
-                  className="mt-2 text-grass-600 hover:text-grass-700 font-medium"
+                  className="mt-2 text-leaf-600 hover:text-leaf-700 font-medium"
                 >
                   View {articles.length} article{articles.length !== 1 ? 's' : ''} instead →
                 </button>
@@ -210,12 +210,12 @@ export default function SearchResults({ articles, videos, query }: SearchResults
                       </div>
                     </div>
                     <div className="p-4">
-                      <h3 className="font-semibold text-gray-900 mb-1 line-clamp-2 group-hover:text-grass-600 transition">
+                      <h3 className="font-semibold text-gray-900 mb-1 line-clamp-2 group-hover:text-leaf-600 transition">
                         <HighlightMatch text={video.title} query={query} />
                       </h3>
                       <p className="text-sm text-gray-500 mb-2">{video.channel}</p>
                       <div className="text-xs text-gray-600 bg-gray-50 rounded px-2 py-1">
-                        From: <span className="text-grass-700 font-medium">{video.articleTitle}</span>
+                        From: <span className="text-leaf-700 font-medium">{video.articleTitle}</span>
                       </div>
                       {video.insights?.best_quote && (
                         <p className="text-sm text-gray-600 mt-3 italic line-clamp-2">
@@ -230,7 +230,7 @@ export default function SearchResults({ articles, videos, query }: SearchResults
                 <div className="text-center pt-6">
                   <button
                     onClick={() => setVisibleVideos(v => v + RESULTS_PER_PAGE)}
-                    className="px-6 py-3 bg-grass-600 text-white rounded-full font-medium hover:bg-grass-700 transition-colors"
+                    className="px-6 py-3 bg-leaf-600 text-white rounded-full font-medium hover:bg-leaf-700 transition-colors"
                   >
                     Show More Videos ({videos.length - visibleVideos} remaining)
                   </button>

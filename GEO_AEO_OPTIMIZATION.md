@@ -1,9 +1,9 @@
-# Claude Code Task List: GEO/AEO Optimization for lawncare.center
+# Claude Code Task List: GEO/AEO Optimization for thegreenleaf.com
 
 **Goal:** Maximize visibility in AI-generated answers (ChatGPT, Perplexity, Google AI Overviews) and traditional Google search results.
 
-**Project:** lawncare.center
-**GitHub:** https://github.com/JakeTaylorDesign/lawncare-center
+**Project:** thegreenleaf.com
+**GitHub:** https://github.com/JakeTaylorDesign/cannabiscare-center
 
 ---
 
@@ -157,7 +157,7 @@
 
 ### 16. Add Article Category Taxonomy
 - **Location:** Frontmatter in `content_generator.py`
-- **Task:** Add consistent category field (Lawn Care Basics, Seasonal Care, Problem Solving, Equipment, etc.)
+- **Task:** Add consistent category field (Cannabis Basics, Seasonal Care, Problem Solving, Equipment, etc.)
 - Use categories in internal linking and topic pages
 - **Why:** Helps AI understand content relationships
 

@@ -26,8 +26,8 @@ export default function DesktopNav() {
           href={item.href}
           className={`transition ${
             isActive(item.href)
-              ? 'text-grass-700 font-semibold border-b-2 border-grass-500 pb-0.5'
-              : 'text-gray-600 hover:text-grass-900'
+              ? 'text-leaf-700 font-semibold border-b-2 border-leaf-500 pb-0.5'
+              : 'text-gray-600 hover:text-leaf-900'
           }`}
         >
           {item.label}

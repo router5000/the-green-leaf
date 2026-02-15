@@ -26,7 +26,7 @@ The regeneration scripts automatically:
 
 ### Regenerate Single Article
 ```bash
-python3 regenerate_article.py site/content/posts/how-often-should-i-aerate-my-lawn.md
+python3 regenerate_article.py site/content/posts/how-often-should-i-aerate-my-cannabis.md
 ```
 
 ### Regenerate All Articles
@@ -73,9 +73,9 @@ python3 regenerate_article.py site/content/posts/*.md --auto-replace
 ### Step-by-Step Process:
 
 ```
-🔄 Regenerating: how-often-should-i-aerate-my-lawn.md
+🔄 Regenerating: how-often-should-i-aerate-my-cannabis.md
 ============================================================
-📌 Keyword: how often should I aerate my lawn
+📌 Keyword: how often should I aerate my cannabis
 🤖 Generating new version with QA...
    🎨 Generating hero image (Runware)...
    ✅ Image saved: hero.jpg (310 KB)
@@ -92,7 +92,7 @@ python3 regenerate_article.py site/content/posts/*.md --auto-replace
 📦 Backed up old article: posts_backups/article_20251207_140530.md
 ⚠️  Ready to replace old article with new version
    Replace? (y/n): y
-   ✅ Replaced: site/content/posts/how-often-should-i-aerate-my-lawn.md
+   ✅ Replaced: site/content/posts/how-often-should-i-aerate-my-cannabis.md
    🧹 Cleaned up temp file
 
 ✅ SUCCESS! Article regenerated and replaced
@@ -119,24 +119,24 @@ python3 regenerate_article.py site/content/posts/*.md --auto-replace
 
 ```yaml
 ---
-title: "How Often Should You Aerate Your Lawn?"
-meta_description: "Learn the optimal lawn aeration..."
-slug: "how-often-should-i-aerate-my-lawn"
-keyword: "how often should I aerate my lawn"
+title: "How Often Should You Aerate Your Cannabis?"
+meta_description: "Learn the optimal cannabis aeration..."
+slug: "how-often-should-i-aerate-my-cannabis"
+keyword: "how often should I aerate my cannabis"
 featured_image: "/images/articles/how-often-aerate.jpg"
-featured_image_alt: "Professional photograph of lawn aeration"
+featured_image_alt: "Professional photograph of cannabis aeration"
 section_image: "/images/articles/how-often-aerate-section.jpg"
 section_image_alt: "Detail view of aeration process"
 youtube:
   - id: "abc123xyz"
-    title: "How to Aerate Your Lawn"
-    channel: "The Lawn Care Nut"
+    title: "How to Aerate Your Cannabis"
+    channel: "The Cannabis Nut"
     position: "hero"
   - id: "def456uvw"
     title: "Aeration Tips"
     channel: "Ryan Knorr"
     position: "section"
-tags: ["aeration", "lawn care", "fall"]
+tags: ["aeration", "cannabis", "fall"]
 status: "draft"
 generated_at: "2025-12-07"
 season: "fall"
@@ -154,7 +154,7 @@ qa_passed: true
 ## File Structure After Regeneration
 
 ```
-lawncare-content-engine/
+cannabiscare-content-engine/
 ├── site/content/
 │   ├── posts/
 │   │   ├── article-1.md        ← NEW version (replaced)
@@ -265,7 +265,7 @@ cp site/content/posts_backups/article_DATE.md \
 
 1. **Test with one article first**
    ```bash
-   python3 regenerate_article.py site/content/posts/best-time-to-aerate-lawn.md
+   python3 regenerate_article.py site/content/posts/best-time-to-aerate-cannabis.md
    ```
 
 2. **Skip QA for faster regeneration**
@@ -292,7 +292,7 @@ cp site/content/posts_backups/article_DATE.md \
 
 **Single article test:**
 ```bash
-python3 regenerate_article.py site/content/posts/how-often-should-i-aerate-my-lawn.md
+python3 regenerate_article.py site/content/posts/how-often-should-i-aerate-my-cannabis.md
 ```
 
 **All articles:**

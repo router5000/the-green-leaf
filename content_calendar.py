@@ -21,16 +21,16 @@ RECENT_ARTICLE_WINDOW = 5  # Check last N articles for similarity
 
 # Tag category mappings for topic analysis
 TAG_CATEGORIES = {
-    "mowing": ["mow", "cut", "blade", "trimmer", "edger", "height"],
-    "fertilizing": ["fertiliz", "npk", "nitrogen", "feed", "nutrient"],
-    "watering": ["water", "irrigat", "sprinkler", "drought", "moisture"],
-    "weeds": ["weed", "herbicide", "crabgrass", "dandelion", "broadleaf"],
-    "aeration": ["aerat", "compact", "core", "plug", "soil"],
-    "overseeding": ["seed", "overseed", "germina", "establish"],
-    "pest-control": ["pest", "grub", "insect", "fungus", "disease", "fungicide"],
-    "equipment": ["mower", "tool", "equipment", "blade", "sharpen", "maintain"],
-    "thatch": ["thatch", "dethatch", "scarif"],
-    "soil": ["soil", "ph", "test", "amend", "compost"],
+    "strains": ["strain", "indica", "sativa", "hybrid", "genetics", "phenotype", "terpene"],
+    "growing": ["grow", "cultivat", "plant", "seed", "clone", "vegetat", "flower", "harvest"],
+    "lighting": ["light", "led", "hps", "lamp", "lumen", "spectrum", "photoperiod"],
+    "nutrients": ["nutrient", "fertili", "nitrogen", "phospho", "potassium", "npk", "feed"],
+    "consumption": ["smoke", "vape", "edible", "tincture", "topical", "dab", "concentrate"],
+    "medical": ["cbd", "thc", "medical", "pain", "anxiety", "sleep", "wellness", "therapeutic"],
+    "indoor": ["indoor", "grow room", "tent", "ventilat", "humidity", "climate", "hydro"],
+    "outdoor": ["outdoor", "garden", "soil", "companion", "pest", "organic", "sun"],
+    "processing": ["dry", "cure", "trim", "extract", "hash", "rosin", "butter", "oil"],
+    "legal": ["legal", "law", "regulat", "dispens", "licens", "state", "federal"],
 }
 
 # Content type patterns
@@ -227,7 +227,7 @@ def calculate_keyword_similarity(keyword1: str, keyword2: str) -> float:
     words2 = set(keyword2.lower().replace("-", " ").split())
 
     # Remove common stop words
-    stop_words = {"the", "a", "an", "to", "for", "of", "in", "on", "my", "your", "lawn", "grass", "how", "what", "when", "why", "is", "are", "should", "i"}
+    stop_words = {"the", "a", "an", "to", "for", "of", "in", "on", "my", "your", "cannabis", "weed", "how", "what", "when", "why", "is", "are", "should", "i"}
     words1 = words1 - stop_words
     words2 = words2 - stop_words
 
@@ -418,4 +418,4 @@ if __name__ == "__main__":
         print("Usage:")
         print("  python content_calendar.py --analyze")
         print("  python content_calendar.py --gaps")
-        print('  python content_calendar.py --check "spring lawn care tips"')
+        print('  python content_calendar.py --check "best indica strains for sleep"')

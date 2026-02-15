@@ -14,10 +14,10 @@ export default function Home() {
 
         {/* H1 for SEO - visually integrated with design */}
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif text-gray-900 mb-6 sm:mb-8 text-center">
-          Expert Lawn Care Tips & Guides
+          Cannabis Education & Guides
         </h1>
         <p className="text-gray-600 text-base sm:text-lg text-center max-w-2xl mx-auto mb-8 sm:mb-12">
-          Professional advice for a healthier, greener lawn. From seasonal care to troubleshooting common problems.
+          Accurate, balanced cannabis education. From strain guides and growing tips to health, wellness, and legal updates.
         </p>
 
         {allPosts.length === 0 ? (

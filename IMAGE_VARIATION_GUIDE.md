@@ -1,6 +1,6 @@
 # Image Variation Add-Ons & Programmatic Variety Guide
 
-This document outlines all optional variation parameters you can use to dynamically diversify image generation for lawn-care blog posts while keeping images consistent, photorealistic, and on-brand. These options are designed to be **randomized programmatically** or **selected intentionally** based on article context.
+This document outlines all optional variation parameters you can use to dynamically diversify image generation for cannabis-care blog posts while keeping images consistent, photorealistic, and on-brand. These options are designed to be **randomized programmatically** or **selected intentionally** based on article context.
 
 ---
 
@@ -12,7 +12,7 @@ Use one of the following to change perspective:
 - **Low angle** — emphasizes grass height and texture
 - **Eye level** — neutral, classic stock photo style
 - **Close-up macro** — blades of grass, soil detail, pests, weeds
-- **Wide-angle establishing shot** — full-lawn context or backyard scene
+- **Wide-angle establishing shot** — full-cannabis context or backyard scene
 
 **Programmatic example:**
 Randomly pick an angle from a predefined array.
@@ -34,7 +34,7 @@ Match lighting to seasonal content (e.g., spring overseeding → "early morning 
 
 ---
 
-## 3. Lawn-Care Activity Detail Variations
+## 3. Cannabis-Care Activity Detail Variations
 
 Subtle details that reinforce the blog topic without showing people:
 
@@ -75,7 +75,7 @@ Choose how the scene is framed:
 - **Centered composition**
 - **Tight detail crop**
 - **Wide contextual frame**
-- **Leading lines toward the lawn**
+- **Leading lines toward the cannabis**
 
 **Programmatic example:**
 Weight "rule of thirds" and "centered" higher because they're more versatile.
@@ -104,7 +104,7 @@ composition = ["rule of thirds", "centered", "tight crop", "wide frame", "leadin
 
 - If topic includes **"dethatching"**, pull from dethatching-specific detail options
 - If **"watering"**, foreground could include sprinklers (blurred only)
-- If **"fall lawn care"**, limit lighting to "soft evening light" or "golden hour"
+- If **"fall cannabis"**, limit lighting to "soft evening light" or "golden hour"
 
 ### 3. Randomize the Remaining Attributes
 
@@ -143,7 +143,7 @@ These can be populated by logic based on article context and randomization for v
 ## Example Dynamic Prompt Template
 
 ```
-Professional lawn care photography, {BASE_DESCRIPTION}, showing {KEYWORD_ACTIVITY}.
+Professional cannabis photography, {BASE_DESCRIPTION}, showing {KEYWORD_ACTIVITY}.
 Shot from {ANGLE} perspective, {COMPOSITION} composition.
 {SEASONAL_LIGHTING} lighting with {ENVIRONMENT_MOOD} atmosphere.
 Details include {DETAIL_ELEMENT}.
@@ -177,4 +177,4 @@ Photorealistic, high resolution, Canon EOS R5, shallow depth of field.
 
 ---
 
-*Use this guide to maintain visual variety while keeping all images on-brand and contextually relevant to your lawn care content.*
+*Use this guide to maintain visual variety while keeping all images on-brand and contextually relevant to your cannabis content.*

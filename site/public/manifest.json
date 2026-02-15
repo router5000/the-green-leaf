@@ -1,11 +1,11 @@
 {
-  "name": "Lawn Care Center",
-  "short_name": "Lawn Care",
-  "description": "Expert lawn care tips, guides, and seasonal advice for the perfect lawn.",
+  "name": "The Green Leaf",
+  "short_name": "Green Leaf",
+  "description": "Cannabis education, strain guides, growing tips, and wellness content.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#16a34a",
+  "theme_color": "#2D5016",
   "icons": [
     {
       "src": "/favicon.svg",

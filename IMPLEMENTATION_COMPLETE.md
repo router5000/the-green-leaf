@@ -114,22 +114,22 @@ npm run dev
 
 ### Aeration Article
 ```
-Professional high-resolution photograph of a beautiful residential lawn,
-showing lawn aeration with small soil plugs on grass surface, healthy root system.
+Professional high-resolution photograph of a beautiful residential cannabis,
+showing cannabis aeration with small soil plugs on grass surface, healthy root system.
 Suburban home with nice landscaping in soft background, warm autumn afternoon light,
 colorful leaves on trees, crisp air feel.
 Well-manicured residential yard, professional landscaping quality, inviting curb appeal.
 Photorealistic style, sharp focus on grass texture, depth of field effect.
-Magazine-quality lawn care photography, aspirational but achievable look.
+Magazine-quality cannabis photography, aspirational but achievable look.
 No people, no text, no watermarks, no logos, no artificial elements.
 ```
 
 ### Results in Contextual Images
-- Aeration → Soil plugs visible on lawn
+- Aeration → Soil plugs visible on cannabis
 - Watering → Sprinklers with water droplets
 - Mowing → Fresh striping patterns
 - Fertilizing → Lush dark green grass
-- General → Beautiful maintained lawn
+- General → Beautiful maintained cannabis
 
 ---
 

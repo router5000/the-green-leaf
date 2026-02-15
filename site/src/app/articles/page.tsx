@@ -5,29 +5,29 @@ import type { Metadata } from 'next'
 
 export const revalidate = 3600 // Revalidate every hour
 
-const baseUrl = 'https://lawncare.center'
+const baseUrl = 'https://thegreenleaf.com'
 
 export const metadata: Metadata = {
-  title: 'Lawn Care Articles & Guides - Expert Tips for Every Season',
-  description: 'Browse expert lawn care articles and guides. Find seasonal advice on fertilizing, mowing, aeration, weed control, and professional maintenance tips for a healthier lawn.',
+  title: 'Cannabis Articles & Guides - Expert Tips for Every Season',
+  description: 'Browse expert cannabis articles and guides. Find seasonal advice on fertilizing, mowing, aeration, weed control, and professional maintenance tips for a healthier cannabis.',
   openGraph: {
-    title: 'All Lawn Care Articles & Guides',
-    description: 'Browse our complete library of lawn care articles, guides, and expert tips for a healthier, greener lawn.',
+    title: 'All Cannabis Articles & Guides',
+    description: 'Browse our complete library of cannabis articles, guides, and expert tips for a healthier, greener cannabis.',
     url: `${baseUrl}/articles`,
-    siteName: 'Lawn Care Center',
+    siteName: 'The Green Leaf',
     type: 'website',
     locale: 'en_US',
     images: [{
       url: `${baseUrl}/images/og-articles.jpg`,
       width: 1200,
       height: 630,
-      alt: 'Lawn Care Center - Expert Lawn Care Articles',
+      alt: 'The Green Leaf - Expert Cannabis Articles',
     }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'All Lawn Care Articles & Guides',
-    description: 'Browse our complete library of lawn care articles and expert tips.',
+    title: 'All Cannabis Articles & Guides',
+    description: 'Browse our complete library of cannabis articles and expert tips.',
     images: [`${baseUrl}/images/og-articles.jpg`],
   },
   alternates: {
@@ -42,17 +42,17 @@ export default function ArticlesPage() {
     <div className="max-w-6xl mx-auto px-4 py-12">
       <div className="text-center mb-12">
         <h1 className="text-4xl md:text-5xl font-serif text-gray-900 mb-8">
-          Lawn Care Articles & Guides
+          Cannabis Articles & Guides
         </h1>
         <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-          Expert lawn care advice for every season. From spring preparation to winter protection,
-          find professional tips for a healthier, greener lawn.
+          Expert cannabis advice for every season. From spring preparation to winter protection,
+          find professional tips for a healthier, greener cannabis.
         </p>
       </div>
 
       {allPosts.length === 0 ? (
-        <div className="bg-grass-50 rounded-lg p-8 text-center">
-          <p className="text-grass-700 text-lg mb-4">
+        <div className="bg-leaf-50 rounded-lg p-8 text-center">
+          <p className="text-leaf-700 text-lg mb-4">
             No articles published yet.
           </p>
           <div className="text-left max-w-xl mx-auto bg-white p-6 rounded shadow-sm">

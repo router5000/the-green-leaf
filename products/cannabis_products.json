@@ -1,0 +1,254 @@
+{
+  "products": [
+    {
+      "category": "growing_equipment",
+      "items": [
+        {
+          "name": "VIVOSUN Grow Tent 4x4",
+          "keywords": ["grow tent", "indoor grow", "grow room", "tent setup"],
+          "amazon_search": "vivosun grow tent 4x4 indoor cannabis",
+          "asin": "B01DXYMKIO",
+          "price_range": "$80-150",
+          "rating": "4.6+",
+          "best_for": "indoor cannabis grow setup"
+        },
+        {
+          "name": "VIVOSUN Inline Fan with Carbon Filter",
+          "keywords": ["inline fan", "carbon filter", "ventilation", "exhaust fan", "odor control"],
+          "amazon_search": "vivosun inline fan carbon filter combo",
+          "asin": "B01MSEVQ3L",
+          "price_range": "$60-120",
+          "rating": "4.5+",
+          "best_for": "grow room ventilation and odor control"
+        },
+        {
+          "name": "Fabric Grow Pots 5-Pack",
+          "keywords": ["fabric pot", "grow pot", "smart pot", "air pot", "container"],
+          "amazon_search": "fabric grow pots 5 gallon cannabis",
+          "price_range": "$15-30",
+          "rating": "4.7+",
+          "best_for": "better root development and drainage"
+        }
+      ]
+    },
+    {
+      "category": "lighting",
+      "items": [
+        {
+          "name": "Spider Farmer SF2000 LED Grow Light",
+          "keywords": ["grow light", "LED light", "full spectrum", "spider farmer"],
+          "amazon_search": "spider farmer sf2000 led grow light",
+          "asin": "B07TS82HWB",
+          "price_range": "$200-300",
+          "rating": "4.7+",
+          "best_for": "full spectrum LED for all growth stages"
+        },
+        {
+          "name": "MARS HYDRO TS1000 LED Grow Light",
+          "keywords": ["mars hydro", "led panel", "grow lamp", "plant light"],
+          "amazon_search": "mars hydro ts1000 led grow light",
+          "asin": "B07VL8FZS1",
+          "price_range": "$80-130",
+          "rating": "4.6+",
+          "best_for": "budget-friendly full spectrum lighting"
+        }
+      ]
+    },
+    {
+      "category": "nutrients",
+      "items": [
+        {
+          "name": "Fox Farm Liquid Nutrient Trio",
+          "keywords": ["nutrients", "plant food", "fox farm", "liquid fertilizer", "nutrient solution"],
+          "amazon_search": "fox farm liquid nutrient trio soil hydro",
+          "asin": "B00572026S",
+          "price_range": "$30-50",
+          "rating": "4.7+",
+          "best_for": "complete veg and bloom nutrient system"
+        },
+        {
+          "name": "General Hydroponics Flora Series",
+          "keywords": ["general hydroponics", "flora series", "hydro nutrients", "nutrient kit"],
+          "amazon_search": "general hydroponics flora series nutrient",
+          "asin": "B017H73708",
+          "price_range": "$30-50",
+          "rating": "4.7+",
+          "best_for": "hydroponic and soil nutrient system"
+        },
+        {
+          "name": "Cal-Mag Plant Supplement",
+          "keywords": ["cal-mag", "calcium magnesium", "cal mag", "nutrient deficiency"],
+          "amazon_search": "cal mag plant supplement cannabis",
+          "price_range": "$15-25",
+          "rating": "4.6+",
+          "best_for": "preventing calcium and magnesium deficiencies"
+        }
+      ]
+    },
+    {
+      "category": "soil_medium",
+      "items": [
+        {
+          "name": "Fox Farm Ocean Forest Potting Soil",
+          "keywords": ["potting soil", "ocean forest", "growing medium", "soil mix"],
+          "amazon_search": "fox farm ocean forest potting soil",
+          "asin": "B001I49Q98",
+          "price_range": "$15-30",
+          "rating": "4.6+",
+          "best_for": "nutrient-rich cannabis growing soil"
+        },
+        {
+          "name": "Coco Coir Growing Medium",
+          "keywords": ["coco coir", "coconut coir", "growing medium", "soilless"],
+          "amazon_search": "coco coir growing medium block",
+          "price_range": "$15-25",
+          "rating": "4.5+",
+          "best_for": "hydroponic and soilless growing"
+        },
+        {
+          "name": "Perlite for Drainage",
+          "keywords": ["perlite", "drainage", "soil amendment", "aeration"],
+          "amazon_search": "perlite horticultural grade cannabis",
+          "price_range": "$10-25",
+          "rating": "4.6+",
+          "best_for": "improving soil drainage and aeration"
+        }
+      ]
+    },
+    {
+      "category": "pest_control",
+      "items": [
+        {
+          "name": "Neem Oil Organic Spray",
+          "keywords": ["neem oil", "pest spray", "organic pest control", "insecticide"],
+          "amazon_search": "neem oil organic pest control plants",
+          "price_range": "$10-20",
+          "rating": "4.4+",
+          "best_for": "organic pest prevention and treatment"
+        },
+        {
+          "name": "Yellow Sticky Traps",
+          "keywords": ["sticky trap", "fungus gnat", "gnat trap", "fly trap"],
+          "amazon_search": "yellow sticky traps fungus gnats plants",
+          "price_range": "$8-15",
+          "rating": "4.5+",
+          "best_for": "monitoring and catching flying pests"
+        }
+      ]
+    },
+    {
+      "category": "harvesting",
+      "items": [
+        {
+          "name": "Fiskars Trimming Scissors",
+          "keywords": ["trimming scissors", "trim scissors", "pruning scissors", "bud trimmer"],
+          "amazon_search": "fiskars trimming scissors cannabis bud",
+          "price_range": "$10-25",
+          "rating": "4.7+",
+          "best_for": "precise cannabis bud trimming"
+        },
+        {
+          "name": "Drying Rack Mesh",
+          "keywords": ["drying rack", "herb drying", "hanging rack", "dry net"],
+          "amazon_search": "herb drying rack mesh cannabis",
+          "price_range": "$10-25",
+          "rating": "4.5+",
+          "best_for": "even drying of harvested cannabis"
+        }
+      ]
+    },
+    {
+      "category": "storage",
+      "items": [
+        {
+          "name": "Mason Jars for Curing",
+          "keywords": ["mason jar", "curing jar", "storage jar", "glass jar"],
+          "amazon_search": "mason jars wide mouth curing cannabis",
+          "price_range": "$15-30",
+          "rating": "4.8+",
+          "best_for": "curing and long-term cannabis storage"
+        },
+        {
+          "name": "Boveda 62% Humidity Packs",
+          "keywords": ["boveda", "humidity pack", "humidity control", "62 percent"],
+          "amazon_search": "boveda 62 humidity pack cannabis storage",
+          "asin": "B00CPPG21Y",
+          "price_range": "$10-20",
+          "rating": "4.8+",
+          "best_for": "maintaining perfect curing humidity"
+        },
+        {
+          "name": "Smell Proof Storage Bag",
+          "keywords": ["smell proof", "storage bag", "odor proof", "stash bag"],
+          "amazon_search": "smell proof bag cannabis storage",
+          "price_range": "$10-25",
+          "rating": "4.4+",
+          "best_for": "discreet odor-proof storage"
+        }
+      ]
+    },
+    {
+      "category": "accessories",
+      "items": [
+        {
+          "name": "Digital pH Meter",
+          "keywords": ["pH meter", "pH tester", "pH pen", "water pH"],
+          "amazon_search": "digital pH meter water plants cannabis",
+          "price_range": "$10-30",
+          "rating": "4.4+",
+          "best_for": "accurate pH monitoring for nutrient uptake"
+        },
+        {
+          "name": "Jeweler's Loupe 60x",
+          "keywords": ["jeweler loupe", "magnifier", "trichome", "loupe"],
+          "amazon_search": "jewelers loupe 60x trichome cannabis",
+          "price_range": "$8-15",
+          "rating": "4.5+",
+          "best_for": "checking trichome ripeness for harvest timing"
+        }
+      ]
+    },
+    {
+      "category": "books_guides",
+      "items": [
+        {
+          "name": "The Cannabis Grow Bible",
+          "keywords": ["grow bible", "growing book", "cannabis book", "cultivation book"],
+          "amazon_search": "cannabis grow bible book green",
+          "price_range": "$20-35",
+          "rating": "4.7+",
+          "best_for": "comprehensive cannabis cultivation reference"
+        },
+        {
+          "name": "Cannabis Pharmacy Book",
+          "keywords": ["cannabis pharmacy", "medical cannabis book", "strain guide book"],
+          "amazon_search": "cannabis pharmacy book medical guide",
+          "price_range": "$15-25",
+          "rating": "4.6+",
+          "best_for": "understanding medical cannabis and strains"
+        }
+      ]
+    },
+    {
+      "category": "testing",
+      "items": [
+        {
+          "name": "Soil pH Test Kit",
+          "keywords": ["soil test", "pH test kit", "soil pH", "soil testing"],
+          "amazon_search": "soil pH test kit plants cannabis",
+          "price_range": "$10-20",
+          "rating": "4.3+",
+          "best_for": "testing soil pH for optimal nutrient availability"
+        },
+        {
+          "name": "TDS/EC Meter",
+          "keywords": ["tds meter", "ec meter", "ppm meter", "water quality"],
+          "amazon_search": "tds ec meter water quality plants",
+          "price_range": "$10-25",
+          "rating": "4.5+",
+          "best_for": "measuring nutrient concentration in water"
+        }
+      ]
+    }
+  ]
+}

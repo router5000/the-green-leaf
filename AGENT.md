@@ -1,12 +1,12 @@
-# AGENT.md - Lawn Care Content Engine
+# AGENT.md - The Green Leaf Content Engine
 
-AI-powered content generation system for [lawncare.center](https://lawncare.center).
+AI-powered content generation system for [thegreenleaf.com](https://thegreenleaf.com).
 
 ## Quick Reference
 
 | Item | Value |
 |------|-------|
-| Live URL | https://lawncare.center |
+| Live URL | https://thegreenleaf.com |
 | Articles | 65 published |
 | Cost/article | ~$0.10-0.15 (tracked via cost_tracker.py) |
 | Hosting | Vercel (auto-deploy on push to main) |
@@ -18,7 +18,7 @@ AI-powered content generation system for [lawncare.center](https://lawncare.cent
 ## Project Structure
 
 ```
-lawncare-content-engine/
+cannabiscare-content-engine/
 ├── content_generator.py      # Main keyword-first article generation
 ├── youtube_content_agent.py  # Video-first article generation
 ├── youtube_search.py         # Video search + AI evaluation + caching
@@ -38,7 +38,7 @@ lawncare-content-engine/
 ├── .cache/youtube_cache.json # 30-day video cache
 ├── drafts/                   # Generated articles before publishing
 ├── products/
-│   └── lawn_care_products.json # 34 affiliate products, 14 categories
+│   └── cannabis_products.json # 34 affiliate products, 14 categories
 │
 └── site/                     # Next.js application
     ├── content/posts/        # Published markdown articles
@@ -67,8 +67,8 @@ Keyword → Claude AI → Runware Images → YouTube Videos → Affiliate Links 
 
 **Command:**
 ```bash
-python content_generator.py --keyword "how to aerate lawn"
-python content_generator.py --keyword "lawn tips" --no-qa  # Skip QA (faster)
+python content_generator.py --keyword "how to aerate cannabis"
+python content_generator.py --keyword "cannabis tips" --no-qa  # Skip QA (faster)
 ```
 
 ### Workflow 2: Video-First (YouTube Agent)
@@ -91,8 +91,8 @@ python youtube_content_agent.py --run-pipeline  # Full pipeline
 
 ```bash
 # Generate article
-python content_generator.py --keyword "spring lawn care"
-python content_generator.py --keyword "spring lawn care" --force  # Skip duplicate check
+python content_generator.py --keyword "spring cannabis"
+python content_generator.py --keyword "spring cannabis" --force  # Skip duplicate check
 
 # Add internal links to all existing articles
 python internal_linker.py
@@ -138,7 +138,7 @@ youtube:
       best_quote: "Quote from transcript..."
       key_points: ["Point 1", "Point 2"]
       pro_tips: ["Tip 1", "Tip 2"]
-tags: ["lawn care", "seasonal"]
+tags: ["cannabis", "seasonal"]
 status: "published"
 season: "spring"  # spring, summer, fall, winter, year-round
 has_affiliate_links: true
@@ -170,7 +170,7 @@ All images generated via `regenerate_images.py` → `generate_image()`.
 | Section | 1536 × 1152 | 4:3 | Before "Key Takeaways" |
 
 **Style:** Candid documentary photography
-- People actively performing lawn care tasks
+- People actively performing cannabis tasks
 - Faces never visible (privacy)
 - Seasonal lighting adjustments (spring dew, summer heat, fall colors)
 
@@ -190,7 +190,7 @@ All images generated via `regenerate_images.py` → `generate_image()`.
 - Image alt text
 - Already-linked text
 
-**Product database:** `products/lawn_care_products.json`
+**Product database:** `products/cannabis_products.json`
 
 ---
 
@@ -387,7 +387,7 @@ Content generator checks for duplicate articles before generating:
 
 Use `--force` flag to skip duplicate check:
 ```bash
-python content_generator.py --keyword "spring lawn care" --force
+python content_generator.py --keyword "spring cannabis" --force
 ```
 
 ---
@@ -454,7 +454,7 @@ python freshness_tracker.py --save           # Save report to file
    🟡 another-article (380 days)
 
 🌱 Seasonal Refresh Needed:
-   📆 spring-lawn-care (spring) - 45 days until season
+   📆 spring-cannabis-care (spring) - 45 days until season
 ```
 
 **Storage:** `reports/freshness_report_YYYYMMDD.json`

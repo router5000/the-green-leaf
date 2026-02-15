@@ -13,10 +13,10 @@ export async function generateMetadata({ searchParams }: SearchPageProps): Promi
   const query = params.q || ''
 
   return {
-    title: query ? `Search: ${query} - Lawn Care Center` : 'Search - Lawn Care Center',
+    title: query ? `Search: ${query} - The Green Leaf` : 'Search - The Green Leaf',
     description: query
-      ? `Search results for "${query}" - Find lawn care articles and videos`
-      : 'Search lawn care articles and videos',
+      ? `Search results for "${query}" - Find cannabis articles and videos`
+      : 'Search cannabis articles and videos',
     robots: {
       index: false,
       follow: true,
@@ -35,11 +35,11 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
     <div className="max-w-6xl mx-auto px-4 py-12">
       {/* Search Header */}
       <div className="mb-8">
-        <h1 className="text-4xl font-bold text-grass-900 mb-4">
+        <h1 className="text-4xl font-bold text-leaf-900 mb-4">
           {query ? (
             <>
               Search Results for{' '}
-              <span className="text-grass-600">&ldquo;{query}&rdquo;</span>
+              <span className="text-leaf-600">&ldquo;{query}&rdquo;</span>
             </>
           ) : (
             'Search'
@@ -54,9 +54,9 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
       {/* No Query State */}
       {!query && (
-        <div className="bg-grass-50 rounded-xl p-12 text-center">
+        <div className="bg-leaf-50 rounded-xl p-12 text-center">
           <svg
-            className="w-16 h-16 mx-auto text-grass-400 mb-4"
+            className="w-16 h-16 mx-auto text-leaf-400 mb-4"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -68,11 +68,11 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
               d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
             />
           </svg>
-          <h2 className="text-xl font-semibold text-grass-900 mb-2">
+          <h2 className="text-xl font-semibold text-leaf-900 mb-2">
             Search Our Library
           </h2>
           <p className="text-gray-600 mb-6">
-            Find lawn care articles, tips, and expert video guides
+            Find cannabis articles, tips, and expert video guides
           </p>
           <div className="flex flex-wrap justify-center gap-2">
             <span className="text-sm text-gray-500">Popular searches:</span>
@@ -80,7 +80,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
               <Link
                 key={term}
                 href={`/search?q=${encodeURIComponent(term)}`}
-                className="px-3 py-1 bg-white text-grass-700 rounded-full text-sm hover:bg-grass-100 transition border border-grass-200"
+                className="px-3 py-1 bg-white text-leaf-700 rounded-full text-sm hover:bg-leaf-100 transition border border-leaf-200"
               >
                 {term}
               </Link>
@@ -120,7 +120,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
             </ul>
             <Link
               href="/articles"
-              className="inline-block mt-4 px-6 py-2 bg-grass-600 text-white rounded-lg hover:bg-grass-700 transition"
+              className="inline-block mt-4 px-6 py-2 bg-leaf-600 text-white rounded-lg hover:bg-leaf-700 transition"
             >
               Browse All Articles
             </Link>
@@ -142,7 +142,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         <div className="mt-12 text-center">
           <Link
             href="/articles"
-            className="text-grass-600 hover:text-grass-800 font-medium"
+            className="text-leaf-600 hover:text-leaf-800 font-medium"
           >
             ← Browse All Articles
           </Link>

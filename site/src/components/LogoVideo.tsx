@@ -17,7 +17,7 @@ function Video({ isHovered }: { isHovered: boolean }) {
   return (
     <video
       ref={videoRef}
-      src="/images/lawn_care_center_hover.mp4"
+      src="/images/the_green_leaf_hover.mp4"
       muted
       playsInline
       className="h-8 sm:h-10 md:h-14 lg:h-16 w-auto"
@@ -35,8 +35,8 @@ export default function LogoLink({ className }: { className: string }) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <span className="text-grass-900">Lawn Care</span>
-      <span className="text-amber-600">Center</span>
+      <span className="text-leaf-900">The Green</span>
+      <span className="text-amber-600">Leaf</span>
       <Video isHovered={isHovered} />
     </Link>
   )

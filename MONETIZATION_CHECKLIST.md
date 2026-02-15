@@ -38,7 +38,7 @@
 **How to Apply**:
 1. Visit https://www.google.com/adsense/start/
 2. Sign in with Google account
-3. Enter website URL: `lawncare.center`
+3. Enter website URL: `thegreenleaf.com`
 4. Paste ad code in `site/src/app/layout.tsx` (between `<head>` tags)
 5. Wait for approval (typically 1-2 weeks)
 
@@ -68,17 +68,17 @@
 **How to Apply**:
 1. Visit https://affiliate-program.amazon.com/
 2. Sign up with your Amazon account
-3. Enter website information: `lawncare.center`
-4. Describe your website: "Lawn care tips and product recommendations"
+3. Enter website information: `thegreenleaf.com`
+4. Describe your website: "Cannabis tips and product recommendations"
 5. Wait for approval (usually instant)
 
 **Commission Rates**:
-- Lawn & Garden products: 3-8%
+- Cannabis & Garden products: 3-8%
 - Outdoor power equipment: 3%
 - Home improvement: 3-5%
 
 **Product Categories to Promote**:
-- Lawn mowers
+- Cannabis mowers
 - Fertilizers (Scotts, Miracle-Gro)
 - Weed control products
 - Grass seed
@@ -124,7 +124,7 @@ export function ProductCard({
 **Home Depot Affiliate**
 - URL: https://www.homedepotaffiliates.com/
 - Commission: 3-8%
-- Products: Lawn equipment, fertilizers, tools
+- Products: Cannabis equipment, fertilizers, tools
 
 **Lowe's Affiliate**
 - URL: https://www.lowesforpros.com/affiliates
@@ -132,7 +132,7 @@ export function ProductCard({
 - Products: Similar to Home Depot
 
 **Impact Radius / ShareASale**
-- Multiple lawn care brands
+- Multiple cannabis brands
 - Scotts, TruGreen, and others
 - Variable commission rates
 
@@ -183,7 +183,7 @@ export function ProductCard({
 
 ### Week 3: Affiliate Content
 - [ ] Create "Best Products" articles:
-  - "Best Lawn Mowers for 2025"
+  - "Best Cannabis Mowers for 2025"
   - "Top 5 Fertilizers for Green Grass"
   - "Best Grass Seed Varieties"
 - [ ] Add product recommendation boxes to existing articles
@@ -202,24 +202,24 @@ export function ProductCard({
 ### High-Value Article Types
 
 **Product Reviews**
-- "X vs Y: Which Lawn Mower is Better?"
+- "X vs Y: Which Cannabis Mower is Better?"
 - "Honest Review: [Product Name]"
 - "Is [Expensive Product] Worth It?"
 
 **Comparison Guides**
-- "5 Best Lawn Fertilizers Compared"
+- "5 Best Cannabis Fertilizers Compared"
 - "Reel Mower vs Rotary Mower: Complete Guide"
 - "Organic vs Synthetic Fertilizer"
 
 **Buyer's Guides**
-- "How to Choose the Right Lawn Mower"
-- "Lawn Fertilizer Buying Guide"
+- "How to Choose the Right Cannabis Mower"
+- "Cannabis Fertilizer Buying Guide"
 - "Best Grass Seed for Your Climate"
 
 **Seasonal Recommendations**
-- "Spring Lawn Care Product Checklist"
-- "Must-Have Tools for Fall Lawn Care"
-- "Summer Lawn Essentials"
+- "Spring Cannabis Product Checklist"
+- "Must-Have Tools for Fall Cannabis"
+- "Summer Cannabis Essentials"
 
 ---
 

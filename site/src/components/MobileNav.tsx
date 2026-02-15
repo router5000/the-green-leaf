@@ -81,7 +81,7 @@ export default function MobileNav() {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="relative p-2 w-10 h-10 text-gray-600 hover:text-grass-600 transition-colors z-50"
+        className="relative p-2 w-10 h-10 text-gray-600 hover:text-leaf-600 transition-colors z-50"
         aria-label={isOpen ? 'Close menu' : 'Open menu'}
         aria-expanded={isOpen}
       >
@@ -144,7 +144,7 @@ export default function MobileNav() {
             >
               {/* Header */}
               <div className="flex items-center justify-between p-4 border-b border-gray-100">
-                <span className="text-lg font-serif text-grass-700">Menu</span>
+                <span className="text-lg font-serif text-leaf-700">Menu</span>
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
@@ -171,8 +171,8 @@ export default function MobileNav() {
                       onClick={() => setIsOpen(false)}
                       className={`flex items-center px-6 py-4 text-lg font-medium transition-all ${
                         isActive(item.href)
-                          ? 'text-grass-600 bg-grass-50 border-r-4 border-grass-500'
-                          : 'text-gray-700 hover:text-grass-600 hover:bg-gray-50 active:bg-gray-100'
+                          ? 'text-leaf-600 bg-leaf-50 border-r-4 border-leaf-500'
+                          : 'text-gray-700 hover:text-leaf-600 hover:bg-gray-50 active:bg-gray-100'
                       }`}
                     >
                       {item.label}
@@ -189,7 +189,7 @@ export default function MobileNav() {
                 transition={{ delay: 0.3 }}
               >
                 <p className="text-xs text-gray-400 text-center">
-                  Lawn Care Center
+                  The Green Leaf
                 </p>
               </motion.div>
             </motion.nav>

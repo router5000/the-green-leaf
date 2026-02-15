@@ -1,6 +1,6 @@
 """
 Automated Amazon Affiliate Link System
-Detects product opportunities in lawn care content and inserts affiliate links.
+Detects product opportunities in cannabis content and inserts affiliate links.
 """
 
 import json
@@ -20,7 +20,7 @@ AFFILIATE_DISCLOSURE = """
 
 def load_product_database():
     """Load the curated product database."""
-    db_path = Path(__file__).parent / "products" / "lawn_care_products.json"
+    db_path = Path(__file__).parent / "products" / "cannabis_products.json"
     with open(db_path, 'r') as f:
         return json.load(f)
 
@@ -267,17 +267,17 @@ def generate_affiliate_metadata(inserted_links: List[Dict]) -> Dict:
 # Example usage
 if __name__ == "__main__":
     # Test with sample content
-    sample_content = """# How to Aerate Your Lawn
+    sample_content = """# How to Set Up Your Indoor Cannabis Grow Room
 
-Lawn aeration is essential for healthy grass growth. Using a core aerator helps improve soil drainage and oxygen flow to grass roots.
+Setting up a proper indoor grow room is essential for healthy cannabis plants. Using quality grow lights and ventilation helps ensure optimal growth and yield.
 
-## Tools You'll Need
+## Equipment You'll Need
 
-For aerating, you'll need a manual aerator or spike aerator shoes for small lawns. Larger properties benefit from a powered aerator.
+For indoor growing, you'll need LED grow lights, a grow tent, inline fan with carbon filter, and fabric pots. Hydroponic setups benefit from a quality nutrient solution.
 
 ## Best Practices
 
-Apply lawn fertilizer after aeration for better nutrient absorption. Use a broadcast spreader for even application.
+Monitor pH levels regularly and maintain proper humidity during the flowering stage. Use a digital thermometer to track temperature.
 """
 
     result = process_article_for_affiliates(sample_content, max_links=5)

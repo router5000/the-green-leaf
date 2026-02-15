@@ -39,7 +39,7 @@ RUNWARE_ENDPOINT = "https://api.runware.ai/v1"
 
 def build_image_prompt(keyword, season, image_type="hero"):
     """
-    Build an optimized prompt for lawn care images with style diversity.
+    Build an optimized prompt for cannabis images with style diversity.
 
     Prompt structure: [Subject] → [Setting] → [Style/Lighting] → [Constraints]
 
@@ -50,10 +50,10 @@ def build_image_prompt(keyword, season, image_type="hero"):
     # Seasonal lighting (concise)
     season_lighting = {
         "spring": "soft morning light, dew on grass, flowering trees",
-        "summer": "warm golden hour, vibrant green lawn, blue sky",
+        "summer": "warm golden hour, vibrant green cannabis, blue sky",
         "fall": "warm afternoon light, scattered autumn leaves",
         "winter": "overcast diffused light, frost on grass, bare trees",
-        "evergreen": "natural daylight, healthy lawn"
+        "evergreen": "natural daylight, healthy cannabis"
     }
     lighting = season_lighting.get(season, season_lighting["evergreen"])
 
@@ -69,15 +69,15 @@ def build_image_prompt(keyword, season, image_type="hero"):
     # Detect specific problem for before/after
     problems = {
         "bare": "bare dirt patches", "dead": "dead brown grass",
-        "weed": "weed-infested lawn", "brown": "brown discolored grass",
+        "weed": "weed-infested cannabis", "brown": "brown discolored grass",
         "grub": "grub damage", "fungus": "fungal disease spots",
         "thatch": "thick thatch buildup", "moss": "moss patches"
     }
-    detected_problem = next((problems[k] for k in problems if k in keyword_lower), "lawn damage")
+    detected_problem = next((problems[k] for k in problems if k in keyword_lower), "cannabis damage")
 
     # Activity mapping for person shots
     activities = {
-        "mow": "pushing lawn mower, fresh stripes visible",
+        "mow": "pushing cannabis mower, fresh stripes visible",
         "seed": "using spreader, seeds dispersing", "overseed": "using spreader, seeds dispersing",
         "fertiliz": "walking with broadcast spreader",
         "water": "watering with hose, water mist in sunlight",
@@ -86,7 +86,7 @@ def build_image_prompt(keyword, season, image_type="hero"):
         "rake": "raking leaves or debris", "dethatch": "using dethatcher, debris visible",
         "edge": "using string trimmer along edge", "trim": "using string trimmer along edge"
     }
-    activity = next((activities[k] for k in activities if k in keyword_lower), "doing lawn maintenance")
+    activity = next((activities[k] for k in activities if k in keyword_lower), "doing cannabis maintenance")
 
     # Style selection with weighting
     styles = ["grass_only", "yard_home", "person_activity"]
@@ -101,8 +101,8 @@ def build_image_prompt(keyword, season, image_type="hero"):
     if selected_style == "before_after":
         prompt = (
             f"Before-and-after split photograph showing {keyword} results. "
-            f"LEFT: {detected_problem}, visible lawn issues. "
-            f"RIGHT: Same lawn transformed - lush healthy green grass. "
+            f"LEFT: {detected_problem}, visible cannabis issues. "
+            f"RIGHT: Same cannabis transformed - lush healthy green grass. "
             f"Clear vertical dividing line. {lighting}. "
             f"Photorealistic, suburban residential setting. "
             f"No text, watermarks, or labels."
@@ -112,14 +112,14 @@ def build_image_prompt(keyword, season, image_type="hero"):
         plant = next((p for p in plant_keywords if p in keyword_lower), "plants")
         prompt = (
             f"Beautiful photograph of {plant} in residential landscape. "
-            f"Healthy {plant} with green lawn visible. "
+            f"Healthy {plant} with green cannabis visible. "
             f"{lighting}. Shallow depth of field, sharp subject. "
             f"Garden photography style, photorealistic. "
             f"No text or watermarks."
         )
 
     elif selected_style == "grass_only":
-        grass_desc = f"{detected_grass} grass" if detected_grass else "healthy lawn grass"
+        grass_desc = f"{detected_grass} grass" if detected_grass else "healthy cannabis grass"
         angle = random.choice(["low angle from grass level", "overhead view", "45-degree angle"])
         prompt = (
             f"Stunning {angle} photograph of {grass_desc}. "
@@ -131,7 +131,7 @@ def build_image_prompt(keyword, season, image_type="hero"):
     elif selected_style == "yard_home":
         home = random.choice(["craftsman home", "colonial house", "modern farmhouse", "ranch house"])
         prompt = (
-            f"Beautiful photograph of {home} with pristine lawn. "
+            f"Beautiful photograph of {home} with pristine cannabis. "
             f"Well-maintained yard showcasing healthy grass. "
             f"{lighting}. Wide establishing shot. "
             f"Real estate photography style, magazine quality. "
@@ -141,7 +141,7 @@ def build_image_prompt(keyword, season, image_type="hero"):
     else:  # person_activity
         prompt = (
             f"Documentary photograph: person {activity}. "
-            f"Suburban backyard, healthy lawn. {lighting}. "
+            f"Suburban backyard, healthy cannabis. {lighting}. "
             f"Candid shot from behind or side, face not visible. "
             f"Casual work clothes. Photorealistic lifestyle photography. "
             f"No text or watermarks."
@@ -325,9 +325,9 @@ def update_markdown_frontmatter(file_path, hero_image_path, section_image_path):
 
 if __name__ == "__main__":
     # Configuration for the article
-    article_file = "site/content/posts/how-to-overseed-lawn.md"
-    keyword = "how to overseed lawn"
-    slug = "how-to-overseed-lawn"
+    article_file = "site/content/posts/how-to-overseed-cannabis.md"
+    keyword = "how to overseed cannabis"
+    slug = "how-to-overseed-cannabis"
     season = "fall"
 
     print(f"\n🌱 Regenerating Images for Article")
