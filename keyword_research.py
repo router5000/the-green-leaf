@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-Keyword Research Module for Lawn Care Content Engine
+Keyword Research Module for The Green Leaf Cannabis Content Engine
 
 Uses Google Trends API (free) with optional Keywords Everywhere API for search volume.
 Intelligently selects keywords based on:
-- Seasonal relevance
+- Seasonal relevance (outdoor growing seasons)
 - Trending interest
 - Competition (avoiding already-published topics)
 - Search volume (if Keywords Everywhere API key provided)
@@ -43,222 +43,197 @@ SITE_CONTENT_PATH = Path("site/content/posts")
 KEYWORD_CACHE_PATH = Path(".cache/keyword_cache.json")
 CACHE_TTL_HOURS = 24
 
-# Lawn care topic bank organized by season
-LAWN_CARE_TOPICS = {
+# Cannabis topic bank organized by season (outdoor growing calendar) + evergreen clusters
+CANNABIS_TOPICS = {
+    # Spring: germination, seedlings, transplanting outdoors, strain selection
     "spring": [
-        "when to start mowing lawn in spring",
-        "spring lawn fertilizer schedule",
-        "how to dethatch lawn",
-        "overseeding bare spots in spring",
-        "spring lawn care checklist",
-        "pre-emergent herbicide timing",
-        "lawn aeration in spring",
-        "how to fix winter lawn damage",
-        "spring weed control tips",
-        "best grass seed for spring planting",
-        "lawn mower spring maintenance",
-        "when to apply crabgrass preventer",
-        "spring lawn watering schedule",
-        "how to level a bumpy lawn",
-        "repairing lawn after snow mold",
+        "how to germinate cannabis seeds",
+        "cannabis seedling care guide",
+        "when to transplant cannabis outdoors",
+        "best cannabis strains for outdoor growing",
+        "how to sex cannabis plants",
+        "cannabis seedling light schedule",
+        "starting cannabis seeds indoors",
+        "feminized vs autoflower seeds explained",
+        "cannabis germination rate tips",
+        "best soil mix for cannabis seedlings",
+        "how to harden off cannabis plants",
+        "cloning cannabis plants beginners guide",
+        "cannabis companion planting guide",
+        "organic cannabis soil preparation",
+        "cannabis grow calendar spring checklist",
     ],
+    # Summer: vegetative training, nutrients, pest/disease management
     "summer": [
-        "how often to water lawn in summer",
-        "summer lawn care tips",
-        "how to keep grass green in heat",
-        "lawn mowing height for summer",
-        "grub control for lawns",
-        "brown patch lawn disease treatment",
-        "summer fertilizer for lawns",
-        "drought tolerant grass types",
-        "how to fix heat stressed lawn",
-        "chinch bug lawn damage",
-        "summer weed control",
-        "best time to water lawn in summer",
-        "lawn fungus treatment summer",
-        "how to reduce lawn watering",
-        "summer lawn diseases identification",
+        "cannabis vegetative stage nutrients guide",
+        "how to top cannabis plants",
+        "low stress training LST cannabis guide",
+        "SCROG method for cannabis explained",
+        "cannabis watering schedule guide",
+        "how to identify cannabis nutrient deficiencies",
+        "cannabis pH and EC guide",
+        "fimming vs topping cannabis plants",
+        "cannabis defoliation techniques",
+        "how to identify cannabis pests",
+        "spider mites on cannabis treatment",
+        "cannabis root development guide",
+        "super cropping cannabis technique",
+        "cannabis nitrogen deficiency vs light burn",
+        "outdoor cannabis training techniques",
     ],
+    # Fall: harvest, drying, curing — peak search season
     "fall": [
-        "fall lawn care schedule",
-        "overseeding lawn in fall",
-        "fall fertilizer for lawns",
-        "when to stop mowing lawn in fall",
-        "fall lawn aeration benefits",
-        "leaf removal lawn care",
-        "winterizing lawn mower",
-        "fall weed control tips",
-        "best grass seed for fall planting",
-        "preparing lawn for winter",
-        "fall lawn watering guide",
-        "when to apply fall fertilizer",
-        "core aeration vs spike aeration",
-        "fall lawn disease prevention",
-        "how to seed bare spots in fall",
+        "when to harvest cannabis plants",
+        "how to read cannabis trichomes for harvest",
+        "cannabis flushing before harvest guide",
+        "how to dry cannabis buds properly",
+        "cannabis curing guide for beginners",
+        "wet trimming vs dry trimming cannabis",
+        "cannabis harvest checklist outdoor",
+        "how long to cure cannabis",
+        "cannabis storage after curing",
+        "how to trim cannabis buds",
+        "cannabis drying room setup",
+        "cannabis brix levels and harvest timing",
+        "how to increase cannabis terpenes at harvest",
+        "cannabis yield per plant outdoor",
+        "cannabis bud rot prevention and treatment",
     ],
+    # Winter: indoor growing, lights, hydroponics, autoflowers
     "winter": [
-        "winter lawn care tips",
-        "protecting lawn from snow damage",
-        "winter lawn diseases",
-        "lawn mower winter storage",
-        "planning spring lawn renovation",
-        "winter lawn watering needs",
-        "salt damage lawn repair",
-        "winter lawn fertilizer",
-        "lawn care tools maintenance winter",
-        "cool season grass winter care",
-        "warm season grass dormancy care",
-        "snow mold prevention lawn",
-        "winter lawn weeds identification",
-        "frost damage lawn recovery",
-        "winter lawn care mistakes",
+        "indoor cannabis growing guide for beginners",
+        "best LED grow lights for cannabis 2026",
+        "cannabis grow tent setup guide",
+        "hydroponic cannabis growing DWC guide",
+        "autoflower cannabis grow guide",
+        "cannabis grow room ventilation setup",
+        "cannabis light cycle for flowering",
+        "best cannabis nutrients for indoor growing",
+        "cannabis coco coir growing guide",
+        "how to control humidity in cannabis grow room",
+        "cannabis cloning success rate tips",
+        "cannabis sea of green SOG method",
+        "LED vs HPS grow lights for cannabis",
+        "cannabis VPD chart explained",
+        "cannabis grow journal how to start",
     ],
+    # Evergreen education — foundational, high-volume, durable traffic
     "evergreen": [
-        "how to get thicker grass",
-        "lawn fertilizer npk explained",
-        "organic lawn care tips",
-        "lawn care for beginners",
-        "best lawn mower for small yards",
-        "how to sharpen lawn mower blades",
-        "soil testing for lawns",
-        "lawn ph balance guide",
-        "types of grass for lawns",
-        "lawn edging techniques",
-        "how to remove lawn weeds naturally",
-        "lawn striping techniques",
-        "electric vs gas lawn mower",
-        "robotic lawn mower guide",
-        "lawn care subscription services",
-        "how to measure lawn size",
-        "lawn sprinkler system setup",
-        "shade tolerant grass types",
-        "pet safe lawn care",
-        "lawn renovation cost guide",
+        "indica vs sativa vs hybrid explained",
+        "cannabis for beginners complete guide",
+        "how does THC affect the brain",
+        "what is CBD and how does it work",
+        "cannabis consumption methods compared",
+        "how to dose cannabis edibles safely",
+        "cannabis tolerance explained",
+        "how to store cannabis properly",
+        "cannabis and alcohol interaction",
+        "cannabis entourage effect explained",
+        "how to roll a joint step by step",
+        "cannabis tincture how to use",
+        "cannabis microdosing guide",
+        "cannabis drug test how long does it stay",
+        "first time cannabis user tips",
+        "cannabis smoke vs vaporize comparison",
+        "cannabis allergy symptoms and causes",
+        "how to make cannabis tea",
+        "cannabis edibles vs smoking onset time",
+        "cannabis tolerance break benefits",
     ],
-    # Weed-killer cluster — high commercial intent, affiliate $$ on Tenacity, Sedgehammer, Drive XLR8, etc.
-    # Crabgrass already covered nationally — start with the next 30 highest-volume weeds.
-    "weeds": [
-        "how to get rid of nutsedge in lawn",
-        "how to kill dollarweed in lawn",
-        "creeping charlie killer that won't kill grass",
-        "how to get rid of wild violets in lawn",
-        "how to kill chickweed in lawn",
-        "how to get rid of henbit in lawn",
-        "how to kill plantain weed in lawn",
-        "how to get rid of spurge in lawn",
-        "oxalis killer for lawns",
-        "how to kill ground ivy in lawn",
-        "how to get rid of quackgrass in lawn",
-        "foxtail weed killer for lawns",
-        "how to kill bermuda grass in fescue lawn",
-        "poa annua control in lawn",
-        "goosegrass vs crabgrass identification",
-        "how to get rid of thistle in lawn",
-        "purslane killer for lawns",
-        "japanese knotweed killer",
-        "johnson grass killer for lawns",
-        "field bindweed control in lawn",
-        "how to get rid of mallow in lawn",
-        "lambs quarters in lawn",
-        "yellow nutsedge vs purple nutsedge",
-        "best post emergent for nutsedge",
-        "selective herbicide for st augustine grass",
-        "selective herbicide for bermuda grass",
-        "best weed killer for tall fescue lawn",
-        "how to identify common lawn weeds",
-        "best 3 way weed killer for lawns",
-        "broadleaf weed killer comparison",
+    # Strain guides — high affiliate potential (seed banks), perennial curiosity
+    "strains": [
+        "best strains for anxiety and stress",
+        "best cannabis strains for sleep",
+        "best strains for chronic pain relief",
+        "best sativa strains for energy and focus",
+        "best indica strains for relaxation",
+        "high CBD low THC strains guide",
+        "Blue Dream strain effects and review",
+        "OG Kush strain guide and effects",
+        "Girl Scout Cookies strain review",
+        "Gorilla Glue strain effects guide",
+        "Wedding Cake strain review",
+        "Gelato strain effects and terpenes",
+        "Jack Herer strain review",
+        "Northern Lights strain guide",
+        "Granddaddy Purple strain effects",
+        "Sour Diesel strain effects review",
+        "best strains for creativity",
+        "best strains for nausea and appetite",
+        "best cannabis strains for depression",
+        "high THC strains list 2026",
     ],
-    # Lawn pest cluster — affiliate (GrubEx, BioAdvanced, beneficial nematodes) + lead gen
-    "pests": [
-        "how to identify grub damage in lawn",
-        "when to apply grub control",
-        "chinch bug damage vs drought stress",
-        "how to get rid of armyworms in lawn",
-        "fall armyworm treatment for lawns",
-        "how to identify mole crickets in lawn",
-        "sod webworm damage and treatment",
-        "billbug damage in lawn",
-        "how to get rid of fire ants in lawn",
-        "how to get rid of fleas in yard",
-        "how to treat ticks in lawn naturally",
-        "japanese beetle grub treatment",
-        "vole damage in lawn repair",
-        "mole control for lawns",
-        "gopher control for yards",
-        "cutworm damage to grass",
-        "lawn pest identification guide",
-        "beneficial nematodes for lawn pests",
-        "milky spore for grub control",
-        "lawn pest prevention schedule",
+    # Growing equipment/products — strong affiliate (Mars Hydro, AC Infinity, Fox Farm, etc.)
+    "growing": [
+        "best cannabis grow lights under $200",
+        "AC Infinity vs other inline fans review",
+        "Fox Farm vs General Hydroponics nutrients",
+        "best cannabis growing medium comparison",
+        "cannabis grow tent brands compared",
+        "best carbon filter for grow tent",
+        "smart cannabis grow controllers review",
+        "best cannabis fertilizer for beginners",
+        "cannabis pH meters comparison",
+        "best pots for cannabis growing",
+        "cannabis grow light coverage calculator",
+        "best cannabis seeds to buy online",
+        "autoflower vs photoperiod cannabis comparison",
+        "cannabis seedling heat mat guide",
+        "best humidity controller for grow room",
     ],
-    # Lawn disease cluster — extension PDFs dominate, commercial pages weak; fungicide affiliates
-    "diseases": [
-        "brown patch fungus treatment for lawn",
-        "dollar spot lawn disease treatment",
-        "red thread lawn disease",
-        "rust fungus on grass treatment",
-        "fairy ring lawn treatment",
-        "large patch vs brown patch",
-        "gray leaf spot in st augustine",
-        "pythium blight treatment for lawn",
-        "snow mold lawn repair in spring",
-        "take-all root rot treatment",
-        "leaf spot on lawn grass",
-        "summer patch disease treatment",
-        "anthracnose lawn disease",
-        "best fungicide for brown patch",
-        "lawn disease identification chart",
-        "preventing lawn fungus in humid weather",
+    # Wellness and health — medical cannabis, CBD, research-backed claims
+    "wellness": [
+        "cannabis for anxiety research and evidence",
+        "CBD oil for pain management guide",
+        "medical cannabis conditions it treats",
+        "cannabis and sleep quality research",
+        "cannabis for inflammation and arthritis",
+        "microdosing cannabis for mental health",
+        "cannabis and PTSD treatment research",
+        "CBD dosage guide by weight",
+        "cannabis for nausea and chemotherapy",
+        "cannabis and exercise recovery",
+        "cannabis for migraines evidence",
+        "CBD vs THC for anxiety which is better",
+        "cannabis and epilepsy CBD research",
+        "cannabis harm reduction guide",
+        "cannabis dependency signs and prevention",
     ],
-    # USDA zone calendars — durable evergreen, supports state hubs
-    "zones": [
-        "zone 5 lawn care calendar",
-        "zone 6 lawn care calendar",
-        "zone 7 lawn care calendar",
-        "zone 8 lawn care calendar",
-        "zone 9 lawn care calendar",
-        "when to plant grass seed zone 5",
-        "when to plant grass seed zone 6",
-        "when to plant grass seed zone 7",
-        "when to plant grass seed zone 8",
-        "best grass for zone 6",
-        "best grass for zone 7",
-        "best grass for zone 8",
-        "pre emergent timing zone 6",
-        "pre emergent timing zone 7",
-        "fall fertilizer zone 6",
+    # Legal and policy — high news-driven traffic, low competition educational content
+    "legal": [
+        "cannabis legalization by state 2026",
+        "recreational cannabis states list",
+        "cannabis possession limits by state",
+        "how to get a medical cannabis card",
+        "cannabis social equity programs explained",
+        "cannabis expungement how it works",
+        "cannabis DUI laws by state",
+        "traveling with cannabis laws guide",
+        "cannabis home grow laws by state",
+        "cannabis employment drug testing laws",
+        "cannabis banking laws SAFE Act explained",
+        "federal cannabis legalization timeline",
+        "cannabis licensing requirements by state",
+        "cannabis delivery service laws",
+        "cannabis gifting laws explained",
     ],
-    # Cost/pricing — lead gen revenue (Networx, HomeAdvisor, Angi). Long-tail wins, avoid head terms.
-    "cost": [
-        "lawn aeration cost per square foot",
-        "sod installation cost per pallet",
-        "lawn dethatching cost",
-        "overseeding cost per acre",
-        "lawn fertilization service cost",
-        "fall lawn cleanup cost",
-        "grub treatment cost",
-        "lawn fungicide treatment cost",
-        "lawn mowing cost per acre",
-        "tree stump grinding cost",
-        "lawn renovation cost per square foot",
-        "mulch installation cost per yard",
-        "leaf removal service cost",
-    ],
-    # Irrigation/sprinkler — strong affiliate (Rachio, Orbit, Rain Bird) + lead gen for installs
-    "irrigation": [
-        "how long to water lawn each zone",
-        "smart sprinkler controller comparison",
-        "drip irrigation for lawn beds",
-        "sprinkler system winterization",
-        "rain sensor for sprinkler system",
-        "pop up sprinkler vs rotor head",
-        "best smart sprinkler controller 2026",
-        "how to fix low pressure sprinkler head",
-        "wifi hose timer comparison",
-        "rachio vs rain bird vs orbit",
-        "soaker hose vs drip irrigation lawn",
-        "sprinkler head spacing guide",
+    # Science and cannabinoids — attracts educated readers, strong SEO authority signal
+    "science": [
+        "cannabis terpenes complete guide and effects",
+        "THC vs CBD vs CBN vs CBG explained",
+        "THCA vs THC what is the difference",
+        "cannabis cannabinoids full list and effects",
+        "myrcene terpene effects and strains",
+        "limonene terpene cannabis effects",
+        "beta-caryophyllene terpene guide",
+        "linalool terpene cannabis effects",
+        "pinene terpene effects cannabis",
+        "cannabis endocannabinoid system explained",
+        "cannabis pharmacology how it works",
+        "THCV effects and benefits guide",
+        "CBC cannabinoid effects explained",
+        "cannabis terpene profiles by strain",
+        "cannabis extraction methods compared",
     ],
 }
 
@@ -283,9 +258,9 @@ def get_relevant_seasons() -> list[str]:
     current_idx = season_order.index(current)
     next_idx = (current_idx + 1) % 4
 
-    # Always pull from cluster banks too — these are evergreen commercial-intent buckets
-    # that earn the most affiliate/lead-gen revenue and aren't bound to one season.
-    always_on_clusters = ["weeds", "pests", "diseases", "zones", "cost", "irrigation"]
+    # Always pull from cluster banks — evergreen commercial-intent buckets
+    # not bound to a single season.
+    always_on_clusters = ["strains", "growing", "wellness", "legal", "products", "science"]
 
     return [current, season_order[next_idx], "evergreen"] + always_on_clusters
 
@@ -498,7 +473,7 @@ def find_best_keyword(
     candidates = []
     for season in seasons:
         relevance = 1.0 if season == seasons[0] else (0.8 if season == "evergreen" else 0.6)
-        for kw in LAWN_CARE_TOPICS.get(season, []):
+        for kw in CANNABIS_TOPICS.get(season, []):
             candidates.append({
                 "keyword": kw,
                 "season": season,
@@ -586,51 +561,54 @@ def find_best_keyword(
     return top_results
 
 
-def get_trending_lawn_topics() -> list[str]:
+def get_trending_cannabis_topics() -> list[str]:
     """
-    Get currently trending lawn care topics from Google Trends.
+    Get currently trending cannabis topics from Google Trends.
     Uses related queries feature to discover new topics.
     """
     if not PYTRENDS_AVAILABLE:
         return []
-    
+
     pytrends = TrendReq(hl='en-US', tz=360)
     trending = []
-    
-    seed_terms = ["lawn care", "grass care", "lawn mower", "fertilizer lawn"]
-    
+
+    seed_terms = ["cannabis", "marijuana strains", "CBD oil", "cannabis growing"]
+
     for term in seed_terms:
         try:
             pytrends.build_payload([term], cat=0, timeframe='today 1-m', geo='US')
             related = pytrends.related_queries()
-            
+
             if term in related and related[term]["rising"] is not None:
                 rising = related[term]["rising"]
                 for _, row in rising.head(5).iterrows():
                     query = row["query"]
-                    if any(word in query.lower() for word in ["lawn", "grass", "mow", "seed", "fertiliz"]):
+                    if any(word in query.lower() for word in [
+                        "cannabis", "marijuana", "weed", "cbd", "thc",
+                        "strain", "hemp", "dispensary", "edible", "terpene"
+                    ]):
                         trending.append(query)
-                        
+
         except Exception as e:
             print(f"Error getting related queries for {term}: {e}")
-    
+
     return list(set(trending))[:10]
 
 
 if __name__ == "__main__":
     import argparse
     
-    parser = argparse.ArgumentParser(description="Lawn Care Keyword Research")
+    parser = argparse.ArgumentParser(description="The Green Leaf Cannabis Keyword Research")
     parser.add_argument("--count", type=int, default=1, help="Number of keywords to find")
     parser.add_argument("--season", type=str, help="Force specific season")
     parser.add_argument("--no-cache", action="store_true", help="Ignore cache")
     parser.add_argument("--trending", action="store_true", help="Show trending topics")
-    
+
     args = parser.parse_args()
-    
+
     if args.trending:
-        print("\n📈 Discovering trending lawn care topics...")
-        trending = get_trending_lawn_topics()
+        print("\n📈 Discovering trending cannabis topics...")
+        trending = get_trending_cannabis_topics()
         if trending:
             print("Trending topics:")
             for topic in trending:
