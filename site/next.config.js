@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
+  trailingSlash: false,
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [

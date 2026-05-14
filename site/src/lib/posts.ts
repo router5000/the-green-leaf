@@ -3,7 +3,80 @@ import path from 'path'
 import matter from 'gray-matter'
 import { remark } from 'remark'
 import html from 'remark-html'
+import { unified } from 'unified'
+import rehypeParse from 'rehype-parse'
+import rehypeSanitize from 'rehype-sanitize'
+import rehypeStringify from 'rehype-stringify'
+import { defaultSchema } from 'hast-util-sanitize'
+import type { Schema } from 'hast-util-sanitize'
 import { cache } from 'react'
+
+/**
+ * Sanitization schema: extends the default hast-util-sanitize schema to allow
+ * the elements and attributes used in our article content while stripping
+ * dangerous constructs (script, style, event handlers, javascript: URLs).
+ */
+export const sanitizeSchema: Schema = {
+  ...defaultSchema,
+  clobberPrefix: '',
+  tagNames: [
+    ...(defaultSchema.tagNames || []),
+    'mark', 'time', 'figure', 'figcaption', 'iframe',
+  ],
+  attributes: {
+    ...defaultSchema.attributes,
+    '*': [
+      'className', 'id', 'title',
+      'itemScope', 'itemType', 'itemProp',
+    ],
+    a: [
+      ...(defaultSchema.attributes?.a || []),
+      'href', 'target', 'rel', 'title',
+    ],
+    img: [
+      ...(defaultSchema.attributes?.img || []),
+      'src', 'alt', 'title', 'width', 'height',
+      'loading', 'decoding', 'sizes',
+    ],
+    iframe: [
+      'src', 'title', 'allow', ['allowFullScreen', true],
+      'width', 'height', 'className',
+    ],
+    time: ['dateTime'],
+    th: ['className'],
+    td: ['className'],
+    div: [
+      ...(defaultSchema.attributes?.div || []),
+      'className',
+    ],
+    section: ['className', 'itemScope', 'itemType'],
+    p: ['className'],
+    span: ['className'],
+  },
+  protocols: {
+    ...defaultSchema.protocols,
+    src: ['http', 'https'],
+    href: ['http', 'https', 'mailto'],
+  },
+  allowComments: false,
+  strip: ['script', 'style'],
+}
+
+async function sanitizeHtml(rawHtml: string): Promise<string> {
+  const result = await unified()
+    .use(rehypeParse, { fragment: true })
+    .use(rehypeSanitize, sanitizeSchema)
+    .use(rehypeStringify, { allowDangerousHtml: false })
+    .process(rawHtml)
+  return String(result)
+}
+
+// Drop macOS-style copy artifacts like "slug 2.md" / "slug 3.md"
+function isPostFile(fileName: string): boolean {
+  if (!fileName.endsWith('.md')) return false
+  if (/ \d+\.md$/.test(fileName)) return false
+  return true
+}
 
 const postsDirectory = path.join(process.cwd(), 'content/posts')
 
@@ -53,6 +126,8 @@ export interface PostData {
   keyword: string
   featured_image?: string
   featured_image_alt?: string
+  section_image?: string
+  section_image_alt?: string
   tags: string[]
   status: string
   generated_at: string
@@ -81,7 +156,7 @@ export const getSortedPostsData = cache(function getSortedPostsData(): PostData[
 
   const fileNames = fs.readdirSync(postsDirectory)
   const allPostsData = fileNames
-    .filter(fileName => fileName.endsWith('.md'))
+    .filter(isPostFile)
     .map((fileName) => {
       const slug = fileName.replace(/\.md$/, '')
       const fullPath = path.join(postsDirectory, fileName)
@@ -117,7 +192,7 @@ export function getAllPostSlugs() {
   
   const fileNames = fs.readdirSync(postsDirectory)
   return fileNames
-    .filter(fileName => fileName.endsWith('.md'))
+    .filter(isPostFile)
     .map((fileName) => {
       return {
         params: {
@@ -210,14 +285,21 @@ export async function getPostData(slug: string): Promise<PostData> {
 
   // Replace YouTube shortcodes with HTML BEFORE markdown processing
   // Pattern: {{< youtube id="VIDEO_ID" title="TITLE" channel="CHANNEL" >}}
+  const youtubeIdPattern = /^[a-zA-Z0-9_-]{11}$/
+  const stripHtmlTags = (str: string) => str.replace(/<[^>]*>/g, '')
   const youtubePattern = /\{\{<\s*youtube\s+id="([^"]+)"\s+title="([^"]+)"\s+channel="([^"]+)"\s*>\}\}/g
   const contentWithVideos = contentWithoutH1.replace(youtubePattern, (match, id, title, channel) => {
+    if (!youtubeIdPattern.test(id)) {
+      return ''
+    }
+    const safeTitle = stripHtmlTags(title)
+    const safeChannel = stripHtmlTags(channel)
     return `
 <div class="youtube-embed my-8">
 <div class="aspect-video rounded-xl overflow-hidden shadow-lg">
-<iframe src="https://www.youtube.com/embed/${id}?rel=0" title="${title}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"></iframe>
+<iframe src="https://www.youtube.com/embed/${id}?rel=0" title="${safeTitle}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full"></iframe>
 </div>
-<p class="text-sm text-gray-500 mt-2 text-center">📺 ${title} • ${channel}</p>
+<p class="text-sm text-gray-500 mt-2 text-center">📺 ${safeTitle} • ${safeChannel}</p>
 </div>
 `
   })
@@ -318,6 +400,9 @@ export async function getPostData(slug: string): Promise<PostData> {
       sources.push({ name: match[1], url: match[2] })
     }
   }
+
+  // Sanitize HTML to prevent stored XSS
+  contentHtml = await sanitizeHtml(contentHtml)
 
   // Parse HowTo steps from content (for schema)
   const postData = matterResult.data as Omit<PostData, 'slug' | 'contentHtml' | 'content'>

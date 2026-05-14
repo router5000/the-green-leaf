@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Auto-Publish Module for The Green Leaf Content Engine
+Auto-Publish Module for Lawn Care Content Engine
 
 Handles automatic Git operations after content generation:
 - Commits new articles and images
@@ -23,8 +23,12 @@ import yaml
 REPO_ROOT = Path(__file__).parent  # Assumes script is in repo root
 SITE_PATH = REPO_ROOT / "site"
 CONTENT_PATH = SITE_PATH / "content" / "posts"
+DRAFTS_PATH = REPO_ROOT / "drafts"
+STATES_CONTENT_PATH = SITE_PATH / "content" / "states"
 IMAGES_PATH = SITE_PATH / "public" / "images" / "articles"
+STATES_IMAGES_PATH = SITE_PATH / "public" / "images" / "states"
 LOG_DIR = REPO_ROOT / "logs"
+GIT_TIMEOUT = 300  # seconds — large repos with images need extra time
 
 # Logging setup
 LOG_DIR.mkdir(exist_ok=True)
@@ -41,7 +45,20 @@ def _log(msg: str) -> None:
     logger.info(msg)
 
 
-def run_git_command(args: list[str], cwd: Optional[Path] = None) -> tuple[bool, str]:
+def clean_git_locks() -> None:
+    """Remove stale lock files left by crashed git processes."""
+    lock_files = [
+        REPO_ROOT / ".git" / "index.lock",
+        REPO_ROOT / ".git" / "HEAD.lock",
+        REPO_ROOT / ".git" / "refs" / "heads" / "main.lock",
+    ]
+    for lock in lock_files:
+        if lock.exists():
+            lock.unlink()
+            _log(f"   Removed stale lock: {lock.name}")
+
+
+def run_git_command(args: list[str], cwd: Optional[Path] = None, timeout: Optional[int] = None) -> tuple[bool, str]:
     """
     Run a git command and return success status and output.
     """
@@ -51,13 +68,36 @@ def run_git_command(args: list[str], cwd: Optional[Path] = None) -> tuple[bool, 
             cwd=cwd or REPO_ROOT,
             capture_output=True,
             text=True,
-            timeout=60
+            timeout=timeout or GIT_TIMEOUT
         )
         return result.returncode == 0, result.stdout + result.stderr
     except subprocess.TimeoutExpired:
-        return False, "Command timed out"
+        return False, f"Command timed out after {timeout or GIT_TIMEOUT}s"
     except Exception as e:
         return False, str(e)
+
+
+def promote_draft(slug: str) -> bool:
+    """
+    Move an article from drafts/ to site/content/posts/ for publishing.
+    Returns True if the file was promoted (or already exists in posts).
+    """
+    draft = DRAFTS_PATH / f"{slug}.md"
+    target = CONTENT_PATH / f"{slug}.md"
+
+    if target.exists():
+        _log(f"   Article already in posts: {slug}.md")
+        return True
+
+    if not draft.exists():
+        _log(f"   Draft not found: {draft}")
+        return False
+
+    import shutil
+    CONTENT_PATH.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(draft, target)
+    _log(f"   Promoted draft to posts: {slug}.md")
+    return True
 
 
 def check_git_status() -> dict:
@@ -67,40 +107,47 @@ def check_git_status() -> dict:
     status = {
         "clean": True,
         "new_articles": [],
+        "new_state_articles": [],
         "new_images": [],
         "modified": [],
         "branch": "unknown"
     }
-    
+
     # Get current branch
     success, output = run_git_command(["branch", "--show-current"])
     if success:
         status["branch"] = output.strip()
-    
+
     # Get status
     success, output = run_git_command(["status", "--porcelain"])
     if not success:
         return status
-    
+
     for line in output.strip().split("\n"):
         if not line:
             continue
-        
+
         status_code = line[:2]
         filepath = line[3:]
-        
+
         if "content/posts/" in filepath and filepath.endswith(".md"):
             if status_code.startswith("?") or status_code.startswith("A"):
                 status["new_articles"].append(filepath)
             elif status_code.startswith("M"):
                 status["modified"].append(filepath)
-                
-        elif "images/articles/" in filepath:
+
+        elif "content/states/" in filepath and filepath.endswith(".md"):
+            if status_code.startswith("?") or status_code.startswith("A"):
+                status["new_state_articles"].append(filepath)
+            elif status_code.startswith("M"):
+                status["modified"].append(filepath)
+
+        elif "images/articles/" in filepath or "images/states/" in filepath:
             if status_code.startswith("?") or status_code.startswith("A"):
                 status["new_images"].append(filepath)
-    
-    status["clean"] = not (status["new_articles"] or status["new_images"] or status["modified"])
-    
+
+    status["clean"] = not (status["new_articles"] or status["new_state_articles"] or status["new_images"] or status["modified"])
+
     return status
 
 
@@ -137,7 +184,7 @@ def check_article_qa(md_file: Path, min_score: float = 7.0) -> tuple[bool, str]:
 
         return True, f"QA passed (score: {qa_score or 'N/A'})"
     except Exception as e:
-        return True, f"QA check error (publishing anyway): {e}"
+        return False, f"QA check error (blocking publish): {e}"
 
 
 def stage_content_files(skip_qa: bool = False) -> tuple[bool, list[str]]:
@@ -149,7 +196,7 @@ def stage_content_files(skip_qa: bool = False) -> tuple[bool, list[str]]:
     staged = []
     blocked = []
 
-    # Stage markdown files with QA validation
+    # Stage general markdown files with QA validation
     if CONTENT_PATH.exists():
         for md_file in CONTENT_PATH.glob("*.md"):
             if not skip_qa:
@@ -160,35 +207,64 @@ def stage_content_files(skip_qa: bool = False) -> tuple[bool, list[str]]:
                     continue
 
             success, _ = run_git_command(["add", str(md_file)])
-        if blocked:
-            print(f"\n   ⚠️  {len(blocked)} article(s) blocked by QA validation")
-        staged.append("content/posts/*.md")
+            if success:
+                staged.append(str(md_file))
 
-    # Stage images
+    # Stage state markdown files with QA validation
+    if STATES_CONTENT_PATH.exists():
+        for state_dir in STATES_CONTENT_PATH.iterdir():
+            if state_dir.is_dir():
+                for md_file in state_dir.glob("*.md"):
+                    if not skip_qa:
+                        passed, reason = check_article_qa(md_file)
+                        if not passed:
+                            blocked.append(f"{state_dir.name}/{md_file.name}: {reason}")
+                            print(f"   ⛔ Blocked: {state_dir.name}/{md_file.name} - {reason}")
+                            continue
+
+                    success, _ = run_git_command(["add", str(md_file)])
+                    if success:
+                        staged.append(str(md_file))
+
+    if blocked:
+        print(f"\n   ⚠️  {len(blocked)} article(s) blocked by QA validation")
+
+    # Stage article images
     if IMAGES_PATH.exists():
         success, _ = run_git_command(["add", str(IMAGES_PATH)])
         if success:
             staged.append("public/images/articles/*")
 
+    # Stage state images
+    if STATES_IMAGES_PATH.exists():
+        success, _ = run_git_command(["add", str(STATES_IMAGES_PATH)])
+        if success:
+            staged.append("public/images/states/*")
+
     return len(staged) > 0, staged
 
 
-def create_commit_message(articles: list[str], auto: bool = False) -> str:
+def create_commit_message(articles: list[str], state_articles: Optional[list[str]] = None, auto: bool = False) -> str:
     """
     Generate a descriptive commit message.
     """
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
-    
-    if len(articles) == 1:
-        # Extract article name from path
-        article_name = Path(articles[0]).stem.replace("-", " ").title()
-        prefix = "🤖 Auto-publish" if auto else "📝 Add"
+    state_articles = state_articles or []
+    total = len(articles) + len(state_articles)
+    prefix = "🤖 Auto-publish" if auto else "📝 Add"
+
+    if total == 0:
+        return f"📝 Content update ({timestamp})"
+    elif total == 1:
+        path = articles[0] if articles else state_articles[0]
+        article_name = Path(path).stem.replace("-", " ").title()
         return f"{prefix}: {article_name}"
-    elif len(articles) > 1:
-        prefix = "🤖 Auto-publish" if auto else "📝 Add"
+    elif state_articles and not articles:
+        return f"{prefix}: {len(state_articles)} new state articles ({timestamp})"
+    elif articles and not state_articles:
         return f"{prefix}: {len(articles)} new articles ({timestamp})"
     else:
-        return f"📝 Content update ({timestamp})"
+        return f"{prefix}: {len(articles)} articles + {len(state_articles)} state articles ({timestamp})"
 
 
 def commit_changes(message: Optional[str] = None, auto: bool = False) -> tuple[bool, str]:
@@ -198,7 +274,7 @@ def commit_changes(message: Optional[str] = None, auto: bool = False) -> tuple[b
     status = check_git_status()
     
     if not message:
-        message = create_commit_message(status["new_articles"], auto=auto)
+        message = create_commit_message(status["new_articles"], status.get("new_state_articles", []), auto=auto)
     
     success, output = run_git_command(["commit", "-m", message])
     return success, output
@@ -228,25 +304,39 @@ def auto_publish(
     commit_message: Optional[str] = None,
     branch: str = "main",
     dry_run: bool = False,
-    skip_qa: bool = False
+    skip_qa: bool = False,
+    slug: Optional[str] = None
 ) -> bool:
     """
     Full auto-publish workflow:
-    1. Check for changes
-    2. Pull latest
-    3. Stage files
-    4. Commit
-    5. Push
-    
+    1. Optionally promote a draft by slug
+    2. Check for changes
+    3. Pull latest
+    4. Stage files
+    5. Commit
+    6. Push
+
     Args:
         commit_message: Optional custom commit message
         branch: Branch to push to (default: main)
         dry_run: If True, show what would happen without actually doing it
-    
+        skip_qa: If True, skip QA validation checks
+        slug: If provided, promote this draft to posts before publishing
+
     Returns:
         True if successful, False otherwise
     """
     _log("🚀 Starting auto-publish workflow...")
+
+    # Clean stale lock files from any previously crashed git processes
+    clean_git_locks()
+
+    # Promote draft if slug provided
+    if slug:
+        _log(f"\n📄 Promoting draft: {slug}")
+        if not promote_draft(slug):
+            _log("❌ Draft promotion failed")
+            return False
 
     # Check current status
     status = check_git_status()
@@ -257,12 +347,13 @@ def auto_publish(
         return True
 
     _log(f"📄 New articles: {len(status['new_articles'])}")
+    _log(f"🗺️  New state articles: {len(status['new_state_articles'])}")
     _log(f"🖼️  New images: {len(status['new_images'])}")
     _log(f"✏️  Modified: {len(status['modified'])}")
 
     if dry_run:
         _log("\n🔍 DRY RUN - No changes will be made")
-        _log(f"Would commit with message: {commit_message or create_commit_message(status['new_articles'], auto=True)}")
+        _log(f"Would commit with message: {commit_message or create_commit_message(status['new_articles'], status.get('new_state_articles', []), auto=True)}")
         return True
 
     # Pull latest changes
@@ -283,7 +374,7 @@ def auto_publish(
 
     # Commit
     _log("\n💾 Creating commit...")
-    message = commit_message or create_commit_message(status["new_articles"], auto=True)
+    message = commit_message or create_commit_message(status["new_articles"], status.get("new_state_articles", []), auto=True)
     success, output = commit_changes(message, auto=True)
     if not success:
         _log(f"❌ Commit failed: {output}")
@@ -308,8 +399,8 @@ def setup_git_for_ci():
     Configure git for CI environment (GitHub Actions).
     """
     # Set git user for commits
-    run_git_command(["config", "user.email", "bot@thegreenleaf.com"])
-    run_git_command(["config", "user.name", "Cannabis Bot"])
+    run_git_command(["config", "user.email", "bot@lawncare.center"])
+    run_git_command(["config", "user.name", "Lawn Care Bot"])
     
     print("✅ Git configured for CI environment")
 
@@ -322,6 +413,7 @@ if __name__ == "__main__":
     parser.add_argument("--branch", "-b", type=str, default="main", help="Branch to push to")
     parser.add_argument("--dry-run", action="store_true", help="Show what would happen without doing it")
     parser.add_argument("--skip-qa", action="store_true", help="Skip QA validation checks")
+    parser.add_argument("--slug", type=str, help="Promote a specific draft by slug before publishing")
     parser.add_argument("--status", action="store_true", help="Just show current git status")
     parser.add_argument("--setup-ci", action="store_true", help="Configure git for CI environment")
     
@@ -334,6 +426,7 @@ if __name__ == "__main__":
         print(f"Branch: {status['branch']}")
         print(f"Clean: {status['clean']}")
         print(f"New articles: {status['new_articles']}")
+        print(f"New state articles: {status['new_state_articles']}")
         print(f"New images: {status['new_images']}")
         print(f"Modified: {status['modified']}")
     else:
@@ -341,6 +434,7 @@ if __name__ == "__main__":
             commit_message=args.message,
             branch=args.branch,
             dry_run=args.dry_run,
-            skip_qa=args.skip_qa
+            skip_qa=args.skip_qa,
+            slug=args.slug
         )
         sys.exit(0 if success else 1)

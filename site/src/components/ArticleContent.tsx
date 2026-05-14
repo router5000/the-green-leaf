@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ReactNode, useState } from 'react'
@@ -15,13 +15,14 @@ export function ScrollReveal({
   delay?: number
   className?: string
 }) {
+  const shouldReduceMotion = useReducedMotion()
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 40 }}
+      initial={shouldReduceMotion ? false : { opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, delay, ease: "easeOut" }}
+      transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay, ease: "easeOut" }}
     >
       {children}
     </motion.div>
@@ -36,12 +37,13 @@ export function HeroImage({
   src: string
   alt: string
 }) {
+  const shouldReduceMotion = useReducedMotion()
   return (
     <motion.figure
       className="relative h-56 sm:h-72 md:h-96 w-full mb-8 overflow-hidden"
-      initial={{ opacity: 0, scale: 1.05 }}
+      initial={shouldReduceMotion ? false : { opacity: 0, scale: 1.05 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.7, ease: "easeOut" }}
+      transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.7, ease: "easeOut" }}
       itemProp="image"
     >
       <Image
@@ -65,13 +67,14 @@ export function HeroImage({
 
 // Animated breadcrumb navigation
 export function AnimatedBreadcrumb({ title, category }: { title: string; category?: string }) {
+  const shouldReduceMotion = useReducedMotion()
   return (
     <motion.nav
       className="text-sm text-gray-500 mb-8"
       aria-label="Breadcrumb"
-      initial={{ opacity: 0, x: -20 }}
+      initial={shouldReduceMotion ? false : { opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.4, delay: 0.2 }}
+      transition={{ duration: shouldReduceMotion ? 0 : 0.4, delay: shouldReduceMotion ? 0 : 0.2 }}
     >
       <Link href="/" className="hover:text-leaf-600">Home</Link>
       <span className="mx-2">/</span>

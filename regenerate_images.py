@@ -22,16 +22,16 @@ import random
 # =============================================================================
 # IMAGE CONFIGURATION - Single source of truth for all image settings
 # =============================================================================
-# Dimensions must match google:4@2 (Nano Banana Pro) supported sizes
+# Dimensions must match google:4@3 (Nano Banana 2) supported sizes
 # Supported: 1264x848, 2528x1696, 1200x896, 2400x1792, 1024x1024, etc.
 IMAGE_SIZES = {
     "hero": (2528, 1696),      # ~3:2 landscape - article header
     "section": (2400, 1792),   # ~4:3 landscape - embedded in body
 }
 
-# Runware model - Nano Banana Pro (Gemini 3 Pro Image Preview)
-# See: https://runware.ai/models/nano-banana-pro
-IMAGE_MODEL = "google:4@2"
+# Runware model - Nano Banana 2 (Imagen 4)
+# See: https://runware.ai/models
+IMAGE_MODEL = "google:4@3"
 
 # Runware API configuration
 RUNWARE_API_KEY = "aSGjkn0N1yQ019hlPP62INlzuwryN1vA"

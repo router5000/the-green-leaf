@@ -15,15 +15,15 @@ body {
 
 /* Prose styling for articles */
 .prose h2 {
-  @apply text-grass-800 mt-10 mb-4 font-bold;
+  @apply text-leaf-800 mt-10 mb-4 font-bold;
 }
 
 .prose h3 {
-  @apply text-grass-700 mt-8 mb-3 font-semibold;
+  @apply text-leaf-700 mt-8 mb-3 font-semibold;
 }
 
 .prose a {
-  @apply text-grass-600 hover:text-grass-800 underline;
+  @apply text-leaf-600 hover:text-leaf-800 underline;
 }
 
 .prose ul {
@@ -43,12 +43,65 @@ body {
 }
 
 .prose strong {
-  @apply font-semibold text-grass-900;
+  @apply font-semibold text-leaf-900;
 }
 
 /* Rounded corners for images in article content */
 .prose img {
   @apply rounded-xl shadow-md my-8;
+}
+
+/* YouTube facade - performance optimization
+   Shows static thumbnail + play button instead of loading ~500KB iframe.
+   Iframe loads on click via inline script in article pages. */
+.youtube-facade {
+  position: relative;
+  cursor: pointer;
+  background-color: #000;
+}
+
+.youtube-facade img {
+  transition: opacity 0.2s ease;
+}
+
+.youtube-facade:hover img {
+  opacity: 0.85;
+}
+
+.youtube-facade-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 68px;
+  height: 48px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.youtube-facade:hover .youtube-facade-play,
+.youtube-facade:focus .youtube-facade-play {
+  background-color: #f00;
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.youtube-facade-play span {
+  display: block;
+  width: 0;
+  height: 0;
+  margin-left: 24px;
+  border-style: solid;
+  border-width: 10px 0 10px 18px;
+  border-color: transparent transparent transparent #fff;
+}
+
+.youtube-facade:focus {
+  outline: 3px solid #2D5016;
+  outline-offset: 2px;
 }
 
 /* Print styles */

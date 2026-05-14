@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Keyword Research Module for The Green Leaf Content Engine
+Keyword Research Module for Lawn Care Content Engine
 
 Uses Google Trends API (free) with optional Keywords Everywhere API for search volume.
 Intelligently selects keywords based on:
@@ -43,98 +43,223 @@ SITE_CONTENT_PATH = Path("site/content/posts")
 KEYWORD_CACHE_PATH = Path(".cache/keyword_cache.json")
 CACHE_TTL_HOURS = 24
 
-# Cannabis topic bank organized by season
-CANNABIS_TOPICS = {
+# Lawn care topic bank organized by season
+LAWN_CARE_TOPICS = {
     "spring": [
-        "when to start outdoor cannabis grow",
-        "spring cannabis seed germination guide",
-        "how to prepare outdoor cannabis garden",
-        "best cannabis strains for outdoor growing",
-        "cannabis clone preparation spring",
-        "autoflower cannabis spring planting",
-        "cannabis seedling care tips",
-        "how to harden off cannabis seedlings",
-        "spring cannabis soil preparation",
-        "cannabis companion planting guide",
-        "early season cannabis pest prevention",
-        "cannabis transplanting outdoor guide",
-        "spring cannabis grow room cleaning",
-        "starting cannabis seeds indoors",
-        "cannabis grow calendar spring",
+        "when to start mowing lawn in spring",
+        "spring lawn fertilizer schedule",
+        "how to dethatch lawn",
+        "overseeding bare spots in spring",
+        "spring lawn care checklist",
+        "pre-emergent herbicide timing",
+        "lawn aeration in spring",
+        "how to fix winter lawn damage",
+        "spring weed control tips",
+        "best grass seed for spring planting",
+        "lawn mower spring maintenance",
+        "when to apply crabgrass preventer",
+        "spring lawn watering schedule",
+        "how to level a bumpy lawn",
+        "repairing lawn after snow mold",
     ],
     "summer": [
-        "cannabis flowering stage guide",
-        "summer cannabis pest management",
-        "cannabis heat stress solutions",
-        "outdoor cannabis watering schedule",
-        "cannabis nutrient deficiency guide",
-        "summer cannabis training techniques",
-        "cannabis light deprivation technique",
-        "how to increase cannabis yield outdoor",
-        "cannabis terpene development tips",
-        "summer cannabis mold prevention",
-        "cannabis topping and fimming guide",
-        "outdoor cannabis feeding schedule",
-        "cannabis light cycle management",
-        "cannabis bud rot prevention summer",
-        "how to support heavy cannabis buds",
+        "how often to water lawn in summer",
+        "summer lawn care tips",
+        "how to keep grass green in heat",
+        "lawn mowing height for summer",
+        "grub control for lawns",
+        "brown patch lawn disease treatment",
+        "summer fertilizer for lawns",
+        "drought tolerant grass types",
+        "how to fix heat stressed lawn",
+        "chinch bug lawn damage",
+        "summer weed control",
+        "best time to water lawn in summer",
+        "lawn fungus treatment summer",
+        "how to reduce lawn watering",
+        "summer lawn diseases identification",
     ],
     "fall": [
-        "when to harvest cannabis outdoor",
-        "cannabis drying and curing guide",
-        "fall cannabis trimming techniques",
-        "how to set up indoor grow room",
-        "cannabis storage long term guide",
-        "making cannabis butter at home",
-        "cannabis trichome harvest timing",
-        "fall indoor cannabis grow setup",
-        "processing cannabis concentrates",
-        "cannabis edible dosage guide",
-        "how to make cannabis tinctures",
-        "cannabis seed saving techniques",
-        "fall cannabis soil amendment",
-        "cannabis harvest tools and equipment",
-        "curing cannabis for best flavor",
+        "fall lawn care schedule",
+        "overseeding lawn in fall",
+        "fall fertilizer for lawns",
+        "when to stop mowing lawn in fall",
+        "fall lawn aeration benefits",
+        "leaf removal lawn care",
+        "winterizing lawn mower",
+        "fall weed control tips",
+        "best grass seed for fall planting",
+        "preparing lawn for winter",
+        "fall lawn watering guide",
+        "when to apply fall fertilizer",
+        "core aeration vs spike aeration",
+        "fall lawn disease prevention",
+        "how to seed bare spots in fall",
     ],
     "winter": [
-        "indoor cannabis growing complete guide",
-        "cannabis edible recipes winter",
-        "cannabis strain reviews and comparisons",
-        "best grow lights for cannabis",
-        "cannabis grow tent setup guide",
-        "winter indoor cannabis tips",
-        "cannabis legalization news update",
-        "cannabis ventilation and humidity control",
-        "cannabis hydroponic growing guide",
-        "best cannabis books and resources",
-        "cannabis seed bank reviews",
-        "cannabis grow room automation",
-        "LED vs HPS grow lights cannabis",
-        "cannabis nutrient brands compared",
-        "planning next cannabis grow season",
+        "winter lawn care tips",
+        "protecting lawn from snow damage",
+        "winter lawn diseases",
+        "lawn mower winter storage",
+        "planning spring lawn renovation",
+        "winter lawn watering needs",
+        "salt damage lawn repair",
+        "winter lawn fertilizer",
+        "lawn care tools maintenance winter",
+        "cool season grass winter care",
+        "warm season grass dormancy care",
+        "snow mold prevention lawn",
+        "winter lawn weeds identification",
+        "frost damage lawn recovery",
+        "winter lawn care mistakes",
     ],
     "evergreen": [
-        "cannabis growing for beginners",
-        "indica vs sativa vs hybrid differences",
-        "cannabis terpene profiles explained",
-        "CBD vs THC benefits guide",
-        "how to roll a joint properly",
-        "cannabis edibles complete guide",
-        "best cannabis strains for anxiety",
-        "cannabis tolerance break guide",
-        "medical cannabis benefits research",
-        "cannabis decarboxylation guide",
-        "how to make cannabis oil",
-        "cannabis vaporizer buying guide",
-        "cannabis storage tips and tricks",
-        "cannabis dosing guide beginners",
-        "cannabis and sleep research",
-        "how to choose cannabis strain",
-        "cannabis cooking basics guide",
-        "cannabis topicals how they work",
-        "cannabis concentrates types guide",
-        "cannabis legality by state guide",
-    ]
+        "how to get thicker grass",
+        "lawn fertilizer npk explained",
+        "organic lawn care tips",
+        "lawn care for beginners",
+        "best lawn mower for small yards",
+        "how to sharpen lawn mower blades",
+        "soil testing for lawns",
+        "lawn ph balance guide",
+        "types of grass for lawns",
+        "lawn edging techniques",
+        "how to remove lawn weeds naturally",
+        "lawn striping techniques",
+        "electric vs gas lawn mower",
+        "robotic lawn mower guide",
+        "lawn care subscription services",
+        "how to measure lawn size",
+        "lawn sprinkler system setup",
+        "shade tolerant grass types",
+        "pet safe lawn care",
+        "lawn renovation cost guide",
+    ],
+    # Weed-killer cluster — high commercial intent, affiliate $$ on Tenacity, Sedgehammer, Drive XLR8, etc.
+    # Crabgrass already covered nationally — start with the next 30 highest-volume weeds.
+    "weeds": [
+        "how to get rid of nutsedge in lawn",
+        "how to kill dollarweed in lawn",
+        "creeping charlie killer that won't kill grass",
+        "how to get rid of wild violets in lawn",
+        "how to kill chickweed in lawn",
+        "how to get rid of henbit in lawn",
+        "how to kill plantain weed in lawn",
+        "how to get rid of spurge in lawn",
+        "oxalis killer for lawns",
+        "how to kill ground ivy in lawn",
+        "how to get rid of quackgrass in lawn",
+        "foxtail weed killer for lawns",
+        "how to kill bermuda grass in fescue lawn",
+        "poa annua control in lawn",
+        "goosegrass vs crabgrass identification",
+        "how to get rid of thistle in lawn",
+        "purslane killer for lawns",
+        "japanese knotweed killer",
+        "johnson grass killer for lawns",
+        "field bindweed control in lawn",
+        "how to get rid of mallow in lawn",
+        "lambs quarters in lawn",
+        "yellow nutsedge vs purple nutsedge",
+        "best post emergent for nutsedge",
+        "selective herbicide for st augustine grass",
+        "selective herbicide for bermuda grass",
+        "best weed killer for tall fescue lawn",
+        "how to identify common lawn weeds",
+        "best 3 way weed killer for lawns",
+        "broadleaf weed killer comparison",
+    ],
+    # Lawn pest cluster — affiliate (GrubEx, BioAdvanced, beneficial nematodes) + lead gen
+    "pests": [
+        "how to identify grub damage in lawn",
+        "when to apply grub control",
+        "chinch bug damage vs drought stress",
+        "how to get rid of armyworms in lawn",
+        "fall armyworm treatment for lawns",
+        "how to identify mole crickets in lawn",
+        "sod webworm damage and treatment",
+        "billbug damage in lawn",
+        "how to get rid of fire ants in lawn",
+        "how to get rid of fleas in yard",
+        "how to treat ticks in lawn naturally",
+        "japanese beetle grub treatment",
+        "vole damage in lawn repair",
+        "mole control for lawns",
+        "gopher control for yards",
+        "cutworm damage to grass",
+        "lawn pest identification guide",
+        "beneficial nematodes for lawn pests",
+        "milky spore for grub control",
+        "lawn pest prevention schedule",
+    ],
+    # Lawn disease cluster — extension PDFs dominate, commercial pages weak; fungicide affiliates
+    "diseases": [
+        "brown patch fungus treatment for lawn",
+        "dollar spot lawn disease treatment",
+        "red thread lawn disease",
+        "rust fungus on grass treatment",
+        "fairy ring lawn treatment",
+        "large patch vs brown patch",
+        "gray leaf spot in st augustine",
+        "pythium blight treatment for lawn",
+        "snow mold lawn repair in spring",
+        "take-all root rot treatment",
+        "leaf spot on lawn grass",
+        "summer patch disease treatment",
+        "anthracnose lawn disease",
+        "best fungicide for brown patch",
+        "lawn disease identification chart",
+        "preventing lawn fungus in humid weather",
+    ],
+    # USDA zone calendars — durable evergreen, supports state hubs
+    "zones": [
+        "zone 5 lawn care calendar",
+        "zone 6 lawn care calendar",
+        "zone 7 lawn care calendar",
+        "zone 8 lawn care calendar",
+        "zone 9 lawn care calendar",
+        "when to plant grass seed zone 5",
+        "when to plant grass seed zone 6",
+        "when to plant grass seed zone 7",
+        "when to plant grass seed zone 8",
+        "best grass for zone 6",
+        "best grass for zone 7",
+        "best grass for zone 8",
+        "pre emergent timing zone 6",
+        "pre emergent timing zone 7",
+        "fall fertilizer zone 6",
+    ],
+    # Cost/pricing — lead gen revenue (Networx, HomeAdvisor, Angi). Long-tail wins, avoid head terms.
+    "cost": [
+        "lawn aeration cost per square foot",
+        "sod installation cost per pallet",
+        "lawn dethatching cost",
+        "overseeding cost per acre",
+        "lawn fertilization service cost",
+        "fall lawn cleanup cost",
+        "grub treatment cost",
+        "lawn fungicide treatment cost",
+        "lawn mowing cost per acre",
+        "tree stump grinding cost",
+        "lawn renovation cost per square foot",
+        "mulch installation cost per yard",
+        "leaf removal service cost",
+    ],
+    # Irrigation/sprinkler — strong affiliate (Rachio, Orbit, Rain Bird) + lead gen for installs
+    "irrigation": [
+        "how long to water lawn each zone",
+        "smart sprinkler controller comparison",
+        "drip irrigation for lawn beds",
+        "sprinkler system winterization",
+        "rain sensor for sprinkler system",
+        "pop up sprinkler vs rotor head",
+        "best smart sprinkler controller 2026",
+        "how to fix low pressure sprinkler head",
+        "wifi hose timer comparison",
+        "rachio vs rain bird vs orbit",
+        "soaker hose vs drip irrigation lawn",
+        "sprinkler head spacing guide",
+    ],
 }
 
 
@@ -152,22 +277,26 @@ def get_current_season() -> str:
 
 
 def get_relevant_seasons() -> list[str]:
-    """Get seasons relevant for content planning (current + upcoming + evergreen)."""
+    """Get topic buckets relevant for content planning (current season + upcoming + evergreen + always-on clusters)."""
     season_order = ["spring", "summer", "fall", "winter"]
     current = get_current_season()
     current_idx = season_order.index(current)
     next_idx = (current_idx + 1) % 4
 
-    return [current, season_order[next_idx], "evergreen"]
+    # Always pull from cluster banks too — these are evergreen commercial-intent buckets
+    # that earn the most affiliate/lead-gen revenue and aren't bound to one season.
+    always_on_clusters = ["weeds", "pests", "diseases", "zones", "cost", "irrigation"]
+
+    return [current, season_order[next_idx], "evergreen"] + always_on_clusters
 
 
 def get_published_keywords() -> set[str]:
     """Extract keywords from already-published articles to avoid duplicates."""
     published = set()
-
+    
     if not SITE_CONTENT_PATH.exists():
         return published
-
+    
     for md_file in SITE_CONTENT_PATH.glob("*.md"):
         try:
             content = md_file.read_text()
@@ -175,7 +304,7 @@ def get_published_keywords() -> set[str]:
             match = re.search(r'^keyword:\s*["\']?([^"\'\n]+)["\']?', content, re.MULTILINE)
             if match:
                 published.add(match.group(1).lower().strip())
-
+            
             # Also extract title to avoid similar topics
             title_match = re.search(r'^title:\s*["\']?([^"\'\n]+)["\']?', content, re.MULTILINE)
             if title_match:
@@ -184,7 +313,7 @@ def get_published_keywords() -> set[str]:
                 published.update(title_words)
         except Exception as e:
             print(f"Warning: Could not parse {md_file}: {e}")
-
+    
     return published
 
 
@@ -192,7 +321,7 @@ def load_cache() -> dict:
     """Load keyword cache if exists and not expired."""
     if not KEYWORD_CACHE_PATH.exists():
         return {}
-
+    
     try:
         cache = json.loads(KEYWORD_CACHE_PATH.read_text())
         cache_time = datetime.fromisoformat(cache.get("timestamp", "2000-01-01"))
@@ -200,7 +329,7 @@ def load_cache() -> dict:
             return cache
     except Exception:
         pass
-
+    
     return {}
 
 
@@ -219,17 +348,17 @@ def get_google_trends_interest(keywords: list[str]) -> dict[str, int]:
     if not PYTRENDS_AVAILABLE:
         # Return equal scores if pytrends not available
         return {kw: 50 for kw in keywords}
-
+    
     interest_scores = {}
     pytrends = TrendReq(hl='en-US', tz=360)
-
+    
     # Google Trends only allows 5 keywords at a time
     for i in range(0, len(keywords), 5):
         batch = keywords[i:i+5]
         try:
             pytrends.build_payload(batch, cat=0, timeframe='today 3-m', geo='US')
             interest_over_time = pytrends.interest_over_time()
-
+            
             if not interest_over_time.empty:
                 for kw in batch:
                     if kw in interest_over_time.columns:
@@ -240,12 +369,12 @@ def get_google_trends_interest(keywords: list[str]) -> dict[str, int]:
             else:
                 for kw in batch:
                     interest_scores[kw] = 0
-
+                    
         except Exception as e:
             print(f"Google Trends error for batch {batch}: {e}")
             for kw in batch:
                 interest_scores[kw] = 50  # Default score on error
-
+    
     return interest_scores
 
 
@@ -257,15 +386,15 @@ def get_keywords_everywhere_volume(keywords: list[str]) -> dict[str, int]:
     """
     if not KEYWORDS_EVERYWHERE_API_KEY:
         return {}
-
+    
     url = "https://api.keywordseverywhere.com/v1/get_keyword_data"
     headers = {
         "Authorization": f"Bearer {KEYWORDS_EVERYWHERE_API_KEY}",
         "Content-Type": "application/json"
     }
-
+    
     volumes = {}
-
+    
     # API allows up to 100 keywords per request
     for i in range(0, len(keywords), 100):
         batch = keywords[i:i+100]
@@ -276,17 +405,17 @@ def get_keywords_everywhere_volume(keywords: list[str]) -> dict[str, int]:
                 "dataSource": "gkp",
                 "kw": batch
             })
-
+            
             if response.status_code == 200:
                 data = response.json()
                 for item in data.get("data", []):
                     volumes[item["keyword"]] = item.get("vol", 0)
             else:
                 print(f"Keywords Everywhere API error: {response.status_code}")
-
+                
         except Exception as e:
             print(f"Keywords Everywhere error: {e}")
-
+    
     return volumes
 
 
@@ -299,7 +428,7 @@ def score_keyword(
 ) -> float:
     """
     Calculate composite score for keyword prioritization.
-
+    
     Scoring weights:
     - Trends interest: 30%
     - Search volume: 30% (normalized)
@@ -308,10 +437,10 @@ def score_keyword(
     """
     if is_published:
         return 0  # Skip already published topics
-
+    
     # Normalize trends (0-100 -> 0-1)
     trends_normalized = trends_score / 100
-
+    
     # Normalize search volume (log scale, 100-10k sweet spot)
     if search_volume > 0:
         import math
@@ -320,7 +449,7 @@ def score_keyword(
         vol_normalized = min(vol_log / 4, 1)  # Cap at 10,000
     else:
         vol_normalized = 0.5  # Default if no volume data
-
+    
     # Calculate composite score
     score = (
         (trends_normalized * 0.30) +
@@ -328,7 +457,7 @@ def score_keyword(
         (season_relevance * 0.30) +
         (0.10)  # Novelty bonus for unpublished
     )
-
+    
     return round(score, 3)
 
 
@@ -339,73 +468,73 @@ def find_best_keyword(
 ) -> list[dict]:
     """
     Find the best keyword(s) to write about.
-
+    
     Args:
         count: Number of keywords to return
         use_cache: Whether to use cached results
         force_season: Override automatic season detection
-
+    
     Returns:
         List of dicts with keyword data, sorted by score
     """
     print("🔍 Starting keyword research...")
-
+    
     # Check cache first
     if use_cache:
         cache = load_cache()
         if cache.get("keywords"):
             print("📦 Using cached keyword data")
             return cache["keywords"][:count]
-
+    
     # Get relevant seasons
     if force_season:
         seasons = [force_season, "evergreen"]
     else:
         seasons = get_relevant_seasons()
-
+    
     print(f"📅 Targeting seasons: {', '.join(seasons)}")
-
+    
     # Gather candidate keywords
     candidates = []
     for season in seasons:
         relevance = 1.0 if season == seasons[0] else (0.8 if season == "evergreen" else 0.6)
-        for kw in CANNABIS_TOPICS.get(season, []):
+        for kw in LAWN_CARE_TOPICS.get(season, []):
             candidates.append({
                 "keyword": kw,
                 "season": season,
                 "season_relevance": relevance
             })
-
+    
     print(f"📋 Evaluating {len(candidates)} candidate keywords...")
-
+    
     # Get published keywords to exclude
     published = get_published_keywords()
     print(f"📰 Found {len(published)} published keywords/topics to exclude")
-
+    
     # Get Google Trends data
     keywords = [c["keyword"] for c in candidates]
     print("📈 Fetching Google Trends data...")
     trends_scores = get_google_trends_interest(keywords)
-
+    
     # Get search volume (if API key available)
     volumes = {}
     if KEYWORDS_EVERYWHERE_API_KEY:
         print("🔢 Fetching search volume data...")
         volumes = get_keywords_everywhere_volume(keywords)
-
+    
     # Score all candidates
     results = []
     for candidate in candidates:
         kw = candidate["keyword"]
         kw_lower = kw.lower()
-
+        
         # Check if already published (keyword or significant word overlap)
         kw_words = set(kw_lower.split())
         is_published = (
             kw_lower in published or
             len(kw_words & published) >= 3  # 3+ word overlap
         )
-
+        
         score = score_keyword(
             keyword=kw,
             trends_score=trends_scores.get(kw, 50),
@@ -413,7 +542,7 @@ def find_best_keyword(
             season_relevance=candidate["season_relevance"],
             is_published=is_published
         )
-
+        
         results.append({
             "keyword": kw,
             "season": candidate["season"],
@@ -422,7 +551,7 @@ def find_best_keyword(
             "search_volume": volumes.get(kw, "N/A"),
             "is_published": is_published
         })
-
+    
     # Sort by score descending
     results.sort(key=lambda x: x["score"], reverse=True)
 
@@ -437,10 +566,10 @@ def find_best_keyword(
         unpublished.sort(key=lambda x: x.get("adjusted_score", x["score"]), reverse=True)
 
     top_results = unpublished[:count]
-
+    
     # Cache results
     save_cache({"keywords": unpublished[:20]})  # Cache top 20
-
+    
     print(f"\n✅ Top {count} keyword(s) found:")
     for i, result in enumerate(top_results, 1):
         print(f"  {i}. \"{result['keyword']}\"")
@@ -453,55 +582,55 @@ def find_best_keyword(
             fills = result.get("fills_gaps", [])
             fills_str = f" | Fills gaps: {', '.join(fills)}" if fills else ""
             print(f"     Balance: {adj_str}{fills_str}")
-
+    
     return top_results
 
 
-def get_trending_cannabis_topics() -> list[str]:
+def get_trending_lawn_topics() -> list[str]:
     """
-    Get currently trending cannabis topics from Google Trends.
+    Get currently trending lawn care topics from Google Trends.
     Uses related queries feature to discover new topics.
     """
     if not PYTRENDS_AVAILABLE:
         return []
-
+    
     pytrends = TrendReq(hl='en-US', tz=360)
     trending = []
-
-    seed_terms = ["cannabis growing", "marijuana strains", "CBD benefits", "cannabis edibles", "grow room setup"]
-
+    
+    seed_terms = ["lawn care", "grass care", "lawn mower", "fertilizer lawn"]
+    
     for term in seed_terms:
         try:
             pytrends.build_payload([term], cat=0, timeframe='today 1-m', geo='US')
             related = pytrends.related_queries()
-
+            
             if term in related and related[term]["rising"] is not None:
                 rising = related[term]["rising"]
                 for _, row in rising.head(5).iterrows():
                     query = row["query"]
-                    if any(word in query.lower() for word in ["cannabis", "marijuana", "weed", "cbd", "thc", "grow"]):
+                    if any(word in query.lower() for word in ["lawn", "grass", "mow", "seed", "fertiliz"]):
                         trending.append(query)
-
+                        
         except Exception as e:
             print(f"Error getting related queries for {term}: {e}")
-
+    
     return list(set(trending))[:10]
 
 
 if __name__ == "__main__":
     import argparse
-
-    parser = argparse.ArgumentParser(description="Cannabis Keyword Research")
+    
+    parser = argparse.ArgumentParser(description="Lawn Care Keyword Research")
     parser.add_argument("--count", type=int, default=1, help="Number of keywords to find")
     parser.add_argument("--season", type=str, help="Force specific season")
     parser.add_argument("--no-cache", action="store_true", help="Ignore cache")
     parser.add_argument("--trending", action="store_true", help="Show trending topics")
-
+    
     args = parser.parse_args()
-
+    
     if args.trending:
-        print("\n📈 Discovering trending cannabis topics...")
-        trending = get_trending_cannabis_topics()
+        print("\n📈 Discovering trending lawn care topics...")
+        trending = get_trending_lawn_topics()
         if trending:
             print("Trending topics:")
             for topic in trending:

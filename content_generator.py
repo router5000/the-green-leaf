@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-The Green Leaf Content Generator with Claude Sonnet + Runware Image
+Lawn Care Content Generator with Claude Sonnet + Runware Image
 Automated article creation with AI-generated featured images
 
 AI Models:
@@ -36,7 +36,7 @@ from cost_tracker import CostTracker, set_tracker, get_tracker, clear_tracker
 load_dotenv()
 
 # Initialize API clients
-client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
+client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"), max_retries=3)
 
 # Initialize Runware API client
 runware_api_key = os.environ.get("RUNWARE_API_KEY")
@@ -48,65 +48,65 @@ else:
     print("⚠️  Runware API key not found in environment variables")
     runware_api_key = None
 
-# Seasonal cannabis topics (high-impact, evergreen structure)
+# Seasonal lawn care topics (high-impact, evergreen structure)
 SEASONAL_TOPICS = {
     "spring": [
-        "outdoor cannabis grow season preparation",
-        "best cannabis strains for spring planting",
-        "germinating cannabis seeds guide",
-        "clone preparation and transplanting",
-        "spring cannabis garden soil prep",
-        "autoflower vs photoperiod spring grow",
-        "outdoor pest prevention early season",
+        "lawn dethatching tips",
+        "spring lawn fertilizer schedule",
+        "crabgrass pre-emergent timing",
+        "overseeding bare spots",
+        "lawn mower maintenance checklist",
+        "spring lawn aeration benefits",
+        "when to start mowing in spring",
     ],
     "summer": [
-        "outdoor cannabis flowering stage guide",
-        "cannabis pest management summer",
-        "cannabis light cycle optimization",
-        "heat stress cannabis plants solutions",
-        "cannabis nutrient schedule flowering",
-        "summer cannabis watering guide",
-        "companion planting for cannabis",
+        "lawn watering schedule hot weather",
+        "brown patch fungus treatment",
+        "how to mow in extreme heat",
+        "drought tolerant grass types",
+        "grub damage signs and treatment",
+        "summer lawn fertilizer mistakes",
+        "mosquito control for lawns",
     ],
     "fall": [
-        "cannabis harvest timing guide",
-        "drying and curing cannabis properly",
-        "cannabis trimming techniques",
-        "fall indoor grow room setup",
-        "cannabis storage best practices",
-        "making cannabis concentrates at home",
-        "processing cannabis after harvest",
+        "fall lawn overseeding guide",
+        "best fall fertilizer for lawns",
+        "leaf removal vs mulching",
+        "fall lawn aeration timing",
+        "winterizing lawn mower",
+        "fall weed control strategy",
+        "preparing lawn for winter",
     ],
     "winter": [
-        "indoor cannabis growing setup guide",
-        "cannabis edible recipes winter",
-        "cannabis strain review roundup",
-        "cannabis grow light comparison",
-        "winter indoor growing tips",
-        "cannabis legalization year in review",
-        "planning your next cannabis grow",
+        "winter lawn care dormant grass",
+        "snow mold prevention",
+        "planning spring lawn renovation",
+        "soil testing winter months",
+        "lawn care tool maintenance winter",
+        "cool season grass winter care",
+        "ice melt damage lawn repair",
     ]
 }
 
 # High-intent question patterns (People Also Ask style)
 QUESTION_PATTERNS = [
-    "How do I {action} cannabis plants",
-    "What is the best way to {action}",
-    "Why are my cannabis plants {problem}",
-    "How to fix {problem} in cannabis",
+    "How often should I {action} my lawn",
+    "What is the best time to {action}",
+    "Why is my lawn {problem}",
+    "How to fix {problem} in lawn",
     "Should I {action} before or after {event}",
-    "What causes {problem} in cannabis plants",
+    "What causes {problem} in grass",
     "How long does it take to {action}",
 ]
 
-CANNABIS_ACTIONS = [
-    "grow", "harvest", "cure", "trim", "decarboxylate",
-    "germinate", "clone", "top", "train", "flush"
+LAWN_ACTIONS = [
+    "water", "fertilize", "mow", "aerate", "dethatch", 
+    "overseed", "apply herbicide", "apply fungicide"
 ]
 
-CANNABIS_PROBLEMS = [
-    "turning yellow", "wilting", "not flowering", "stretching",
-    "showing nutrient burn", "getting mold", "growing slowly", "drooping"
+LAWN_PROBLEMS = [
+    "turning brown", "patchy", "full of weeds", "not growing",
+    "yellow spots", "dying in spots", "thin", "bumpy"
 ]
 
 
@@ -126,15 +126,15 @@ def get_current_season():
 def categorize_article(title: str, keyword: str, tags: list) -> str:
     """Assign a category based on title, keyword, and tags."""
     CLUSTERS = [
-        ("Strains & Genetics", ["strain", "indica", "sativa", "hybrid", "terpene", "genetics", "phenotype", "seed"]),
-        ("Growing & Cultivation", ["grow", "cultivat", "indoor", "outdoor", "hydro", "soil", "nutrient", "light", "flower", "veg"]),
-        ("Consumption Methods", ["smoke", "vape", "edible", "tincture", "topical", "dab", "concentrate", "oil"]),
-        ("Health & Wellness", ["cbd", "medical", "pain", "anxiety", "sleep", "wellness", "therapeutic", "health"]),
-        ("Legal & Industry", ["legal", "law", "regulat", "licens", "dispens", "state", "federal", "legislat"]),
-        ("Culture & Lifestyle", ["histor", "recipe", "event", "travel", "accessor", "culture", "lifestyle"]),
+        ("Weed Control", ["weed", "crabgrass", "spurge", "pre-emergent", "post-emergent", "herbicide", "kill"]),
+        ("Lawn Problems & Solutions", ["problem", "disease", "fungus", "fungicide", "yellow", "dead spot", "brown spot", "bumpy", "patchy", "bare spot", "not growing"]),
+        ("Equipment & Techniques", ["mow", "trimmer", "mower", "robot mow", "string trimmer", "equipment", "scalp"]),
+        ("Grass Types & Seeding", ["seed", "overseed", "grass type", "cool season", "warm season", "germination", "grow grass"]),
+        ("Seasonal Care", ["spring", "summer", "fall", "winter", "winterize", "preparation"]),
+        ("Lawn Health & Maintenance", ["fertiliz", "aerat", "dethatch", "water", "level", "green"]),
     ]
     title_kw = f"{title} {keyword}".lower()
-    best_score, best_cat = 0, "Growing & Cultivation"
+    best_score, best_cat = 0, "Lawn Health & Maintenance"
     for cat, keywords_list in CLUSTERS:
         score = sum(5 for kw in keywords_list if kw in title_kw)
         if score > best_score:
@@ -144,14 +144,17 @@ def categorize_article(title: str, keyword: str, tags: list) -> str:
 
 def build_image_prompt(keyword, season, image_type="hero"):
     """
-    Build an optimized prompt for cannabis education images.
+    Build an optimized prompt for lawn care images.
 
-    Prompt structure follows instruction hierarchy:
-    [Subject/Action] → [Setting] → [Style/Lighting] → [Technical] → [Constraints]
+    Optimized for Nano Banana 2 (google:4@3) on Runware.
+    Prompts are richly descriptive, scene-driven, and avoid weather/season references
+    to maximize visual quality and relevance.
+
+    Prompt structure: [Scene description] → [Composition] → [Style] → [Constraints]
 
     Args:
         keyword: Target keyword for the article
-        season: Current season (spring, summer, fall, winter)
+        season: Current season (unused — kept for API compatibility)
         image_type: "hero" for wide shot (16:9) or "section" for detail (4:3)
 
     Returns:
@@ -169,90 +172,175 @@ def build_image_prompt(keyword, season, image_type="hero"):
 
     selected_person = random.choice(person_types)
 
-    # Seasonal lighting (explicit to prevent AI showing wrong season)
-    season_lighting = {
-        "spring": "bright spring greenhouse, seedling trays, warm natural light through glass",
-        "summer": "lush outdoor cannabis garden in full sun, vibrant green plants, blue sky",
-        "fall": "harvest time golden hour, mature cannabis plants, warm amber light",
-        "winter": "modern indoor grow room, LED grow lights purple/white glow, controlled environment"
-    }
-
-    # Activity descriptions by keyword (streamlined)
     keyword_lower = keyword.lower()
 
-    # Hero: wide environmental shot | Section: close-up on hands/task
+    # Activity descriptions by keyword
+    # Each tuple: (hero_scene, section_scene)
+    # Hero: wide cinematic environmental shot | Section: tight detail/texture shot
     activities = {
-        "grow": (
-            f"{selected_person} tending cannabis plants in a grow room, checking leaves",
-            f"hands inspecting cannabis plant leaves under grow lights"
+        "aerat": (
+            f"{selected_person} pushing a core aerator across a thick green residential lawn, "
+            f"neat rows of soil plugs trailing behind on the grass, well-kept suburban backyard "
+            f"with mature trees and a stone patio in the background",
+            f"extreme close-up of fresh aeration holes in dense green turf, dark soil plugs "
+            f"scattered on the grass surface, rich earth tones and vivid green textures"
         ),
-        "harvest": (
-            f"{selected_person} carefully trimming mature cannabis plant with scissors",
-            f"hands with trimming scissors cutting cannabis buds from plant"
+        "water": (
+            f"{selected_person} standing on a lush green lawn holding a garden hose with a fan spray nozzle, "
+            f"fine water mist catching sunlight creating a subtle rainbow, manicured suburban yard "
+            f"with flower beds and a white picket fence",
+            f"close-up of water droplets on individual grass blades, shallow depth of field, "
+            f"each droplet reflecting light like tiny jewels on emerald green turf"
         ),
-        "cure": (
-            f"glass mason jars filled with curing cannabis buds on wooden shelf",
-            f"hand opening mason jar with curing cannabis, humidity pack visible"
+        "irrigat": (
+            f"pop-up sprinkler head spraying a perfect arc of water across a vibrant green lawn, "
+            f"{selected_person} inspecting the sprinkler zone in the background, clean suburban "
+            f"landscape with defined garden beds and a driveway",
+            f"close-up of a rotating sprinkler head mid-spray, water jets fanning out over "
+            f"thick green grass, droplets frozen in mid-air, sharp detail"
         ),
-        "trim": (
-            f"{selected_person} at trimming station with scissors and cannabis buds",
-            f"hands with precision scissors trimming cannabis flower over tray"
+        "mow": (
+            f"{selected_person} pushing a classic gas push mower across a wide suburban lawn, "
+            f"clean parallel mowing lines visible in the freshly cut grass behind them, "
+            f"clippings dispersing, neat house and landscaping in background",
+            f"freshly mowed residential lawn with crisp parallel stripes, vivid alternating "
+            f"light and dark green bands, sharp grass texture, suburban yard setting"
+        ),
+        "fertiliz": (
+            f"{selected_person} walking steadily across a green lawn pushing a broadcast spreader, "
+            f"white fertilizer granules dispersing in a wide arc, well-maintained suburban yard "
+            f"with a garden shed and hedges",
+            f"close-up of fertilizer granules scattered on grass blades and soil, individual "
+            f"white pellets visible against dark green turf, shallow depth of field"
+        ),
+        "weed": (
+            f"{selected_person} crouched on a green lawn using a pump sprayer to treat a patch of weeds, "
+            f"dandelions and clover visible in the grass, tidy suburban yard with flower borders",
+            f"extreme close-up of a gloved hand gripping a dandelion at the base, pulling it from "
+            f"dark soil with roots intact, surrounding green grass in soft focus"
+        ),
+        "thatch": (
+            f"{selected_person} operating a power dethatcher across a residential lawn, "
+            f"brown thatch debris piling up in its wake, exposed healthy green grass emerging, "
+            f"suburban backyard with a deck and potted plants",
+            f"close-up of a dethatching rake pulling a thick layer of brown thatch from green turf, "
+            f"dramatic contrast between dead material and healthy grass beneath"
+        ),
+        "dethatch": (
+            f"{selected_person} operating a power dethatcher across a residential lawn, "
+            f"brown thatch debris piling up in its wake, exposed healthy green grass emerging, "
+            f"suburban backyard with a deck and potted plants",
+            f"close-up of a dethatching rake pulling a thick layer of brown thatch from green turf, "
+            f"dramatic contrast between dead material and healthy grass beneath"
         ),
         "seed": (
-            f"{selected_person} planting cannabis seeds in small starter pots",
-            f"hands placing cannabis seed into moist soil in starter pot"
+            f"{selected_person} walking across a patchy lawn scattering grass seed from a handheld spreader, "
+            f"tiny seeds visible mid-air, bare soil patches alongside green grass, "
+            f"suburban yard with a garden hose coiled nearby",
+            f"macro close-up of grass seeds landing on dark topsoil, a few young grass sprouts "
+            f"emerging nearby, rich earth textures and vivid green seedlings"
         ),
-        "germina": (
-            f"{selected_person} checking germinating cannabis seeds on damp paper towel",
-            f"close-up of cannabis seed sprouting taproot on damp paper towel"
+        "overseed": (
+            f"{selected_person} pushing a drop spreader across an existing lawn, grass seed flowing "
+            f"into the turf, established green grass mixed with thin areas being overseeded, "
+            f"neat suburban property with a mailbox and walkway",
+            f"close-up of fresh grass seed nestled between existing grass blades on a lawn, "
+            f"tiny seeds catching light against the green and brown turf texture"
         ),
-        "clone": (
-            f"{selected_person} taking cannabis cuttings and placing in rooting cubes",
-            f"hands cutting cannabis clone at 45-degree angle with clean scissors"
+        "edge": (
+            f"{selected_person} using a string trimmer along a crisp concrete sidewalk edge, "
+            f"grass clippings spraying, perfectly defined line between lawn and hardscape, "
+            f"tidy suburban front yard with a brick pathway",
+            f"close-up of a razor-sharp lawn edge along a sidewalk, perfectly vertical cut, "
+            f"lush green grass on one side and clean concrete on the other"
         ),
-        "nutrient": (
-            f"{selected_person} mixing cannabis nutrients in measuring cup near plants",
-            f"hands measuring liquid nutrients with pH meter nearby"
+        "trim": (
+            f"{selected_person} using a string trimmer along a crisp concrete sidewalk edge, "
+            f"grass clippings spraying, perfectly defined line between lawn and hardscape, "
+            f"tidy suburban front yard with a brick pathway",
+            f"close-up of a razor-sharp lawn edge along a sidewalk, perfectly vertical cut, "
+            f"lush green grass on one side and clean concrete on the other"
         ),
-        "light": (
-            f"modern indoor cannabis grow tent with LED lights and healthy plants",
-            f"close-up of LED grow light panel above cannabis canopy"
+        "rake": (
+            f"{selected_person} raking colorful fallen leaves on a green lawn, large pile of "
+            f"orange red and yellow leaves building up, leaf-covered suburban yard with "
+            f"mature oak and maple trees",
+            f"close-up of rake tines dragging through colorful autumn leaves on green grass, "
+            f"vivid oranges reds and yellows against emerald turf"
         ),
-        "edible": (
-            f"{selected_person} in kitchen preparing cannabis-infused butter",
-            f"hands stirring cannabis-infused butter in double boiler"
-        ),
-        "strain": (
-            f"variety of cannabis buds displayed on clean surface with labels",
-            f"close-up of colorful cannabis bud showing trichomes and orange hairs"
-        ),
-        "cbd": (
-            f"CBD oil bottles and hemp flower arranged on natural wood surface",
-            f"hand holding CBD oil dropper with hemp plant in background"
-        ),
-        "indoor": (
-            f"well-organized indoor cannabis grow room with multiple plants under lights",
-            f"hands adjusting grow light height above cannabis canopy"
-        ),
-        "outdoor": (
-            f"{selected_person} tending large outdoor cannabis plants in garden",
-            f"hands training outdoor cannabis plant branch with garden tie"
-        ),
-        "hydro": (
-            f"hydroponic cannabis setup with plants in net pots and reservoir visible",
-            f"hands checking roots in hydroponic cannabis system"
+        "leaf": (
+            f"{selected_person} raking colorful fallen leaves on a green lawn, large pile of "
+            f"orange red and yellow leaves building up, leaf-covered suburban yard with "
+            f"mature oak and maple trees",
+            f"close-up of rake tines dragging through colorful autumn leaves on green grass, "
+            f"vivid oranges reds and yellows against emerald turf"
         ),
         "soil": (
-            f"{selected_person} mixing organic soil amendments for cannabis growing",
-            f"hands filling fabric pot with premium cannabis growing soil"
+            f"{selected_person} kneeling on a green lawn holding a soil test kit, small soil "
+            f"sample in a clear vial, probe inserted into the ground nearby, "
+            f"well-kept suburban backyard with raised garden beds",
+            f"close-up of hands holding a soil test kit with color-coded pH results, "
+            f"dark rich soil sample visible, green lawn blurred in background"
         ),
-        "dry": (
-            f"cannabis branches hanging upside down to dry in controlled room",
-            f"hands hanging freshly trimmed cannabis branches on drying line"
+        "test": (
+            f"{selected_person} kneeling on a green lawn holding a soil test kit, small soil "
+            f"sample in a clear vial, probe inserted into the ground nearby, "
+            f"well-kept suburban backyard with raised garden beds",
+            f"close-up of hands holding a soil test kit with color-coded pH results, "
+            f"dark rich soil sample visible, green lawn blurred in background"
         ),
-        "vape": (
-            f"clean vaporizer device with cannabis flower on modern surface",
-            f"close-up of dry herb vaporizer with ground cannabis nearby"
+        "golf course": (
+            f"stunning suburban backyard transformed into a golf-course-quality lawn, "
+            f"perfectly alternating dark and light green mowing stripes from a reel mower, "
+            f"{selected_person} pushing a cylinder reel mower in the distance, "
+            f"immaculate edges along flower beds and a stone walkway, lush thick turf",
+            f"low-angle close-up of a pristine residential lawn with razor-sharp mowing stripes, "
+            f"alternating dark and light green bands, individual grass blades visible, "
+            f"a reel mower wheel at the edge of frame, morning dew glistening on the turf"
+        ),
+        "stripe": (
+            f"{selected_person} pushing a cylinder reel mower creating perfect parallel stripes "
+            f"on a thick lush residential lawn, alternating light and dark green bands stretching "
+            f"toward the horizon, immaculate suburban backyard with a patio and landscaping",
+            f"dramatic overhead drone angle showing a crisp checkerboard lawn stripe pattern, "
+            f"thick emerald green grass with perfectly geometric light and dark bands, "
+            f"suburban property edges and patio furniture visible"
+        ),
+        "putting green": (
+            f"beautiful DIY backyard putting green with ultra-short velvet bentgrass, "
+            f"a red flag pin in the cup, {selected_person} in a putting stance, "
+            f"surrounding lawn neatly mowed at a taller height creating a natural frame, "
+            f"upscale residential backyard with mature landscaping",
+            f"close-up of a perfectly smooth backyard putting green surface, white golf ball "
+            f"rolling toward the cup with a red flag pin, individual bent grass blades "
+            f"trimmed to putting height, soft bokeh residential background"
+        ),
+        "chipping": (
+            f"backyard chipping practice area with a short-cut target green and red flag pin, "
+            f"{selected_person} mid-chip-shot from a hitting mat, golf ball arcing through the air "
+            f"toward the green, well-maintained residential lawn surrounding the practice area, "
+            f"mature trees and a stone retaining wall in background",
+            f"close-up of a golf ball landing on a closely mowed backyard chipping green, "
+            f"small divot of turf spraying up near the pin, blurred residential landscape "
+            f"in warm soft background"
+        ),
+        "tee box": (
+            f"custom-built backyard tee box with thick durable bermudagrass turf, "
+            f"{selected_person} addressing a golf ball with a mid-iron, black safety net "
+            f"stretched across the yard in the background, neatly framed tee area with "
+            f"landscape timbers, residential backyard with a fence and trees",
+            f"close-up of a white golf ball on a wooden tee pushed into dense green tee box turf, "
+            f"iron club head hovering just behind the ball, crisp grass texture and "
+            f"individual blades visible, shallow depth of field"
+        ),
+        "cost": (
+            f"aerial view of a beautifully finished backyard putting green installation, "
+            f"smooth green turf surrounded by landscaping, flagstick in the cup, "
+            f"paver walkway leading from a patio, upscale residential property, "
+            f"before-and-after feel with raw materials stacked neatly to one side",
+            f"close-up of putting green construction materials laid out: rolls of artificial turf, "
+            f"bags of crushed stone and sand, landscape timbers, cup cutter and flag pins, "
+            f"organized on a suburban driveway, project planning aesthetic"
         ),
     }
 
@@ -264,29 +352,33 @@ def build_image_prompt(keyword, season, image_type="hero"):
             break
 
     if not activity_hero:
-        activity_hero = f"{selected_person} in a well-organized cannabis grow space tending to plants"
-        activity_section = f"hands with clean gloves inspecting cannabis plant health"
+        activity_hero = (
+            f"{selected_person} performing lawn care on a beautiful residential property, "
+            f"lush green grass, tidy suburban backyard with landscaping and a patio"
+        )
+        activity_section = (
+            f"close-up of hands with work gloves performing a lawn care task on thick green turf, "
+            f"tools and grass texture in sharp detail"
+        )
 
-    # Build prompt with clear hierarchy
+    # Build prompt optimized for Nano Banana 2 (google:4@3)
+    # Rich scene descriptions, strong composition cues, no weather references
     if image_type == "hero":
-        # [Subject/Action] → [Setting] → [Style] → [Technical] → [Constraints]
         prompt = (
-            f"Editorial photograph: {activity_hero}. "
-            f"Clean, professional cannabis cultivation setting. "
-            f"{season_lighting.get(season, 'natural daylight')}. "
-            f"Wide environmental shot from 15 feet away, natural composition. "
-            f"Realistic equipment with correct proportions. "
-            f"Person seen from behind, face not visible. "
-            f"No text, watermarks, or logos."
+            f"Professional editorial photograph: {activity_hero}. "
+            f"Golden hour natural light, soft directional shadows, warm tones. "
+            f"Wide cinematic composition, shallow depth of field on the subject. "
+            f"Vivid saturated colors, ultra-sharp detail, photorealistic. "
+            f"Person seen from behind or side, face not visible. "
+            f"No text, no watermarks, no logos, no UI elements."
         )
     else:
         prompt = (
-            f"Editorial photograph: {activity_section}. "
-            f"Professional cannabis setting. "
-            f"{season_lighting.get(season, 'natural daylight')}. "
-            f"Medium shot showing task clearly, sharp detail. "
-            f"Realistic equipment, correct proportions. "
-            f"No face visible. No text or watermarks."
+            f"Professional editorial photograph: {activity_section}. "
+            f"Soft natural light with gentle bokeh background. "
+            f"Tight composition, tack-sharp focus on the subject, rich textures. "
+            f"Vivid saturated colors, photorealistic detail. "
+            f"No face visible. No text, no watermarks, no logos."
         )
 
     aspect_ratio = "16:9" if image_type == "hero" else "4:3"
@@ -477,7 +569,7 @@ def generate_hero_image(keyword, slug, season):
 
     if runware_api_key is None:
         print("   ⚠️  Runware API not available, using default fallback image")
-        return "/images/default-cannabis-hero.jpg", {}
+        return "/images/default-lawn-hero.jpg", {}
 
     try:
         prompt, aspect_ratio, image_metadata = build_image_prompt(keyword, season, image_type="hero")
@@ -491,7 +583,7 @@ def generate_hero_image(keyword, slug, season):
     except Exception as e:
         print(f"   ❌ Image generation failed: {e}")
         print("   Using default fallback image")
-        return "/images/default-cannabis-hero.jpg", {}
+        return "/images/default-lawn-hero.jpg", {}
 
 
 def generate_section_image(keyword, slug, season, section_title):
@@ -546,13 +638,13 @@ def generate_keyword_ideas(count=5):
         pattern = random.choice(QUESTION_PATTERNS)
         if "{action}" in pattern and "{event}" in pattern:
             keyword = pattern.format(
-                action=random.choice(CANNABIS_ACTIONS),
-                event=random.choice(["watering", "feeding", "transplanting"])
+                action=random.choice(LAWN_ACTIONS),
+                event=random.choice(["rain", "mowing", "fertilizing"])
             )
         elif "{action}" in pattern:
-            keyword = pattern.format(action=random.choice(CANNABIS_ACTIONS))
+            keyword = pattern.format(action=random.choice(LAWN_ACTIONS))
         elif "{problem}" in pattern:
-            keyword = pattern.format(problem=random.choice(CANNABIS_PROBLEMS))
+            keyword = pattern.format(problem=random.choice(LAWN_PROBLEMS))
         else:
             keyword = pattern
         keywords.append(keyword)
@@ -724,7 +816,7 @@ COMPARISON TABLE (REQUIRED for this topic):
   | Cost | Higher | Lower |
 """ if is_comparison else ""
 
-    prompt = f"""You are a knowledgeable cannabis journalist writing accurate, balanced educational content. Write a concise, SEO-optimized article for the keyword: "{keyword}"
+    prompt = f"""You are an expert lawn care content writer. Write a concise, SEO-optimized article for the keyword: "{keyword}"
 
 Requirements:
 - Target word count: 600-750 words (concise and focused)
@@ -741,7 +833,7 @@ Requirements:
 
 GEO OPTIMIZATION (for AI citation):
 - Use QUESTION-BASED H2 headings that match how people ask AI assistants
-  Examples: "How Long Should I Cure?", "What's the Best Strain for Sleep?", "Why Are My Plants Turning Yellow?"
+  Examples: "How Long Should I Wait?", "What's the Best Time to Dethatch?", "Why Does My Lawn Turn Brown?"
 - Write direct, factual answers that AI can easily extract and cite
 - FAQs and key stats will be rendered separately via structured data - DO NOT include them in the article content
 
@@ -785,15 +877,15 @@ CRITICAL SOURCE REQUIREMENTS:
 Example Sources section:
 ## Sources
 <a id="user-content-fn-1"></a>
-1. [Leafly](https://www.leafly.com) - Comprehensive strain database and cannabis guides
+1. [Purdue Extension](https://www.extension.purdue.edu) - Dethatching and lawn maintenance guidelines
 <a id="user-content-fn-2"></a>
-2. [NORML](https://norml.org) - Cannabis law and policy research
+2. [University of Illinois Extension](https://extension.illinois.edu) - Turfgrass fertilization best practices
 <a id="user-content-fn-3"></a>
-3. [Project CBD](https://www.projectcbd.org) - CBD and medical cannabis research
+3. [Pennington Seed](https://www.pennington.com) - Professional lawn care research and guides
 <a id="user-content-fn-4"></a>
-4. [Cannabis Business Times](https://www.cannabisbusinesstimes.com) - Industry cultivation best practices
+4. [Consumer Reports](https://www.consumerreports.org) - Independent lawn care product testing
 <a id="user-content-fn-5"></a>
-5. [Journal of Cannabis Research](https://jcannabisresearch.biomedcentral.com) - Peer-reviewed cannabis science
+5. [Cornell University](https://www.cornell.edu) - Turfgrass management research
 
 IMPORTANT:
 - Use main domain URLs (e.g., https://extension.psu.edu) NOT deep links that might 404
@@ -820,7 +912,7 @@ Output format (JSON):
         {{"question": "Fourth question if applicable?", "answer": "Concise answer."}}
     ],
     "key_stat": "Single most quotable statistic with specific numbers (e.g., 'Dethatching 24-48 hours after rain increases effectiveness by 40%')",
-    "tldr": "One sentence summary of the article's main point (e.g., 'Cure your cannabis in mason jars for 2-4 weeks at 60-65% humidity for the best flavor and potency.')"
+    "tldr": "One sentence summary of the article's main point (e.g., 'Water your lawn early morning between 6-10 AM for best results and least water waste.')"
 }}
 
 Return ONLY valid JSON, no other text."""
@@ -829,7 +921,7 @@ Return ONLY valid JSON, no other text."""
     wait_for_claude()
 
     message = client.messages.create(
-        model="claude-sonnet-4-20250514",
+        model="claude-sonnet-4-6",
         max_tokens=4000,
         messages=[
             {"role": "user", "content": prompt}
@@ -837,7 +929,7 @@ Return ONLY valid JSON, no other text."""
     )
 
     # Log Claude API usage for cost tracking
-    cost_tracker.log_claude_usage(message.usage, "claude-sonnet-4-20250514")
+    cost_tracker.log_claude_usage(message.usage, "claude-sonnet-4-6")
 
     response_text = message.content[0].text
 
@@ -1078,13 +1170,13 @@ def save_to_notion_format(article: dict, output_dir: str = "drafts"):
         'meta_description': article['meta_description'],
         'slug': article['slug'],
         'keyword': article['keyword'],
-        'featured_image': article.get('featured_image', '/images/default-cannabis-hero.jpg'),
+        'featured_image': article.get('featured_image', '/images/default-lawn-hero.jpg'),
         'featured_image_alt': article.get('featured_image_alt', article['title']),
         'tags': article['tags'],
         'status': 'draft',
         'generated_at': article['generated_at'],
         'season': article['season'],
-        'category': article.get('category', 'Growing & Cultivation'),
+        'category': article.get('category', 'Lawn Health & Maintenance'),
         'estimated_read_time': article['estimated_read_time'],
         'word_count': article['word_count']
     }
@@ -1201,7 +1293,7 @@ def save_article_json(article: dict, output_dir: str = "drafts/json"):
 
 def generate_content_batch(count: int = 3, enable_qa: bool = True):
     """Generate a batch of articles based on trending keywords"""
-    print(f"\n🌱 The Green Leaf Content Generator")
+    print(f"\n🌱 Lawn Care Content Generator")
     print(f"Season: {get_current_season().upper()}")
     print(f"Generating {count} articles...")
     print(f"QA Pipeline: {'✅ Enabled' if enable_qa else '⚠️ Disabled'}\n")
@@ -1253,12 +1345,13 @@ def generate_content_batch(count: int = 3, enable_qa: bool = True):
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(description="Generate cannabis education content")
+    parser = argparse.ArgumentParser(description="Generate lawn care content")
     parser.add_argument("--count", type=int, default=3, help="Number of articles to generate")
     parser.add_argument("--keyword", type=str, help="Generate for specific keyword")
     parser.add_argument("--with-qa", action="store_true", default=True, help="Enable QA pipeline (default)")
     parser.add_argument("--no-qa", action="store_true", help="Disable QA pipeline (faster, lower cost)")
     parser.add_argument("--force", action="store_true", help="Skip duplicate check and force generation")
+    parser.add_argument("--publish", action="store_true", help="Auto-publish after generation (promote draft, commit, push)")
 
     args = parser.parse_args()
 
@@ -1273,5 +1366,15 @@ if __name__ == "__main__":
         print(f"✅ Generated: {article['title']}")
         if enable_qa and article.get('qa_passed'):
             print(f"   QA Score: {article['qa_evaluation']['scores']['overall']:.1f}/10 ✅")
+
+        if args.publish:
+            from auto_publish import auto_publish
+            slug = article.get('slug', '')
+            print(f"\n📤 Auto-publishing: {slug}")
+            success = auto_publish(slug=slug)
+            if success:
+                print("✅ Published and pushed to remote")
+            else:
+                print("❌ Auto-publish failed — check logs/auto_publish.log")
     else:
         generate_content_batch(args.count, enable_qa=enable_qa)
