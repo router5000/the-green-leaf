@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
-Auto-Publish Module for Lawn Care Content Engine
+Auto-Publish Module for The Green Leaf Cannabis Content Engine
 
 Handles automatic Git operations after content generation:
+- Promotes articles from drafts/ to site/content/posts/
 - Commits new articles and images
 - Pushes to main branch
 - Triggers Vercel deployment
@@ -95,9 +96,58 @@ def promote_draft(slug: str) -> bool:
 
     import shutil
     CONTENT_PATH.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(draft, target)
+    shutil.move(str(draft), target)
     _log(f"   Promoted draft to posts: {slug}.md")
     return True
+
+
+def promote_all_drafts(skip_qa: bool = False) -> list[str]:
+    """
+    Scan drafts/ and move all QA-passing articles to site/content/posts/.
+    Returns a list of promoted slugs.
+    """
+    if not DRAFTS_PATH.exists():
+        _log("   No drafts/ directory found — skipping promotion")
+        return []
+
+    draft_files = list(DRAFTS_PATH.glob("*.md"))
+    if not draft_files:
+        _log("   No drafts found to promote")
+        return []
+
+    _log(f"   Found {len(draft_files)} draft(s) to evaluate")
+    CONTENT_PATH.mkdir(parents=True, exist_ok=True)
+
+    import shutil
+    promoted = []
+    blocked = []
+
+    for draft in draft_files:
+        slug = draft.stem
+        target = CONTENT_PATH / draft.name
+
+        if target.exists():
+            _log(f"   Skipping {draft.name} — already in posts/")
+            continue
+
+        if not skip_qa:
+            passed, reason = check_article_qa(draft)
+            if not passed:
+                blocked.append(f"{draft.name}: {reason}")
+                _log(f"   ⛔ Blocked {draft.name}: {reason}")
+                continue
+            _log(f"   ✅ QA passed {draft.name}: {reason}")
+
+        shutil.move(str(draft), target)
+        _log(f"   Promoted: {draft.name} → site/content/posts/")
+        promoted.append(slug)
+
+    if blocked:
+        _log(f"\n   ⚠️  {len(blocked)} draft(s) blocked by QA:")
+        for b in blocked:
+            _log(f"      {b}")
+
+    return promoted
 
 
 def check_git_status() -> dict:
@@ -331,12 +381,21 @@ def auto_publish(
     # Clean stale lock files from any previously crashed git processes
     clean_git_locks()
 
-    # Promote draft if slug provided
+    # Promote drafts to site/content/posts/
     if slug:
+        # Promote a single named draft
         _log(f"\n📄 Promoting draft: {slug}")
         if not promote_draft(slug):
             _log("❌ Draft promotion failed")
             return False
+    else:
+        # Promote all QA-passing drafts
+        _log("\n📄 Promoting all ready drafts...")
+        promoted = promote_all_drafts(skip_qa=skip_qa)
+        if promoted:
+            _log(f"   Promoted {len(promoted)} draft(s): {', '.join(promoted)}")
+        else:
+            _log("   No drafts promoted")
 
     # Check current status
     status = check_git_status()
@@ -399,8 +458,8 @@ def setup_git_for_ci():
     Configure git for CI environment (GitHub Actions).
     """
     # Set git user for commits
-    run_git_command(["config", "user.email", "bot@lawncare.center"])
-    run_git_command(["config", "user.name", "Lawn Care Bot"])
+    run_git_command(["config", "user.email", "bot@thegreenleaf.com"])
+    run_git_command(["config", "user.name", "Green Leaf Bot"])
     
     print("✅ Git configured for CI environment")
 
