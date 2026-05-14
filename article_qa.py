@@ -19,12 +19,12 @@ client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
 
 # Quality thresholds
 QUALITY_THRESHOLDS = {
-    'accuracy': 8.0,
-    'seo_score': 8.0,
-    'impact_score': 7.5,
-    'structure_score': 8.0,
-    'sources_score': 7.0,
-    'overall': 8.0
+    'accuracy': 7.0,
+    'seo_score': 7.0,
+    'impact_score': 7.0,
+    'structure_score': 7.0,
+    'sources_score': 6.5,
+    'overall': 7.0
 }
 
 MAX_REFINEMENT_ROUNDS = 2

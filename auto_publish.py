@@ -279,17 +279,34 @@ def stage_content_files(skip_qa: bool = False) -> tuple[bool, list[str]]:
     if blocked:
         print(f"\n   ⚠️  {len(blocked)} article(s) blocked by QA validation")
 
-    # Stage article images
-    if IMAGES_PATH.exists():
-        success, _ = run_git_command(["add", str(IMAGES_PATH)])
-        if success:
-            staged.append("public/images/articles/*")
-
-    # Stage state images
-    if STATES_IMAGES_PATH.exists():
-        success, _ = run_git_command(["add", str(STATES_IMAGES_PATH)])
-        if success:
-            staged.append("public/images/states/*")
+    # Stage images only for articles that passed (avoids orphaned image commits)
+    if skip_qa:
+        # QA skipped — stage all images unconditionally
+        if IMAGES_PATH.exists():
+            success, _ = run_git_command(["add", str(IMAGES_PATH)])
+            if success:
+                staged.append("public/images/articles/*")
+        if STATES_IMAGES_PATH.exists():
+            success, _ = run_git_command(["add", str(STATES_IMAGES_PATH)])
+            if success:
+                staged.append("public/images/states/*")
+    else:
+        # Only stage images whose article slug is in the staged set
+        staged_slugs = {Path(f).stem for f in staged if f.endswith(".md")}
+        if IMAGES_PATH.exists():
+            for img in IMAGES_PATH.iterdir():
+                slug_part = img.stem.replace("-section", "").replace("-hero", "")
+                if any(slug_part == slug or img.stem.startswith(slug) for slug in staged_slugs):
+                    run_git_command(["add", str(img)])
+                    staged.append(str(img))
+        if STATES_IMAGES_PATH.exists():
+            for state_dir in STATES_IMAGES_PATH.iterdir():
+                if state_dir.is_dir():
+                    for img in state_dir.iterdir():
+                        slug_part = img.stem.replace("-section", "").replace("-hero", "")
+                        if any(slug_part == slug or img.stem.startswith(slug) for slug in staged_slugs):
+                            run_git_command(["add", str(img)])
+                            staged.append(str(img))
 
     return len(staged) > 0, staged
 
