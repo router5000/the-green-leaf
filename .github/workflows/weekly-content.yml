@@ -46,6 +46,7 @@ env:
 jobs:
   generate-content:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     # Grant write permission to push commits
     permissions:
@@ -88,37 +89,20 @@ jobs:
           KEYWORDS_EVERYWHERE_API_KEY: ${{ secrets.KEYWORDS_EVERYWHERE_API_KEY }}
           SUPADATA_API_KEY: ${{ secrets.SUPADATA_API_KEY }}
           NOTIFICATION_WEBHOOK_URL: ${{ secrets.NOTIFICATION_WEBHOOK_URL }}
+          INPUT_KEYWORD: ${{ github.event.inputs.keyword }}
+          INPUT_COUNT: ${{ github.event.inputs.count }}
+          INPUT_SEASON: ${{ github.event.inputs.season }}
+          INPUT_SKIP_QA: ${{ github.event.inputs.skip_qa }}
+          INPUT_DRY_RUN: ${{ github.event.inputs.dry_run }}
         run: |
-          # Build command with optional arguments
-          CMD="python weekly_content_pipeline.py --ci"
-          
-          # Add keyword if provided
-          if [ -n "${{ github.event.inputs.keyword }}" ]; then
-            CMD="$CMD --keyword \"${{ github.event.inputs.keyword }}\""
-          fi
-          
-          # Add count
-          if [ -n "${{ github.event.inputs.count }}" ]; then
-            CMD="$CMD --count ${{ github.event.inputs.count }}"
-          fi
-          
-          # Add season if not auto
-          if [ "${{ github.event.inputs.season }}" != "auto" ] && [ -n "${{ github.event.inputs.season }}" ]; then
-            CMD="$CMD --season ${{ github.event.inputs.season }}"
-          fi
-          
-          # Add skip QA flag
-          if [ "${{ github.event.inputs.skip_qa }}" == "true" ]; then
-            CMD="$CMD --no-qa"
-          fi
-          
-          # Add dry run flag
-          if [ "${{ github.event.inputs.dry_run }}" == "true" ]; then
-            CMD="$CMD --dry-run"
-          fi
-          
-          echo "Running: $CMD"
-          eval $CMD
+          ARGS="--ci"
+          [ -n "$INPUT_KEYWORD" ] && ARGS="$ARGS --keyword $INPUT_KEYWORD"
+          [ -n "$INPUT_COUNT" ] && ARGS="$ARGS --count $INPUT_COUNT"
+          [ "$INPUT_SEASON" != "auto" ] && [ -n "$INPUT_SEASON" ] && ARGS="$ARGS --season $INPUT_SEASON"
+          [ "$INPUT_SKIP_QA" = "true" ] && ARGS="$ARGS --no-qa"
+          [ "$INPUT_DRY_RUN" = "true" ] && ARGS="$ARGS --dry-run"
+          echo "Running: python weekly_content_pipeline.py $ARGS"
+          python weekly_content_pipeline.py $ARGS
       
       - name: Push changes
         if: ${{ github.event.inputs.dry_run != 'true' }}
