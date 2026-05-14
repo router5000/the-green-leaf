@@ -104,19 +104,6 @@ jobs:
           echo "Running: python weekly_content_pipeline.py $ARGS"
           python weekly_content_pipeline.py $ARGS
       
-      - name: Push changes
-        if: ${{ github.event.inputs.dry_run != 'true' }}
-        run: |
-          # Check if there are changes to push
-          if [ -n "$(git status --porcelain)" ]; then
-            git add site/content/posts/*.md || true
-            git add site/public/images/articles/* || true
-            git commit -m "🤖 Auto-generated content [skip ci]" || true
-            git push origin main
-          else
-            echo "No changes to push"
-          fi
-      
       - name: Upload logs as artifact
         if: always()
         uses: actions/upload-artifact@v4
