@@ -17,7 +17,7 @@ function Video({ isHovered }: { isHovered: boolean }) {
   return (
     <video
       ref={videoRef}
-      src="/images/the_green_leaf_hover.mp4"
+      src="/images/logo_hover.mp4"
       muted
       playsInline
       className="h-8 sm:h-10 md:h-14 lg:h-16 w-auto"

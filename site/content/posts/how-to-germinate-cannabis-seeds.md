@@ -4,16 +4,16 @@ meta_description: "Learn how to germinate cannabis seeds successfully with 5 pro
 slug: "how-to-germinate-cannabis-seeds"
 keyword: "how to germinate cannabis seeds"
 featured_image: "/images/articles/how-to-germinate-cannabis-seeds.jpg"
-featured_image_alt: "New grass seedlings emerging from overseeded cannabis"
+featured_image_alt: "Cannabis seeds germinating using the paper towel method"
 tags: ["cannabis", "germination", "cannabis seeds", "growing cannabis", "seed germination", "cannabis growing", "indoor growing", "beginner growing"]
-status: "draft"
+status: "published"
 generated_at: "2026-05-14T15:22:03.578202"
 season: "spring"
-category: "Grass Types & Seeding"
+category: "Growing Cannabis"
 estimated_read_time: "4 min read"
 word_count: 916
 section_image: "/images/articles/how-to-germinate-cannabis-seeds-section.jpg"
-section_image_alt: "New grass seedlings emerging from overseeded cannabis"
+section_image_alt: "Cannabis seedling emerging from germinated seed"
 youtube:
   - id: "QeHyEcyTedc"
     title: "Step-by-Step Tutorial: Germinating &amp; Planting Cannabis Seeds"

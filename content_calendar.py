@@ -21,16 +21,16 @@ RECENT_ARTICLE_WINDOW = 5  # Check last N articles for similarity
 
 # Tag category mappings for topic analysis
 TAG_CATEGORIES = {
-    "mowing": ["mow", "cut", "blade", "trimmer", "edger", "height"],
-    "fertilizing": ["fertiliz", "npk", "nitrogen", "feed", "nutrient"],
-    "watering": ["water", "irrigat", "sprinkler", "drought", "moisture"],
-    "weeds": ["weed", "herbicide", "crabgrass", "dandelion", "broadleaf"],
-    "aeration": ["aerat", "compact", "core", "plug", "soil"],
-    "overseeding": ["seed", "overseed", "germina", "establish"],
-    "pest-control": ["pest", "grub", "insect", "fungus", "disease", "fungicide"],
-    "equipment": ["mower", "tool", "equipment", "blade", "sharpen", "maintain"],
-    "thatch": ["thatch", "dethatch", "scarif"],
-    "soil": ["soil", "ph", "test", "amend", "compost"],
+    "growing": ["grow", "cultivat", "indoor", "outdoor", "tent", "yield", "harvest", "vegetat", "flower"],
+    "strains": ["strain", "indica", "sativa", "hybrid", "genetics", "cultivar", "terpene", "phenotype"],
+    "nutrients": ["nutrient", "fertiliz", "feed", "nitrogen", "phosphorus", "potassium", "npk", "deficien", "flush"],
+    "soil-medium": ["soil", "coco", "hydropon", "medium", "substrate", "ph", "amend", "compost", "perlite", "worm"],
+    "seeds-clones": ["seed", "germina", "clone", "cutting", "seedling", "sprout", "propagat"],
+    "training": ["top", "fim", "lst", "scrog", "sog", "defoliat", "training", "prune", "manifold", "mainline"],
+    "pest-disease": ["pest", "mold", "mildew", "aphid", "spider mite", "fungus", "disease", "bud rot", "root rot"],
+    "harvest-cure": ["harvest", "flush", "dry", "cure", "trim", "jar", "trichome", "ripen", "amber"],
+    "wellness": ["cbd", "thc", "medical", "anxiety", "pain", "sleep", "relax", "therapeutic", "benefit"],
+    "legal": ["legal", "law", "state", "regulation", "license", "compli", "possession", "dispensary"],
 }
 
 # Content type patterns
@@ -227,7 +227,7 @@ def calculate_keyword_similarity(keyword1: str, keyword2: str) -> float:
     words2 = set(keyword2.lower().replace("-", " ").split())
 
     # Remove common stop words
-    stop_words = {"the", "a", "an", "to", "for", "of", "in", "on", "my", "your", "lawn", "grass", "how", "what", "when", "why", "is", "are", "should", "i"}
+    stop_words = {"the", "a", "an", "to", "for", "of", "in", "on", "my", "your", "cannabis", "weed", "how", "what", "when", "why", "is", "are", "should", "i"}
     words1 = words1 - stop_words
     words2 = words2 - stop_words
 
@@ -391,7 +391,7 @@ def print_distribution_report():
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(description="Content Calendar and Topic Balancing")
+    parser = argparse.ArgumentParser(description="Cannabis Content Calendar and Topic Balancing")
     parser.add_argument("--analyze", action="store_true", help="Analyze topic distribution")
     parser.add_argument("--gaps", action="store_true", help="Show coverage gaps")
     parser.add_argument("--check", type=str, help="Check if keyword should be published")
@@ -418,4 +418,4 @@ if __name__ == "__main__":
         print("Usage:")
         print("  python content_calendar.py --analyze")
         print("  python content_calendar.py --gaps")
-        print('  python content_calendar.py --check "spring lawn care tips"')
+        print('  python content_calendar.py --check "best strains for anxiety"')

@@ -980,7 +980,7 @@ Return ONLY valid JSON, no other text."""
     article_data["category"] = categorize_article(
         article_data.get("title", ""), keyword, article_data.get("tags", [])
     )
-    article_data["status"] = "draft"
+    article_data["status"] = "published"
     article_data["word_count"] = len(article_data["content"].split())
 
     # Update cost tracker with actual slug
@@ -1166,7 +1166,7 @@ def save_to_notion_format(article: dict, output_dir: str = "drafts"):
         'featured_image': article.get('featured_image', '/images/default-cannabis-hero.jpg'),
         'featured_image_alt': article.get('featured_image_alt', article['title']),
         'tags': article['tags'],
-        'status': 'draft',
+        'status': 'published',
         'generated_at': article['generated_at'],
         'season': article['season'],
         'category': article.get('category', 'Cannabis Basics'),

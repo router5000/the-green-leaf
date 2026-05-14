@@ -9,7 +9,7 @@ const baseUrl = 'https://thegreenleaf.com'
 
 export const metadata: Metadata = {
   title: 'Cannabis Articles & Guides - Expert Tips for Every Season',
-  description: 'Browse expert cannabis articles and guides. Find seasonal advice on fertilizing, mowing, aeration, weed control, and professional maintenance tips for a healthier cannabis.',
+  description: 'Browse expert cannabis articles and guides. Find advice on growing, strains, nutrients, harvesting, and wellness for every experience level.',
   openGraph: {
     title: 'All Cannabis Articles & Guides',
     description: 'Browse our complete library of cannabis articles, guides, and expert tips for a healthier, greener cannabis.',

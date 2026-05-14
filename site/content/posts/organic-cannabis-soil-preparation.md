@@ -6,7 +6,7 @@ keyword: "organic cannabis soil preparation"
 featured_image: "/images/articles/organic-cannabis-soil-preparation.jpg"
 featured_image_alt: "Healthy cannabis soil showing good structure and root development"
 tags: ["organic cannabis", "soil preparation", "cannabis growing", "living soil", "cannabis cultivation", "organic gardening", "soil amendments", "worm castings", "mycorrhizal fungi", "cannabis for beginners"]
-status: "draft"
+status: "published"
 generated_at: "2026-05-14T15:44:31.377520"
 season: "spring"
 category: "Cannabis Basics"
