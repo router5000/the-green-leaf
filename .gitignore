@@ -58,6 +58,9 @@ drafts/json/
 
 # GSC credentials
 gsc_credentials.json
+
+# shadcn components.json contains ReactBits license key — keep local only
+site/components.json
 .gsc_token.json
 reports/
 

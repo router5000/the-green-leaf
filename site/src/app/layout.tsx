@@ -1,21 +1,15 @@
 import type { Metadata } from 'next'
-import { Inter, Playfair_Display, Cormorant_Garamond } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import './globals.css'
-import Link from 'next/link'
-import Image from 'next/image'
 import Script from 'next/script'
 import { Suspense } from 'react'
-import SearchBar from '@/components/SearchBar'
-import MobileNav from '@/components/MobileNav'
-import DesktopNav from '@/components/DesktopNav'
 import { HeaderProvider } from '@/components/HeaderContext'
 import { PostHogProvider, PostHogPageview } from '@/components/PostHogProvider'
-import LogoLink from '@/components/LogoVideo'
+import SiteNav from '@/components/SiteNav'
+import Footer7 from '@/components/blocks/footer-7'
 import { Analytics } from '@vercel/analytics/next'
 
 const inter = Inter({ subsets: ['latin'] })
-const playfair = Playfair_Display({ subsets: ['latin'], style: ['normal', 'italic'], weight: ['400', '700'] })
-const cormorant = Cormorant_Garamond({ subsets: ['latin'], weight: ['400', '500', '600', '700'] })
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://thegreenleaf.com'),
@@ -60,8 +54,11 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: '/favicon.svg',
-    apple: '/apple-touch-icon.png',
+    icon: [
+      { url: '/favicon.png', type: 'image/png' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+    apple: '/favicon.png',
   },
 }
 
@@ -161,81 +158,18 @@ export default function RootLayout({
               Skip to main content
             </a>
 
-            {/* Header */}
+            {/* Navigation */}
             <HeaderProvider>
-              <header className="bg-white border-b border-gray-200 shadow-sm print:hidden">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6 md:py-8">
-                  <nav className="flex items-center justify-between gap-4">
-                    <LogoLink className={`${cormorant.className} text-xl sm:text-2xl md:text-4xl lg:text-5xl font-normal tracking-wide hover:opacity-80 transition flex items-center gap-1 sm:gap-2`} />
-                    <div className="flex items-center gap-2 md:gap-8">
-                      <SearchBar />
-                      <DesktopNav />
-                      <MobileNav />
-                    </div>
-                  </nav>
-                </div>
-              </header>
+              <SiteNav />
             </HeaderProvider>
 
-            {/* Main Content */}
-            <main id="main-content" className="flex-grow bg-gradient-to-b from-white to-gray-50">
+            {/* Main Content — offset right of sidebar on md+, below top bar on mobile */}
+            <main id="main-content" className="flex-grow bg-gradient-to-b from-white to-gray-50 md:pl-24 pt-16 md:pt-0">
               {children}
             </main>
 
             {/* Footer */}
-            <footer className="bg-white border-t border-gray-200 relative overflow-hidden print:hidden">
-              {/* Background illustration - right side */}
-              <div
-                className="absolute right-0 bottom-0 w-80 h-64 md:w-96 md:h-80 pointer-events-none"
-                style={{
-                  backgroundImage: 'url(/images/footer-lawn-transparent.png)',
-                  backgroundSize: 'contain',
-                  backgroundRepeat: 'no-repeat',
-                  backgroundPosition: 'right bottom',
-                }}
-              />
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 relative z-10">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 md:gap-12">
-                  <div className="col-span-2 md:col-span-1">
-                    <h3 className={`${cormorant.className} text-xl sm:text-2xl mb-3 sm:mb-4`}><span className="text-leaf-900">The Green</span> <span className="text-amber-600">Leaf</span></h3>
-                    <p className="text-gray-600 text-sm leading-relaxed">
-                      Your trusted source for cannabis education, strain guides, and wellness content.
-                    </p>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-leaf-900 mb-4 text-sm uppercase tracking-wide">Quick Links</h3>
-                    <ul className="space-y-3 text-sm">
-                      <li><Link href="/" className="text-gray-600 hover:text-leaf-900 transition">Home</Link></li>
-                      <li><Link href="/topics" className="text-gray-600 hover:text-leaf-900 transition">Topics</Link></li>
-                      <li><Link href="/articles" className="text-gray-600 hover:text-leaf-900 transition">All Articles</Link></li>
-                      <li><Link href="/videos" className="text-gray-600 hover:text-leaf-900 transition">Videos</Link></li>
-                      <li><Link href="/about" className="text-gray-600 hover:text-leaf-900 transition">About</Link></li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-leaf-900 mb-4 text-sm uppercase tracking-wide">Seasons</h3>
-                    <ul className="space-y-3 text-sm text-gray-600">
-                      <li>Spring Growing</li>
-                      <li>Summer Flowering</li>
-                      <li>Fall Harvest</li>
-                      <li>Winter Indoor</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-leaf-900 mb-4 text-sm uppercase tracking-wide">Legal</h3>
-                    <ul className="space-y-3 text-sm">
-                      <li><Link href="/privacy-policy" className="text-gray-600 hover:text-leaf-900 transition">Privacy Policy</Link></li>
-                      <li><Link href="/terms-of-service" className="text-gray-600 hover:text-leaf-900 transition">Terms of Service</Link></li>
-                      <li><Link href="/affiliate-disclosure" className="text-gray-600 hover:text-leaf-900 transition">Affiliate Disclosure</Link></li>
-                      <li><Link href="/disclaimer" className="text-gray-600 hover:text-leaf-900 transition">Legal Disclaimer</Link></li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="border-t border-gray-200 mt-12 pt-8 text-center text-sm text-gray-500">
-                  © {new Date().getFullYear()} The Green Leaf. All rights reserved. Content is for educational purposes only.
-                </div>
-              </div>
-            </footer>
+            <Footer7 />
           </div>
         </PostHogProvider>
         <Analytics />
