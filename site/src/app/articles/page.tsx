@@ -8,11 +8,11 @@ export const revalidate = 3600 // Revalidate every hour
 const baseUrl = 'https://thegreenleaf.com'
 
 export const metadata: Metadata = {
-  title: 'Cannabis Articles & Guides - Expert Tips for Every Season',
-  description: 'Browse expert cannabis articles and guides. Find advice on growing, strains, nutrients, harvesting, and wellness for every experience level.',
+  title: 'Cannabis Articles & Guides - Strain Reviews, Effects & Education',
+  description: 'In-depth strain reviews, effect guides, and cannabis education. Find the right strain for you.',
   openGraph: {
-    title: 'All Cannabis Articles & Guides',
-    description: 'Browse our complete library of cannabis articles, guides, and expert tips for a healthier, greener cannabis.',
+    title: 'Cannabis Articles & Guides - The Green Leaf',
+    description: 'In-depth strain reviews, effect guides, and cannabis education. Find the right strain for you.',
     url: `${baseUrl}/articles`,
     siteName: 'The Green Leaf',
     type: 'website',
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'All Cannabis Articles & Guides',
-    description: 'Browse our complete library of cannabis articles and expert tips.',
+    description: 'In-depth strain reviews, effect guides, and cannabis education. Find the right strain for you.',
     images: [`${baseUrl}/images/og-articles.jpg`],
   },
   alternates: {
@@ -45,8 +45,7 @@ export default function ArticlesPage() {
           Cannabis Articles & Guides
         </h1>
         <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-          Expert cannabis advice for every season. From spring preparation to winter protection,
-          find professional tips for a healthier, greener cannabis.
+          In-depth strain reviews, effect guides, and cannabis education. Find the right strain for you.
         </p>
       </div>
 
