@@ -657,30 +657,30 @@ def generate_alt_text(keyword, title, image_type="hero", image_prompt=None):
 
 
 def generate_keyword_ideas(count=5):
-    """Generate keyword ideas based on season and patterns"""
-    season = get_current_season()
+    """Generate keyword ideas drawn from all strain content pillars."""
     keywords = []
-    
-    # Add seasonal topics
-    seasonal = random.sample(SEASONAL_TOPICS[season], min(count // 2, len(SEASONAL_TOPICS[season])))
-    keywords.extend(seasonal)
-    
-    # Add question-based keywords
+
+    # Flatten all pillars and sample evenly
+    all_pillar_topics = [kw for topics in STRAIN_TOPICS.values() for kw in topics]
+    base = random.sample(all_pillar_topics, min(count // 2, len(all_pillar_topics)))
+    keywords.extend(base)
+
+    # Fill remainder with question-pattern keywords
     for _ in range(count - len(keywords)):
         pattern = random.choice(QUESTION_PATTERNS)
-        if "{action}" in pattern and "{event}" in pattern:
-            keyword = pattern.format(
-                action=random.choice(CANNABIS_ACTIONS),
-                event=random.choice(["transplanting", "topping", "harvesting"])
-            )
-        elif "{action}" in pattern:
-            keyword = pattern.format(action=random.choice(CANNABIS_ACTIONS))
-        elif "{problem}" in pattern:
-            keyword = pattern.format(problem=random.choice(CANNABIS_PROBLEMS))
+        if "{effect}" in pattern:
+            keyword = pattern.format(effect=random.choice(STRAIN_EFFECTS))
+        elif "{use_case}" in pattern:
+            keyword = pattern.format(use_case=random.choice(STRAIN_EFFECTS))
+        elif "{strain}" in pattern and "{strain1}" not in pattern:
+            keyword = pattern.format(strain=random.choice(STRAIN_NAMES))
+        elif "{strain1}" in pattern:
+            pair = random.sample(STRAIN_NAMES, 2)
+            keyword = pattern.format(strain1=pair[0], strain2=pair[1])
         else:
             keyword = pattern
         keywords.append(keyword)
-    
+
     return keywords
 
 
@@ -1067,7 +1067,7 @@ Return ONLY valid JSON, no other text."""
     article_data["content"] = re.sub(r'^• ', '- ', article_data["content"], flags=re.MULTILINE)
 
     # Generate images
-    season = get_current_season()
+    season = "evergreen"
     slug = article_data["slug"]
 
     # Generate hero image (16:9 ratio - see IMAGE_SIZES in regenerate_images.py)
@@ -1363,8 +1363,8 @@ def save_article_json(article: dict, output_dir: str = "drafts/json"):
 
 def generate_content_batch(count: int = 3, enable_qa: bool = True):
     """Generate a batch of articles based on trending keywords"""
-    print(f"\n🌱 Cannabis Content Generator")
-    print(f"Season: {get_current_season().upper()}")
+    print(f"\n🌿 Cannabis Content Generator")
+    print(f"Focus: STRAIN DATABASE + EDUCATION")
     print(f"Generating {count} articles...")
     print(f"QA Pipeline: {'✅ Enabled' if enable_qa else '⚠️ Disabled'}\n")
 
@@ -1389,7 +1389,7 @@ def generate_content_batch(count: int = 3, enable_qa: bool = True):
     # Save batch summary
     summary = {
         "generated_at": datetime.now().isoformat(),
-        "season": get_current_season(),
+        "season": "evergreen",
         "total_articles": len(articles),
         "articles": [
             {
