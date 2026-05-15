@@ -9,47 +9,64 @@ import type { VideoWithArticle } from '@/lib/posts'
 
 const VideoModal = dynamic(() => import('./VideoModal'), { ssr: false })
 
-// Month-to-season mapping
-const MONTH_SEASONS: Record<number, string[]> = {
-  0:  ['winter'],           // January
-  1:  ['winter', 'spring'], // February
-  2:  ['spring'],           // March
-  3:  ['spring'],           // April
-  4:  ['spring', 'summer'], // May
-  5:  ['summer'],           // June
-  6:  ['summer'],           // July
-  7:  ['summer', 'fall'],   // August
-  8:  ['fall'],             // September
-  9:  ['fall'],             // October
-  10: ['fall', 'winter'],   // November
-  11: ['winter'],           // December
-}
-
-const MONTH_NAMES = [
-  'January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December'
-]
-
 interface VideosTabsProps {
   videos: VideoWithArticle[]
 }
 
+const tabs = [
+  { id: 'all',            label: 'All' },
+  { id: 'strain-reviews', label: 'Strain Reviews' },
+  { id: 'by-effect',      label: 'By Effect' },
+  { id: 'indica-sativa',  label: 'Indica / Sativa / Hybrid' },
+  { id: 'science',        label: 'Science & Education' },
+  { id: 'consumption',    label: 'Consumption Methods' },
+]
+
+function matchesTab(video: VideoWithArticle, tabId: string): boolean {
+  const tags = video.articleTags.map(t => t.toLowerCase())
+  const text = `${video.title} ${video.articleTitle} ${video.articleKeyword}`.toLowerCase()
+
+  switch (tabId) {
+    case 'strain-reviews':
+      return tags.some(t =>
+        ['strain profile', 'strain guide', 'strain review', 'strain effects',
+         'strain overview', 'strain breakdown'].includes(t)
+      ) || /strain.*(profile|guide|review|effects|breakdown)|review.*strain/.test(text)
+
+    case 'by-effect':
+      return tags.some(t =>
+        ['anxiety', 'sleep', 'pain', 'focus', 'stress relief', 'depression',
+         'insomnia', 'relaxation', 'energy', 'appetite', 'nausea', 'ptsd',
+         'inflammation', 'migraines', 'mood', 'creativity'].some(e => t.includes(e))
+      ) || /\b(anxiety|sleep|pain|focus|stress|depression|insomnia|relaxation|energy|appetite|nausea|ptsd|inflammation|migraine|mood|creativity)\b/.test(text)
+
+    case 'indica-sativa':
+      return tags.some(t => ['indica', 'sativa', 'hybrid'].includes(t))
+        || /\b(indica|sativa|hybrid)\b/.test(text)
+
+    case 'science':
+      return tags.some(t =>
+        ['terpenes', 'terpene', 'cannabinoids', 'cannabinoid', 'endocannabinoid',
+         'entourage effect', 'thc', 'cbd', 'thca', 'cbg', 'cbn', 'pharmacology',
+         'lab results', 'beginner cannabis'].some(s => t.includes(s))
+      ) || /\b(terpene|cannabinoid|endocannabinoid|entourage|thc|cbd|thca|pharmacology|science|explained|what is|how does)\b/.test(text)
+
+    case 'consumption':
+      return tags.some(t =>
+        ['vaping', 'vaporizer', 'edibles', 'tincture', 'concentrates', 'pre-roll',
+         'topical', 'dabs', 'dabbing', 'live resin', 'rosin', 'hash', 'smoking',
+         'bong', 'joint', 'blunt', 'pipe'].some(c => t.includes(c))
+      ) || /\b(vap|edible|tincture|concentrat|pre.?roll|topical|dab|smok|bong|pipe|joint|blunt|hash|rosin|live resin|consume|consumption)\b/.test(text)
+
+    default:
+      return true
+  }
+}
+
 export default function VideosTabs({ videos }: VideosTabsProps) {
   const searchParams = useSearchParams()
-  const currentMonth = new Date().getMonth()
-  const monthName = MONTH_NAMES[currentMonth]
-  const monthSeasons = MONTH_SEASONS[currentMonth]
   const hasInteracted = useRef(false)
   const [selectedVideo, setSelectedVideo] = useState<VideoWithArticle | null>(null)
-
-  const tabs = [
-    { id: 'all', label: 'All' },
-    { id: 'monthly', label: `For ${monthName}` },
-    { id: 'spring', label: 'Spring' },
-    { id: 'summer', label: 'Summer' },
-    { id: 'fall', label: 'Fall' },
-    { id: 'winter', label: 'Winter' },
-  ]
 
   const initialTab = searchParams.get('tab') || 'all'
   const [activeTab, setActiveTab] = useState(initialTab)
@@ -61,15 +78,8 @@ export default function VideosTabs({ videos }: VideosTabsProps) {
 
   const filteredVideos = useMemo(() => {
     if (activeTab === 'all') return videos
-    if (activeTab === 'monthly') {
-      return videos.filter(video =>
-        monthSeasons.includes(video.articleSeason?.toLowerCase())
-      )
-    }
-    return videos.filter(video =>
-      video.articleSeason?.toLowerCase() === activeTab
-    )
-  }, [videos, activeTab, monthSeasons])
+    return videos.filter(video => matchesTab(video, activeTab))
+  }, [videos, activeTab])
 
   if (videos.length === 0) {
     return (
@@ -108,7 +118,7 @@ export default function VideosTabs({ videos }: VideosTabsProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
         >
-          <div role="tablist" aria-label="Filter videos by season" className="flex flex-wrap justify-center gap-2">
+          <div role="tablist" aria-label="Filter videos by category" className="flex flex-wrap justify-center gap-2">
             {tabs.map((tab, index) => (
               <motion.button
                 key={tab.id}
@@ -148,7 +158,7 @@ export default function VideosTabs({ videos }: VideosTabsProps) {
           <motion.div
             id="videos-panel"
             role="tabpanel"
-            aria-label={`${activeTab === 'all' ? 'All' : activeTab === 'monthly' ? `${monthName}` : activeTab} videos`}
+            aria-label={`${tabs.find(t => t.id === activeTab)?.label ?? 'All'} videos`}
             className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
             layout
           >
@@ -191,10 +201,10 @@ export default function VideosTabs({ videos }: VideosTabsProps) {
                         </svg>
                       </div>
                     </div>
-                    {/* Duration/Position Badge */}
+                    {/* Position Badge */}
                     <div className="absolute top-3 right-3">
                       <span className="px-2 py-1 bg-black/70 text-white text-xs rounded font-medium">
-                        {video.position === 'hero' ? 'Featured' : 'Tutorial'}
+                        {video.position === 'hero' ? 'Featured' : 'Related'}
                       </span>
                     </div>
                   </div>
@@ -231,12 +241,16 @@ export default function VideosTabs({ videos }: VideosTabsProps) {
                       </p>
                     )}
 
-                    {/* Season Tag */}
-                    <div className="mt-3 flex items-center gap-2">
-                      <span className="text-xs bg-leaf-100 text-leaf-700 px-2 py-1 rounded-full capitalize">
-                        {video.articleSeason}
-                      </span>
-                    </div>
+                    {/* Tags */}
+                    {video.articleTags.length > 0 && (
+                      <div className="mt-3 flex flex-wrap gap-1">
+                        {video.articleTags.slice(0, 3).map(tag => (
+                          <span key={tag} className="text-xs bg-leaf-100 text-leaf-700 px-2 py-0.5 rounded-full capitalize">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </motion.article>
               ))}

@@ -440,6 +440,8 @@ export interface VideoWithArticle extends YouTubeVideo {
   articleTitle: string
   articleImage?: string
   articleSeason: string
+  articleTags: string[]
+  articleKeyword: string
 }
 
 export function getAllVideos(): VideoWithArticle[] {
@@ -455,6 +457,8 @@ export function getAllVideos(): VideoWithArticle[] {
           articleTitle: post.title,
           articleImage: post.featured_image,
           articleSeason: post.season,
+          articleTags: post.tags ?? [],
+          articleKeyword: post.keyword ?? '',
         })
       }
     }

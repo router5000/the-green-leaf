@@ -14,15 +14,6 @@ estimated_read_time: "5 min read"
 word_count: 997
 section_image: "/images/articles/organic-cannabis-soil-preparation-section.jpg"
 section_image_alt: "Healthy cannabis soil showing good structure and root development"
-youtube:
-  - id: "Ydm4BuNNFyY"
-    title: "How to Prepare &amp; Mix Your Soil to Grow the Best Cannabis (pH Fix &amp; Premoisten) - GWM Free Episode"
-    channel: "How Weed Grow at Home - Indoor Cannabis Tutorials"
-    position: "hero"
-  - id: "L2hJGOdaLkU"
-    title: "Grow Organic Cannabis the EASY Way! | Clackamas Coots Soil Mix Explained"
-    channel: "Canadian Grower"
-    position: "section"
 faqs:
   - question: "What is the best soil mix ratio for organic cannabis growing?"
     answer: "A reliable starting ratio is roughly 40% quality organic base mix, 20–25% worm castings and compost combined, and 20–30% perlite for drainage. This ratio creates a well-aerated, nutrient-rich environment that supports strong root development and microbial activity throughout the grow cycle."

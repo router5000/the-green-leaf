@@ -14,15 +14,6 @@ estimated_read_time: "4 min read"
 word_count: 916
 section_image: "/images/articles/how-to-germinate-cannabis-seeds-section.jpg"
 section_image_alt: "Cannabis seedling emerging from germinated seed"
-youtube:
-  - id: "QeHyEcyTedc"
-    title: "Step-by-Step Tutorial: Germinating &amp; Planting Cannabis Seeds"
-    channel: "Mr. Grow It"
-    position: "hero"
-  - id: "pzMQaAT3Rp8"
-    title: "Germinating and Planting Cannabis Seeds!"
-    channel: "Humboldt Seed Company"
-    position: "section"
 faqs:
   - question: "How long does it take for cannabis seeds to germinate?"
     answer: "Most cannabis seeds germinate within 24–120 hours (1–5 days) under ideal conditions of 70–85°F and consistent moisture. Older seeds or seeds stored improperly may take up to 7–10 days or may not germinate at all."
