@@ -43,226 +43,156 @@ SITE_CONTENT_PATH = Path("site/content/posts")
 KEYWORD_CACHE_PATH = Path(".cache/keyword_cache.json")
 CACHE_TTL_HOURS = 24
 
-# Cannabis topic bank organized by season (outdoor growing calendar) + evergreen clusters
-CANNABIS_TOPICS = {
-    # Spring: germination, seedlings, transplanting outdoors, strain selection
-    "spring": [
-        "how to germinate cannabis seeds",
-        "cannabis seedling care guide",
-        "when to transplant cannabis outdoors",
-        "best cannabis strains for outdoor growing",
-        "how to sex cannabis plants",
-        "cannabis seedling light schedule",
-        "starting cannabis seeds indoors",
-        "feminized vs autoflower seeds explained",
-        "cannabis germination rate tips",
-        "best soil mix for cannabis seedlings",
-        "how to harden off cannabis plants",
-        "cloning cannabis plants beginners guide",
-        "cannabis companion planting guide",
-        "organic cannabis soil preparation",
-        "cannabis grow calendar spring checklist",
-    ],
-    # Summer: vegetative training, nutrients, pest/disease management
-    "summer": [
-        "cannabis vegetative stage nutrients guide",
-        "how to top cannabis plants",
-        "low stress training LST cannabis guide",
-        "SCROG method for cannabis explained",
-        "cannabis watering schedule guide",
-        "how to identify cannabis nutrient deficiencies",
-        "cannabis pH and EC guide",
-        "fimming vs topping cannabis plants",
-        "cannabis defoliation techniques",
-        "how to identify cannabis pests",
-        "spider mites on cannabis treatment",
-        "cannabis root development guide",
-        "super cropping cannabis technique",
-        "cannabis nitrogen deficiency vs light burn",
-        "outdoor cannabis training techniques",
-    ],
-    # Fall: harvest, drying, curing — peak search season
-    "fall": [
-        "when to harvest cannabis plants",
-        "how to read cannabis trichomes for harvest",
-        "cannabis flushing before harvest guide",
-        "how to dry cannabis buds properly",
-        "cannabis curing guide for beginners",
-        "wet trimming vs dry trimming cannabis",
-        "cannabis harvest checklist outdoor",
-        "how long to cure cannabis",
-        "cannabis storage after curing",
-        "how to trim cannabis buds",
-        "cannabis drying room setup",
-        "cannabis brix levels and harvest timing",
-        "how to increase cannabis terpenes at harvest",
-        "cannabis yield per plant outdoor",
-        "cannabis bud rot prevention and treatment",
-    ],
-    # Winter: indoor growing, lights, hydroponics, autoflowers
-    "winter": [
-        "indoor cannabis growing guide for beginners",
-        "best LED grow lights for cannabis 2026",
-        "cannabis grow tent setup guide",
-        "hydroponic cannabis growing DWC guide",
-        "autoflower cannabis grow guide",
-        "cannabis grow room ventilation setup",
-        "cannabis light cycle for flowering",
-        "best cannabis nutrients for indoor growing",
-        "cannabis coco coir growing guide",
-        "how to control humidity in cannabis grow room",
-        "cannabis cloning success rate tips",
-        "cannabis sea of green SOG method",
-        "LED vs HPS grow lights for cannabis",
-        "cannabis VPD chart explained",
-        "cannabis grow journal how to start",
-    ],
-    # Evergreen education — foundational, high-volume, durable traffic
-    "evergreen": [
-        "indica vs sativa vs hybrid explained",
-        "cannabis for beginners complete guide",
-        "how does THC affect the brain",
-        "what is CBD and how does it work",
-        "cannabis consumption methods compared",
-        "how to dose cannabis edibles safely",
-        "cannabis tolerance explained",
-        "how to store cannabis properly",
-        "cannabis and alcohol interaction",
-        "cannabis entourage effect explained",
-        "how to roll a joint step by step",
-        "cannabis tincture how to use",
-        "cannabis microdosing guide",
-        "cannabis drug test how long does it stay",
-        "first time cannabis user tips",
-        "cannabis smoke vs vaporize comparison",
-        "cannabis allergy symptoms and causes",
-        "how to make cannabis tea",
-        "cannabis edibles vs smoking onset time",
-        "cannabis tolerance break benefits",
-    ],
-    # Strain guides — high affiliate potential (seed banks), perennial curiosity
-    "strains": [
-        "best strains for anxiety and stress",
-        "best cannabis strains for sleep",
-        "best strains for chronic pain relief",
-        "best sativa strains for energy and focus",
-        "best indica strains for relaxation",
-        "high CBD low THC strains guide",
+# Content pillars organized by editorial focus (not growing season)
+CONTENT_PILLARS = {
+    # Pillar 1: Individual strain profiles — deep, high-affiliate, high search volume
+    "strain_database": [
         "Blue Dream strain effects and review",
-        "OG Kush strain guide and effects",
-        "Girl Scout Cookies strain review",
-        "Gorilla Glue strain effects guide",
-        "Wedding Cake strain review",
-        "Gelato strain effects and terpenes",
-        "Jack Herer strain review",
-        "Northern Lights strain guide",
+        "OG Kush strain guide and terpenes",
+        "Girl Scout Cookies strain profile",
+        "Gorilla Glue 4 strain review",
+        "Wedding Cake strain effects guide",
+        "Gelato strain review and terpenes",
+        "Jack Herer strain guide",
+        "Northern Lights strain profile",
         "Granddaddy Purple strain effects",
-        "Sour Diesel strain effects review",
-        "best strains for creativity",
-        "best strains for nausea and appetite",
-        "best cannabis strains for depression",
-        "high THC strains list 2026",
+        "Sour Diesel strain review",
+        "White Widow strain effects and lineage",
+        "AK-47 strain guide and effects",
+        "Amnesia Haze strain profile",
+        "Pineapple Express strain review",
+        "Purple Haze strain effects guide",
+        "Zkittlez strain review and terpenes",
+        "Runtz strain effects and lineage",
+        "MAC 1 strain guide",
+        "Cereal Milk strain review",
+        "Ice Cream Cake strain review",
+        "London Pound Cake strain guide",
+        "Do-Si-Dos strain effects profile",
+        "Mimosa strain review and terpenes",
+        "Tropicana Cookies strain guide",
+        "Apple Fritter strain effects",
+        "Banana Runtz strain review",
+        "Sherbet strain effects and terpenes",
+        "Biscotti strain guide and effects",
+        "Gary Payton strain effects profile",
+        "Durban Poison strain guide",
+        "Trainwreck strain review",
+        "Super Lemon Haze strain effects",
+        "Strawberry Cough strain guide",
+        "Green Crack strain effects profile",
+        "Skywalker OG strain review",
+        "Bubba Kush strain guide and effects",
+        "Purple Punch strain effects review",
+        "Zkittlez strain guide",
+        "Animal Cookies strain review",
+        "Chemdawg strain guide and lineage",
     ],
-    # Growing equipment/products — strong affiliate (Mars Hydro, AC Infinity, Fox Farm, etc.)
-    "growing": [
-        "best cannabis grow lights under $200",
-        "AC Infinity vs other inline fans review",
-        "Fox Farm vs General Hydroponics nutrients",
-        "best cannabis growing medium comparison",
-        "cannabis grow tent brands compared",
-        "best carbon filter for grow tent",
-        "smart cannabis grow controllers review",
-        "best cannabis fertilizer for beginners",
-        "cannabis pH meters comparison",
-        "best pots for cannabis growing",
-        "cannabis grow light coverage calculator",
-        "best cannabis seeds to buy online",
-        "autoflower vs photoperiod cannabis comparison",
-        "cannabis seedling heat mat guide",
-        "best humidity controller for grow room",
+    # Pillar 2: Strain discovery roundups — high-volume, commercial-intent
+    "strain_discovery": [
+        "best indica strains for sleep 2026",
+        "best strains for anxiety and stress",
+        "best sativa strains for energy and focus",
+        "high CBD low THC strains guide",
+        "strongest THC strains 2026",
+        "best strains for creativity and focus",
+        "best strains for chronic pain relief",
+        "best strains for depression",
+        "best strains for nausea",
+        "best cannabis strains for beginners",
+        "best hybrid strains 2026",
+        "best terpene-rich strains guide",
+        "best strains for social anxiety",
+        "best daytime cannabis strains",
+        "best nighttime cannabis strains",
+        "best strains for appetite stimulation",
+        "best strains for relaxation without sedation",
+        "most popular cannabis strains 2026",
+        "top 10 cannabis strains 2026",
+        "best cannabis strains for migraines",
+        "best strains for inflammation and arthritis",
+        "cannabis strains high in myrcene",
+        "cannabis strains high in limonene",
+        "cannabis strains high in linalool",
+        "best strains for euphoria and happiness",
+        "best strains for PTSD",
+        "best CBD-dominant strains guide",
+        "best strains for focus and ADHD",
+        "best strains for insomnia",
+        "best autoflower strains to buy 2026",
     ],
-    # Wellness and health — medical cannabis, CBD, research-backed claims
-    "wellness": [
-        "cannabis for anxiety research and evidence",
-        "CBD oil for pain management guide",
-        "medical cannabis conditions it treats",
-        "cannabis and sleep quality research",
-        "cannabis for inflammation and arthritis",
-        "microdosing cannabis for mental health",
-        "cannabis and PTSD treatment research",
-        "CBD dosage guide by weight",
-        "cannabis for nausea and chemotherapy",
-        "cannabis and exercise recovery",
-        "cannabis for migraines evidence",
-        "CBD vs THC for anxiety which is better",
-        "cannabis and epilepsy CBD research",
-        "cannabis harm reduction guide",
-        "cannabis dependency signs and prevention",
-    ],
-    # Legal and policy — high news-driven traffic, low competition educational content
-    "legal": [
-        "cannabis legalization by state 2026",
-        "recreational cannabis states list",
-        "cannabis possession limits by state",
-        "how to get a medical cannabis card",
-        "cannabis social equity programs explained",
-        "cannabis expungement how it works",
-        "cannabis DUI laws by state",
-        "traveling with cannabis laws guide",
-        "cannabis home grow laws by state",
-        "cannabis employment drug testing laws",
-        "cannabis banking laws SAFE Act explained",
-        "federal cannabis legalization timeline",
-        "cannabis licensing requirements by state",
-        "cannabis delivery service laws",
-        "cannabis gifting laws explained",
-    ],
-    # Science and cannabinoids — attracts educated readers, strong SEO authority signal
-    "science": [
-        "cannabis terpenes complete guide and effects",
+    # Pillar 3: Cannabis education — foundational, evergreen, AI-citation friendly
+    "cannabis_education": [
+        "indica vs sativa vs hybrid explained",
+        "cannabis terpenes complete guide",
         "THC vs CBD vs CBN vs CBG explained",
+        "entourage effect explained",
+        "how to read cannabis lab results",
         "THCA vs THC what is the difference",
-        "cannabis cannabinoids full list and effects",
+        "cannabis endocannabinoid system explained",
         "myrcene terpene effects and strains",
         "limonene terpene cannabis effects",
         "beta-caryophyllene terpene guide",
         "linalool terpene cannabis effects",
         "pinene terpene effects cannabis",
-        "cannabis endocannabinoid system explained",
-        "cannabis pharmacology how it works",
-        "THCV effects and benefits guide",
-        "CBC cannabinoid effects explained",
+        "terpinolene terpene guide",
+        "cannabis tolerance explained",
+        "how THC affects the brain",
+        "how to dose cannabis safely",
+        "cannabis for beginners complete guide",
+        "what are cannabis flavonoids",
+        "THCV effects and benefits explained",
+        "cannabis pharmacology explained",
+        "what does cannabis potency mean",
+        "understanding cannabis certificates of analysis",
+        "cannabis and sleep science explained",
+        "cannabis and anxiety the research",
+        "THC to CBD ratio guide",
+        "cannabis microdosing guide",
+        "CBD bioavailability by consumption method",
+        "cannabis drug interactions guide",
+        "full spectrum vs broad spectrum CBD explained",
+        "what is the difference between hemp and cannabis",
+    ],
+    # Pillar 4: Reviews and culture — consumption methods, consumer guides, lifestyle
+    "reviews_culture": [
+        "how to choose the right cannabis strain",
+        "cannabis consumption methods compared",
+        "vaping vs smoking cannabis comparison",
+        "cannabis edibles vs smoking onset times",
+        "how to read a dispensary menu",
+        "cannabis tinctures how to use",
+        "how to store cannabis properly",
+        "what to expect first time cannabis user",
+        "best cannabis vaporizers 2026",
+        "cannabis gummies vs capsules comparison",
+        "cannabis topicals how they work",
+        "cannabis concentrates for beginners",
+        "what is live resin vs cured resin",
+        "what is rosin vs resin",
+        "cannabis hash types explained",
+        "what is THCA flower",
+        "cannabis pre-rolls buying guide",
+        "how to talk to a budtender",
+        "cannabis tolerance break guide",
+        "how to choose CBD products",
+        "cannabis third-party testing why it matters",
+        "cannabis topicals vs edibles for pain",
+        "cannabis infused beverages guide",
+        "how to read cannabis packaging",
+        "dispensary vs delivery service guide",
+        "cannabis moon rocks what are they",
         "cannabis terpene profiles by strain",
         "cannabis extraction methods compared",
+        "dabbing cannabis concentrates guide",
+        "cannabis sublingual vs ingested effects",
     ],
 }
 
 
-def get_current_season() -> str:
-    """Determine current season based on Northern Hemisphere dates."""
-    month = datetime.now().month
-    if month in [3, 4, 5]:
-        return "spring"
-    elif month in [6, 7, 8]:
-        return "summer"
-    elif month in [9, 10, 11]:
-        return "fall"
-    else:
-        return "winter"
-
-
-def get_relevant_seasons() -> list[str]:
-    """Get topic buckets relevant for content planning (current season + upcoming + evergreen + always-on clusters)."""
-    season_order = ["spring", "summer", "fall", "winter"]
-    current = get_current_season()
-    current_idx = season_order.index(current)
-    next_idx = (current_idx + 1) % 4
-
-    # Always pull from cluster banks — evergreen commercial-intent buckets
-    # not bound to a single season.
-    always_on_clusters = ["strains", "growing", "wellness", "legal", "products", "science"]
-
-    return [current, season_order[next_idx], "evergreen"] + always_on_clusters
+def get_content_pillars() -> list[str]:
+    """Return all content pillars. All pillars are weighted equally — strain content is evergreen."""
+    return list(CONTENT_PILLARS.keys())
 
 
 def get_published_keywords() -> set[str]:
@@ -460,24 +390,23 @@ def find_best_keyword(
         if cache.get("keywords"):
             print("📦 Using cached keyword data")
             return cache["keywords"][:count]
-    
-    # Get relevant seasons
+
+    # Get content pillars to draw from
     if force_season:
-        seasons = [force_season, "evergreen"]
+        pillars = [force_season] if force_season in CONTENT_PILLARS else get_content_pillars()
     else:
-        seasons = get_relevant_seasons()
-    
-    print(f"📅 Targeting seasons: {', '.join(seasons)}")
-    
-    # Gather candidate keywords
+        pillars = get_content_pillars()
+
+    print(f"📋 Targeting pillars: {', '.join(pillars)}")
+
+    # Gather candidate keywords — all pillars equal weight (strain content is evergreen)
     candidates = []
-    for season in seasons:
-        relevance = 1.0 if season == seasons[0] else (0.8 if season == "evergreen" else 0.6)
-        for kw in CANNABIS_TOPICS.get(season, []):
+    for pillar in pillars:
+        for kw in CONTENT_PILLARS.get(pillar, []):
             candidates.append({
                 "keyword": kw,
-                "season": season,
-                "season_relevance": relevance
+                "season": "evergreen",
+                "season_relevance": 1.0
             })
     
     print(f"📋 Evaluating {len(candidates)} candidate keywords...")
@@ -572,7 +501,7 @@ def get_trending_cannabis_topics() -> list[str]:
     pytrends = TrendReq(hl='en-US', tz=360)
     trending = []
 
-    seed_terms = ["cannabis", "marijuana strains", "CBD oil", "cannabis growing"]
+    seed_terms = ["cannabis strains", "best weed strains", "cannabis effects", "marijuana strain review"]
 
     for term in seed_terms:
         try:

@@ -48,61 +48,71 @@ else:
     print("⚠️  Runware API key not found in environment variables")
     runware_api_key = None
 
-# Seasonal cannabis topics (outdoor growing calendar)
-SEASONAL_TOPICS = {
-    "spring": [
-        "how to germinate cannabis seeds",
-        "cannabis seedling care guide",
-        "when to transplant cannabis outdoors",
-        "best cannabis strains for outdoor growing",
-        "feminized vs autoflower seeds explained",
+# Strain-focused topic bank mirroring keyword_research.py CONTENT_PILLARS
+STRAIN_TOPICS = {
+    "strain_database": [
+        "Blue Dream strain effects and review",
+        "OG Kush strain guide and terpenes",
+        "Girl Scout Cookies strain profile",
+        "Wedding Cake strain effects guide",
+        "Gelato strain review and terpenes",
+        "Northern Lights strain profile",
+        "Granddaddy Purple strain effects",
+        "Sour Diesel strain review",
+        "Zkittlez strain review and terpenes",
+        "Runtz strain effects and lineage",
     ],
-    "summer": [
-        "cannabis vegetative stage nutrients guide",
-        "how to top cannabis plants",
-        "low stress training LST cannabis guide",
-        "how to identify cannabis nutrient deficiencies",
-        "cannabis pH and EC guide",
-        "spider mites on cannabis treatment",
-        "SCROG method for cannabis explained",
+    "strain_discovery": [
+        "best indica strains for sleep 2026",
+        "best strains for anxiety and stress",
+        "best sativa strains for energy and focus",
+        "high CBD low THC strains guide",
+        "strongest THC strains 2026",
+        "best strains for creativity and focus",
+        "best strains for chronic pain relief",
+        "best hybrid strains 2026",
+        "top 10 cannabis strains 2026",
     ],
-    "fall": [
-        "when to harvest cannabis plants",
-        "how to read cannabis trichomes for harvest",
-        "how to dry cannabis buds properly",
-        "cannabis curing guide for beginners",
-        "wet trimming vs dry trimming cannabis",
+    "cannabis_education": [
+        "indica vs sativa vs hybrid explained",
+        "cannabis terpenes complete guide",
+        "THC vs CBD vs CBN vs CBG explained",
+        "entourage effect explained",
+        "how to read cannabis lab results",
+        "cannabis endocannabinoid system explained",
+        "cannabis for beginners complete guide",
+        "how to dose cannabis safely",
     ],
-    "winter": [
-        "indoor cannabis growing guide for beginners",
-        "best LED grow lights for cannabis 2026",
-        "cannabis grow tent setup guide",
-        "hydroponic cannabis growing DWC guide",
-        "autoflower cannabis grow guide",
-        "cannabis VPD chart explained",
-        "cannabis light cycle for flowering",
-    ]
+    "reviews_culture": [
+        "how to choose the right cannabis strain",
+        "cannabis consumption methods compared",
+        "vaping vs smoking cannabis comparison",
+        "cannabis edibles vs smoking onset times",
+        "how to read a dispensary menu",
+        "cannabis concentrates for beginners",
+        "best cannabis vaporizers 2026",
+        "how to talk to a budtender",
+    ],
 }
 
-# High-intent question patterns (People Also Ask style)
+# High-intent question patterns for strain discovery
 QUESTION_PATTERNS = [
-    "How often should I {action} my cannabis plants",
-    "What is the best time to {action}",
-    "Why are my cannabis plants {problem}",
-    "How to fix {problem} in cannabis plants",
-    "Should I {action} before or after {event}",
-    "What causes {problem} in cannabis",
-    "How long does it take to {action}",
+    "What strains are best for {effect}",
+    "Which strain is better for {use_case}",
+    "What does {strain} feel like",
+    "How strong is {strain}",
+    "What terpenes are in {strain}",
+    "What is the difference between {strain1} and {strain2}",
 ]
 
-CANNABIS_ACTIONS = [
-    "water", "feed nutrients", "top", "harvest", "flush",
-    "transplant", "train", "cure", "defoliate"
+STRAIN_EFFECTS = [
+    "sleep", "anxiety relief", "focus", "relaxation", "creativity",
+    "pain relief", "energy", "mood boost", "appetite", "euphoria"
 ]
 
-CANNABIS_PROBLEMS = [
-    "turning yellow", "showing nutrient deficiency", "wilting",
-    "not flowering", "getting light burn", "growing slowly", "curling leaves"
+STRAIN_NAMES = [
+    "Blue Dream", "OG Kush", "Girl Scout Cookies", "Sour Diesel",
+    "Northern Lights", "Gelato", "Wedding Cake", "Granddaddy Purple"
 ]
 
 
@@ -120,17 +130,21 @@ def get_current_season():
 
 
 def categorize_article(title: str, keyword: str, tags: list) -> str:
-    """Assign a cannabis category based on title, keyword, and tags."""
+    """Assign a category from the 4 content pillars based on title and keyword."""
     CLUSTERS = [
-        ("Growing Techniques", ["grow", "growing", "germinate", "seedling", "transplant", "train", "top", "fim", "scrog", "lst", "sog", "defoliat", "clone", "autoflower", "hydroponic", "nutrient", "harvest", "cure", "dry", "trim"]),
-        ("Strains & Effects", ["strain", "indica", "sativa", "hybrid", "terpene", "effect", "review", "kush", "haze", "diesel", "cookies", "gelato", "og ", "purple", "blue dream"]),
-        ("Cannabis Science", ["cannabinoid", "thc", "cbd", "cbn", "cbg", "terpene", "endocannabinoid", "pharmacology", "thca", "extraction", "entourage"]),
-        ("Health & Wellness", ["anxiety", "pain", "sleep", "medical", "wellness", "health", "dose", "dosage", "ptsd", "inflammation", "nausea", "microdose"]),
-        ("Legal & Policy", ["legal", "law", "state", "dispensary", "possession", "license", "legalization", "policy", "regulation", "expunge"]),
-        ("Products & Consumption", ["vaporizer", "vape", "edible", "tincture", "concentrate", "dab", "pipe", "joint", "bong", "consume", "smoke", "product"]),
+        # Pillar 1: individual strain profiles (named strains, lineage, terpene profiles)
+        ("Strain Database", ["strain profile", "strain guide", "strain review", "lineage", "kush", "haze", "diesel", "cookies", "gelato", "runtz", "zkittlez", "wedding cake", "gorilla glue", "blue dream", "og kush", "northern lights", "granddaddy", "sour diesel", "purple punch", "pineapple express", "white widow", "bubba kush", "mac 1", "do-si-dos", "mimosa", "biscotti"]),
+        # Pillar 2: roundups, recommendations, best-of lists
+        ("Strain Discovery", ["best strains", "strains for", "top strains", "strains 2026", "best indica", "best sativa", "best hybrid", "high cbd", "high thc", "strongest", "most popular"]),
+        # Pillar 3: education, science, compounds, how-it-works
+        ("Cannabis Education", ["explained", "what is", "how does", "terpene guide", "cannabinoid", "endocannabinoid", "entourage effect", "indica vs", "sativa vs", "thca vs", "thc vs cbd", "pharmacology", "tolerance", "lab results", "certificate of analysis", "beginners guide", "microdosing"]),
+        # Pillar 4: consumption, reviews, consumer decisions, culture
+        ("Reviews & Culture", ["how to choose", "consumption methods", "vaping vs", "edibles vs", "dispensary", "budtender", "vaporizer", "concentrates", "live resin", "rosin", "hash", "pre-roll", "tincture", "topical", "tolerance break", "third-party testing", "packaging"]),
+        # Supporting: wellness conditions (strain-selection context)
+        ("Health & Wellness", ["anxiety", "pain", "sleep", "depression", "ptsd", "inflammation", "medical", "nausea", "migraines", "arthritis"]),
     ]
-    title_kw = f"{title} {keyword}".lower()
-    best_score, best_cat = 0, "Cannabis Basics"
+    title_kw = f"{title} {keyword} {' '.join(tags)}".lower()
+    best_score, best_cat = 0, "Strain Discovery"
     for cat, keywords_list in CLUSTERS:
         score = sum(5 for kw in keywords_list if kw in title_kw)
         if score > best_score:
@@ -172,167 +186,193 @@ def build_image_prompt(keyword, season, image_type="hero"):
     # Each tuple: (hero_scene, section_scene)
     # Hero: wide cinematic environmental shot | Section: tight detail/texture shot
     activities = {
-        "germinate": (
-            f"cannabis seeds arranged on a damp paper towel inside a clear plastic container, "
-            f"small white taproots just beginning to emerge from the dark seeds, "
-            f"warm wooden surface in soft background, natural light from a nearby window",
-            f"extreme macro close-up of a cannabis seed with a white taproot curling out, "
-            f"water droplets glistening on the seed surface, shallow depth of field, "
-            f"dark rich texture against a clean white paper towel"
-        ),
-        "seedling": (
-            f"healthy cannabis seedling in a small black nursery pot, two bright green cotyledon "
-            f"leaves fully spread with a tiny serrated first true leaf emerging between them, "
-            f"sitting on a wooden grow bench under warm LED light, clean grow room background",
-            f"close-up of cannabis seedling cotyledons and first true leaf, vivid lime green "
-            f"color, fine leaf texture visible, shallow focus with soft bokeh background"
-        ),
-        "transplant": (
-            f"{selected_person} carefully transferring a cannabis plant from a small pot into a "
-            f"large fabric pot filled with dark rich soil, healthy green plant held gently, "
-            f"clean indoor grow space with other plants visible in background",
-            f"close-up of gloved hands pressing dark rich soil around the base of a cannabis "
-            f"plant being transplanted, roots just visible at the soil edge, natural tones"
-        ),
-        "harvest": (
-            f"{selected_person} carefully inspecting a large mature cannabis plant with dense "
-            f"resin-coated buds, using a jeweler's loupe to examine trichomes, bright grow "
-            f"lights illuminating the plant from above, professional indoor grow room",
-            f"extreme close-up of dense cannabis trichomes under magnification, cloudy and "
-            f"amber resin glands catching light, purple and green bud structure visible beneath"
-        ),
-        "trichome": (
-            f"professional macro photograph of cannabis bud trichomes, crystal-clear stalked "
-            f"capitate trichomes densely covering a deep green and purple bud surface, "
-            f"resin glands reflecting light, ultra-sharp botanical photography",
-            f"extreme macro of individual cannabis trichomes, translucent and milky-white "
-            f"stalked capitate glands in perfect focus, orange pistils blurred softly behind"
-        ),
-        "trim": (
-            f"{selected_person} carefully hand-trimming a freshly harvested cannabis bud with "
-            f"small bonsai scissors, resin-coated fingers, trimming tray beneath collecting "
-            f"sugar leaves, warm studio lighting, clean professional setting",
-            f"close-up of scissors trimming a dense cannabis bud, sticky resin on the blades, "
-            f"vivid green and orange bud texture in sharp detail, dark background"
-        ),
-        "dry": (
-            f"cannabis buds hanging upside down on drying lines in a dark controlled room, "
-            f"many branches evenly spaced, temperature and humidity gauge on the wall, "
-            f"soft warm ambient light revealing the bud structure and color",
-            f"close-up of cannabis buds hanging to dry, individual calyxes and orange pistils "
-            f"visible, trichomes catching the low ambient light, dark background"
-        ),
-        "cure": (
-            f"rows of wide-mouth mason jars filled with cured cannabis buds on wooden shelves, "
-            f"lids slightly ajar for burping, hygrometer reading visible inside one jar, "
-            f"warm natural lighting, rustic wooden background, artisanal aesthetic",
-            f"close-up of a mason jar filled with perfectly cured cannabis buds, deep green "
-            f"and purple colors, orange pistils, trichomes visible through the glass"
-        ),
-        "grow tent": (
-            f"interior of a professional home cannabis grow tent, multiple healthy plants in "
-            f"fabric pots under bright full-spectrum LED lights, reflective mylar walls, "
-            f"carbon filter and fan system visible, lush green canopy",
-            f"close-up of cannabis plant canopy under LED grow lights, multiple bud sites "
-            f"developing, rich green fan leaves, grow light spectrum reflected on leaf surfaces"
-        ),
-        "hydroponic": (
-            f"cannabis plants growing in a DWC hydroponic system, roots visible through "
-            f"transparent reservoir walls, healthy white root mass in nutrient solution, "
-            f"clean modern grow room setup with LED lights above",
-            f"close-up of healthy white cannabis roots submerged in clear nutrient solution "
-            f"in a hydroponic reservoir, air bubbles rising from an air stone below"
-        ),
-        "training": (
-            f"{selected_person} carefully bending a cannabis branch and securing it with a "
-            f"soft wire tie to a bamboo stake, LST training in progress, healthy green plant "
-            f"in a fabric pot, indoor grow tent environment",
-            f"close-up of cannabis branches bent and secured with training wire, multiple "
-            f"bud sites exposed to light, healthy green growth visible at each node"
-        ),
-        "top": (
-            f"{selected_person} using small scissors to top a cannabis plant at the main stem, "
-            f"removing the apical tip between two nodes, healthy green plant with multiple "
-            f"side branches, fabric pot in an indoor grow space",
-            f"close-up of a topped cannabis plant showing two new main colas growing from "
-            f"the cut site, fresh green growth emerging, healthy leaf texture"
-        ),
-        "nutrient": (
-            f"selection of cannabis nutrient bottles and supplements arranged neatly on a "
-            f"wooden shelf, measuring cups and pH meter on the counter, clean grow room "
-            f"workspace with a plant in the background",
-            f"close-up of nutrient solution being measured into a graduated cylinder, "
-            f"amber liquid against a clean white background, scientific precision aesthetic"
-        ),
+        # Strain profiles and individual strain articles
         "strain": (
-            f"close-up of multiple cannabis strain samples displayed in small glass jars on "
-            f"a wooden dispensary-style counter, different colors from bright green to deep "
+            f"close-up of multiple premium cannabis strain samples in small labeled glass jars "
+            f"on a wooden dispensary-style counter, rich colors from bright green to deep "
             f"purple, soft warm lighting creating an elegant retail atmosphere",
             f"extreme close-up of a single dense cannabis bud showing complex trichome "
-            f"coverage and vivid coloration, orange pistils and purple calyxes in sharp detail"
+            f"coverage and vivid coloration, orange pistils and purple calyxes in sharp detail, "
+            f"shallow depth of field, botanical photography"
         ),
+        "review": (
+            f"beautifully lit cannabis bud on a dark slate surface surrounded by small "
+            f"botanical elements — citrus slice, pine sprig, lavender — editorial flat-lay, "
+            f"soft studio lighting, premium lifestyle photography",
+            f"extreme close-up of a cannabis bud with visible trichomes, deep green and "
+            f"purple coloration, orange pistils, macro photography style, dark background"
+        ),
+        "profile": (
+            f"premium cannabis flower displayed in an open glass jar on a natural wood surface, "
+            f"deep green and purple bud with glistening resin visible, soft diffused light, "
+            f"clean minimalist product photography aesthetic",
+            f"close-up macro shot of cannabis flower trichomes, crystalline resin glands "
+            f"in sharp focus, vivid colors, ultra-detailed botanical photography"
+        ),
+        # Best-of roundups and strain discovery
+        "best strain": (
+            f"elegant flat-lay of five different cannabis strain samples in small glass jars, "
+            f"each a different color and texture, arranged on dark wood, soft studio lighting, "
+            f"premium cannabis lifestyle photography",
+            f"close-up of several cannabis buds side by side showing different colors and "
+            f"trichome densities, comparison photography, macro detail, dark background"
+        ),
+        "top strain": (
+            f"curated selection of premium cannabis buds displayed on a wooden board, "
+            f"various strains with different hues — greens, purples, and golds — "
+            f"soft warm lighting, editorial food photography aesthetic applied to cannabis",
+            f"macro close-up of multiple cannabis buds showing diverse trichome patterns "
+            f"and bud structures, vivid colors, professional botanical photography"
+        ),
+        "indica": (
+            f"dense, compact indica cannabis buds in deep purple and forest green tones "
+            f"displayed on a dark marble surface, soft warm ambient lighting, "
+            f"premium strain photography with elegant lifestyle aesthetic",
+            f"extreme close-up of a dense indica bud with heavy trichome coverage, "
+            f"deep purple coloration, orange pistils curling through crystal-coated calyxes"
+        ),
+        "sativa": (
+            f"elongated sativa cannabis buds in bright lime green and golden tones "
+            f"displayed on a light wood surface with soft natural window light, "
+            f"airy open bud structure, energetic premium lifestyle photography",
+            f"close-up of a sativa bud with long orange pistils and visible trichomes, "
+            f"bright green coloration, open fluffy structure, macro botanical photography"
+        ),
+        "hybrid": (
+            f"selection of balanced hybrid cannabis strains displayed in elegant glass "
+            f"containers on a modern countertop, mixed green and purple tones, "
+            f"clean contemporary lifestyle photography",
+            f"macro close-up of a hybrid cannabis bud showing balanced indica and sativa "
+            f"bud structure, vivid trichomes, orange and green color mix, dark background"
+        ),
+        # Terpenes and science
         "terpene": (
-            f"artistic flat-lay of cannabis buds surrounded by botanicals that share terpene "
-            f"profiles — lavender sprigs, citrus slices, pine needles, black pepper — "
+            f"artistic flat-lay of cannabis buds surrounded by botanicals sharing terpene "
+            f"profiles — lavender sprigs, citrus slices, pine needles, black pepper, mango — "
             f"arranged on a dark slate surface, elegant editorial photography",
-            f"close-up of cannabis buds with terpene-rich botanicals alongside, vivid colors "
+            f"close-up of cannabis buds alongside terpene-matching botanicals, vivid colors "
             f"and natural textures, soft bokeh background, botanical science aesthetic"
         ),
+        "entourage": (
+            f"artistic arrangement of cannabis plant components — flower, leaves, and "
+            f"botanical extracts in small vials — on a clean white laboratory surface, "
+            f"scientific wellness photography, soft diffused light",
+            f"close-up of cannabis trichomes and botanical elements, scientific detail "
+            f"photography, various plant compounds visible, clean white background"
+        ),
+        "endocannabinoid": (
+            f"clean modern scientific illustration aesthetic: cannabis leaf with soft "
+            f"glowing neural network overlay on a dark background, science and wellness "
+            f"photography, professional editorial style",
+            f"close-up of cannabis plant structure with soft scientific bokeh, "
+            f"editorial science photography, clean background, deep green tones"
+        ),
+        "cannabinoid": (
+            f"clean modern cannabis laboratory with glass vials containing cannabis "
+            f"extracts in amber and green tones, scientific equipment on the counter, "
+            f"researcher in background, professional science photography",
+            f"close-up of laboratory cannabis sample vials with amber liquid extracts, "
+            f"scientific glassware, clean white lab aesthetic, soft lighting"
+        ),
+        # THC/CBD/science
         "thc": (
-            f"clean modern cannabis laboratory setting with cannabis samples in glass vials, "
-            f"testing equipment and microscopes, scientist in white coat with gloves examining "
-            f"sample, professional scientific photography",
-            f"close-up of laboratory cannabis testing equipment, glass vials with green plant "
-            f"extract, scientific instruments in background, clean white lab aesthetic"
+            f"modern cannabis testing laboratory setting, glass sample vials and scientific "
+            f"equipment on a clean white countertop, soft professional lighting, "
+            f"science and wellness aesthetic",
+            f"close-up of cannabis sample in a glass vial with THC percentage label, "
+            f"laboratory setting, clean white background, scientific precision aesthetic"
         ),
         "cbd": (
-            f"elegant CBD oil tincture bottles with dropper caps arranged on a natural wood "
-            f"surface with hemp leaves and flowers nearby, soft natural window light, "
-            f"clean minimalist wellness product photography",
-            f"close-up of a dropper releasing a golden CBD oil drop, amber liquid catching "
-            f"light, hemp leaf blurred softly in the background"
+            f"elegant CBD product collection — tincture bottles, capsules, and hemp flowers — "
+            f"arranged on natural wood with soft green leaves, clean wellness photography, "
+            f"natural window light, minimalist lifestyle aesthetic",
+            f"close-up of a dropper releasing a golden CBD oil drop into a small glass bottle, "
+            f"amber liquid catching soft light, hemp leaf blurred softly in background"
+        ),
+        "lab result": (
+            f"{selected_person} reviewing a cannabis certificate of analysis document at a "
+            f"clean desk, lab report visible with cannabinoid percentages, professional and "
+            f"educational lifestyle photography",
+            f"close-up of a cannabis lab results document showing THC, CBD, and terpene "
+            f"percentages in clear print, professional document photography"
+        ),
+        # Consumption methods
+        "vaporiz": (
+            f"premium dry herb vaporizer on a clean marble surface alongside a small "
+            f"glass jar of cannabis flower, minimalist product photography, "
+            f"soft diffused lighting, upscale lifestyle aesthetic",
+            f"close-up of vaporizer heating chamber with cannabis flower, "
+            f"warm product lighting, premium device detail photography"
         ),
         "edible": (
-            f"artfully arranged cannabis-infused edibles on a wooden board — gummies, "
-            f"chocolates, and baked goods — with small cannabis leaves as garnish, "
-            f"soft natural lighting, food photography aesthetic, appetizing and tasteful",
-            f"close-up of colorful cannabis gummies arranged in a small glass bowl, "
+            f"artfully arranged cannabis-infused edibles — gummies, chocolates, and "
+            f"mints — displayed on a wooden board with small hemp leaves as garnish, "
+            f"soft natural lighting, upscale food photography aesthetic",
+            f"close-up of colorful cannabis gummies in a small glass bowl, "
             f"vibrant colors and glossy surface, macro food photography style"
         ),
-        "vaporiz": (
-            f"elegant dry herb vaporizer device on a clean marble surface alongside a small "
-            f"glass jar of dried cannabis flower, minimalist product photography, "
-            f"soft diffused lighting, premium lifestyle aesthetic",
-            f"close-up of a vaporizer mouthpiece with a small amount of cannabis vapor "
-            f"rising, clean background, soft focus product photography"
+        "tincture": (
+            f"glass tincture bottles with droppers arranged on a natural wood surface "
+            f"with hemp flowers and leaves nearby, clean wellness product photography, "
+            f"soft natural window light, minimal lifestyle aesthetic",
+            f"close-up of a dropper tip with amber tincture liquid ready to dispense, "
+            f"natural green background, wellness product macro photography"
+        ),
+        "concentrat": (
+            f"collection of premium cannabis concentrates in small glass containers — "
+            f"golden wax, clear shatter, and amber live resin — on a dark slate surface, "
+            f"professional product photography with warm studio lighting",
+            f"extreme close-up of golden cannabis concentrate showing crystalline "
+            f"structure, warm amber tones, macro detail, dark background"
         ),
         "dispensary": (
-            f"modern cannabis dispensary interior with well-lit display cases showing "
-            f"labeled jars of cannabis products, clean retail environment, "
-            f"professional budtender behind the counter helping a customer",
-            f"close-up of dispensary display case with labeled cannabis strain jars, "
-            f"clean glass case, soft retail lighting, various strains visible"
+            f"modern cannabis dispensary interior with illuminated display cases, "
+            f"labeled strain jars under soft retail lighting, professional budtender "
+            f"helping a customer, welcoming clean retail environment",
+            f"close-up of a dispensary display case with labeled cannabis strain jars "
+            f"showing strain names and THC percentages, clean glass case, soft lighting"
         ),
-        "legal": (
-            f"state capitol building exterior under clear blue sky, American flag and state "
-            f"flag flying, steps leading to the entrance, classic government architecture, "
-            f"civic and political photography aesthetic",
-            f"close-up of a state ballot measure document with cannabis legalization text, "
-            f"American flag in the background, civic policy photography"
+        "budtender": (
+            f"friendly {selected_person} budtender in a clean cannabis dispensary, "
+            f"explaining products to a customer across the counter, professional "
+            f"retail setting, welcoming and educational atmosphere",
+            f"close-up of a budtender's hands displaying a cannabis product jar with "
+            f"label visible, clean dispensary counter, professional retail photography"
         ),
+        # Wellness and effects
         "anxiety": (
-            f"{selected_person} sitting in a peaceful meditation pose on a yoga mat near a "
-            f"large window with natural light, calm and relaxed expression, small plant "
-            f"and wellness items nearby, soft natural lifestyle photography",
-            f"close-up of hands holding a small CBD tincture bottle with hemp leaves nearby, "
+            f"{selected_person} sitting peacefully in a sunlit living room, calm and "
+            f"relaxed expression, soft natural light, clean wellness lifestyle photography, "
+            f"green plants visible in background, serene home environment",
+            f"close-up of hands cradling a warm cup of herbal tea with hemp leaves nearby, "
             f"soft warm lighting, wellness and calm aesthetic, natural tones"
         ),
         "sleep": (
-            f"peaceful bedroom scene at night with soft bedside lamp lighting, a person "
-            f"resting comfortably in bed, small nightstand with a CBD oil bottle and "
-            f"lavender plant, calm and serene wellness photography",
-            f"close-up of a CBD oil tincture and lavender sprigs on a white linen surface, "
-            f"soft warm ambient light, sleep wellness product photography aesthetic"
+            f"peaceful bedroom scene with soft bedside lamp, person resting comfortably "
+            f"in a cozy bed, lavender plant on the nightstand, calm and serene "
+            f"wellness photography, warm amber lighting",
+            f"close-up of lavender sprigs and a small glass tincture bottle on "
+            f"white linen, soft warm ambient light, sleep wellness aesthetic"
+        ),
+        "pain": (
+            f"{selected_person} looking relaxed and comfortable in a modern living space, "
+            f"natural light, wellness lifestyle photography, clean and calm home environment, "
+            f"subtle cannabis plant element visible in background",
+            f"close-up of hands holding a CBD topical cream jar with cannabis leaf design, "
+            f"clean product photography, soft natural light, wellness aesthetic"
+        ),
+        "beginner": (
+            f"{selected_person} browsing cannabis products at a modern dispensary, "
+            f"curious and engaged expression, friendly budtender explaining options, "
+            f"clean well-lit retail environment, educational lifestyle photography",
+            f"close-up of a beginner's guide booklet or label next to a cannabis product, "
+            f"informational and approachable, clean photography aesthetic"
+        ),
+        "legal": (
+            f"state capitol building exterior under clear blue sky, American flags flying, "
+            f"classic government architecture, civic photography aesthetic",
+            f"close-up of cannabis legalization text in a state policy document, "
+            f"American flag softly blurred in background, civic photography"
         ),
     }
 
@@ -345,14 +385,14 @@ def build_image_prompt(keyword, season, image_type="hero"):
 
     if not activity_hero:
         activity_hero = (
-            f"beautiful mature cannabis plant with dense resin-coated buds in an indoor "
-            f"grow room, full-spectrum LED lights illuminating the lush green canopy, "
-            f"professional cultivation environment"
+            f"premium cannabis flower buds displayed in an open glass jar on a dark wood "
+            f"surface, glistening trichomes and vivid green and purple coloration, "
+            f"soft warm studio lighting, elegant lifestyle product photography"
         )
         activity_section = (
-            f"close-up of a dense cannabis bud with visible trichomes and orange pistils, "
-            f"deep green and purple coloration, shallow depth of field, "
-            f"soft bokeh background, botanical photography"
+            f"extreme close-up of a dense cannabis bud with visible crystalline trichomes "
+            f"and orange pistils, deep green and purple coloration, shallow depth of field, "
+            f"soft bokeh background, macro botanical photography"
         )
 
     # Build prompt optimized for Nano Banana 2 (google:4@3)
@@ -808,26 +848,71 @@ COMPARISON TABLE (REQUIRED for this topic):
   | Best for | Evening, sleep | Daytime, creativity |
 """ if is_comparison else ""
 
-    prompt = f"""You are an expert cannabis education content writer for The Green Leaf, a trusted cannabis education site. Write a concise, SEO-optimized article for the keyword: "{keyword}"
+    # Detect article type to give content-specific instructions
+    kw_lower = keyword.lower()
+    is_strain_profile = any(name.lower() in kw_lower for name in [
+        "blue dream", "og kush", "girl scout", "gorilla glue", "wedding cake",
+        "gelato", "jack herer", "northern lights", "granddaddy purple", "sour diesel",
+        "white widow", "ak-47", "amnesia haze", "pineapple express", "purple haze",
+        "zkittlez", "runtz", "mac 1", "cereal milk", "ice cream cake", "london pound",
+        "sherbet", "biscotti", "do-si-dos", "mimosa", "tropicana", "apple fritter",
+        "banana runtz", "durban poison", "trainwreck", "super lemon haze",
+        "strawberry cough", "green crack", "skywalker", "bubba kush", "purple punch",
+        "chemdawg", "animal cookies", "gary payton"
+    ]) or ("strain" in kw_lower and any(w in kw_lower for w in ["profile", "guide", "review", "effects", "lineage"]))
+
+    is_roundup = any(w in kw_lower for w in ["best strains", "top strains", "strains for", "strains 2026", "high cbd", "high thc", "strongest"])
+
+    strain_profile_instruction = """
+STRAIN PROFILE REQUIREMENTS (this is a named strain article):
+- Include a quick-reference strain card in this format near the top (after Quick Answer):
+  **Strain Overview**
+  | Attribute | Details |
+  |-----------|---------|
+  | Type | Indica / Sativa / Hybrid (and approximate split if known) |
+  | THC Range | XX–XX% (typical range) |
+  | CBD Range | <1% (or actual range) |
+  | Top Terpenes | Myrcene, Caryophyllene, Limonene (list top 3) |
+  | Lineage | Parent strains |
+  | Best For | Top 3 use cases |
+- Discuss: origin and genetics, appearance (bud structure, colors, trichomes), aroma and flavor profile, effects (onset, duration, intensity), medical uses, potential side effects, similar strains
+- Be specific with percentages and terpene data where known — readers want the numbers
+""" if is_strain_profile else ""
+
+    roundup_instruction = """
+ROUNDUP/BEST-OF REQUIREMENTS (this is a strain recommendation article):
+- Include a comparison table of the top 5-8 recommended strains:
+  | Strain | Type | THC% | Best For | Key Terpene |
+  |--------|------|------|----------|-------------|
+  | Blue Dream | Hybrid | 17–24% | Creativity, focus | Myrcene |
+- For each strain in the list, provide: type, THC range, top terpenes, why it fits the use case
+- Rank them in a logical order (most recommended first, or by intensity/use case)
+- Be specific — readers are choosing a product and need real data to decide
+""" if is_roundup else ""
+
+    prompt = f"""You are an expert cannabis strain and education writer for The Green Leaf, a trusted cannabis information site focused on strain discovery, effects, terpenes, and helping consumers make informed choices.
+
+Write a concise, SEO-optimized article for the keyword: "{keyword}"
+
+SITE FOCUS: The Green Leaf covers strain profiles, strain recommendations, cannabis science (terpenes, cannabinoids), and consumer guides. We do NOT cover cultivation, growing techniques, or home growing.
 
 Requirements:
-- Target word count: 600-750 words (concise and focused)
-- Write in a helpful, authoritative but friendly tone
+- Target word count: 650-850 words (concise but complete)
+- Write in a helpful, authoritative but approachable tone
 - Start with a "Quick Answer" section (2-3 sentences directly answering the question)
 - Include 3-5 "Key Takeaways" bullet points after the quick answer
 - Structure with clear H2 and H3 headings
-- Include practical, accurate, evidence-based information
-- Write for cannabis enthusiasts, patients, and curious beginners — not industry insiders
-- Keep sections concise — avoid over-explaining
+- Include specific, accurate data: THC/CBD percentages, terpene names, strain lineages
+- Write for cannabis consumers, patients, and curious beginners — not cultivators
 - IMPORTANT: Use proper markdown list syntax with hyphens (-), NOT bullet characters (•)
 - Do NOT make medical claims or recommend cannabis as a treatment for any condition
-- Keep all content educational and informational
+- Do NOT include cultivation, growing, or harvest advice
 
 GEO OPTIMIZATION (for AI citation):
 - Use QUESTION-BASED H2 headings that match how people ask AI assistants
-  Examples: "How Long Does It Take to Cure?", "What's the Difference Between Indica and Sativa?", "Why Are My Cannabis Leaves Turning Yellow?"
+  Examples: "What Does Blue Dream Feel Like?", "Which Strains Are Best for Sleep?", "What's the Difference Between Indica and Sativa?"
 - Write direct, factual answers that AI can easily extract and cite
-- FAQs and key stats will be rendered separately via structured data - DO NOT include them in the article content
+- FAQs and key stats will be rendered separately via structured data — DO NOT include them in article content
 
 Article Structure (IMPORTANT):
 1. Title (H1)
@@ -835,57 +920,49 @@ Article Structure (IMPORTANT):
 3. Key Takeaways (3-5 bullet points)
 4. Introduction paragraph
 5. Main content with 3-4 H2 sections (USE QUESTION FORMAT for headings)
-6. Conclusion with actionable next steps
-7. Sources section (REQUIRED) - Add "## Sources" with 3-5 authoritative references
+6. Conclusion with recommendation or next step for the reader
+7. Sources section (REQUIRED) — "## Sources" with 4-6 authoritative references
 
-NOTE: Do NOT include a "## Frequently Asked Questions" section in the article content.
-FAQs are provided separately in the JSON output and will be rendered with structured schema markup.
-
-The SECOND H2 section should be the most visual/actionable section (this is where we'll insert a detail image).
-For example: "Step-by-Step Guide", "How It Works", "The Process", "What to Look For", etc.
-{comparison_instruction}
+NOTE: Do NOT include a "## Frequently Asked Questions" section — FAQs go in the JSON output field.
+{strain_profile_instruction}{roundup_instruction}{comparison_instruction}
 
 CRITICAL SOURCE REQUIREMENTS:
 
-1. Research and cite 4-6 DIVERSE, topic-specific credible sources:
-   - At least 1 peer-reviewed research source (PubMed, NCBI, Journal of Cannabis Research, etc.)
-   - At least 1 government or regulatory source (NIH, FDA, state health departments, NORML legislative data)
-   - At least 1 cannabis industry or education publication (Leafly Research, Project CBD, Cannabis Business Times)
-   - At least 1 additional credible source relevant to the specific topic
+1. Cite 4-6 DIVERSE, topic-specific credible sources:
+   - At least 1 peer-reviewed research source (PubMed, NCBI, Journal of Cannabis Research, Frontiers in Pharmacology)
+   - At least 1 cannabis industry or consumer data source (Leafly, Weedmaps, Cannabis Business Times, Headset data)
+   - At least 1 science or education source (Project CBD, NORML, American Cannabis Nurses Association, NIH)
+   - Additional sources relevant to the specific topic (terpene research, strain databases, etc.)
 
-2. Use CLICKABLE NUMBERED CITATIONS throughout the article text when referencing information
-   - Citations should be clickable markdown links that jump to the Sources section
+2. Use CLICKABLE NUMBERED CITATIONS throughout the article text:
    - Format: "This is a fact[[1]](#user-content-fn-1)."
-   - Multiple citations: "This combines several facts[[1]](#user-content-fn-1)[[2]](#user-content-fn-2)."
-   - Place citation links at the END of sentences, before the period
-   - Use citations naturally throughout the article (aim for 8-12 citations distributed across sections)
+   - Place at the END of sentences, before the period
+   - Aim for 8-12 citations distributed naturally across the article
 
-3. End article with "## Sources" section with anchor IDs for each source:
-   Format with anchor IDs:
+3. End with "## Sources" section using anchor IDs:
    ```
    <a id="user-content-fn-1"></a>
    1. [Organization Name](https://example.org) - Specific resource description
    ```
 
-Example Sources section:
+Example Sources for strain/terpene topics:
 ## Sources
 <a id="user-content-fn-1"></a>
-1. [National Institutes of Health](https://www.nih.gov) - Cannabis and cannabinoid research database
+1. [Leafly](https://www.leafly.com) - Cannabis strain database and consumer effects data
 <a id="user-content-fn-2"></a>
-2. [NORML](https://norml.org) - Cannabis law reform and state policy resources
+2. [Project CBD](https://www.projectcbd.org) - Cannabinoid and terpene science research
 <a id="user-content-fn-3"></a>
-3. [Project CBD](https://www.projectcbd.org) - Cannabinoid science and clinical research
+3. [National Institutes of Health](https://www.nih.gov) - Cannabis and cannabinoid clinical research
 <a id="user-content-fn-4"></a>
-4. [Leafly](https://www.leafly.com) - Cannabis strain data and consumer research
+4. [Journal of Cannabis Research](https://jcannabisresearch.biomedcentral.com) - Peer-reviewed cannabis science
 <a id="user-content-fn-5"></a>
-5. [Journal of Cannabis Research](https://jcannabisresearch.biomedcentral.com) - Peer-reviewed cannabis science
+5. [NORML](https://norml.org) - Cannabis consumer research and policy data
 
 IMPORTANT:
-- Use main domain URLs (e.g., https://www.nih.gov) NOT deep links that might 404
-- VARY sources by topic — don't use the same sources every time
-- DO NOT use inline citation links like "[NIH](url) research shows..." — only numbered citations
-- Keep paragraphs clean — only use numbered citations [1], [2], etc.
-- Choose sources actually relevant to the specific topic being discussed
+- Use main domain URLs (e.g., https://www.leafly.com) NOT deep links that may 404
+- VARY sources by topic — terpene articles → terpene research; strain profiles → strain databases
+- DO NOT use inline citation links like "[Leafly](url) says..." — only numbered citations [1]
+- Choose sources genuinely relevant to the specific topic
 
 Return the section title you recommend for the mid-article image in the JSON.
 
@@ -894,7 +971,7 @@ Output format (JSON):
     "title": "SEO-optimized title (50-60 chars)",
     "meta_description": "Compelling meta description (150-160 chars)",
     "slug": "url-friendly-slug",
-    "content": "Full article in Markdown format (NO FAQ section - FAQs go in separate field below)",
+    "content": "Full article in Markdown format (NO FAQ section)",
     "tags": ["relevant", "tags", "for", "article"],
     "estimated_read_time": "X min read",
     "section_image_title": "Title of the H2 section where image should go (2nd main section)",
@@ -902,10 +979,10 @@ Output format (JSON):
         {{"question": "Common question about the topic?", "answer": "Direct 2-3 sentence answer."}},
         {{"question": "Another relevant question?", "answer": "Clear, factual answer."}},
         {{"question": "Third question users ask?", "answer": "Helpful response."}},
-        {{"question": "Fourth question if applicable?", "answer": "Concise answer."}}
+        {{"question": "Fourth question?", "answer": "Concise answer."}}
     ],
-    "key_stat": "Single most quotable statistic with specific numbers (e.g., 'Cannabis plants typically take 8-11 weeks to flower indoors depending on strain genetics')",
-    "tldr": "One sentence summary of the article's main point (e.g., 'Harvest cannabis when 70-90% of trichomes have turned milky white for peak THC potency.')"
+    "key_stat": "Single most quotable statistic with specifics (e.g., 'Blue Dream typically tests at 17-24% THC with myrcene as its dominant terpene, accounting for its balanced cerebral and body effects.')",
+    "tldr": "One sentence summary of the article (e.g., 'Blue Dream is a sativa-dominant hybrid with 17-24% THC that delivers a balanced euphoric head high with gentle body relaxation, making it ideal for daytime use.')"
 }}
 
 Return ONLY valid JSON, no other text."""
@@ -976,7 +1053,7 @@ Return ONLY valid JSON, no other text."""
     # Add metadata
     article_data["keyword"] = keyword
     article_data["generated_at"] = datetime.now().isoformat()
-    article_data["season"] = get_current_season()
+    article_data["season"] = "evergreen"  # Strain/education content is not seasonal
     article_data["category"] = categorize_article(
         article_data.get("title", ""), keyword, article_data.get("tags", [])
     )

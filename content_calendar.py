@@ -21,16 +21,12 @@ RECENT_ARTICLE_WINDOW = 5  # Check last N articles for similarity
 
 # Tag category mappings for topic analysis
 TAG_CATEGORIES = {
-    "growing": ["grow", "cultivat", "indoor", "outdoor", "tent", "yield", "harvest", "vegetat", "flower"],
-    "strains": ["strain", "indica", "sativa", "hybrid", "genetics", "cultivar", "terpene", "phenotype"],
-    "nutrients": ["nutrient", "fertiliz", "feed", "nitrogen", "phosphorus", "potassium", "npk", "deficien", "flush"],
-    "soil-medium": ["soil", "coco", "hydropon", "medium", "substrate", "ph", "amend", "compost", "perlite", "worm"],
-    "seeds-clones": ["seed", "germina", "clone", "cutting", "seedling", "sprout", "propagat"],
-    "training": ["top", "fim", "lst", "scrog", "sog", "defoliat", "training", "prune", "manifold", "mainline"],
-    "pest-disease": ["pest", "mold", "mildew", "aphid", "spider mite", "fungus", "disease", "bud rot", "root rot"],
-    "harvest-cure": ["harvest", "flush", "dry", "cure", "trim", "jar", "trichome", "ripen", "amber"],
-    "wellness": ["cbd", "thc", "medical", "anxiety", "pain", "sleep", "relax", "therapeutic", "benefit"],
-    "legal": ["legal", "law", "state", "regulation", "license", "compli", "possession", "dispensary"],
+    "strain-database": ["strain profile", "strain guide", "strain review", "lineage", "kush", "haze", "diesel", "cookies", "gelato", "runtz", "wedding cake", "blue dream", "northern lights", "granddaddy", "bubba", "og kush", "mac 1", "zkittlez", "biscotti", "mimosa"],
+    "strain-discovery": ["best strains", "strains for", "top strains", "strains 2026", "best indica", "best sativa", "best hybrid", "high cbd", "high thc", "strongest", "most popular"],
+    "cannabis-education": ["explained", "what is", "how does", "terpene guide", "cannabinoid", "endocannabinoid", "entourage", "indica vs", "sativa vs", "thca vs", "thc vs", "pharmacology", "tolerance", "lab results", "beginners guide", "microdosing"],
+    "reviews-culture": ["consumption methods", "vaping vs", "edibles vs", "dispensary", "budtender", "vaporizer", "concentrates", "live resin", "rosin", "hash", "pre-roll", "tincture", "topical", "tolerance break", "how to choose"],
+    "wellness": ["anxiety", "pain", "sleep", "depression", "ptsd", "inflammation", "medical", "nausea", "migraines", "arthritis", "therapeutic"],
+    "legal": ["legal", "law", "state", "regulation", "license", "possession", "legalization"],
 }
 
 # Content type patterns
@@ -227,7 +223,7 @@ def calculate_keyword_similarity(keyword1: str, keyword2: str) -> float:
     words2 = set(keyword2.lower().replace("-", " ").split())
 
     # Remove common stop words
-    stop_words = {"the", "a", "an", "to", "for", "of", "in", "on", "my", "your", "cannabis", "weed", "how", "what", "when", "why", "is", "are", "should", "i"}
+    stop_words = {"the", "a", "an", "to", "for", "of", "in", "on", "my", "your", "how", "what", "when", "why", "is", "are", "should", "i", "and", "vs"}
     words1 = words1 - stop_words
     words2 = words2 - stop_words
 
