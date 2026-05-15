@@ -22,7 +22,7 @@ from typing import Optional
 from dotenv import load_dotenv
 
 # Import our modules
-from keyword_research import find_best_keyword, get_current_season
+from keyword_research import find_best_keyword, get_content_pillars
 from auto_publish import auto_publish, check_git_status, setup_git_for_ci
 
 load_dotenv()
@@ -147,7 +147,7 @@ def run_weekly_pipeline(
     print("=" * 60)
     print("🌿 CANNABIS CARE WEEKLY CONTENT PIPELINE")
     print(f"📅 {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print(f"🌱 Current season: {get_current_season()}")
+    print(f"📋 Active pillars: {', '.join(get_content_pillars())}")
     print("=" * 60)
     
     if is_ci:
