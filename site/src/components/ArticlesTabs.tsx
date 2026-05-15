@@ -7,49 +7,66 @@ import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { PostData } from '@/lib/posts'
 
-// Month-to-season mapping
-const MONTH_SEASONS: Record<number, string[]> = {
-  0:  ['winter'],           // January
-  1:  ['winter', 'spring'], // February
-  2:  ['spring'],           // March
-  3:  ['spring'],           // April
-  4:  ['spring', 'summer'], // May
-  5:  ['summer'],           // June
-  6:  ['summer'],           // July
-  7:  ['summer', 'fall'],   // August
-  8:  ['fall'],             // September
-  9:  ['fall'],             // October
-  10: ['fall', 'winter'],   // November
-  11: ['winter'],           // December
-}
-
-const MONTH_NAMES = [
-  'January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December'
-]
-
 interface ArticlesTabsProps {
   posts: PostData[]
 }
 
 const ARTICLES_PER_PAGE = 12
 
+const tabs = [
+  { id: 'all',             label: 'All' },
+  { id: 'strain-reviews',  label: 'Strain Reviews' },
+  { id: 'by-effect',       label: 'By Effect' },
+  { id: 'indica-sativa',   label: 'Indica / Sativa / Hybrid' },
+  { id: 'science',         label: 'Science & Education' },
+  { id: 'consumption',     label: 'Consumption Methods' },
+]
+
+function matchesTab(post: PostData, tabId: string): boolean {
+  const tags = (post.tags ?? []).map(t => t.toLowerCase())
+  const text = `${post.title} ${post.keyword ?? ''}`.toLowerCase()
+
+  switch (tabId) {
+    case 'strain-reviews':
+      return tags.some(t =>
+        ['strain profile', 'strain guide', 'strain review', 'strain effects',
+         'strain overview', 'strain breakdown'].includes(t)
+      ) || /strain.*(profile|guide|review|effects|breakdown)|review.*strain/.test(text)
+
+    case 'by-effect':
+      return tags.some(t =>
+        ['anxiety', 'sleep', 'pain', 'focus', 'stress relief', 'depression',
+         'insomnia', 'relaxation', 'energy', 'appetite', 'nausea', 'ptsd',
+         'inflammation', 'migraines', 'mood', 'creativity'].some(e => t.includes(e))
+      ) || /\b(anxiety|sleep|pain|focus|stress|depression|insomnia|relaxation|energy|appetite|nausea|ptsd|inflammation|migraine|mood|creativity)\b/.test(text)
+
+    case 'indica-sativa':
+      return tags.some(t => ['indica', 'sativa', 'hybrid'].includes(t))
+        || /\b(indica|sativa|hybrid)\b/.test(text)
+
+    case 'science':
+      return tags.some(t =>
+        ['terpenes', 'terpene', 'cannabinoids', 'cannabinoid', 'endocannabinoid',
+         'entourage effect', 'thc', 'cbd', 'thca', 'cbg', 'cbn', 'pharmacology',
+         'lab results', 'beginner cannabis'].some(s => t.includes(s))
+      ) || /\b(terpene|cannabinoid|endocannabinoid|entourage|thc|cbd|thca|pharmacology|science|explained|what is|how does)\b/.test(text)
+
+    case 'consumption':
+      return tags.some(t =>
+        ['vaping', 'vaporizer', 'edibles', 'tincture', 'concentrates', 'pre-roll',
+         'topical', 'dabs', 'dabbing', 'live resin', 'rosin', 'hash', 'smoking',
+         'bong', 'joint', 'blunt', 'pipe'].some(c => t.includes(c))
+      ) || /\b(vap|edible|tincture|concentrat|pre.?roll|topical|dab|smok|bong|pipe|joint|blunt|hash|rosin|live resin)\b/.test(text)
+
+    default:
+      return true
+  }
+}
+
 export default function ArticlesTabs({ posts }: ArticlesTabsProps) {
   const searchParams = useSearchParams()
-  const currentMonth = new Date().getMonth()
-  const monthName = MONTH_NAMES[currentMonth]
-  const monthSeasons = MONTH_SEASONS[currentMonth]
   const hasInteracted = useRef(false)
   const [visibleCount, setVisibleCount] = useState(ARTICLES_PER_PAGE)
-
-  const tabs = [
-    { id: 'all', label: 'All' },
-    { id: 'monthly', label: `For ${monthName}` },
-    { id: 'spring', label: 'Spring' },
-    { id: 'summer', label: 'Summer' },
-    { id: 'fall', label: 'Fall' },
-    { id: 'winter', label: 'Winter' },
-  ]
 
   const initialTab = searchParams.get('tab') || 'all'
   const [activeTab, setActiveTab] = useState(initialTab)
@@ -62,15 +79,8 @@ export default function ArticlesTabs({ posts }: ArticlesTabsProps) {
 
   const filteredPosts = useMemo(() => {
     if (activeTab === 'all') return posts
-    if (activeTab === 'monthly') {
-      return posts.filter(post =>
-        monthSeasons.includes(post.season?.toLowerCase())
-      )
-    }
-    return posts.filter(post =>
-      post.season?.toLowerCase() === activeTab
-    )
-  }, [posts, activeTab, monthSeasons])
+    return posts.filter(post => matchesTab(post, activeTab))
+  }, [posts, activeTab])
 
   const visiblePosts = filteredPosts.slice(0, visibleCount)
   const hasMore = visibleCount < filteredPosts.length
@@ -85,7 +95,7 @@ export default function ArticlesTabs({ posts }: ArticlesTabsProps) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
       >
-        <div role="tablist" aria-label="Filter articles by season" className="flex flex-wrap justify-center gap-2">
+        <div role="tablist" aria-label="Filter articles by category" className="flex flex-wrap justify-center gap-2">
           {tabs.map((tab, index) => (
             <motion.button
               key={tab.id}
@@ -125,7 +135,7 @@ export default function ArticlesTabs({ posts }: ArticlesTabsProps) {
         <motion.div
           id="articles-panel"
           role="tabpanel"
-          aria-label={`${activeTab === 'all' ? 'All' : activeTab === 'monthly' ? `${monthName}` : activeTab} articles`}
+          aria-label={`${tabs.find(t => t.id === activeTab)?.label ?? 'All'} articles`}
           className="space-y-8"
           layout
         >
@@ -168,9 +178,11 @@ export default function ArticlesTabs({ posts }: ArticlesTabsProps) {
                   {/* Content */}
                   <div className="p-6 flex-1">
                     <div className="flex flex-wrap items-center gap-3 text-sm text-leaf-600 mb-3">
-                      <span className="bg-leaf-100 px-3 py-1 rounded-full font-medium">
-                        {post.season}
-                      </span>
+                      {post.tags?.slice(0, 3).map(tag => (
+                        <span key={tag} className="bg-leaf-100 px-3 py-1 rounded-full font-medium">
+                          {tag}
+                        </span>
+                      ))}
                       {post.last_updated && (Date.now() - new Date(post.last_updated).getTime()) < 14 * 86400000 && (
                         <span className="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full text-xs font-semibold">
                           Recently Updated
