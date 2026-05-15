@@ -20,7 +20,7 @@ youtube:
     channel: "St0nerLukas"
     position: "hero"
   - id: "LIyXEmmanxQ"
-    title: "&quot;Blue Dream&quot; - (Strain Review)"
+    title: '"Blue Dream" - (Strain Review)'
     channel: "StrainCentral (Cannabis Reviews and Smoke Sessions)"
     position: "section"
 faqs:

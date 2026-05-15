@@ -8,11 +8,11 @@ export const revalidate = 3600 // Revalidate every hour
 const baseUrl = 'https://thegreenleaf.com'
 
 export const metadata: Metadata = {
-  title: 'Cannabis Videos - Expert Tutorials & Seasonal Tips',
-  description: 'Watch expert cannabis video tutorials covering aeration, fertilizing, mowing techniques, weed control strategies, and seasonal maintenance from top YouTube cannabis professionals.',
+  title: 'Cannabis Videos - Strain Reviews, Effects & Education',
+  description: 'Strain reviews, effect guides, and cannabis education from top creators.',
   openGraph: {
-    title: 'Cannabis Videos - Expert Tutorials & Seasonal Tips',
-    description: 'Watch expert cannabis videos with tips on aeration, fertilizing, mowing, weed control, and seasonal maintenance.',
+    title: 'Cannabis Videos - Strain Reviews, Effects & Education',
+    description: 'Strain reviews, effect guides, and cannabis education from top creators.',
     url: `${baseUrl}/videos`,
     siteName: 'The Green Leaf',
     type: 'website',
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Cannabis Videos - Expert Tips & Tutorials',
-    description: 'Watch expert cannabis videos with tips and tutorials.',
+    description: 'Strain reviews, effect guides, and cannabis education from top creators.',
     images: [`${baseUrl}/images/og-default.jpg`],
   },
   alternates: {
@@ -49,8 +49,7 @@ export default function VideosPage() {
           Cannabis Videos
         </h1>
         <p className="text-gray-600 text-lg max-w-2xl mx-auto mb-4">
-          Expert tutorials and tips from top cannabis YouTubers.
-          Watch and learn how to maintain a beautiful, healthy cannabis.
+          Strain reviews, effect guides, and cannabis education from top creators.
         </p>
         <span className="text-sm text-gray-500">{allVideos.length} videos from {uniqueChannels.length} channels</span>
       </div>
