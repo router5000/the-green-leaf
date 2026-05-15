@@ -17,5 +17,9 @@
     "lib": "@/lib",
     "hooks": "@/hooks"
   },
-  "iconLibrary": "lucide"
+  "iconLibrary": "lucide",
+  "registries": {
+    "@reactbits-starter": "https://pro.reactbits.dev/r",
+    "@reactbits-pro": "https://pro.reactbits.dev/r/pro"
+  }
 }
