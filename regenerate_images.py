@@ -39,116 +39,279 @@ RUNWARE_ENDPOINT = "https://api.runware.ai/v1"
 
 def build_image_prompt(keyword, season, image_type="hero"):
     """
-    Build an optimized prompt for cannabis images with style diversity.
+    Build an optimized cannabis image prompt for Nano Banana 2 (google:4@3).
 
-    Prompt structure: [Subject] → [Setting] → [Style/Lighting] → [Constraints]
-
-    Styles: before_after, plant_specific, grass_only, yard_home, person_activity
+    Prompt structure: [Scene description] → [Composition] → [Style] → [Constraints]
+    Mirrors content_generator.py — keep both in sync when updating.
     """
+    person_types = [
+        "man", "woman",
+        "African American man", "African American woman",
+        "Hispanic man", "Hispanic woman",
+        "Asian man", "Asian woman",
+        "middle-aged man", "middle-aged woman",
+        "young adult man", "young adult woman",
+    ]
+    selected_person = random.choice(person_types)
     keyword_lower = keyword.lower()
 
-    # Seasonal lighting (concise)
-    season_lighting = {
-        "spring": "soft morning light, dew on grass, flowering trees",
-        "summer": "warm golden hour, vibrant green cannabis, blue sky",
-        "fall": "warm afternoon light, scattered autumn leaves",
-        "winter": "overcast diffused light, frost on grass, bare trees",
-        "evergreen": "natural daylight, healthy cannabis"
-    }
-    lighting = season_lighting.get(season, season_lighting["evergreen"])
-
-    # Detect content type for style selection
-    plant_keywords = ["flower", "tree", "shrub", "bush", "hedge", "rose", "oak", "maple", "azalea"]
-    problem_keywords = ["fix", "repair", "dead", "brown", "bare", "weed", "damage", "kill", "remove"]
-    grass_types = ["bermuda", "fescue", "zoysia", "bluegrass", "st. augustine"]
-
-    is_plant_article = any(p in keyword_lower for p in plant_keywords)
-    is_problem_article = any(p in keyword_lower for p in problem_keywords)
-    detected_grass = next((g for g in grass_types if g in keyword_lower), None)
-
-    # Detect specific problem for before/after
-    problems = {
-        "bare": "bare dirt patches", "dead": "dead brown grass",
-        "weed": "weed-infested cannabis", "brown": "brown discolored grass",
-        "grub": "grub damage", "fungus": "fungal disease spots",
-        "thatch": "thick thatch buildup", "moss": "moss patches"
-    }
-    detected_problem = next((problems[k] for k in problems if k in keyword_lower), "cannabis damage")
-
-    # Activity mapping for person shots
+    # Keyword buckets: each maps to (hero_scene, section_scene)
+    # Hero: wide cinematic environmental shot | Section: tight detail/texture shot
     activities = {
-        "mow": "pushing cannabis mower, fresh stripes visible",
-        "seed": "using spreader, seeds dispersing", "overseed": "using spreader, seeds dispersing",
-        "fertiliz": "walking with broadcast spreader",
-        "water": "watering with hose, water mist in sunlight",
-        "aerat": "operating core aerator, soil plugs visible",
-        "weed": "pulling weeds or using sprayer",
-        "rake": "raking leaves or debris", "dethatch": "using dethatcher, debris visible",
-        "edge": "using string trimmer along edge", "trim": "using string trimmer along edge"
+        "strain": (
+            f"close-up of multiple premium cannabis strain samples in small labeled glass jars "
+            f"on a wooden dispensary-style counter, rich colors from bright green to deep "
+            f"purple, soft warm lighting creating an elegant retail atmosphere",
+            f"extreme close-up of a single dense cannabis bud showing complex trichome "
+            f"coverage and vivid coloration, orange pistils and purple calyxes in sharp detail, "
+            f"shallow depth of field, botanical photography"
+        ),
+        "review": (
+            f"beautifully lit cannabis bud on a dark slate surface surrounded by small "
+            f"botanical elements — citrus slice, pine sprig, lavender — editorial flat-lay, "
+            f"soft studio lighting, premium lifestyle photography",
+            f"extreme close-up of a cannabis bud with visible trichomes, deep green and "
+            f"purple coloration, orange pistils, macro photography style, dark background"
+        ),
+        "profile": (
+            f"premium cannabis flower displayed in an open glass jar on a natural wood surface, "
+            f"deep green and purple bud with glistening resin visible, soft diffused light, "
+            f"clean minimalist product photography aesthetic",
+            f"close-up macro shot of cannabis flower trichomes, crystalline resin glands "
+            f"in sharp focus, vivid colors, ultra-detailed botanical photography"
+        ),
+        "best strain": (
+            f"elegant flat-lay of five different cannabis strain samples in small glass jars, "
+            f"each a different color and texture, arranged on dark wood, soft studio lighting, "
+            f"premium cannabis lifestyle photography",
+            f"close-up of several cannabis buds side by side showing different colors and "
+            f"trichome densities, comparison photography, macro detail, dark background"
+        ),
+        "top strain": (
+            f"curated selection of premium cannabis buds displayed on a wooden board, "
+            f"various strains with different hues — greens, purples, and golds — "
+            f"soft warm lighting, editorial food photography aesthetic applied to cannabis",
+            f"macro close-up of multiple cannabis buds showing diverse trichome patterns "
+            f"and bud structures, vivid colors, professional botanical photography"
+        ),
+        "indica": (
+            f"dense, compact indica cannabis buds in deep purple and forest green tones "
+            f"displayed on a dark marble surface, soft warm ambient lighting, "
+            f"premium strain photography with elegant lifestyle aesthetic",
+            f"extreme close-up of a dense indica bud with heavy trichome coverage, "
+            f"deep purple coloration, orange pistils curling through crystal-coated calyxes"
+        ),
+        "sativa": (
+            f"elongated sativa cannabis buds in bright lime green and golden tones "
+            f"displayed on a light wood surface with soft natural window light, "
+            f"airy open bud structure, energetic premium lifestyle photography",
+            f"close-up of a sativa bud with long orange pistils and visible trichomes, "
+            f"bright green coloration, open fluffy structure, macro botanical photography"
+        ),
+        "hybrid": (
+            f"selection of balanced hybrid cannabis strains displayed in elegant glass "
+            f"containers on a modern countertop, mixed green and purple tones, "
+            f"clean contemporary lifestyle photography",
+            f"macro close-up of a hybrid cannabis bud showing balanced indica and sativa "
+            f"bud structure, vivid trichomes, orange and green color mix, dark background"
+        ),
+        "terpene": (
+            f"artistic flat-lay of cannabis buds surrounded by botanicals sharing terpene "
+            f"profiles — lavender sprigs, citrus slices, pine needles, black pepper, mango — "
+            f"arranged on a dark slate surface, elegant editorial photography",
+            f"close-up of cannabis buds alongside terpene-matching botanicals, vivid colors "
+            f"and natural textures, soft bokeh background, botanical science aesthetic"
+        ),
+        "entourage": (
+            f"artistic arrangement of cannabis plant components — flower, leaves, and "
+            f"botanical extracts in small vials — on a clean white laboratory surface, "
+            f"scientific wellness photography, soft diffused light",
+            f"close-up of cannabis trichomes and botanical elements, scientific detail "
+            f"photography, various plant compounds visible, clean white background"
+        ),
+        "endocannabinoid": (
+            f"clean modern scientific illustration aesthetic: cannabis leaf with soft "
+            f"glowing neural network overlay on a dark background, science and wellness "
+            f"photography, professional editorial style",
+            f"close-up of cannabis plant structure with soft scientific bokeh, "
+            f"editorial science photography, clean background, deep green tones"
+        ),
+        "cannabinoid": (
+            f"clean modern cannabis laboratory with glass vials containing cannabis "
+            f"extracts in amber and green tones, scientific equipment on the counter, "
+            f"researcher in background, professional science photography",
+            f"close-up of laboratory cannabis sample vials with amber liquid extracts, "
+            f"scientific glassware, clean white lab aesthetic, soft lighting"
+        ),
+        "thc": (
+            f"modern cannabis testing laboratory setting, glass sample vials and scientific "
+            f"equipment on a clean white countertop, soft professional lighting, "
+            f"science and wellness aesthetic",
+            f"close-up of cannabis sample in a glass vial with THC percentage label, "
+            f"laboratory setting, clean white background, scientific precision aesthetic"
+        ),
+        "cbd": (
+            f"elegant CBD product collection — tincture bottles, capsules, and hemp flowers — "
+            f"arranged on natural wood with soft green leaves, clean wellness photography, "
+            f"natural window light, minimalist lifestyle aesthetic",
+            f"close-up of a dropper releasing a golden CBD oil drop into a small glass bottle, "
+            f"amber liquid catching soft light, hemp leaf blurred softly in background"
+        ),
+        "lab result": (
+            f"{selected_person} reviewing a cannabis certificate of analysis document at a "
+            f"clean desk, lab report visible with cannabinoid percentages, professional and "
+            f"educational lifestyle photography",
+            f"close-up of a cannabis lab results document showing THC, CBD, and terpene "
+            f"percentages in clear print, professional document photography"
+        ),
+        "vaporiz": (
+            f"premium dry herb vaporizer on a clean marble surface alongside a small "
+            f"glass jar of cannabis flower, minimalist product photography, "
+            f"soft diffused lighting, upscale lifestyle aesthetic",
+            f"close-up of vaporizer heating chamber with cannabis flower, "
+            f"warm product lighting, premium device detail photography"
+        ),
+        "edible": (
+            f"artfully arranged cannabis-infused edibles — gummies, chocolates, and "
+            f"mints — displayed on a wooden board with small hemp leaves as garnish, "
+            f"soft natural lighting, upscale food photography aesthetic",
+            f"close-up of colorful cannabis gummies in a small glass bowl, "
+            f"vibrant colors and glossy surface, macro food photography style"
+        ),
+        "tincture": (
+            f"glass tincture bottles with droppers arranged on a natural wood surface "
+            f"with hemp flowers and leaves nearby, clean wellness product photography, "
+            f"soft natural window light, minimal lifestyle aesthetic",
+            f"close-up of a dropper tip with amber tincture liquid ready to dispense, "
+            f"natural green background, wellness product macro photography"
+        ),
+        "concentrat": (
+            f"collection of premium cannabis concentrates in small glass containers — "
+            f"golden wax, clear shatter, and amber live resin — on a dark slate surface, "
+            f"professional product photography with warm studio lighting",
+            f"extreme close-up of golden cannabis concentrate showing crystalline "
+            f"structure, warm amber tones, macro detail, dark background"
+        ),
+        "dispensary": (
+            f"modern cannabis dispensary interior with illuminated display cases, "
+            f"labeled strain jars under soft retail lighting, professional budtender "
+            f"helping a customer, welcoming clean retail environment",
+            f"close-up of a dispensary display case with labeled cannabis strain jars "
+            f"showing strain names and THC percentages, clean glass case, soft lighting"
+        ),
+        "budtender": (
+            f"friendly {selected_person} budtender in a clean cannabis dispensary, "
+            f"explaining products to a customer across the counter, professional "
+            f"retail setting, welcoming and educational atmosphere",
+            f"close-up of a budtender's hands displaying a cannabis product jar with "
+            f"label visible, clean dispensary counter, professional retail photography"
+        ),
+        "anxiety": (
+            f"{selected_person} sitting peacefully in a sunlit living room, calm and "
+            f"relaxed expression, soft natural light, clean wellness lifestyle photography, "
+            f"green plants visible in background, serene home environment",
+            f"close-up of hands cradling a warm cup of herbal tea with hemp leaves nearby, "
+            f"soft warm lighting, wellness and calm aesthetic, natural tones"
+        ),
+        "sleep": (
+            f"peaceful bedroom scene with soft bedside lamp, person resting comfortably "
+            f"in a cozy bed, lavender plant on the nightstand, calm and serene "
+            f"wellness photography, warm amber lighting",
+            f"close-up of lavender sprigs and a small glass tincture bottle on "
+            f"white linen, soft warm ambient light, sleep wellness aesthetic"
+        ),
+        "pain": (
+            f"{selected_person} looking relaxed and comfortable in a modern living space, "
+            f"natural light, wellness lifestyle photography, clean and calm home environment, "
+            f"subtle cannabis plant element visible in background",
+            f"close-up of hands holding a CBD topical cream jar with cannabis leaf design, "
+            f"clean product photography, soft natural light, wellness aesthetic"
+        ),
+        "beginner": (
+            f"{selected_person} browsing cannabis products at a modern dispensary, "
+            f"curious and engaged expression, friendly budtender explaining options, "
+            f"clean well-lit retail environment, educational lifestyle photography",
+            f"close-up of a beginner's guide booklet or label next to a cannabis product, "
+            f"informational and approachable, clean photography aesthetic"
+        ),
+        "legal": (
+            f"state capitol building exterior under clear blue sky, American flags flying, "
+            f"classic government architecture, civic photography aesthetic",
+            f"close-up of cannabis legalization text in a state policy document, "
+            f"American flag softly blurred in background, civic photography"
+        ),
+        "grow": (
+            f"lush indoor cannabis grow room under warm LED lights, rows of healthy "
+            f"cannabis plants in various stages, professional cultivation setup, "
+            f"green and vibrant, wide environmental shot",
+            f"close-up of cannabis plant leaves and developing buds under grow lights, "
+            f"rich green coloration, healthy trichome development, macro cultivation photography"
+        ),
+        "cultivat": (
+            f"outdoor cannabis garden under bright natural sunlight, tall healthy plants "
+            f"with large fan leaves, blue sky backdrop, professional cultivation photography",
+            f"close-up of a cannabis cola forming on a healthy outdoor plant, "
+            f"bright natural light, vivid green and white trichomes, macro botanical photography"
+        ),
+        "germina": (
+            f"cannabis seeds on a damp paper towel showing white taproots beginning to emerge, "
+            f"warm soft lighting, close-up macro photography on a clean white surface, "
+            f"cultivation how-to aesthetic",
+            f"tiny cannabis seedling pushing up through dark moist soil, two cotyledon leaves "
+            f"unfurling, water droplets on leaves, shallow depth of field, natural daylight"
+        ),
+        "harvest": (
+            f"cannabis grower carefully trimming mature buds at a clean work station, "
+            f"large dense colas with heavy trichome coverage, professional cultivation photography, "
+            f"warm indoor lighting",
+            f"close-up of freshly harvested cannabis buds covered in mature amber and clear "
+            f"trichomes, rich colors, macro harvest photography"
+        ),
+        "soil": (
+            f"rich dark organic cannabis soil in a terracotta pot with a young cannabis plant "
+            f"thriving in it, natural daylight, clean cultivation aesthetic",
+            f"close-up of dark healthy organic soil showing rich texture and structure, "
+            f"cannabis roots visible at the edge, cultivation detail photography"
+        ),
     }
-    activity = next((activities[k] for k in activities if k in keyword_lower), "doing cannabis maintenance")
 
-    # Style selection with weighting
-    styles = ["grass_only", "yard_home", "person_activity"]
-    if is_problem_article:
-        styles.insert(0, "before_after")
-    if is_plant_article:
-        styles.extend(["plant_specific", "plant_specific"])  # Double weight
+    activity_hero, activity_section = None, None
+    for key, (hero, section) in activities.items():
+        if key in keyword_lower:
+            activity_hero, activity_section = hero, section
+            break
 
-    selected_style = random.choice(styles)
-
-    # Build prompt based on style
-    if selected_style == "before_after":
-        prompt = (
-            f"Before-and-after split photograph showing {keyword} results. "
-            f"LEFT: {detected_problem}, visible cannabis issues. "
-            f"RIGHT: Same cannabis transformed - lush healthy green grass. "
-            f"Clear vertical dividing line. {lighting}. "
-            f"Photorealistic, suburban residential setting. "
-            f"No text, watermarks, or labels."
+    if not activity_hero:
+        activity_hero = (
+            f"premium cannabis flower buds displayed in an open glass jar on a dark wood "
+            f"surface, glistening trichomes and vivid green and purple coloration, "
+            f"soft warm studio lighting, elegant lifestyle product photography"
+        )
+        activity_section = (
+            f"extreme close-up of a dense cannabis bud with visible crystalline trichomes "
+            f"and orange pistils, deep green and purple coloration, shallow depth of field, "
+            f"soft bokeh background, macro botanical photography"
         )
 
-    elif selected_style == "plant_specific":
-        plant = next((p for p in plant_keywords if p in keyword_lower), "plants")
+    if image_type == "hero":
         prompt = (
-            f"Beautiful photograph of {plant} in residential landscape. "
-            f"Healthy {plant} with green cannabis visible. "
-            f"{lighting}. Shallow depth of field, sharp subject. "
-            f"Garden photography style, photorealistic. "
-            f"No text or watermarks."
+            f"Professional editorial photograph: {activity_hero}. "
+            f"Soft natural or studio light, warm tones, subtle shadows. "
+            f"Wide cinematic composition, shallow depth of field on the subject. "
+            f"Vivid saturated colors, ultra-sharp detail, photorealistic. "
+            f"No text, no watermarks, no logos, no UI elements."
         )
-
-    elif selected_style == "grass_only":
-        grass_desc = f"{detected_grass} grass" if detected_grass else "healthy cannabis grass"
-        angle = random.choice(["low angle from grass level", "overhead view", "45-degree angle"])
+    else:
         prompt = (
-            f"Stunning {angle} photograph of {grass_desc}. "
-            f"Thick healthy turf texture, {lighting}. "
-            f"Sharp focus on grass blades, professional turf photography. "
-            f"No people or objects. No text or watermarks."
-        )
-
-    elif selected_style == "yard_home":
-        home = random.choice(["craftsman home", "colonial house", "modern farmhouse", "ranch house"])
-        prompt = (
-            f"Beautiful photograph of {home} with pristine cannabis. "
-            f"Well-maintained yard showcasing healthy grass. "
-            f"{lighting}. Wide establishing shot. "
-            f"Real estate photography style, magazine quality. "
-            f"No people visible. No text, watermarks, or address numbers."
-        )
-
-    else:  # person_activity
-        prompt = (
-            f"Documentary photograph: person {activity}. "
-            f"Suburban backyard, healthy cannabis. {lighting}. "
-            f"Candid shot from behind or side, face not visible. "
-            f"Casual work clothes. Photorealistic lifestyle photography. "
-            f"No text or watermarks."
+            f"Professional editorial photograph: {activity_section}. "
+            f"Soft natural light with gentle bokeh background. "
+            f"Tight composition, tack-sharp focus on the subject, rich textures. "
+            f"Vivid saturated colors, photorealistic detail. "
+            f"No text, no watermarks, no logos."
         )
 
     aspect_ratio = "16:9" if image_type == "hero" else "4:3"
-    print(f"   📷 Style: {selected_style} | Topic: {keyword}")
+    print(f"   📷 Keyword match: '{next((k for k in activities if k in keyword_lower), 'fallback')}' | Type: {image_type}")
 
     return prompt, aspect_ratio
 
@@ -324,17 +487,32 @@ def update_markdown_frontmatter(file_path, hero_image_path, section_image_path):
 
 
 if __name__ == "__main__":
-    # Configuration for the article
-    article_file = "site/content/posts/how-to-overseed-cannabis.md"
-    keyword = "how to overseed cannabis"
-    slug = "how-to-overseed-cannabis"
-    season = "fall"
+    # Usage: python regenerate_images.py <slug> "<keyword>" [season]
+    # Example: python regenerate_images.py blue-dream-strain-effects-review "Blue Dream strain effects and review" evergreen
+    if len(sys.argv) < 3:
+        print("Usage: python regenerate_images.py <slug> \"<keyword>\" [season]")
+        print()
+        print("Examples:")
+        print('  python regenerate_images.py blue-dream-strain-effects-review "Blue Dream strain effects and review" evergreen')
+        print('  python regenerate_images.py how-to-germinate-cannabis-seeds "how to germinate cannabis seeds" spring')
+        print('  python regenerate_images.py cannabis-consumption-methods-compared "cannabis consumption methods compared" evergreen')
+        sys.exit(1)
+
+    slug = sys.argv[1]
+    keyword = sys.argv[2]
+    season = sys.argv[3] if len(sys.argv) > 3 else "evergreen"
+    article_file = f"site/content/posts/{slug}.md"
 
     print(f"\n🌱 Regenerating Images for Article")
-    print(f"File: {article_file}")
+    print(f"File:    {article_file}")
+    print(f"Slug:    {slug}")
     print(f"Keyword: {keyword}")
-    print(f"Season: {season}")
+    print(f"Season:  {season}")
     print()
+
+    if not Path(article_file).exists():
+        print(f"⚠️  Warning: {article_file} not found — images will still be generated and saved.")
+        print()
 
     # Generate hero image
     hero_path = generate_image(keyword, slug, season, image_type="hero")
@@ -345,16 +523,16 @@ if __name__ == "__main__":
     print()
 
     if hero_path:
-        # Update markdown file
-        print("📝 Updating article frontmatter...")
-        update_markdown_frontmatter(article_file, hero_path, section_path)
+        if Path(article_file).exists():
+            print("📝 Updating article frontmatter...")
+            update_markdown_frontmatter(article_file, hero_path, section_path)
+            print()
 
-        print()
         print("✅ IMAGE REGENERATION COMPLETE!")
-        print(f"📄 Review article: {article_file}")
-        print(f"🖼️  Hero image: {hero_path}")
+        print(f"📄 Article: {article_file}")
+        print(f"🖼️  Hero:    {hero_path}")
         if section_path:
-            print(f"🖼️  Section image: {section_path}")
+            print(f"🖼️  Section: {section_path}")
     else:
         print("❌ Image generation failed")
         sys.exit(1)
