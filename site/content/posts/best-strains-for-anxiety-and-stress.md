@@ -4,16 +4,16 @@ meta_description: "Discover the best cannabis strains for anxiety and stress rel
 slug: "best-strains-for-anxiety-and-stress"
 keyword: "best strains for anxiety and stress"
 featured_image: "/images/articles/best-strains-for-anxiety-and-stress.jpg"
-featured_image_alt: "Professional cannabis: best strains for anxiety and stress - healthy residential grass"
+featured_image_alt: "Best cannabis strains for anxiety and stress relief including CBD-dominant and balanced options"
 tags: ["anxiety", "stress relief", "cannabis strains", "CBD strains", "terpenes", "indica", "ACDC", "Cannatonic", "Blue Dream", "cannabinoids", "beginner cannabis"]
 status: "published"
 generated_at: "2026-05-14T17:27:56.550739"
 season: "spring"
-category: "Growing Techniques"
+category: "strains-genetics"
 estimated_read_time: "4 min read"
 word_count: 912
 section_image: "/images/articles/best-strains-for-anxiety-and-stress-section.jpg"
-section_image_alt: "Detailed view of best strains for anxiety and stress technique on green cannabis"
+section_image_alt: "Cannabis strains recommended for anxiety showing terpene and cannabinoid profiles"
 youtube:
   - id: "eB_991PcVSs"
     title: "15 Best Strains for Anxiety and Depression"

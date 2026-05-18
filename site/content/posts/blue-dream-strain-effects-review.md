@@ -9,7 +9,7 @@ tags: ["Blue Dream", "strain review", "sativa-dominant hybrid", "cannabis effect
 status: "published"
 generated_at: "2026-05-15T16:41:14.566467"
 season: "evergreen"
-category: "Strain Database"
+category: "strains-genetics"
 estimated_read_time: "5 min read"
 word_count: 1056
 section_image: "/images/articles/blue-dream-strain-effects-review-section.jpg"

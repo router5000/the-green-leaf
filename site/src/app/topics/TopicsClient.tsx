@@ -10,6 +10,7 @@ interface PostSummary {
   title: string
   season: string
   estimated_read_time: string
+  category?: string
 }
 
 interface ClusterData {
@@ -117,7 +118,7 @@ export default function TopicsClient({ clusters }: { clusters: ClusterData[] }) 
                             {post.title}
                           </h3>
                           <div className="flex items-center gap-2 mt-1">
-                            <span className="text-xs text-gray-500 capitalize">{post.season}</span>
+                            <span className="text-xs text-gray-500">{cluster.title}</span>
                             <span className="text-xs text-gray-400">•</span>
                             <span className="text-xs text-gray-500">{post.estimated_read_time}</span>
                           </div>

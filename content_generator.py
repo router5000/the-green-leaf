@@ -130,21 +130,62 @@ def get_current_season():
 
 
 def categorize_article(title: str, keyword: str, tags: list) -> str:
-    """Assign a category from the 4 content pillars based on title and keyword."""
+    """Assign a category matching the six Topics page clusters."""
     CLUSTERS = [
-        # Pillar 1: individual strain profiles (named strains, lineage, terpene profiles)
-        ("Strain Database", ["strain profile", "strain guide", "strain review", "lineage", "kush", "haze", "diesel", "cookies", "gelato", "runtz", "zkittlez", "wedding cake", "gorilla glue", "blue dream", "og kush", "northern lights", "granddaddy", "sour diesel", "purple punch", "pineapple express", "white widow", "bubba kush", "mac 1", "do-si-dos", "mimosa", "biscotti"]),
-        # Pillar 2: roundups, recommendations, best-of lists
-        ("Strain Discovery", ["best strains", "strains for", "top strains", "strains 2026", "best indica", "best sativa", "best hybrid", "high cbd", "high thc", "strongest", "most popular"]),
-        # Pillar 3: education, science, compounds, how-it-works
-        ("Cannabis Education", ["explained", "what is", "how does", "terpene guide", "cannabinoid", "endocannabinoid", "entourage effect", "indica vs", "sativa vs", "thca vs", "thc vs cbd", "pharmacology", "tolerance", "lab results", "certificate of analysis", "beginners guide", "microdosing"]),
-        # Pillar 4: consumption, reviews, consumer decisions, culture
-        ("Reviews & Culture", ["how to choose", "consumption methods", "vaping vs", "edibles vs", "dispensary", "budtender", "vaporizer", "concentrates", "live resin", "rosin", "hash", "pre-roll", "tincture", "topical", "tolerance break", "third-party testing", "packaging"]),
-        # Supporting: wellness conditions (strain-selection context)
-        ("Health & Wellness", ["anxiety", "pain", "sleep", "depression", "ptsd", "inflammation", "medical", "nausea", "migraines", "arthritis"]),
+        # Matches Topics page: strains-genetics
+        ("strains-genetics", [
+            "strain profile", "strain guide", "strain review", "strain effects", "strain overview",
+            "strain breakdown", "lineage", "genetics", "phenotype", "terpene",
+            "kush", "haze", "diesel", "cookies", "gelato", "runtz", "zkittlez",
+            "wedding cake", "gorilla glue", "blue dream", "og kush", "northern lights",
+            "granddaddy", "sour diesel", "purple punch", "pineapple express", "white widow",
+            "bubba kush", "mac 1", "do-si-dos", "mimosa", "biscotti",
+            "best strains", "strains for", "top strains", "best indica", "best sativa",
+            "best hybrid", "high thc", "strongest strains", "most popular strains",
+            "indica vs sativa", "hybrid strain",
+        ]),
+        # Matches Topics page: growing-cultivation
+        ("growing-cultivation", [
+            "grow", "cultivat", "indoor growing", "outdoor growing", "hydroponic",
+            "soil mix", "nutrients", "lighting", "flowering", "vegetative",
+            "harvest", "germinate", "germination", "seed", "clone", "grow tent",
+            "yield", "pruning", "training", "lst", "scrog", "topping", "fimming",
+            "compost", "grow medium", "ph level", "irrigation", "autoflower",
+        ]),
+        # Matches Topics page: consumption-methods
+        ("consumption-methods", [
+            "consumption methods", "how to smoke", "how to vape", "vaping vs",
+            "edibles vs", "how to use", "how to consume",
+            "vaporizer", "vape", "edible", "tincture", "topical", "dab", "dabbing",
+            "concentrate", "pre-roll", "joint", "blunt", "bong", "pipe",
+            "hash", "rosin", "live resin", "budtender", "dispensary menu",
+            "tolerance break", "third-party testing", "packaging",
+        ]),
+        # Matches Topics page: health-wellness
+        ("health-wellness", [
+            "anxiety", "pain relief", "sleep", "depression", "ptsd",
+            "inflammation", "medical cannabis", "nausea", "migraines", "arthritis",
+            "wellness", "therapeutic", "health benefits", "cbd benefits",
+            "cancer", "seizure", "epilepsy", "chronic pain", "insomnia",
+            "stress relief", "mental health",
+        ]),
+        # Matches Topics page: legal-industry
+        ("legal-industry", [
+            "legal", "legalization", "law", "regulat", "licens",
+            "dispens", "federal", "legislat", "policy", "bill", "vote",
+            "decriminalize", "possession limit", "adult-use", "medical marijuana program",
+            "cannabis industry", "market", "hemp", "farm bill",
+        ]),
+        # Matches Topics page: culture-lifestyle
+        ("culture-lifestyle", [
+            "histor", "recipe", "cannabis recipe", "cook", "event", "festival",
+            "travel", "accessor", "culture", "lifestyle", "celebrity",
+            "art", "music", "movie", "documentary", "etiquette", "paraphernalia",
+            "cannabis culture", "social", "community",
+        ]),
     ]
     title_kw = f"{title} {keyword} {' '.join(tags)}".lower()
-    best_score, best_cat = 0, "Strain Discovery"
+    best_score, best_cat = 0, "strains-genetics"
     for cat, keywords_list in CLUSTERS:
         score = sum(5 for kw in keywords_list if kw in title_kw)
         if score > best_score:

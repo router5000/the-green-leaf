@@ -5,6 +5,20 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ReactNode, useState } from 'react'
 
+const CATEGORY_LABELS: Record<string, string> = {
+  'strains-genetics': 'Strains & Genetics',
+  'growing-cultivation': 'Growing & Cultivation',
+  'consumption-methods': 'Consumption Methods',
+  'health-wellness': 'Health & Wellness',
+  'legal-industry': 'Legal & Industry',
+  'culture-lifestyle': 'Culture & Lifestyle',
+}
+
+function formatCategory(category?: string, fallback?: string): string {
+  if (category && CATEGORY_LABELS[category]) return CATEGORY_LABELS[category]
+  return fallback || 'Cannabis'
+}
+
 // Reusable scroll-triggered animation wrapper
 export function ScrollReveal({
   children,
@@ -161,6 +175,7 @@ function InlineShareIcons({ url, title }: { url: string; title: string }) {
 // Animated article header
 export function AnimatedHeader({
   season,
+  category,
   readTime,
   wordCount,
   title,
@@ -169,6 +184,7 @@ export function AnimatedHeader({
   slug
 }: {
   season: string
+  category?: string
   readTime: string
   wordCount: number
   title: string
@@ -191,7 +207,7 @@ export function AnimatedHeader({
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.3, delay: 0.5 }}
         >
-          {season}
+          {formatCategory(category, season)}
         </motion.span>
         <time itemProp="timeRequired">{readTime}</time>
         <span className="text-gray-400">•</span>
@@ -312,8 +328,8 @@ export function AnimatedRelatedArticles({ posts }: { posts: RelatedPost[] }) {
                 )}
                 <div className="p-4">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="bg-leaf-100 text-leaf-700 px-2 py-0.5 rounded text-xs font-medium capitalize">
-                      {post.season}
+                    <span className="bg-leaf-100 text-leaf-700 px-2 py-0.5 rounded text-xs font-medium">
+                      {formatCategory(post.category, post.season)}
                     </span>
                     <span className="text-xs text-gray-500">
                       {post.estimated_read_time}

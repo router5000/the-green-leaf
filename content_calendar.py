@@ -19,14 +19,46 @@ CACHE_DIR = Path(".cache")
 CACHE_FILE = CACHE_DIR / "topic_distribution.json"
 RECENT_ARTICLE_WINDOW = 5  # Check last N articles for similarity
 
-# Tag category mappings for topic analysis
+# Tag category mappings for topic analysis — aligned with the six Topics page clusters
 TAG_CATEGORIES = {
-    "strain-database": ["strain profile", "strain guide", "strain review", "lineage", "kush", "haze", "diesel", "cookies", "gelato", "runtz", "wedding cake", "blue dream", "northern lights", "granddaddy", "bubba", "og kush", "mac 1", "zkittlez", "biscotti", "mimosa"],
-    "strain-discovery": ["best strains", "strains for", "top strains", "strains 2026", "best indica", "best sativa", "best hybrid", "high cbd", "high thc", "strongest", "most popular"],
-    "cannabis-education": ["explained", "what is", "how does", "terpene guide", "cannabinoid", "endocannabinoid", "entourage", "indica vs", "sativa vs", "thca vs", "thc vs", "pharmacology", "tolerance", "lab results", "beginners guide", "microdosing"],
-    "reviews-culture": ["consumption methods", "vaping vs", "edibles vs", "dispensary", "budtender", "vaporizer", "concentrates", "live resin", "rosin", "hash", "pre-roll", "tincture", "topical", "tolerance break", "how to choose"],
-    "wellness": ["anxiety", "pain", "sleep", "depression", "ptsd", "inflammation", "medical", "nausea", "migraines", "arthritis", "therapeutic"],
-    "legal": ["legal", "law", "state", "regulation", "license", "possession", "legalization"],
+    "strains-genetics": [
+        "strain profile", "strain guide", "strain review", "strain effects", "lineage",
+        "genetics", "phenotype", "terpene", "kush", "haze", "diesel", "cookies", "gelato",
+        "runtz", "zkittlez", "wedding cake", "blue dream", "northern lights", "granddaddy",
+        "bubba", "og kush", "mac 1", "biscotti", "mimosa",
+        "best strains", "strains for", "top strains", "best indica", "best sativa",
+        "best hybrid", "high cbd", "high thc", "strongest", "most popular",
+        "indica vs sativa", "hybrid strain",
+    ],
+    "growing-cultivation": [
+        "grow", "cultivat", "indoor growing", "outdoor growing", "hydroponic",
+        "soil mix", "nutrients", "lighting", "flowering", "vegetative",
+        "harvest", "germinate", "germination", "seed", "clone", "grow tent",
+        "yield", "pruning", "training", "lst", "scrog", "topping", "fimming",
+        "compost", "grow medium", "ph level", "autoflower",
+    ],
+    "consumption-methods": [
+        "consumption methods", "vaping vs", "edibles vs", "how to consume",
+        "vaporizer", "vape", "edible", "tincture", "topical", "dab", "dabbing",
+        "concentrate", "pre-roll", "joint", "blunt", "bong", "pipe",
+        "hash", "rosin", "live resin", "budtender", "dispensary menu",
+        "tolerance break", "how to choose",
+    ],
+    "health-wellness": [
+        "anxiety", "pain", "sleep", "depression", "ptsd", "inflammation",
+        "medical", "nausea", "migraines", "arthritis", "wellness", "therapeutic",
+        "health benefits", "cbd benefits", "chronic pain", "insomnia", "stress relief",
+    ],
+    "legal-industry": [
+        "legal", "law", "regulat", "licens", "federal", "legislat", "policy",
+        "decriminalize", "possession", "legalization", "adult-use", "cannabis industry",
+        "hemp", "farm bill",
+    ],
+    "culture-lifestyle": [
+        "histor", "recipe", "cook", "event", "festival", "travel", "accessor",
+        "culture", "lifestyle", "celebrity", "art", "music", "documentary",
+        "etiquette", "paraphernalia", "cannabis culture", "social",
+    ],
 }
 
 # Content type patterns

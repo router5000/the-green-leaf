@@ -9,7 +9,7 @@ tags: ["cannabis", "germination", "cannabis seeds", "growing cannabis", "seed ge
 status: "published"
 generated_at: "2026-05-14T15:22:03.578202"
 season: "spring"
-category: "Growing Cannabis"
+category: "growing-cultivation"
 estimated_read_time: "4 min read"
 word_count: 916
 section_image: "/images/articles/how-to-germinate-cannabis-seeds-section.jpg"

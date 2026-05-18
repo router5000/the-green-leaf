@@ -365,6 +365,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             {/* Article Header - Animated */}
             <AnimatedHeader
               season={post.season}
+              category={post.category}
               readTime={post.estimated_read_time}
               wordCount={post.word_count}
               title={post.title}

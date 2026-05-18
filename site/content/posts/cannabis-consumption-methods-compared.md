@@ -9,7 +9,7 @@ tags: ["consumption methods", "edibles", "smoking cannabis", "vaping cannabis", 
 status: "published"
 generated_at: "2026-05-15T15:48:34.993033"
 season: "evergreen"
-category: "Reviews & Culture"
+category: "consumption-methods"
 estimated_read_time: "5 min read"
 word_count: 1025
 section_image: "/images/articles/cannabis-consumption-methods-compared-section.jpg"

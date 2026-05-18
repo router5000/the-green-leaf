@@ -11,49 +11,95 @@ import yaml
 
 POSTS_DIR = Path("site/content/posts")
 
-# Topic clusters - title/keyword patterns are the primary signal
-# since many articles have only generic tags
+# Topic clusters — aligned with the six Topics page cards
 CLUSTERS = [
     {
-        "id": "weed-control",
-        "category": "Weed Control",
-        "title_keywords": ["weed", "crabgrass", "spurge", "pre-emergent", "post-emergent", "herbicide", "kill"],
-        "tags": ["weed control", "pre-emergent", "post-emergent", "crabgrass"],
+        "id": "strains-genetics",
+        "category": "strains-genetics",
+        "title_keywords": [
+            "strain", "indica", "sativa", "hybrid", "genetics", "phenotype", "terpene",
+            "lineage", "kush", "haze", "diesel", "cookies", "gelato", "runtz", "zkittlez",
+            "wedding cake", "blue dream", "og kush", "northern lights", "granddaddy",
+            "sour diesel", "purple punch", "white widow", "bubba kush", "mac 1",
+            "do-si-dos", "mimosa", "biscotti", "best strains", "strains for", "top strains",
+        ],
+        "tags": [
+            "strain profile", "strain guide", "strain review", "strain effects",
+            "indica", "sativa", "hybrid", "terpene profiles", "cannabis strains",
+        ],
     },
     {
-        "id": "cannabis-problems",
-        "category": "Cannabis Problems & Solutions",
-        "title_keywords": ["problem", "disease", "fungus", "fungicide", "yellow", "dead spot", "brown spot", "bumpy", "patchy", "bare spot", "not growing"],
-        "tags": ["cannabis problems", "disease prevention", "fungicide", "cannabis diseases", "dead grass"],
+        "id": "growing-cultivation",
+        "category": "growing-cultivation",
+        "title_keywords": [
+            "grow", "cultivat", "indoor", "outdoor", "hydroponic", "soil", "nutrient",
+            "light", "flower", "veg", "harvest", "germinate", "seed", "clone",
+            "tent", "yield", "pruning", "training", "lst", "scrog", "topping",
+            "fimming", "compost", "autoflower", "ph level",
+        ],
+        "tags": [
+            "growing cannabis", "indoor growing", "outdoor growing", "hydroponics",
+            "nutrients", "cannabis cultivation",
+        ],
     },
     {
-        "id": "equipment",
-        "category": "Equipment & Techniques",
-        "title_keywords": ["mow", "trimmer", "mower", "robot mow", "string trimmer", "equipment", "scalp"],
-        "tags": ["cannabis mowing", "mowing tips"],
+        "id": "consumption-methods",
+        "category": "consumption-methods",
+        "title_keywords": [
+            "smoke", "vape", "edible", "tincture", "topical", "dab", "concentrate",
+            "pre-roll", "joint", "blunt", "bong", "pipe", "hash", "rosin", "live resin",
+            "consumption methods", "vaping vs", "edibles vs", "budtender", "dispensary menu",
+            "tolerance break",
+        ],
+        "tags": [
+            "edibles", "vaping", "tinctures", "concentrates", "topicals",
+            "consumption methods",
+        ],
     },
     {
-        "id": "grass-types",
-        "category": "Grass Types & Seeding",
-        "title_keywords": ["seed", "overseed", "grass type", "cool season", "warm season", "germination", "grow grass"],
-        "tags": ["grass seed", "overseeding", "cool season grass", "warm season grass", "grass fertilization"],
+        "id": "health-wellness",
+        "category": "health-wellness",
+        "title_keywords": [
+            "anxiety", "pain", "sleep", "depression", "ptsd", "inflammation",
+            "medical", "nausea", "migraine", "arthritis", "wellness", "therapeutic",
+            "cbd", "health benefit", "chronic pain", "insomnia", "stress relief",
+            "mental health", "cancer", "seizure",
+        ],
+        "tags": [
+            "CBD", "medical cannabis", "wellness", "pain relief", "anxiety",
+            "health benefits",
+        ],
     },
     {
-        "id": "seasonal-care",
-        "category": "Seasonal Care",
-        "title_keywords": ["spring", "summer", "fall", "winter", "winterize", "preparation", "seasonal"],
-        "tags": ["spring cannabis", "fall cannabis", "winter cannabis", "seasonal cannabis"],
+        "id": "legal-industry",
+        "category": "legal-industry",
+        "title_keywords": [
+            "legal", "law", "regulat", "licens", "federal", "legislat", "policy",
+            "decriminalize", "possession", "legalization", "adult-use", "industry",
+            "hemp", "farm bill", "dispensary license", "cannabis business",
+        ],
+        "tags": [
+            "cannabis law", "legalization", "regulations", "dispensary",
+            "cannabis industry",
+        ],
     },
     {
-        "id": "cannabis-health",
-        "category": "Cannabis Health & Maintenance",
-        "title_keywords": ["fertiliz", "aerat", "dethatch", "water", "level", "green"],
-        "tags": ["fertilizing", "cannabis aeration", "dethatching", "cannabis watering", "soil health", "soil compaction"],
+        "id": "culture-lifestyle",
+        "category": "culture-lifestyle",
+        "title_keywords": [
+            "histor", "recipe", "cook", "event", "festival", "travel", "accessor",
+            "culture", "lifestyle", "celebrity", "art", "music", "movie",
+            "documentary", "etiquette", "paraphernalia",
+        ],
+        "tags": [
+            "cannabis culture", "recipes", "cannabis history", "accessories",
+            "lifestyle",
+        ],
     },
 ]
 
 # Tags too generic to use for matching
-GENERIC_TAGS = {"cannabis", "seasonal", "grass care", "yard work"}
+GENERIC_TAGS = {"cannabis", "marijuana", "weed", "pot"}
 
 
 def match_category(title: str, keyword: str, tags: list[str]) -> str:
@@ -63,7 +109,7 @@ def match_category(title: str, keyword: str, tags: list[str]) -> str:
     meaningful_tags = [t.lower() for t in tags if t.lower() not in GENERIC_TAGS]
 
     best_score = 0
-    best_category = "Cannabis Health & Maintenance"  # default fallback
+    best_category = "strains-genetics"  # default fallback
 
     for cluster in CLUSTERS:
         score = 0

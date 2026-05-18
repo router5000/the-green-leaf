@@ -97,6 +97,7 @@ export default function TopicsPage() {
         slug: post.slug,
         title: post.title,
         season: post.season,
+        category: post.category,
         estimated_read_time: post.estimated_read_time,
       }))
   }))

@@ -5,6 +5,20 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import type { PostData } from '@/lib/posts'
 
+const CATEGORY_LABELS: Record<string, string> = {
+  'strains-genetics': 'Strains & Genetics',
+  'growing-cultivation': 'Growing & Cultivation',
+  'consumption-methods': 'Consumption Methods',
+  'health-wellness': 'Health & Wellness',
+  'legal-industry': 'Legal & Industry',
+  'culture-lifestyle': 'Culture & Lifestyle',
+}
+
+function formatCategory(category?: string): string {
+  if (category && CATEGORY_LABELS[category]) return CATEGORY_LABELS[category]
+  return category || 'Cannabis'
+}
+
 interface HomeContentProps {
   featuredPost: PostData | undefined
   bottomPosts: PostData[]
@@ -56,7 +70,7 @@ export default function HomeContent({ featuredPost, bottomPosts, monthlyPosts, m
                 <div className="flex items-center gap-3 text-sm text-gray-500 uppercase tracking-wide">
                   <span>{new Date(featuredPost.generated_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                   <span>IN</span>
-                  <span className="text-leaf-600">{featuredPost.season.toUpperCase()}</span>
+                  <span className="text-leaf-600">{formatCategory(featuredPost.category)}</span>
                 </div>
 
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif text-gray-900 leading-tight group-hover:text-leaf-700 transition">
@@ -108,7 +122,7 @@ export default function HomeContent({ featuredPost, bottomPosts, monthlyPosts, m
                     <div className="flex items-center gap-2 text-xs text-gray-500 uppercase tracking-wide">
                       <span>{new Date(post.generated_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                       <span>IN</span>
-                      <span className="text-leaf-600">{post.season.toUpperCase()}</span>
+                      <span className="text-leaf-600">{formatCategory(post.category)}</span>
                     </div>
 
                     <h3 className="text-2xl font-serif text-gray-900 leading-tight group-hover:text-leaf-700 transition line-clamp-3">
@@ -176,7 +190,7 @@ export default function HomeContent({ featuredPost, bottomPosts, monthlyPosts, m
                       {post.title}
                     </h4>
                     <p className="text-xs text-leaf-600 uppercase tracking-wide font-medium">
-                      {post.season.toUpperCase()}
+                      {formatCategory(post.category)}
                     </p>
                   </div>
                 </Link>

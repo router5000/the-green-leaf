@@ -9,7 +9,7 @@ tags: ["organic cannabis", "soil preparation", "cannabis growing", "living soil"
 status: "published"
 generated_at: "2026-05-14T15:44:31.377520"
 season: "spring"
-category: "Cannabis Basics"
+category: "growing-cultivation"
 estimated_read_time: "5 min read"
 word_count: 997
 section_image: "/images/articles/organic-cannabis-soil-preparation-section.jpg"
