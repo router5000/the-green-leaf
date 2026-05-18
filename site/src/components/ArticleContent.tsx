@@ -286,6 +286,7 @@ export function AnimatedTags({ tags }: { tags: string[] }) {
 interface RelatedPost {
   slug: string
   season: string
+  category?: string
   estimated_read_time: string
   title: string
   meta_description: string
