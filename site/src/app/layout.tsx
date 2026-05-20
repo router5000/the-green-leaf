@@ -149,7 +149,7 @@ export default function RootLayout({
           <Suspense fallback={null}>
             <PostHogPageview />
           </Suspense>
-          <div className="min-h-screen flex flex-col bg-gray-50">
+          <div className="min-h-screen flex flex-col bg-[#f0f0f0]">
             {/* Skip to content link for keyboard/screen reader users */}
             <a
               href="#main-content"
@@ -163,8 +163,8 @@ export default function RootLayout({
               <SiteNav />
             </HeaderProvider>
 
-            {/* Main Content — offset right of sidebar on md+, below top bar on mobile */}
-            <main id="main-content" className="flex-grow bg-gradient-to-b from-white to-gray-50 md:pl-24 pt-16 md:pt-0">
+            {/* Main Content — offset below fixed top nav */}
+            <main id="main-content" className="flex-grow bg-[#f0f0f0] pt-16">
               {children}
             </main>
 

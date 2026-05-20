@@ -1,7 +1,9 @@
 import Link from 'next/link'
 import { getSortedPostsData, getMonthlyPosts } from '@/lib/posts'
 import HomeContent from '@/components/HomeContent'
-import BlinkingSquares from '@/components/react-bits/blinking-squares'
+import GlassTiles from '@/components/ui/GlassTiles'
+import GlobeSection from '@/components/GlobeSection'
+import CTASection from '@/components/CTASection'
 
 export default function Home() {
   const allPosts = getSortedPostsData()
@@ -10,84 +12,93 @@ export default function Home() {
   const bottomPosts = allPosts.slice(4, 6)
 
   return (
-    <div className="bg-white min-h-screen">
+    <>
+      {/* ── Separator — below nav bar ───────────────────────────────── */}
+      <svg width="100%" height="1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1="0.5" x2="100%" y2="0.5" stroke="#d4d4d4" strokeWidth="1" strokeDasharray="16,16" />
+      </svg>
 
-      {/* ── Full-viewport hero ──────────────────────────────────────────── */}
-      <section className="min-h-screen flex flex-col md:flex-row overflow-hidden">
-
-        {/* Right column (desktop) / top banner (mobile) — BlinkingSquares only */}
-        {/* order-first on mobile puts it at top; md:order-last shifts it right on desktop */}
-        <div className="h-56 sm:h-72 md:h-auto md:w-1/2 relative order-first md:order-last flex-shrink-0">
-          <BlinkingSquares
-            className="absolute inset-0 z-0"
-            direction="right"
-            squareColor="#2D5016"
-            backgroundColor="#FFFFFF"
-            gridSize={60}
-            squareSize={0.4}
-            fadeStart={0.15}
-            fadeEnd={0.85}
-            twinkleSpeed={1.0}
-            twinkleStrength={0.7}
-            opacity={0.8}
+      {/* ── HERO CARD ───────────────────────────────────────────────── */}
+      <div className="bg-[#f0f0f0] px-4 sm:px-5 pt-4 sm:pt-5 pb-4 sm:pb-5">
+        <section
+          className="relative flex flex-col items-center justify-center overflow-hidden rounded-2xl"
+          style={{ minHeight: 'calc(100vh - 5.5rem)' }}
+        >
+          {/* GlassTiles WebGL background */}
+          <GlassTiles
+            colorA="#0a2405"
+            colorB="#2d6a0f"
+            backgroundColor="#061502"
+            speed={0.25}
+            tileDensity={3}
+            rippleLayers={5}
+            warpStrength={0.33}
+            bandSharpness={3}
+            chromaticSpread={0}
+            opacity={0.6}
+            dpr={1.5}
+            width="100%"
+            height="100%"
+            className="absolute inset-0"
           />
-        </div>
 
-        {/* Left column (desktop) / content below banner (mobile) */}
-        <div className="flex-1 md:w-1/2 flex flex-col justify-center px-8 sm:px-12 lg:px-16 py-12 md:py-0">
-
-          {/* Headline */}
-          <h1 className="font-serif text-4xl sm:text-5xl lg:text-[3.75rem] text-gray-900 leading-tight mb-6">
-            Cannabis<br className="hidden sm:block" />{' '}
-            Education<br className="hidden sm:block" />{' '}
-            &amp; Guides
-          </h1>
-
-          {/* Subtitle */}
-          <p className="text-gray-600 text-lg sm:text-xl max-w-md mb-10 leading-relaxed">
-            In-depth strain reviews, effect guides, and cannabis education. Find the right strain for you.
-          </p>
-
-          {/* CTA buttons */}
-          <div className="flex flex-wrap gap-4">
-            <Link
-              href="/articles"
-              className="inline-block px-7 py-3.5 bg-leaf-600 text-white rounded-full font-medium text-sm hover:bg-leaf-700 transition-colors no-underline shadow-sm"
+          {/* Hero content */}
+          <div className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto">
+            <p className="text-green-300/70 text-sm sm:text-base font-medium tracking-widest uppercase mb-6 select-none">
+              Cannabis Education Resource
+            </p>
+            <h1
+              className="font-serif font-bold text-white leading-[1.06] tracking-tight mb-7"
+              style={{ fontSize: 'clamp(2.75rem, 7vw, 5rem)' }}
             >
-              Browse Strains
-            </Link>
+              Grow smarter,<br className="hidden sm:block" />{' '}
+              consume{' '}
+              <span className="text-green-300">confidently.</span>
+            </h1>
+            <p className="text-white/55 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed mb-12">
+              Your comprehensive cannabis education resource — strain guides,
+              growing tips, wellness insights and more.
+            </p>
             <Link
               href="/topics"
-              className="inline-block px-7 py-3.5 border-2 border-leaf-600 text-leaf-700 rounded-full font-medium text-sm hover:bg-leaf-50 transition-colors no-underline"
+              className="inline-block px-9 py-4 bg-white text-[#0d2106] rounded-full font-semibold text-base hover:bg-green-50 transition-colors no-underline shadow-2xl"
             >
               Explore Topics
             </Link>
           </div>
-
-        </div>
-      </section>
-
-      {/* ── Article grid — starts below the fold ───────────────────────── */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
-        {allPosts.length === 0 ? (
-          <div className="bg-white rounded-xl p-12 text-center border border-gray-200 shadow-sm">
-            <p className="text-gray-700 text-lg mb-4">
-              No articles yet. Generate your first batch of content!
-            </p>
-            <p className="text-gray-500">
-              Run: <code className="bg-gray-100 px-3 py-1 rounded text-gray-700">python content_generator.py</code>
-            </p>
-          </div>
-        ) : (
-          <HomeContent
-            featuredPost={featuredPost}
-            bottomPosts={bottomPosts}
-            monthlyPosts={monthlyPosts}
-            monthName={monthName}
-          />
-        )}
+        </section>
       </div>
 
-    </div>
+      {/* ── GLOBE SECTION ───────────────────────────────────────────── */}
+      <GlobeSection />
+
+      {/* ── ARTICLE CARDS ───────────────────────────────────────────── */}
+      <div className="bg-[#f0f0f0]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+          {allPosts.length === 0 ? (
+            <div className="rounded-xl p-12 text-center border border-gray-200">
+              <p className="text-gray-700 text-lg mb-4">
+                No articles yet. Generate your first batch of content!
+              </p>
+              <p className="text-gray-500">
+                Run:{' '}
+                <code className="bg-gray-100 px-3 py-1 rounded text-gray-700">
+                  python content_generator.py
+                </code>
+              </p>
+            </div>
+          ) : (
+            <HomeContent
+              featuredPost={featuredPost}
+              bottomPosts={bottomPosts}
+              monthlyPosts={monthlyPosts}
+              monthName={monthName}
+            />
+          )}
+        </div>
+      </div>
+
+      <CTASection />
+    </>
   )
 }

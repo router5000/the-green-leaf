@@ -19,7 +19,17 @@
   },
   "iconLibrary": "lucide",
   "registries": {
-    "@reactbits-starter": "https://pro.reactbits.dev/r",
-    "@reactbits-pro": "https://pro.reactbits.dev/r/pro"
+    "@reactbits-starter": {
+      "url": "https://pro.reactbits.dev/api/r/starter/{name}.json",
+      "headers": {
+        "Authorization": "Bearer RBPP-37ACC181-DA5F-4022-A4FA-61BA68EE72F5"
+      }
+    },
+    "@reactbits-pro": {
+      "url": "https://pro.reactbits.dev/api/r/pro/{name}.json",
+      "headers": {
+        "Authorization": "Bearer RBPP-37ACC181-DA5F-4022-A4FA-61BA68EE72F5"
+      }
+    }
   }
 }
