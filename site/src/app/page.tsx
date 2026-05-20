@@ -1,16 +1,10 @@
 import Link from 'next/link'
-import { getSortedPostsData, getMonthlyPosts } from '@/lib/posts'
-import HomeContent from '@/components/HomeContent'
 import GlassTiles from '@/components/ui/GlassTiles'
 import GlobeSection from '@/components/GlobeSection'
 import CTASection from '@/components/CTASection'
+import { Showcase2 } from '@/components/ui/Showcase2'
 
 export default function Home() {
-  const allPosts = getSortedPostsData()
-  const featuredPost = allPosts[0]
-  const { posts: monthlyPosts, monthName } = getMonthlyPosts(3)
-  const bottomPosts = allPosts.slice(4, 6)
-
   return (
     <>
       {/* ── Separator — below nav bar ───────────────────────────────── */}
@@ -72,31 +66,8 @@ export default function Home() {
       {/* ── GLOBE SECTION ───────────────────────────────────────────── */}
       <GlobeSection />
 
-      {/* ── ARTICLE CARDS ───────────────────────────────────────────── */}
-      <div className="bg-[#f0f0f0]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-          {allPosts.length === 0 ? (
-            <div className="rounded-xl p-12 text-center border border-gray-200">
-              <p className="text-gray-700 text-lg mb-4">
-                No articles yet. Generate your first batch of content!
-              </p>
-              <p className="text-gray-500">
-                Run:{' '}
-                <code className="bg-gray-100 px-3 py-1 rounded text-gray-700">
-                  python content_generator.py
-                </code>
-              </p>
-            </div>
-          ) : (
-            <HomeContent
-              featuredPost={featuredPost}
-              bottomPosts={bottomPosts}
-              monthlyPosts={monthlyPosts}
-              monthName={monthName}
-            />
-          )}
-        </div>
-      </div>
+      {/* ── ARTICLE SHOWCASE ─────────────────────────────────────────── */}
+      <Showcase2 />
 
       <CTASection />
     </>

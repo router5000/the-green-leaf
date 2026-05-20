@@ -6,7 +6,7 @@ import { Suspense } from 'react'
 import { HeaderProvider } from '@/components/HeaderContext'
 import { PostHogProvider, PostHogPageview } from '@/components/PostHogProvider'
 import SiteNav from '@/components/SiteNav'
-import Footer7 from '@/components/blocks/footer-7'
+import Footer7 from '@/components/ui/Footer7'
 import { Analytics } from '@vercel/analytics/next'
 
 const inter = Inter({ subsets: ['latin'] })
