@@ -24,12 +24,12 @@ interface ClusterData {
 
 // Map cluster IDs to their category images
 const categoryImages: Record<string, string> = {
-  'strains-genetics': '/images/categories/strains-genetics.jpg',
-  'growing-cultivation': '/images/categories/growing-cultivation.jpg',
-  'consumption-methods': '/images/categories/consumption-methods.jpg',
-  'health-wellness': '/images/categories/health-wellness.jpg',
-  'legal-industry': '/images/categories/legal-industry.jpg',
-  'culture-lifestyle': '/images/categories/culture-lifestyle.jpg',
+  'strains-genetics': '/images/topics/strains-genetics.jpg',
+  'growing-cultivation': '/images/topics/growing-cultivation.jpg',
+  'consumption-methods': '/images/topics/consumption-methods.jpg',
+  'health-wellness': '/images/topics/health-wellness.jpg',
+  'legal-industry': '/images/topics/legal-industry.jpg',
+  'culture-lifestyle': '/images/topics/culture-lifestyle.jpg',
 }
 
 export default function TopicsClient({ clusters }: { clusters: ClusterData[] }) {
