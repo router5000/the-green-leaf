@@ -54,9 +54,12 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: '/images/logo/logo-mark.png',
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
     shortcut: '/favicon.ico',
-    apple: '/images/logo/logo-mark.png',
+    apple: '/favicon.ico',
   },
 }
 
