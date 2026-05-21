@@ -63,11 +63,21 @@ function matchesTab(post: PostData, tabId: string): boolean {
   }
 }
 
+const CATEGORY_NAMES: Record<string, string> = {
+  'strains-genetics':    'Strains & Genetics',
+  'growing-cultivation': 'Growing & Cultivation',
+  'consumption-methods': 'Consumption Methods',
+  'health-wellness':     'Health & Wellness',
+  'legal-industry':      'Legal & Industry',
+  'culture-lifestyle':   'Culture & Lifestyle',
+}
+
 export default function ArticlesTabs({ posts }: ArticlesTabsProps) {
   const searchParams = useSearchParams()
   const hasInteracted = useRef(false)
   const [visibleCount, setVisibleCount] = useState(ARTICLES_PER_PAGE)
 
+  const categoryParam = searchParams.get('category')
   const initialTab = searchParams.get('tab') || 'all'
   const [activeTab, setActiveTab] = useState(initialTab)
 
@@ -77,16 +87,37 @@ export default function ArticlesTabs({ posts }: ArticlesTabsProps) {
     setVisibleCount(ARTICLES_PER_PAGE)
   }
 
+  const categoryFilteredPosts = useMemo(
+    () => categoryParam ? posts.filter(p => p.category === categoryParam) : posts,
+    [posts, categoryParam]
+  )
+
   const filteredPosts = useMemo(() => {
-    if (activeTab === 'all') return posts
-    return posts.filter(post => matchesTab(post, activeTab))
-  }, [posts, activeTab])
+    if (activeTab === 'all') return categoryFilteredPosts
+    return categoryFilteredPosts.filter(post => matchesTab(post, activeTab))
+  }, [categoryFilteredPosts, activeTab])
 
   const visiblePosts = filteredPosts.slice(0, visibleCount)
   const hasMore = visibleCount < filteredPosts.length
 
   return (
     <div>
+      {/* Category filter chip */}
+      {categoryParam && CATEGORY_NAMES[categoryParam] && (
+        <div className="flex justify-center mb-6">
+          <span className="inline-flex items-center gap-2 bg-leaf-100 text-leaf-800 px-4 py-1.5 rounded-full text-sm font-medium">
+            Filtered by: {CATEGORY_NAMES[categoryParam]}
+            <Link
+              href="/articles"
+              className="text-leaf-500 hover:text-leaf-700 font-semibold leading-none"
+              aria-label="Clear category filter"
+            >
+              ×
+            </Link>
+          </span>
+        </div>
+      )}
+
       {/* Tabs */}
       <motion.nav
         aria-label="Article filters"

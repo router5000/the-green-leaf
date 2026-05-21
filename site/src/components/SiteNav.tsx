@@ -34,7 +34,7 @@ export default function SiteNav() {
         className="fixed top-0 left-0 right-0 z-50 h-16 print:hidden bg-[#f0f0f0]"
       >
         {/* Three-column grid: logo | centered nav | right actions */}
-        <div className="max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 grid grid-cols-3 items-center">
+        <div className="h-full px-4 sm:px-6 md:px-[160px] grid grid-cols-3 items-center">
 
           {/* Col 1 — Logo left */}
           <motion.div
