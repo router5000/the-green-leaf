@@ -13,6 +13,7 @@ const navItems = [
   { label: 'Topics',   href: '/topics' },
   { label: 'Articles', href: '/articles' },
   { label: 'Videos',   href: '/videos' },
+  { label: 'States',   href: '/states' },
 ]
 
 export default function SiteNav() {
