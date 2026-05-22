@@ -2,9 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Script from 'next/script'
-import { Suspense } from 'react'
 import { HeaderProvider } from '@/components/HeaderContext'
-import { PostHogProvider, PostHogPageview } from '@/components/PostHogProvider'
 import SiteNav from '@/components/SiteNav'
 import Footer7 from '@/components/ui/Footer7'
 import { Analytics } from '@vercel/analytics/next'
@@ -146,11 +144,7 @@ export default function RootLayout({
         </Script>
       </head>
       <body className={inter.className}>
-        <PostHogProvider>
-          <Suspense fallback={null}>
-            <PostHogPageview />
-          </Suspense>
-          <div className="min-h-screen flex flex-col bg-[#f0f0f0]">
+        <div className="min-h-screen flex flex-col bg-[#f0f0f0]">
             {/* Skip to content link for keyboard/screen reader users */}
             <a
               href="#main-content"
@@ -171,8 +165,7 @@ export default function RootLayout({
 
             {/* Footer */}
             <Footer7 />
-          </div>
-        </PostHogProvider>
+        </div>
         <Analytics />
       </body>
     </html>
