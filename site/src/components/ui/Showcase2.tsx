@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion, useMotionValue, useAnimationFrame } from "motion/react";
 import { useRef, useState, useEffect } from "react";
+import { resolveArticleImage } from "@/lib/articleImage";
 
 const CATEGORY_LABELS: Record<string, string> = {
   'strains-genetics':    'Strains & Genetics',
@@ -17,7 +18,7 @@ const SHOWCASE_ITEMS = [
   {
     id: 1,
     slug: 'blue-dream-strain-effects-review',
-    image: '/images/articles/blue-dream-strain-effects-review.jpg',
+    featured_image: '/images/articles/blue-dream-strain-effects-review.jpg',
     title: 'Blue Dream Strain Effects & Review (2024)',
     category: 'strains-genetics',
     height: 'h-[400px]',
@@ -25,7 +26,7 @@ const SHOWCASE_ITEMS = [
   {
     id: 2,
     slug: 'best-strains-for-anxiety-and-stress',
-    image: '/images/articles/best-strains-for-anxiety-and-stress.jpg',
+    featured_image: '/images/articles/best-strains-for-anxiety-and-stress.jpg',
     title: 'Best Strains for Anxiety and Stress in 2025',
     category: 'strains-genetics',
     height: 'h-[450px]',
@@ -33,7 +34,7 @@ const SHOWCASE_ITEMS = [
   {
     id: 3,
     slug: 'cannabis-consumption-methods-compared',
-    image: '/images/articles/cannabis-consumption-methods-compared.jpg',
+    featured_image: '/images/articles/cannabis-consumption-methods-compared.jpg',
     title: 'Cannabis Consumption Methods Compared (2024 Guide)',
     category: 'consumption-methods',
     height: 'h-[420px]',
@@ -41,7 +42,7 @@ const SHOWCASE_ITEMS = [
   {
     id: 4,
     slug: 'how-to-germinate-cannabis-seeds',
-    image: '/images/articles/how-to-germinate-cannabis-seeds.jpg',
+    featured_image: '/images/articles/how-to-germinate-cannabis-seeds.jpg',
     title: 'How to Germinate Cannabis Seeds (5 Easy Methods)',
     category: 'growing-cultivation',
     height: 'h-[380px]',
@@ -49,7 +50,7 @@ const SHOWCASE_ITEMS = [
   {
     id: 5,
     slug: 'organic-cannabis-soil-preparation',
-    image: '/images/articles/organic-cannabis-soil-preparation.jpg',
+    featured_image: '/images/articles/organic-cannabis-soil-preparation.jpg',
     title: 'Organic Cannabis Soil Preparation Guide (2024)',
     category: 'growing-cultivation',
     height: 'h-[430px]',
@@ -167,7 +168,7 @@ export function Showcase2() {
                 >
                   <div className="w-full h-full bg-green-900/30 relative">
                     <img
-                      src={item.image}
+                      src={resolveArticleImage(item, item.id - 1)}
                       alt={item.title}
                       className="w-full h-full object-cover object-top pointer-events-none"
                       draggable={false}

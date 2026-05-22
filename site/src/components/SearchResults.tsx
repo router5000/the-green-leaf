@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import Image from 'next/image'
 import type { ArticleSearchResult, VideoSearchResult } from '@/lib/search'
+import { resolveArticleImage, resolveArticleImageAlt } from '@/lib/articleImage'
 
 const VideoModal = dynamic(() => import('./VideoModal'), { ssr: false })
 
@@ -117,25 +118,23 @@ export default function SearchResults({ articles, videos, query }: SearchResults
             </div>
           ) : (
             <>
-              {articles.slice(0, visibleArticles).map((article) => (
+              {articles.slice(0, visibleArticles).map((article, index) => (
                 <article
                   key={article.slug}
                   className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition group"
                 >
                   <Link href={`/articles/${article.slug}`} className="md:flex">
-                    {article.featured_image && (
-                      <div className="md:w-64 md:flex-shrink-0">
-                        <div className="relative h-48 md:h-full">
-                          <Image
-                            src={article.featured_image}
-                            alt={article.featured_image_alt || article.title}
-                            fill
-                            className="object-cover group-hover:scale-105 transition-transform duration-500"
-                            sizes="(max-width: 768px) 100vw, 256px"
-                          />
-                        </div>
+                    <div className="md:w-64 md:flex-shrink-0">
+                      <div className="relative h-48 md:h-full overflow-hidden">
+                        <Image
+                          src={resolveArticleImage(article, index)}
+                          alt={resolveArticleImageAlt(article)}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                          sizes="(max-width: 768px) 100vw, 256px"
+                        />
                       </div>
-                    )}
+                    </div>
                     <div className="p-6 flex-1">
                       <div className="flex flex-wrap items-center gap-2 text-sm text-leaf-600 mb-2">
                         <span className="bg-leaf-100 px-2 py-0.5 rounded-full text-xs font-medium">

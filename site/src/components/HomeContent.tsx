@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import type { PostData } from '@/lib/posts'
+import { resolveArticleImage, resolveArticleImageAlt } from '@/lib/articleImage'
 
 const CATEGORY_LABELS: Record<string, string> = {
   'strains-genetics': 'Strains & Genetics',
@@ -42,23 +43,15 @@ export default function HomeContent({ featuredPost, bottomPosts, monthlyPosts, m
 
               {/* Image panel — 3 columns */}
               <div className="lg:col-span-3 relative h-72 sm:h-96 lg:h-[500px] bg-gradient-to-br from-emerald-100 via-teal-50 to-emerald-100">
-                {featuredPost.featured_image ? (
-                  <>
-                    <Image
-                      src={featuredPost.featured_image}
-                      alt={featuredPost.featured_image_alt || featuredPost.title}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-700"
-                      sizes="(max-width: 1024px) 100vw, 60vw"
-                      priority
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/10 pointer-events-none" />
-                  </>
-                ) : (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-32 h-32 rounded-full bg-leaf-300 opacity-60" />
-                  </div>
-                )}
+                <Image
+                  src={resolveArticleImage(featuredPost, 0)}
+                  alt={resolveArticleImageAlt(featuredPost)}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  sizes="(max-width: 1024px) 100vw, 60vw"
+                  priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/10 pointer-events-none" />
               </div>
 
               {/* Text panel — 2 columns, dark editorial */}
@@ -118,23 +111,17 @@ export default function HomeContent({ featuredPost, bottomPosts, monthlyPosts, m
               >
                 <Link href={`/articles/${post.slug}`} className="group block">
                   <div className="relative h-56 mb-4 overflow-hidden rounded-xl bg-gradient-to-br from-leaf-100 via-emerald-50 to-teal-100 shadow-md">
-                    {post.featured_image ? (
-                      <>
-                        <Image
-                          src={post.featured_image}
-                          alt={post.featured_image_alt || post.title}
-                          fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-700"
-                          sizes="(max-width: 768px) 100vw, 50vw"
-                        />
-                        <div
-                          className="absolute inset-0 opacity-100 group-hover:opacity-0 transition-opacity duration-700 pointer-events-none"
-                          style={{ background: 'linear-gradient(45deg, rgba(92,116,86,0.4), rgba(227,191,112,0.4))' }}
-                        />
-                      </>
-                    ) : (
-                      <div className="absolute top-4 left-4 w-16 h-16 rounded-full bg-leaf-300 opacity-40" />
-                    )}
+                    <Image
+                      src={resolveArticleImage(post, index + 1)}
+                      alt={resolveArticleImageAlt(post)}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                    <div
+                      className="absolute inset-0 opacity-100 group-hover:opacity-0 transition-opacity duration-700 pointer-events-none"
+                      style={{ background: 'linear-gradient(45deg, rgba(92,116,86,0.4), rgba(227,191,112,0.4))' }}
+                    />
                     <div className="absolute top-3 left-3">
                       <span className="inline-block px-3 py-1 bg-white/90 backdrop-blur-sm text-xs font-medium text-gray-700 rounded-full shadow-sm">
                         {formatCategory(post.category)}
@@ -184,23 +171,17 @@ export default function HomeContent({ featuredPost, bottomPosts, monthlyPosts, m
               >
                 <Link href={`/articles/${post.slug}`} className="group block">
                   <div className="relative h-44 mb-4 overflow-hidden rounded-lg bg-gradient-to-br from-leaf-100 via-emerald-50 to-teal-100 shadow-md">
-                    {post.featured_image ? (
-                      <>
-                        <Image
-                          src={post.featured_image}
-                          alt={post.featured_image_alt || post.title}
-                          fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-700"
-                          sizes="(max-width: 1024px) 100vw, 33vw"
-                        />
-                        <div
-                          className="absolute inset-0 opacity-100 group-hover:opacity-0 transition-opacity duration-700 pointer-events-none"
-                          style={{ background: 'linear-gradient(45deg, rgba(92,116,86,0.4), rgba(227,191,112,0.4))' }}
-                        />
-                      </>
-                    ) : (
-                      <div className="absolute bottom-4 right-4 w-12 h-12 rounded-full bg-leaf-300 opacity-50" />
-                    )}
+                    <Image
+                      src={resolveArticleImage(post, index + 3)}
+                      alt={resolveArticleImageAlt(post)}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                      sizes="(max-width: 1024px) 100vw, 33vw"
+                    />
+                    <div
+                      className="absolute inset-0 opacity-100 group-hover:opacity-0 transition-opacity duration-700 pointer-events-none"
+                      style={{ background: 'linear-gradient(45deg, rgba(92,116,86,0.4), rgba(227,191,112,0.4))' }}
+                    />
                   </div>
 
                   <div className="space-y-1">

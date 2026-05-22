@@ -6,6 +6,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { PostData } from '@/lib/posts'
+import { resolveArticleImage, resolveArticleImageAlt } from '@/lib/articleImage'
 
 interface ArticlesTabsProps {
   posts: PostData[]
@@ -188,23 +189,21 @@ export default function ArticlesTabs({ posts }: ArticlesTabsProps) {
               >
                 <div className="md:flex">
                   {/* Thumbnail Image */}
-                  {post.featured_image && (
-                    <div className="md:w-80 md:flex-shrink-0">
-                      <div className="relative h-64 md:h-full overflow-hidden">
-                        <Image
-                          src={post.featured_image}
-                          alt={post.featured_image_alt || post.title}
-                          fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-700"
-                          sizes="(max-width: 768px) 100vw, 320px"
-                        />
-                        <div
-                          className="absolute inset-0 opacity-100 group-hover:opacity-0 transition-opacity duration-700 pointer-events-none"
-                          style={{ background: 'linear-gradient(45deg, rgba(92,116,86,0.5), rgba(227,191,112,0.5))' }}
-                        />
-                      </div>
+                  <div className="md:w-80 md:flex-shrink-0">
+                    <div className="relative h-64 md:h-full overflow-hidden">
+                      <Image
+                        src={resolveArticleImage(post, index)}
+                        alt={resolveArticleImageAlt(post)}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-700"
+                        sizes="(max-width: 768px) 100vw, 320px"
+                      />
+                      <div
+                        className="absolute inset-0 opacity-100 group-hover:opacity-0 transition-opacity duration-700 pointer-events-none"
+                        style={{ background: 'linear-gradient(45deg, rgba(92,116,86,0.5), rgba(227,191,112,0.5))' }}
+                      />
                     </div>
-                  )}
+                  </div>
 
                   {/* Content */}
                   <div className="p-6 flex-1">
