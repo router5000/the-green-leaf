@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import BlinkingSquares from '@/components/ui/BlinkingSquares'
 import type React from 'react'
 import type { StateData } from '@/data/statesData'
@@ -163,9 +164,15 @@ export default function StatesClient({ states }: { states: StateData[] }) {
                     className="no-underline block group"
                   >
                     <article className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 h-full flex flex-col">
-                      {/* Placeholder image */}
+                      {/* Hero image */}
                       <div className="relative h-24 flex-shrink-0 overflow-hidden">
-                        <div className="absolute inset-0 bg-gray-200 grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500" />
+                        <Image
+                          src={`/images/states/${state.slug}-hero.jpg`}
+                          alt={`${state.name} cannabis laws`}
+                          fill
+                          className="object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
+                          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                        />
                         <span
                           className={`absolute top-2 right-2 z-10 px-2 py-0.5 rounded-full text-xs font-medium ${STATUS_BADGE[state.legalStatus]}`}
                         >
