@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import Script from 'next/script'
+import { GoogleAnalytics } from '@next/third-parties/google'
 import { HeaderProvider } from '@/components/HeaderContext'
 import SiteNav from '@/components/SiteNav'
 import Footer7 from '@/components/ui/Footer7'
@@ -129,19 +129,6 @@ export default function RootLayout({
             }),
           }}
         />
-        {/* Google Analytics */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-NFJG86K02H"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-NFJG86K02H');
-          `}
-        </Script>
       </head>
       <body className={inter.className}>
         <div className="min-h-screen flex flex-col bg-[#f0f0f0]">
@@ -167,6 +154,7 @@ export default function RootLayout({
             <Footer7 />
         </div>
         <Analytics />
+        {process.env.NODE_ENV === 'production' && <GoogleAnalytics gaId="G-THX1437Q8P" />}
       </body>
     </html>
   )
