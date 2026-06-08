@@ -12,8 +12,8 @@ export default function LogoLink({ className, dark = false }: { className: strin
         height={48}
         style={{ width: '48px', height: '48px' }}
       />
-      <span className={dark ? 'text-white' : 'text-leaf-900'} style={{ fontSize: '24px' }}>The Green</span>
-      <span className={dark ? 'text-green-300' : 'text-leaf-900'} style={{ fontSize: '24px' }}>Leaf</span>
+      <span className={dark ? 'text-white' : 'text-leaf-900'} style={{ fontSize: '24px' }}>The Strain</span>
+      <span className={dark ? 'text-green-300' : 'text-leaf-900'} style={{ fontSize: '24px' }}>Report</span>
     </Link>
   )
 }
