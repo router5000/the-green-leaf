@@ -33,7 +33,7 @@ export default function TopicsPage() {
       '@type': 'WebSite',
       '@id': `${baseUrl}/#website`,
       url: baseUrl,
-      name: 'The Green Leaf',
+      name: 'The Strain Report',
     },
     mainEntity: clusterPosts.map(cluster => ({
       '@type': 'ItemList',

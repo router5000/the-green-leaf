@@ -16,14 +16,14 @@ export const metadata: Metadata = {
     title: 'Cannabis Videos - Strain Reviews, Effects & Education',
     description: 'Strain reviews, effect guides, and cannabis education from top creators.',
     url: `${baseUrl}/videos`,
-    siteName: 'The Green Leaf',
+    siteName: 'The Strain Report',
     type: 'website',
     locale: 'en_US',
     images: [{
       url: `${baseUrl}/images/og-default.jpg`,
       width: 1200,
       height: 630,
-      alt: 'The Green Leaf - Expert Videos',
+      alt: 'The Strain Report - Expert Videos',
     }],
   },
   twitter: {

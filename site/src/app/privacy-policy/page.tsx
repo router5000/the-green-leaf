@@ -4,26 +4,26 @@ import type { Metadata } from 'next'
 const baseUrl = 'https://thegreenleaf.com'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy - How We Protect Your Data | The Green Leaf',
-  description: 'Privacy policy for The Green Leaf website. Learn how we collect, use, and protect your personal information.',
+  title: 'Privacy Policy - How We Protect Your Data | The Strain Report',
+  description: 'Privacy policy for The Strain Report website. Learn how we collect, use, and protect your personal information.',
   openGraph: {
-    title: 'Privacy Policy - How We Protect Your Data | The Green Leaf',
-    description: 'Privacy policy for The Green Leaf website. Learn how we collect, use, and protect your personal information.',
+    title: 'Privacy Policy - How We Protect Your Data | The Strain Report',
+    description: 'Privacy policy for The Strain Report website. Learn how we collect, use, and protect your personal information.',
     url: `${baseUrl}/privacy-policy`,
-    siteName: 'The Green Leaf',
+    siteName: 'The Strain Report',
     type: 'website',
     locale: 'en_US',
     images: [{
       url: `${baseUrl}/images/og-default.jpg`,
       width: 1200,
       height: 630,
-      alt: 'The Green Leaf - Privacy Policy',
+      alt: 'The Strain Report - Privacy Policy',
     }],
   },
   twitter: {
     card: 'summary',
-    title: 'Privacy Policy - How We Protect Your Data | The Green Leaf',
-    description: 'Privacy policy for The Green Leaf website.',
+    title: 'Privacy Policy - How We Protect Your Data | The Strain Report',
+    description: 'Privacy policy for The Strain Report website.',
   },
   alternates: {
     canonical: `${baseUrl}/privacy-policy`,
@@ -43,7 +43,7 @@ export default function PrivacyPolicyPage() {
         <section className="mb-8">
           <h2 className="text-2xl font-bold text-leaf-800 mb-4">Introduction</h2>
           <p className="text-gray-700 leading-relaxed">
-            The Green Leaf ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website thegreenleaf.com.
+            The Strain Report ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website thegreenleaf.com.
           </p>
         </section>
 

@@ -4,26 +4,26 @@ import type { Metadata } from 'next'
 const baseUrl = 'https://thegreenleaf.com'
 
 export const metadata: Metadata = {
-  title: 'Affiliate Disclosure - Our Product Partnerships | The Green Leaf',
-  description: 'Affiliate disclosure and transparency information for The Green Leaf. Learn about our affiliate partnerships and how we earn commissions.',
+  title: 'Affiliate Disclosure - Our Product Partnerships | The Strain Report',
+  description: 'Affiliate disclosure and transparency information for The Strain Report. Learn about our affiliate partnerships and how we earn commissions.',
   openGraph: {
-    title: 'Affiliate Disclosure - Our Product Partnerships | The Green Leaf',
+    title: 'Affiliate Disclosure - Our Product Partnerships | The Strain Report',
     description: 'Affiliate disclosure and transparency information. Learn about our affiliate partnerships.',
     url: `${baseUrl}/affiliate-disclosure`,
-    siteName: 'The Green Leaf',
+    siteName: 'The Strain Report',
     type: 'website',
     locale: 'en_US',
     images: [{
       url: `${baseUrl}/images/og-default.jpg`,
       width: 1200,
       height: 630,
-      alt: 'The Green Leaf - Affiliate Disclosure',
+      alt: 'The Strain Report - Affiliate Disclosure',
     }],
   },
   twitter: {
     card: 'summary',
-    title: 'Affiliate Disclosure - Our Product Partnerships | The Green Leaf',
-    description: 'Affiliate disclosure and transparency information for The Green Leaf.',
+    title: 'Affiliate Disclosure - Our Product Partnerships | The Strain Report',
+    description: 'Affiliate disclosure and transparency information for The Strain Report.',
   },
   alternates: {
     canonical: `${baseUrl}/affiliate-disclosure`,
@@ -43,7 +43,7 @@ export default function AffiliateDisclosurePage() {
         <section className="mb-8">
           <h2 className="text-2xl font-bold text-leaf-800 mb-4">Transparency Commitment</h2>
           <p className="text-gray-700 leading-relaxed">
-            At The Green Leaf, we believe in full transparency with our readers. This page explains our affiliate relationships and how we may earn commissions from product recommendations on our website.
+            At The Strain Report, we believe in full transparency with our readers. This page explains our affiliate relationships and how we may earn commissions from product recommendations on our website.
           </p>
         </section>
 
@@ -62,7 +62,7 @@ export default function AffiliateDisclosurePage() {
 
           <h3 className="text-xl font-semibold text-leaf-700 mb-3">Amazon Associates</h3>
           <p className="text-gray-700 leading-relaxed mb-4">
-            The Green Leaf is a participant in the Amazon Services LLC Associates Program, an affiliate advertising program designed to provide a means for sites to earn advertising fees by advertising and linking to Amazon.com.
+            The Strain Report is a participant in the Amazon Services LLC Associates Program, an affiliate advertising program designed to provide a means for sites to earn advertising fees by advertising and linking to Amazon.com.
           </p>
 
           <h3 className="text-xl font-semibold text-leaf-700 mb-3">Other Affiliate Partnerships</h3>
@@ -120,7 +120,7 @@ export default function AffiliateDisclosurePage() {
         <section className="mb-8">
           <h2 className="text-2xl font-bold text-leaf-800 mb-4">Your Support Helps Us</h2>
           <p className="text-gray-700 leading-relaxed mb-4">
-            When you purchase products through our affiliate links, you're supporting The Green Leaf at no extra cost to you. This support enables us to:
+            When you purchase products through our affiliate links, you're supporting The Strain Report at no extra cost to you. This support enables us to:
           </p>
           <ul className="list-disc pl-6 mb-4 text-gray-700">
             <li>Create comprehensive, research-based cannabis guides</li>

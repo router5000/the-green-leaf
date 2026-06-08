@@ -78,3 +78,17 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER strains_updated_at
   BEFORE UPDATE ON strains
   FOR EACH ROW EXECUTE FUNCTION update_updated_at();
+
+-- Grants: allow service_role full access (bypasses RLS for seeding/admin)
+-- and authenticated/anon read-only access for the public API
+GRANT ALL ON public.strains    TO service_role;
+GRANT ALL ON public.effects    TO service_role;
+GRANT ALL ON public.terpenes   TO service_role;
+GRANT ALL ON public.genetics   TO service_role;
+GRANT ALL ON public.strain_seo TO service_role;
+
+GRANT SELECT ON public.strains    TO anon, authenticated;
+GRANT SELECT ON public.effects    TO anon, authenticated;
+GRANT SELECT ON public.terpenes   TO anon, authenticated;
+GRANT SELECT ON public.genetics   TO anon, authenticated;
+GRANT SELECT ON public.strain_seo TO anon, authenticated;

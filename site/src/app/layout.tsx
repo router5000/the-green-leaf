@@ -11,15 +11,15 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://thegreenleaf.com'),
-  title: 'The Green Leaf - Cannabis Education, Guides & News',
+  title: 'The Strain Report - Cannabis Education, Guides & News',
   description: 'Your trusted source for cannabis education — strain guides, growing tips, health & wellness, and industry news.',
   keywords: 'cannabis, marijuana, strains, growing cannabis, CBD, edibles, cannabis health, legalization',
-  authors: [{ name: 'The Green Leaf' }],
+  authors: [{ name: 'The Strain Report' }],
   openGraph: {
-    title: 'The Green Leaf - Cannabis Education, Guides & News',
+    title: 'The Strain Report - Cannabis Education, Guides & News',
     description: 'Your trusted source for cannabis education — strain guides, growing tips, health & wellness, and industry news.',
     url: 'https://thegreenleaf.com',
-    siteName: 'The Green Leaf',
+    siteName: 'The Strain Report',
     locale: 'en_US',
     type: 'website',
     images: [
@@ -27,13 +27,13 @@ export const metadata: Metadata = {
         url: 'https://thegreenleaf.com/images/default-leaf-hero.jpg',
         width: 1792,
         height: 1024,
-        alt: 'The Green Leaf - Cannabis education and guides',
+        alt: 'The Strain Report - Cannabis education and guides',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'The Green Leaf - Cannabis Education, Guides & News',
+    title: 'The Strain Report - Cannabis Education, Guides & News',
     description: 'Your trusted source for cannabis education — strain guides, growing tips, health & wellness, and industry news.',
     images: ['https://thegreenleaf.com/images/default-leaf-hero.jpg'],
   },
@@ -69,13 +69,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="alternate" type="application/rss+xml" title="The Green Leaf" href="https://thegreenleaf.com/feed.xml" />
+        <link rel="alternate" type="application/rss+xml" title="The Strain Report" href="https://thegreenleaf.com/feed.xml" />
         <link rel="manifest" href="/manifest.json" />
         {/* Vercel Web Analytics — script tag in SSR HTML (HUSA-75).
             <Analytics /> from @vercel/analytics/next injects via JS post-hydration,
             which doesn't satisfy the apex-curl verification. */}
         <script defer src="/_vercel/insights/script.js" />
-        <link rel="search" type="application/opensearchdescription+xml" title="The Green Leaf" href="/opensearch.xml" />
+        <link rel="search" type="application/opensearchdescription+xml" title="The Strain Report" href="/opensearch.xml" />
         <meta name="theme-color" content="#2D5016" />
         {/* Organization Schema - Site-wide structured data for LLMs and search engines */}
         <script
@@ -85,7 +85,7 @@ export default function RootLayout({
               '@context': 'https://schema.org',
               '@type': 'Organization',
               '@id': 'https://thegreenleaf.com/#organization',
-              name: 'The Green Leaf',
+              name: 'The Strain Report',
               url: 'https://thegreenleaf.com',
               logo: {
                 '@type': 'ImageObject',
@@ -112,7 +112,7 @@ export default function RootLayout({
               '@type': 'WebSite',
               '@id': 'https://thegreenleaf.com/#website',
               url: 'https://thegreenleaf.com',
-              name: 'The Green Leaf',
+              name: 'The Strain Report',
               description: 'Cannabis education, strain guides, growing tips, and industry news',
               publisher: {
                 '@id': 'https://thegreenleaf.com/#organization',

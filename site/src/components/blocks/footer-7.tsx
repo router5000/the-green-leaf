@@ -56,7 +56,7 @@ export default function Footer7() {
                 </svg>
               </div>
               <h3 className="text-2xl font-semibold text-leaf-900 leading-tight tracking-tight whitespace-nowrap">
-                The Green Leaf
+                The Strain Report
               </h3>
             </div>
             <p className="text-sm text-gray-500 leading-relaxed max-w-xs">
@@ -124,7 +124,7 @@ export default function Footer7() {
 
         <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-8 items-end">
           <p className="text-gray-400 text-xs sm:text-sm">
-            © 2026 The Green Leaf. Content is for educational purposes only.
+            © 2026 The Strain Report. Content is for educational purposes only.
           </p>
 
           <div>

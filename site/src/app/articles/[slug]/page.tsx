@@ -119,15 +119,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       : `${baseUrl}/images/default-leaf-hero.jpg`
 
     return {
-      title: `${post.title} - The Green Leaf`,
+      title: `${post.title} - The Strain Report`,
       description: post.meta_description,
       keywords: post.tags?.join(', '),
-      authors: [{ name: 'The Green Leaf' }],
+      authors: [{ name: 'The Strain Report' }],
       openGraph: {
         title: post.title,
         description: post.meta_description,
         url: `${baseUrl}/articles/${slug}`,
-        siteName: 'The Green Leaf',
+        siteName: 'The Strain Report',
         images: [
           {
             url: imageUrl,
@@ -139,7 +139,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         locale: 'en_US',
         type: 'article',
         publishedTime: post.generated_at,
-        authors: ['The Green Leaf'],
+        authors: ['The Strain Report'],
         tags: post.tags,
       },
       twitter: {
@@ -154,7 +154,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     }
   } catch {
     return {
-      title: 'Article Not Found - The Green Leaf',
+      title: 'Article Not Found - The Strain Report',
     }
   }
 }
@@ -196,7 +196,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     dateModified: post.last_updated || post.generated_at,
     author: {
       '@type': 'Organization',
-      name: 'The Green Leaf',
+      name: 'The Strain Report',
       url: baseUrl,
       logo: {
         '@type': 'ImageObject',
@@ -205,7 +205,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     },
     publisher: {
       '@type': 'Organization',
-      name: 'The Green Leaf',
+      name: 'The Strain Report',
       url: baseUrl,
       logo: {
         '@type': 'ImageObject',
@@ -228,7 +228,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       '@type': 'WebSite',
       '@id': `${baseUrl}/#website`,
       url: baseUrl,
-      name: 'The Green Leaf',
+      name: 'The Strain Report',
     },
     wordCount: post.word_count,
     timeRequired: post.estimated_read_time,

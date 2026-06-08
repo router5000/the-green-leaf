@@ -4,20 +4,20 @@ import type { Metadata } from 'next'
 const baseUrl = 'https://thegreenleaf.com'
 
 export const metadata: Metadata = {
-  title: 'About The Green Leaf - Our Mission & Expert Sources',
-  description: 'Learn about The Green Leaf, our content methodology, expert sources, and commitment to providing accurate, balanced cannabis education.',
+  title: 'About The Strain Report - Our Mission & Expert Sources',
+  description: 'Learn about The Strain Report, our content methodology, expert sources, and commitment to providing accurate, balanced cannabis education.',
   openGraph: {
-    title: 'About The Green Leaf - Our Mission & Expert Sources',
-    description: 'Learn about The Green Leaf, our content methodology, expert sources, and commitment to providing accurate, balanced cannabis education.',
+    title: 'About The Strain Report - Our Mission & Expert Sources',
+    description: 'Learn about The Strain Report, our content methodology, expert sources, and commitment to providing accurate, balanced cannabis education.',
     url: `${baseUrl}/about`,
-    siteName: 'The Green Leaf',
+    siteName: 'The Strain Report',
     type: 'website',
     locale: 'en_US',
   },
   twitter: {
     card: 'summary',
-    title: 'About Us - The Green Leaf',
-    description: 'Learn about The Green Leaf and our expert cannabis education content.',
+    title: 'About Us - The Strain Report',
+    description: 'Learn about The Strain Report and our expert cannabis education content.',
   },
   alternates: {
     canonical: `${baseUrl}/about`,
@@ -29,7 +29,7 @@ export default function AboutPage() {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     '@id': `${baseUrl}/#organization`,
-    name: 'The Green Leaf',
+    name: 'The Strain Report',
     url: baseUrl,
     logo: {
       '@type': 'ImageObject',
@@ -59,7 +59,7 @@ export default function AboutPage() {
     '@type': 'WebSite',
     '@id': `${baseUrl}/#website`,
     url: baseUrl,
-    name: 'The Green Leaf',
+    name: 'The Strain Report',
     publisher: { '@id': `${baseUrl}/#organization` },
     potentialAction: {
       '@type': 'SearchAction',
@@ -90,12 +90,12 @@ export default function AboutPage() {
           </nav>
 
           <h1 className="text-3xl md:text-4xl font-bold text-leaf-900 mb-6">
-            About The Green Leaf
+            About The Strain Report
           </h1>
 
           <div className="prose prose-lg max-w-none prose-headings:text-leaf-900">
             <p className="text-xl text-gray-600 mb-8">
-              The Green Leaf provides accurate, balanced cannabis education for consumers and cultivators.
+              The Strain Report provides accurate, balanced cannabis education for consumers and cultivators.
               Our goal is to help you make informed decisions with clear, research-backed guides
               regardless of your experience level.
             </p>
@@ -109,7 +109,7 @@ export default function AboutPage() {
 
             <h2>Content Methodology</h2>
             <p>
-              Every article on The Green Leaf follows a rigorous process to ensure accuracy
+              Every article on The Strain Report follows a rigorous process to ensure accuracy
               and usefulness:
             </p>
             <ol>
@@ -149,7 +149,7 @@ export default function AboutPage() {
 
             <h2>AI-Assisted Content</h2>
             <p>
-              The Green Leaf uses AI technology to assist in content creation. Our articles are
+              The Strain Report uses AI technology to assist in content creation. Our articles are
               generated with the help of large language models and then verified against expert
               sources. This approach allows us to produce comprehensive guides at scale while
               maintaining accuracy through our citation and quality assurance process.
@@ -162,7 +162,7 @@ export default function AboutPage() {
 
             <h2>Legal Disclaimer</h2>
             <p>
-              Cannabis laws vary by state and jurisdiction. Content on The Green Leaf is for
+              Cannabis laws vary by state and jurisdiction. Content on The Strain Report is for
               educational purposes only and should not be considered legal or medical advice.
               Always check your local laws before purchasing, possessing, or cultivating cannabis.
               See our full <Link href="/disclaimer" className="text-leaf-600 hover:text-leaf-800">legal disclaimer</Link> for details.

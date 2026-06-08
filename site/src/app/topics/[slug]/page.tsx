@@ -15,11 +15,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const cluster = topicClusters.find(c => c.id === slug)
   if (!cluster) return {}
   return {
-    title: `${cluster.title} - Cannabis Guides | The Green Leaf`,
+    title: `${cluster.title} - Cannabis Guides | The Strain Report`,
     description: cluster.description,
     alternates: { canonical: `${baseUrl}/topics/${slug}` },
     openGraph: {
-      title: `${cluster.title} - The Green Leaf`,
+      title: `${cluster.title} - The Strain Report`,
       description: cluster.description,
       url: `${baseUrl}/topics/${slug}`,
     },

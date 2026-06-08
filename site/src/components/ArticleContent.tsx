@@ -239,7 +239,7 @@ export function AnimatedHeader({
       <meta itemProp="datePublished" content={generatedAt} />
       <meta itemProp="dateModified" content={generatedAt} />
       <meta itemProp="inLanguage" content="en-US" />
-      <meta itemProp="author" content="The Green Leaf" />
+      <meta itemProp="author" content="The Strain Report" />
     </motion.header>
   )
 }

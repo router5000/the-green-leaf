@@ -10,6 +10,7 @@ const navItems = [
   { href: '/', label: 'Home' },
   { href: '/topics', label: 'Topics' },
   { href: '/articles', label: 'Articles' },
+  { href: '/strains', label: 'Strains' },
   { href: '/videos', label: 'Videos' },
 ]
 
@@ -189,7 +190,7 @@ export default function MobileNav() {
                 transition={{ delay: 0.3 }}
               >
                 <p className="text-xs text-gray-400 text-center">
-                  The Green Leaf
+                  The Strain Report
                 </p>
               </motion.div>
             </motion.nav>

@@ -4,26 +4,26 @@ import type { Metadata } from 'next'
 const baseUrl = 'https://thegreenleaf.com'
 
 export const metadata: Metadata = {
-  title: 'Terms of Service - Usage Guidelines | The Green Leaf',
-  description: 'Terms of service for using The Green Leaf website. Please read these terms carefully before using our site.',
+  title: 'Terms of Service - Usage Guidelines | The Strain Report',
+  description: 'Terms of service for using The Strain Report website. Please read these terms carefully before using our site.',
   openGraph: {
-    title: 'Terms of Service - Usage Guidelines | The Green Leaf',
-    description: 'Terms of service for using The Green Leaf website. Please read these terms carefully.',
+    title: 'Terms of Service - Usage Guidelines | The Strain Report',
+    description: 'Terms of service for using The Strain Report website. Please read these terms carefully.',
     url: `${baseUrl}/terms-of-service`,
-    siteName: 'The Green Leaf',
+    siteName: 'The Strain Report',
     type: 'website',
     locale: 'en_US',
     images: [{
       url: `${baseUrl}/images/og-default.jpg`,
       width: 1200,
       height: 630,
-      alt: 'The Green Leaf - Terms of Service',
+      alt: 'The Strain Report - Terms of Service',
     }],
   },
   twitter: {
     card: 'summary',
-    title: 'Terms of Service - Usage Guidelines | The Green Leaf',
-    description: 'Terms of service for using The Green Leaf website.',
+    title: 'Terms of Service - Usage Guidelines | The Strain Report',
+    description: 'Terms of service for using The Strain Report website.',
   },
   alternates: {
     canonical: `${baseUrl}/terms-of-service`,
@@ -43,7 +43,7 @@ export default function TermsOfServicePage() {
         <section className="mb-8">
           <h2 className="text-2xl font-bold text-leaf-800 mb-4">Agreement to Terms</h2>
           <p className="text-gray-700 leading-relaxed">
-            By accessing or using The Green Leaf ("the Website"), you agree to be bound by these Terms of Service ("Terms"). If you disagree with any part of these Terms, you may not access the Website.
+            By accessing or using The Strain Report ("the Website"), you agree to be bound by these Terms of Service ("Terms"). If you disagree with any part of these Terms, you may not access the Website.
           </p>
         </section>
 
@@ -76,7 +76,7 @@ export default function TermsOfServicePage() {
 
           <h3 className="text-xl font-semibold text-leaf-700 mb-3">Our Content</h3>
           <p className="text-gray-700 leading-relaxed mb-4">
-            Unless otherwise indicated, the Website and all content, including but not limited to text, graphics, logos, images, articles, and software, are the property of The Green Leaf and are protected by copyright, trademark, and other intellectual property laws.
+            Unless otherwise indicated, the Website and all content, including but not limited to text, graphics, logos, images, articles, and software, are the property of The Strain Report and are protected by copyright, trademark, and other intellectual property laws.
           </p>
 
           <h3 className="text-xl font-semibold text-leaf-700 mb-3">Limited License</h3>
@@ -168,7 +168,7 @@ export default function TermsOfServicePage() {
         <section className="mb-8">
           <h2 className="text-2xl font-bold text-leaf-800 mb-4">Indemnification</h2>
           <p className="text-gray-700 leading-relaxed">
-            You agree to defend, indemnify, and hold harmless The Green Leaf and its officers, directors, employees, and agents from and against any claims, liabilities, damages, losses, and expenses, including reasonable attorneys' fees, arising out of or in any way connected with your access to or use of the Website or your violation of these Terms.
+            You agree to defend, indemnify, and hold harmless The Strain Report and its officers, directors, employees, and agents from and against any claims, liabilities, damages, losses, and expenses, including reasonable attorneys' fees, arising out of or in any way connected with your access to or use of the Website or your violation of these Terms.
           </p>
         </section>
 

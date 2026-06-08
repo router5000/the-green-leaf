@@ -7,7 +7,7 @@ export default function LogoLink({ className, dark = false }: { className: strin
     <Link href="/" className={className}>
       <img
         src="/images/logo/cannabis-logo.svg"
-        alt="The Green Leaf logo"
+        alt="The Strain Report logo"
         width={48}
         height={48}
         style={{ width: '48px', height: '48px' }}

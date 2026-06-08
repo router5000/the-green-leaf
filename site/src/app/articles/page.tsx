@@ -13,17 +13,17 @@ export const metadata: Metadata = {
   title: 'Cannabis Articles & Guides - Strain Reviews, Effects & Education',
   description: 'In-depth strain reviews, effect guides, and cannabis education. Find the right strain for you.',
   openGraph: {
-    title: 'Cannabis Articles & Guides - The Green Leaf',
+    title: 'Cannabis Articles & Guides - The Strain Report',
     description: 'In-depth strain reviews, effect guides, and cannabis education. Find the right strain for you.',
     url: `${baseUrl}/articles`,
-    siteName: 'The Green Leaf',
+    siteName: 'The Strain Report',
     type: 'website',
     locale: 'en_US',
     images: [{
       url: `${baseUrl}/images/og-articles.jpg`,
       width: 1200,
       height: 630,
-      alt: 'The Green Leaf - Expert Cannabis Articles',
+      alt: 'The Strain Report - Expert Cannabis Articles',
     }],
   },
   twitter: {

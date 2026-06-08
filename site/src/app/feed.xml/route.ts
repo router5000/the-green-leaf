@@ -29,7 +29,7 @@ export async function GET() {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>The Green Leaf</title>
+    <title>The Strain Report</title>
     <link>${SITE_URL}</link>
     <description>Expert cannabis tips, guides, and seasonal advice for the perfect cannabis.</description>
     <language>en-us</language>

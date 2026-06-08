@@ -13,7 +13,7 @@ export async function generateMetadata({ searchParams }: SearchPageProps): Promi
   const query = params.q || ''
 
   return {
-    title: query ? `Search: ${query} - The Green Leaf` : 'Search - The Green Leaf',
+    title: query ? `Search: ${query} - The Strain Report` : 'Search - The Strain Report',
     description: query
       ? `Search results for "${query}" - Find cannabis articles and videos`
       : 'Search cannabis articles and videos',

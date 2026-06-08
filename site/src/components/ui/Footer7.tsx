@@ -99,7 +99,7 @@ export default function Footer7() {
         {/* Bottom bar */}
         <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-8 items-end">
           <div className="flex flex-col gap-2 text-neutral-500 text-xs sm:text-sm">
-            <p>© 2026 • The Green Leaf • Cannabis education for everyone.</p>
+            <p>© 2026 • The Strain Report • Cannabis education for everyone.</p>
             <div className="flex items-center gap-3">
               <Link href="/privacy" className="hover:text-neutral-900 transition-colors no-underline">Privacy Policy</Link>
               <span className="text-neutral-400">•</span>

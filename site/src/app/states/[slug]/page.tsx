@@ -85,11 +85,11 @@ export async function generateMetadata({
       ? 'Medical cannabis program available'
       : 'Cannabis remains illegal'
   return {
-    title: `${state.name} Cannabis Laws 2025 — Possession Limits & Regulations | The Green Leaf`,
+    title: `${state.name} Cannabis Laws 2025 — Possession Limits & Regulations | The Strain Report`,
     description: `${statusPhrase} in ${state.name}. Possession limit: ${state.possessionLimit}. ${state.consumptionNote}`,
     alternates: { canonical: `${baseUrl}/states/${slug}` },
     openGraph: {
-      title: `${state.name} Cannabis Laws 2025 | The Green Leaf`,
+      title: `${state.name} Cannabis Laws 2025 | The Strain Report`,
       description: `Possession limits, home-grow rules, and dispensary info for ${state.name}.`,
       url: `${baseUrl}/states/${slug}`,
     },
