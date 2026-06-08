@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase'
+import { getSupabase } from '@/lib/supabase'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import type { Metadata } from 'next'
@@ -72,15 +72,21 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
   const { slug } = await params
-  const { data } = await supabase
-    .from('strains')
-    .select('name, strain_seo(meta_title, meta_description)')
-    .eq('slug', slug)
-    .single()
+  let data: { name: string; strain_seo: StrainSeo[] } | null = null
+  try {
+    const result = await getSupabase()
+      .from('strains')
+      .select('name, strain_seo(meta_title, meta_description)')
+      .eq('slug', slug)
+      .single()
+    data = result.data as unknown as { name: string; strain_seo: StrainSeo[] }
+  } catch {
+    // env vars unavailable during static build
+  }
 
   if (!data) return {}
 
-  const seo = (data.strain_seo as unknown as StrainSeo[])?.[0]
+  const seo = data.strain_seo?.[0]
   const title = seo?.meta_title ?? `${data.name} Strain | The Strain Report`
   const description = seo?.meta_description ?? undefined
 
@@ -108,18 +114,24 @@ export default async function StrainDetailPage({
 }) {
   const { slug } = await params
 
-  const { data: strain } = await supabase
-    .from('strains')
-    .select(`
-      *,
-      strain_seo(*),
-      effects(*),
-      terpenes(*),
-      genetics(*)
-    `)
-    .eq('slug', slug)
-    .eq('published', true)
-    .single()
+  let strain: unknown = null
+  try {
+    const result = await getSupabase()
+      .from('strains')
+      .select(`
+        *,
+        strain_seo(*),
+        effects(*),
+        terpenes(*),
+        genetics(*)
+      `)
+      .eq('slug', slug)
+      .eq('published', true)
+      .single()
+    strain = result.data
+  } catch {
+    // env vars unavailable during static build
+  }
 
   if (!strain) notFound()
 

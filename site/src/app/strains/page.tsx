@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase'
+import { getSupabase } from '@/lib/supabase'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 
@@ -41,11 +41,17 @@ const TYPE_BADGE: Record<string, string> = {
 }
 
 export default async function StrainsPage() {
-  const { data: strains } = await supabase
-    .from('strains')
-    .select('id, name, slug, strain_type, thc_min, thc_max, short_description, flavors')
-    .eq('published', true)
-    .order('name')
+  let strains: Strain[] = []
+  try {
+    const { data } = await getSupabase()
+      .from('strains')
+      .select('id, name, slug, strain_type, thc_min, thc_max, short_description, flavors')
+      .eq('published', true)
+      .order('name')
+    strains = data ?? []
+  } catch {
+    // env vars unavailable during static build — render empty list
+  }
 
   return (
     <div className="min-h-screen bg-[#f0f0f0]">
@@ -57,7 +63,7 @@ export default async function StrainsPage() {
       </div>
 
       <div className="px-4 sm:px-6 md:px-[160px] pb-16">
-        {!strains || strains.length === 0 ? (
+        {strains.length === 0 ? (
           <p className="text-gray-400 text-center py-16">No strains found.</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
