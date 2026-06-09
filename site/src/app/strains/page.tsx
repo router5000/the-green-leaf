@@ -1,11 +1,13 @@
 import { getSupabase } from '@/lib/supabase'
 import Link from 'next/link'
 import BlinkingSquares from '@/components/ui/BlinkingSquares'
+import StrainFilters from '@/components/StrainFilters'
 import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
 
 const baseUrl = 'https://strainreport.com'
+const PAGE_SIZE = 24
 
 export const metadata: Metadata = {
   title: 'Strain Database - Cannabis Strains | The Strain Report',
@@ -37,23 +39,101 @@ type Strain = {
   flavors: string[] | null
 }
 
+type SearchParams = {
+  q?: string
+  type?: string
+  difficulty?: string
+  thc_min?: string
+  thc_max?: string
+  sort?: string
+  page?: string
+}
+
 const TYPE_BADGE: Record<string, string> = {
   indica: 'bg-purple-100 text-purple-700',
   sativa: 'bg-green-100 text-green-700',
   hybrid: 'bg-orange-100 text-orange-600',
 }
 
-export default async function StrainsPage() {
+const SORT_CONFIG: Record<string, { column: string; ascending: boolean }> = {
+  name_asc:  { column: 'name',       ascending: true  },
+  name_desc: { column: 'name',       ascending: false },
+  thc_desc:  { column: 'thc_max',    ascending: false },
+  thc_asc:   { column: 'thc_max',    ascending: true  },
+  newest:    { column: 'created_at', ascending: false },
+}
+
+export default async function StrainsPage({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>
+}) {
+  const sp = await searchParams
+  const page    = Math.max(1, parseInt(sp.page ?? '1', 10) || 1)
+  const sortKey = sp.sort && SORT_CONFIG[sp.sort] ? sp.sort : 'name_asc'
+  const sortCfg = SORT_CONFIG[sortKey]
+
+  const from = (page - 1) * PAGE_SIZE
+  const to   = from + PAGE_SIZE - 1
+
   let strains: Strain[] = []
+  let totalCount = 0
+  let totalAllCount = 0
+
   try {
-    const { data } = await getSupabase()
+    const sb = getSupabase()
+
+    const { count: allCount } = await sb
       .from('strains')
-      .select('id, name, slug, strain_type, thc_min, thc_max, short_description, flavors')
+      .select('*', { count: 'exact', head: true })
       .eq('published', true)
-      .order('name')
-    strains = data ?? []
+    totalAllCount = allCount ?? 0
+
+    let q = sb
+      .from('strains')
+      .select(
+        'id, name, slug, strain_type, thc_min, thc_max, short_description, flavors',
+        { count: 'exact' },
+      )
+      .eq('published', true)
+
+    if (sp.q)          q = q.ilike('name', `%${sp.q}%`)
+    if (sp.type)       q = q.eq('strain_type', sp.type)
+    if (sp.difficulty) q = q.eq('difficulty', sp.difficulty)
+    if (sp.thc_min)    q = q.gte('thc_min', Number(sp.thc_min))
+    if (sp.thc_max)    q = q.lte('thc_max', Number(sp.thc_max))
+
+    const { data, count } = await q
+      .order(sortCfg.column, { ascending: sortCfg.ascending, nullsFirst: false })
+      .range(from, to)
+
+    strains    = (data as unknown as Strain[]) ?? []
+    totalCount = count ?? 0
   } catch {
-    // env vars unavailable during static build — render empty list
+    // env unavailable during build
+  }
+
+  const totalPages  = Math.max(1, Math.ceil(totalCount / PAGE_SIZE))
+  const hasFilters  = !!(sp.q || sp.type || sp.difficulty || sp.thc_min || sp.thc_max
+                        || (sp.sort && sp.sort !== 'name_asc'))
+  const showingFrom = totalCount === 0 ? 0 : from + 1
+  const showingTo   = Math.min(from + PAGE_SIZE, totalCount)
+
+  const subtitle = hasFilters
+    ? `Showing ${showingFrom}–${showingTo} of ${totalCount} ${sp.type ?? ''} strains`.replace(/\s+/g, ' ').trim()
+    : 'Detailed profiles on effects, terpenes, genetics, and growing info for 200+ strains.'
+
+  function pageHref(p: number) {
+    const params = new URLSearchParams()
+    if (sp.q)          params.set('q', sp.q)
+    if (sp.type)       params.set('type', sp.type)
+    if (sp.difficulty) params.set('difficulty', sp.difficulty)
+    if (sp.thc_min)    params.set('thc_min', sp.thc_min)
+    if (sp.thc_max)    params.set('thc_max', sp.thc_max)
+    if (sp.sort)       params.set('sort', sp.sort)
+    if (p > 1)         params.set('page', String(p))
+    const qs = params.toString()
+    return qs ? `/strains?${qs}` : '/strains'
   }
 
   return (
@@ -89,14 +169,14 @@ export default async function StrainsPage() {
             Cannabis Strain Database
           </h1>
           <p className="text-xl max-w-2xl mb-4" style={{ color: '#2d4a1e' }}>
-            Detailed profiles on effects, terpenes, genetics, and growing info for 200+ strains.
+            {subtitle}
           </p>
           <span
             className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/70 backdrop-blur-sm text-sm font-medium border border-amber-300/40"
             style={{ color: '#2d4a1e' }}
           >
             <span className="w-2 h-2 rounded-full bg-amber-500" />
-            {strains.length} {strains.length === 1 ? 'strain' : 'strains'} in the database
+            {totalAllCount} {totalAllCount === 1 ? 'strain' : 'strains'} in the database
           </span>
         </div>
       </div>
@@ -106,16 +186,54 @@ export default async function StrainsPage() {
         <line x1="0" y1="0.5" x2="100%" y2="0.5" stroke="#d4d4d4" strokeWidth="1" strokeDasharray="16,16" />
       </svg>
 
-      {/* ── Grid ──────────────────────────────────────────── */}
+      {/* ── Filters + Grid ──────────────────────────────────── */}
       <div className="px-4 sm:px-6 md:px-[160px] py-12">
+        <StrainFilters />
+
         {strains.length === 0 ? (
-          <p className="text-gray-400 text-center py-16">No strains found.</p>
+          <p className="text-gray-500 text-center py-16">
+            No strains match your filters.{' '}
+            <Link href="/strains" className="text-leaf-600 hover:text-leaf-700 underline">
+              Clear filters
+            </Link>
+          </p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {strains.map((strain) => (
-              <StrainCard key={strain.id} strain={strain} />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {strains.map((strain) => (
+                <StrainCard key={strain.id} strain={strain} />
+              ))}
+            </div>
+
+            {totalPages > 1 && (
+              <div className="flex items-center justify-between mt-12 pt-6 border-t border-gray-200 flex-wrap gap-4">
+                <p className="text-sm text-gray-500">
+                  Showing {showingFrom}–{showingTo} of {totalCount} strains
+                </p>
+                <div className="flex gap-2 items-center">
+                  {page > 1 && (
+                    <Link
+                      href={pageHref(page - 1)}
+                      className="px-4 py-2 rounded-full text-sm font-medium bg-white border border-gray-200 text-gray-700 hover:bg-leaf-50 hover:border-leaf-300 transition-colors no-underline"
+                    >
+                      ← Previous
+                    </Link>
+                  )}
+                  <span className="px-4 py-2 text-sm font-medium text-gray-500">
+                    Page {page} of {totalPages}
+                  </span>
+                  {page < totalPages && (
+                    <Link
+                      href={pageHref(page + 1)}
+                      className="px-4 py-2 rounded-full text-sm font-medium bg-leaf-600 text-white hover:bg-leaf-700 transition-colors no-underline"
+                    >
+                      Next →
+                    </Link>
+                  )}
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
