@@ -144,17 +144,110 @@ export default async function StrainDetailPage({
   }, {})
   const maxTerpene = Math.max(...(s.terpenes ?? []).map((t) => t.percentage ?? 0), 0.01)
 
+  // ── JSON-LD schemas ─────────────────────────────────────────────────────
+  const positiveEffects = (effectsByType.positive ?? []).slice(0, 5).map((e) => e.effect_name)
+  const medicalEffects  = (effectsByType.medical  ?? []).slice(0, 5).map((e) => e.effect_name)
+  const topTerpenes     = [...(s.terpenes ?? [])].sort((a, b) => (b.percentage ?? 0) - (a.percentage ?? 0)).slice(0, 5)
+
+  const productProps: { name: string; value: string }[] = []
+  if (s.thc_min != null && s.thc_max != null) productProps.push({ name: 'THC', value: `${s.thc_min}-${s.thc_max}%` })
+  if (s.cbd_min != null && s.cbd_max != null) productProps.push({ name: 'CBD', value: `${s.cbd_min}-${s.cbd_max}%` })
+  if (s.flowering_time_days)                  productProps.push({ name: 'Flowering Time', value: `${s.flowering_time_days} days` })
+  if (s.difficulty)                           productProps.push({ name: 'Difficulty', value: s.difficulty })
+  if (s.origin_country)                       productProps.push({ name: 'Origin', value: s.origin_country })
+
+  const productSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: s.name,
+    description: s.short_description ?? s.description ?? `${s.name} cannabis strain profile`,
+    category: `Cannabis Strain — ${s.strain_type}`,
+    brand: { '@type': 'Brand', name: 'The Strain Report' },
+    url: `${baseUrl}/strains/${s.slug}`,
+    additionalProperty: productProps.map((p) => ({ '@type': 'PropertyValue', ...p })),
+  }
+
+  // FAQ Q&As (skip any with no source data)
+  const faqEntries: { name: string; text: string }[] = []
+  if (positiveEffects.length)
+    faqEntries.push({
+      name: `What are the effects of ${s.name}?`,
+      text: `${s.name} is known for effects including ${positiveEffects.join(', ')}.`,
+    })
+  if (topTerpenes.length)
+    faqEntries.push({
+      name: `What terpenes does ${s.name} have?`,
+      text: `The dominant terpenes in ${s.name} are ${topTerpenes
+        .map((t) => `${t.terpene_name}${t.percentage != null ? ` (${t.percentage.toFixed(2)}%)` : ''}`)
+        .join(', ')}.`,
+    })
+  if (s.thc_min != null && s.thc_max != null) {
+    const cbdPart = (s.cbd_min != null && s.cbd_max != null)
+      ? ` CBD typically falls between ${s.cbd_min}% and ${s.cbd_max}%.`
+      : ''
+    faqEntries.push({
+      name: `How strong is ${s.name}?`,
+      text: `${s.name} has THC levels ranging from ${s.thc_min}% to ${s.thc_max}%.${cbdPart}`,
+    })
+  }
+  faqEntries.push({
+    name: `Is ${s.name} indica, sativa, or hybrid?`,
+    text: `${s.name} is a ${s.strain_type} strain${
+      s.strain_type === 'indica'
+        ? ', typically producing relaxing, body-focused effects.'
+        : s.strain_type === 'sativa'
+          ? ', typically producing energizing, cerebral effects.'
+          : ', combining both indica and sativa effects for a balanced profile.'
+    }`,
+  })
+  if (medicalEffects.length)
+    faqEntries.push({
+      name: `What is ${s.name} good for?`,
+      text: `${s.name} is commonly used for ${medicalEffects.join(', ')}.`,
+    })
+
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqEntries.map((f) => ({
+      '@type': 'Question',
+      name: f.name,
+      acceptedAnswer: { '@type': 'Answer', text: f.text },
+    })),
+  }
+
+  const typeLabel = s.strain_type.charAt(0).toUpperCase() + s.strain_type.slice(1)
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home',                  item: baseUrl },
+      { '@type': 'ListItem', position: 2, name: 'Strains',               item: `${baseUrl}/strains` },
+      { '@type': 'ListItem', position: 3, name: `${typeLabel} Strains`,  item: `${baseUrl}/strains/${s.strain_type}` },
+      { '@type': 'ListItem', position: 4, name: s.name },
+    ],
+  }
+
   return (
     <div className="min-h-screen bg-[#f0f0f0]">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+
       <div className="px-4 sm:px-6 md:px-[160px] pt-10 pb-16">
 
-        {/* Back link */}
-        <Link
-          href="/strains"
-          className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-[#2D5016] no-underline mb-8 transition-colors"
-        >
-          ← Strain Database
-        </Link>
+        {/* Breadcrumb */}
+        <nav className="text-sm text-gray-500 mb-6" aria-label="Breadcrumb">
+          <ol className="flex flex-wrap items-center gap-1.5">
+            <li><Link href="/" className="hover:text-leaf-700 no-underline">Home</Link></li>
+            <li aria-hidden="true">/</li>
+            <li><Link href="/strains" className="hover:text-leaf-700 no-underline">Strains</Link></li>
+            <li aria-hidden="true">/</li>
+            <li><Link href={`/strains/${s.strain_type}`} className="hover:text-leaf-700 no-underline capitalize">{typeLabel} Strains</Link></li>
+            <li aria-hidden="true">/</li>
+            <li><span className="text-gray-700 font-medium">{s.name}</span></li>
+          </ol>
+        </nav>
 
         {/* Hero */}
         <div className="flex flex-wrap items-start gap-3 mb-2">

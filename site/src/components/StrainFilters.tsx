@@ -6,7 +6,11 @@ import Link from 'next/link'
 
 const TYPE_OPTIONS = ['all', 'indica', 'sativa', 'hybrid'] as const
 
-export default function StrainFilters() {
+type Props = {
+  lockedType?: 'indica' | 'sativa' | 'hybrid'
+}
+
+export default function StrainFilters({ lockedType }: Props) {
   const router = useRouter()
   const pathname = usePathname()
   const params = useSearchParams()
@@ -14,12 +18,10 @@ export default function StrainFilters() {
 
   const [search, setSearch] = useState(params.get('q') ?? '')
 
-  // Keep input in sync if URL changes externally (e.g. Clear filters link)
   useEffect(() => {
     setSearch(params.get('q') ?? '')
   }, [params])
 
-  // Debounce search → URL
   useEffect(() => {
     const current = params.get('q') ?? ''
     if (search === current) return
@@ -41,8 +43,8 @@ export default function StrainFilters() {
     })
   }
 
-  const activeType = params.get('type') ?? 'all'
-  const hasFilters = !!(params.get('q') || params.get('type'))
+  const activeType = lockedType ?? (params.get('type') ?? 'all')
+  const hasFilters = !!(params.get('q') || (!lockedType && params.get('type')))
 
   return (
     <div className="flex flex-col gap-4 mb-8">
@@ -56,34 +58,48 @@ export default function StrainFilters() {
         className="w-full px-4 py-3 rounded-full border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-leaf-500 focus:border-transparent"
       />
 
-      {/* Type pills + Clear */}
-      <div className="flex items-center gap-3 flex-wrap">
-        <div className="flex flex-wrap gap-2">
-          {TYPE_OPTIONS.map((t) => (
-            <button
-              key={t}
-              type="button"
-              onClick={() => pushParam('type', t === 'all' ? null : t)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors capitalize ${
-                activeType === t
-                  ? 'bg-leaf-600 text-white'
-                  : 'bg-leaf-100 text-leaf-700 hover:bg-leaf-200'
-              }`}
-            >
-              {t === 'all' ? 'All types' : t}
-            </button>
-          ))}
-        </div>
+      {/* Type pills — hidden on type landing pages */}
+      {!lockedType && (
+        <div className="flex items-center gap-3 flex-wrap">
+          <div className="flex flex-wrap gap-2">
+            {TYPE_OPTIONS.map((t) => (
+              <button
+                key={t}
+                type="button"
+                onClick={() => pushParam('type', t === 'all' ? null : t)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors capitalize ${
+                  activeType === t
+                    ? 'bg-leaf-600 text-white'
+                    : 'bg-leaf-100 text-leaf-700 hover:bg-leaf-200'
+                }`}
+              >
+                {t === 'all' ? 'All types' : t}
+              </button>
+            ))}
+          </div>
 
-        {hasFilters && (
+          {hasFilters && (
+            <Link
+              href={pathname}
+              className="text-sm font-medium text-gray-500 hover:text-leaf-700 transition-colors"
+            >
+              Clear filters
+            </Link>
+          )}
+        </div>
+      )}
+
+      {/* On locked pages, only show clear if search is set */}
+      {lockedType && hasFilters && (
+        <div>
           <Link
             href={pathname}
             className="text-sm font-medium text-gray-500 hover:text-leaf-700 transition-colors"
           >
-            Clear filters
+            Clear search
           </Link>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   )
 }
