@@ -5,13 +5,6 @@ import { useEffect, useState, useTransition } from 'react'
 import Link from 'next/link'
 
 const TYPE_OPTIONS = ['all', 'indica', 'sativa', 'hybrid'] as const
-const DIFFICULTY_OPTIONS = ['all', 'easy', 'moderate', 'difficult'] as const
-const SORT_OPTIONS = [
-  { value: 'name_asc',  label: 'A–Z' },
-  { value: 'name_desc', label: 'Z–A' },
-  { value: 'thc_desc',  label: 'THC: High–Low' },
-  { value: 'thc_asc',   label: 'THC: Low–High' },
-] as const
 
 export default function StrainFilters() {
   const router = useRouter()
@@ -48,12 +41,8 @@ export default function StrainFilters() {
     })
   }
 
-  const activeType       = params.get('type')       ?? 'all'
-  const activeDifficulty = params.get('difficulty') ?? 'all'
-  const activeSort       = params.get('sort')       ?? 'name_asc'
-  const hasFilters       = !!(params.get('q') || params.get('type') || params.get('difficulty')
-                            || params.get('thc_min') || params.get('thc_max')
-                            || (params.get('sort') && params.get('sort') !== 'name_asc'))
+  const activeType = params.get('type') ?? 'all'
+  const hasFilters = !!(params.get('q') || params.get('type'))
 
   return (
     <div className="flex flex-col gap-4 mb-8">
@@ -67,54 +56,24 @@ export default function StrainFilters() {
         className="w-full px-4 py-3 rounded-full border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-leaf-500 focus:border-transparent"
       />
 
-      {/* Type pills */}
-      <div className="flex flex-wrap gap-2">
-        {TYPE_OPTIONS.map((t) => (
-          <button
-            key={t}
-            type="button"
-            onClick={() => pushParam('type', t === 'all' ? null : t)}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors capitalize ${
-              activeType === t
-                ? 'bg-leaf-600 text-white'
-                : 'bg-leaf-100 text-leaf-700 hover:bg-leaf-200'
-            }`}
-          >
-            {t === 'all' ? 'All types' : t}
-          </button>
-        ))}
-      </div>
-
-      {/* Difficulty pills */}
-      <div className="flex flex-wrap gap-2">
-        {DIFFICULTY_OPTIONS.map((d) => (
-          <button
-            key={d}
-            type="button"
-            onClick={() => pushParam('difficulty', d === 'all' ? null : d)}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors capitalize ${
-              activeDifficulty === d
-                ? 'bg-leaf-600 text-white'
-                : 'bg-leaf-100 text-leaf-700 hover:bg-leaf-200'
-            }`}
-          >
-            {d === 'all' ? 'All difficulty' : d}
-          </button>
-        ))}
-      </div>
-
-      {/* Sort + Clear */}
+      {/* Type pills + Clear */}
       <div className="flex items-center gap-3 flex-wrap">
-        <select
-          value={activeSort}
-          onChange={(e) => pushParam('sort', e.target.value === 'name_asc' ? null : e.target.value)}
-          aria-label="Sort strains"
-          className="px-4 py-2 rounded-full border border-gray-200 bg-white text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-leaf-500"
-        >
-          {SORT_OPTIONS.map((s) => (
-            <option key={s.value} value={s.value}>Sort: {s.label}</option>
+        <div className="flex flex-wrap gap-2">
+          {TYPE_OPTIONS.map((t) => (
+            <button
+              key={t}
+              type="button"
+              onClick={() => pushParam('type', t === 'all' ? null : t)}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors capitalize ${
+                activeType === t
+                  ? 'bg-leaf-600 text-white'
+                  : 'bg-leaf-100 text-leaf-700 hover:bg-leaf-200'
+              }`}
+            >
+              {t === 'all' ? 'All types' : t}
+            </button>
           ))}
-        </select>
+        </div>
 
         {hasFilters && (
           <Link

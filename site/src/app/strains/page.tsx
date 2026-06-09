@@ -42,10 +42,6 @@ type Strain = {
 type SearchParams = {
   q?: string
   type?: string
-  difficulty?: string
-  thc_min?: string
-  thc_max?: string
-  sort?: string
   page?: string
 }
 
@@ -55,23 +51,13 @@ const TYPE_BADGE: Record<string, string> = {
   hybrid: 'bg-orange-100 text-orange-600',
 }
 
-const SORT_CONFIG: Record<string, { column: string; ascending: boolean }> = {
-  name_asc:  { column: 'name',       ascending: true  },
-  name_desc: { column: 'name',       ascending: false },
-  thc_desc:  { column: 'thc_max',    ascending: false },
-  thc_asc:   { column: 'thc_max',    ascending: true  },
-  newest:    { column: 'created_at', ascending: false },
-}
-
 export default async function StrainsPage({
   searchParams,
 }: {
   searchParams: Promise<SearchParams>
 }) {
   const sp = await searchParams
-  const page    = Math.max(1, parseInt(sp.page ?? '1', 10) || 1)
-  const sortKey = sp.sort && SORT_CONFIG[sp.sort] ? sp.sort : 'name_asc'
-  const sortCfg = SORT_CONFIG[sortKey]
+  const page = Math.max(1, parseInt(sp.page ?? '1', 10) || 1)
 
   const from = (page - 1) * PAGE_SIZE
   const to   = from + PAGE_SIZE - 1
@@ -97,14 +83,11 @@ export default async function StrainsPage({
       )
       .eq('published', true)
 
-    if (sp.q)          q = q.ilike('name', `%${sp.q}%`)
-    if (sp.type)       q = q.eq('strain_type', sp.type)
-    if (sp.difficulty) q = q.eq('difficulty', sp.difficulty)
-    if (sp.thc_min)    q = q.gte('thc_min', Number(sp.thc_min))
-    if (sp.thc_max)    q = q.lte('thc_max', Number(sp.thc_max))
+    if (sp.q)    q = q.ilike('name', `%${sp.q}%`)
+    if (sp.type) q = q.eq('strain_type', sp.type)
 
     const { data, count } = await q
-      .order(sortCfg.column, { ascending: sortCfg.ascending, nullsFirst: false })
+      .order('name', { ascending: true })
       .range(from, to)
 
     strains    = (data as unknown as Strain[]) ?? []
@@ -114,8 +97,7 @@ export default async function StrainsPage({
   }
 
   const totalPages  = Math.max(1, Math.ceil(totalCount / PAGE_SIZE))
-  const hasFilters  = !!(sp.q || sp.type || sp.difficulty || sp.thc_min || sp.thc_max
-                        || (sp.sort && sp.sort !== 'name_asc'))
+  const hasFilters  = !!(sp.q || sp.type)
   const showingFrom = totalCount === 0 ? 0 : from + 1
   const showingTo   = Math.min(from + PAGE_SIZE, totalCount)
 
@@ -125,13 +107,9 @@ export default async function StrainsPage({
 
   function pageHref(p: number) {
     const params = new URLSearchParams()
-    if (sp.q)          params.set('q', sp.q)
-    if (sp.type)       params.set('type', sp.type)
-    if (sp.difficulty) params.set('difficulty', sp.difficulty)
-    if (sp.thc_min)    params.set('thc_min', sp.thc_min)
-    if (sp.thc_max)    params.set('thc_max', sp.thc_max)
-    if (sp.sort)       params.set('sort', sp.sort)
-    if (p > 1)         params.set('page', String(p))
+    if (sp.q)    params.set('q', sp.q)
+    if (sp.type) params.set('type', sp.type)
+    if (p > 1)   params.set('page', String(p))
     const qs = params.toString()
     return qs ? `/strains?${qs}` : '/strains'
   }
