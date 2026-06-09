@@ -1,5 +1,6 @@
 import { getSupabase } from '@/lib/supabase'
 import Link from 'next/link'
+import BlinkingSquares from '@/components/ui/BlinkingSquares'
 import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
@@ -56,15 +57,57 @@ export default async function StrainsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f0f0f0]">
-      <div className="px-4 sm:px-6 md:px-[160px] pt-12 pb-8 md:pt-16">
-        <h1 className="font-serif text-4xl md:text-5xl text-gray-900 mb-3">Strain Database</h1>
-        <p className="text-gray-500 text-lg">
-          {strains?.length ?? 0} strains with detailed profiles on effects, terpenes, genetics, and growing info.
-        </p>
+    <div className="bg-[#f0f0f0]">
+      {/* ── Separator — below nav bar ────────────────────────── */}
+      <svg width="100%" height="1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1="0.5" x2="100%" y2="0.5" stroke="#d4d4d4" strokeWidth="1" strokeDasharray="16,16" />
+      </svg>
+
+      {/* ── Hero ───────────────────────────────────────────── */}
+      <div className="relative py-16 overflow-hidden">
+        <BlinkingSquares
+          className="absolute inset-0"
+          width="100%"
+          height="100%"
+          direction="right"
+          gridSize={52}
+          squareColor="#F59E0B"
+          backgroundColor="#f0f0f0"
+          falloff={1.25}
+          fadeStart={0.33}
+          fadeEnd={1}
+          squareSize={0.57}
+          minBrightness={0.55}
+          twinkleSpeed={1.4}
+          twinkleStrength={0.94}
+          intensity={1}
+          opacity={0.4}
+          dpr={1.5}
+        />
+        <div className="relative z-10 max-w-6xl mx-auto px-4">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: '#1a3a0a' }}>
+            Cannabis Strain Database
+          </h1>
+          <p className="text-xl max-w-2xl mb-4" style={{ color: '#2d4a1e' }}>
+            Detailed profiles on effects, terpenes, genetics, and growing info for 200+ strains.
+          </p>
+          <span
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/70 backdrop-blur-sm text-sm font-medium border border-amber-300/40"
+            style={{ color: '#2d4a1e' }}
+          >
+            <span className="w-2 h-2 rounded-full bg-amber-500" />
+            {strains.length} {strains.length === 1 ? 'strain' : 'strains'} in the database
+          </span>
+        </div>
       </div>
 
-      <div className="px-4 sm:px-6 md:px-[160px] pb-16">
+      {/* ── Separator ─────────────────────────────────────── */}
+      <svg width="100%" height="1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1="0.5" x2="100%" y2="0.5" stroke="#d4d4d4" strokeWidth="1" strokeDasharray="16,16" />
+      </svg>
+
+      {/* ── Grid ──────────────────────────────────────────── */}
+      <div className="px-4 sm:px-6 md:px-[160px] py-12">
         {strains.length === 0 ? (
           <p className="text-gray-400 text-center py-16">No strains found.</p>
         ) : (
