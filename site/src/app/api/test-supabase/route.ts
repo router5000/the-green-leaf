@@ -25,6 +25,20 @@ export async function GET() {
     }, { status: 500 })
   }
 
+  // Raw fetch ping — bypasses the Supabase client to verify network/auth basics
+  let pingStatus: number | null = null
+  let pingOk: boolean | null = null
+  let pingError: string | null = null
+  try {
+    const pingRes = await fetch('https://nqgdqukpqutijotmfcjb.supabase.co/rest/v1/', {
+      headers: { 'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '' }
+    })
+    pingStatus = pingRes.status
+    pingOk = pingRes.ok
+  } catch (e) {
+    pingError = e instanceof Error ? e.message : String(e)
+  }
+
   try {
     const supabase = createClient(url, key)
 
@@ -47,6 +61,9 @@ export async function GET() {
       ok: !countError && !sampleError && !publishedError,
       stage: 'query',
       env: envCheck,
+      pingStatus,
+      pingOk,
+      pingError,
       count,
       countError: countError?.message ?? null,
       sample,
@@ -60,6 +77,9 @@ export async function GET() {
       ok: false,
       stage: 'exception',
       env: envCheck,
+      pingStatus,
+      pingOk,
+      pingError,
       error: err instanceof Error ? err.message : String(err),
     }, { status: 500 })
   }
