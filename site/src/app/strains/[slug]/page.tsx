@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 const baseUrl = 'https://strainreport.com'
 
 const TYPE_BADGE: Record<string, string> = {
