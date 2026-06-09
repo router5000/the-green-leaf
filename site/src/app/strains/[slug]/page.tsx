@@ -111,10 +111,13 @@ export async function generateMetadata({
 
 export default async function StrainDetailPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string }>
+  searchParams: Promise<{ compare?: string }>
 }) {
   const { slug } = await params
+  const sp = await searchParams
 
   let strain: unknown = null
   try {
@@ -272,6 +275,22 @@ export default async function StrainDetailPage({
           {s.origin_country && (
             <StatPill label="Origin" value={s.origin_country} />
           )}
+        </div>
+
+        {/* Compare with another strain */}
+        <div className="mb-6">
+          <Link
+            href={
+              sp.compare && sp.compare !== s.slug
+                ? `/strains/compare/${sp.compare}-vs-${s.slug}`
+                : `/strains?compare=${s.slug}`
+            }
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-leaf-600 text-white text-sm font-medium hover:bg-leaf-700 no-underline transition-colors"
+          >
+            {sp.compare && sp.compare !== s.slug
+              ? `Compare with ${sp.compare} →`
+              : 'Compare with another strain →'}
+          </Link>
         </div>
 
         {s.short_description && (

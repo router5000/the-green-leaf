@@ -5,11 +5,11 @@ import { useState } from 'react'
 
 type Props = {
   slugs: { slug: string; name: string }[]
-  currentSlugA: string
-  currentSlugB: string
+  currentSlugA?: string
+  currentSlugB?: string
 }
 
-export default function CompareAnotherStrain({ slugs, currentSlugA, currentSlugB }: Props) {
+export default function CompareAnotherStrain({ slugs, currentSlugA = '', currentSlugB = '' }: Props) {
   const router = useRouter()
   const [a, setA] = useState(currentSlugA)
   const [b, setB] = useState(currentSlugB)

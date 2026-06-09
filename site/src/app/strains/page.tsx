@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic'
 const baseUrl = 'https://strainreport.com'
 const PAGE_SIZE = 24
 
-type SearchParams = { q?: string; type?: string; page?: string }
+type SearchParams = { q?: string; type?: string; page?: string; compare?: string }
 
 export async function generateMetadata({
   searchParams,

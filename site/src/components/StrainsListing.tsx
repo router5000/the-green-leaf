@@ -33,7 +33,7 @@ type Props = {
   heroTitle?: string
   heroSubtitle?: string
   basePath?: string
-  searchParams: { q?: string; type?: string; page?: string }
+  searchParams: { q?: string; type?: string; page?: string; compare?: string }
 }
 
 export default async function StrainsListing({
@@ -45,12 +45,14 @@ export default async function StrainsListing({
 }: Props) {
   const page = Math.max(1, parseInt(searchParams.page ?? '1', 10) || 1)
   const activeType = lockedType ?? searchParams.type
+  const compareSlug = searchParams.compare
   const from = (page - 1) * PAGE_SIZE
   const to   = from + PAGE_SIZE - 1
 
   let strains: Strain[] = []
   let totalCount = 0
   let totalAllCount = 0
+  let compareName: string | null = null
 
   try {
     const sb = getSupabase()
@@ -75,6 +77,16 @@ export default async function StrainsListing({
 
     strains    = (data as unknown as Strain[]) ?? []
     totalCount = count ?? 0
+
+    // Look up display name for the banner
+    if (compareSlug) {
+      const { data: nameRow } = await sb
+        .from('strains')
+        .select('name')
+        .eq('slug', compareSlug)
+        .single()
+      compareName = (nameRow as { name: string } | null)?.name ?? null
+    }
   } catch {
     // env unavailable during build
   }
@@ -90,14 +102,35 @@ export default async function StrainsListing({
 
   function pageHref(p: number) {
     const params = new URLSearchParams()
-    if (searchParams.q)                  params.set('q', searchParams.q)
+    if (searchParams.q)                   params.set('q', searchParams.q)
     if (!lockedType && searchParams.type) params.set('type', searchParams.type)
+    if (compareSlug)                      params.set('compare', compareSlug)
     if (p > 1)                            params.set('page', String(p))
     const qs = params.toString()
     return qs ? `${basePath}?${qs}` : basePath
   }
 
+  // Tab suffix preserves ?compare across route switches
+  const tabSuffix = compareSlug ? `?compare=${encodeURIComponent(compareSlug)}` : ''
+
+  // Cancel-compare href: current path with all other params, just no `compare`
+  function cancelCompareHref() {
+    const params = new URLSearchParams()
+    if (searchParams.q)                   params.set('q', searchParams.q)
+    if (!lockedType && searchParams.type) params.set('type', searchParams.type)
+    if (page > 1)                         params.set('page', String(page))
+    const qs = params.toString()
+    return qs ? `${basePath}?${qs}` : basePath
+  }
+
   const heroColor = lockedType ? TYPE_HERO_COLOR[lockedType] : '#F59E0B'
+
+  const tabs = [
+    { label: 'All Strains', href: `/strains${tabSuffix}`,        match: undefined },
+    { label: 'Indica',      href: `/strains/indica${tabSuffix}`, match: 'indica'  },
+    { label: 'Sativa',      href: `/strains/sativa${tabSuffix}`, match: 'sativa'  },
+    { label: 'Hybrid',      href: `/strains/hybrid${tabSuffix}`, match: 'hybrid'  },
+  ] as const
 
   return (
     <div className="bg-[#f0f0f0]">
@@ -149,9 +182,45 @@ export default async function StrainsListing({
         <line x1="0" y1="0.5" x2="100%" y2="0.5" stroke="#d4d4d4" strokeWidth="1" strokeDasharray="16,16" />
       </svg>
 
-      {/* Filters + Grid */}
       <div className="px-4 sm:px-6 md:px-[160px] py-12">
-        <StrainFilters lockedType={lockedType} />
+        {/* Compare banner */}
+        {compareSlug && (
+          <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-6 flex items-center justify-between gap-3 flex-wrap">
+            <p className="text-sm text-amber-900">
+              <span className="font-semibold">Comparing {compareName ?? compareSlug}</span> — now pick a second strain to compare.
+            </p>
+            <Link
+              href={cancelCompareHref()}
+              className="text-sm font-medium text-amber-700 hover:text-amber-900 no-underline"
+            >
+              Cancel
+            </Link>
+          </div>
+        )}
+
+        {/* Type tabs */}
+        <nav className="flex flex-wrap gap-2 mb-6" aria-label="Strain type">
+          {tabs.map((t) => {
+            const active = t.match === lockedType
+            return (
+              <Link
+                key={t.href}
+                href={t.href}
+                className={`px-5 py-2 rounded-full text-sm font-medium transition-colors no-underline ${
+                  active
+                    ? 'bg-leaf-700 text-white'
+                    : 'bg-white border border-gray-200 text-gray-700 hover:border-leaf-300 hover:text-leaf-700'
+                }`}
+                aria-current={active ? 'page' : undefined}
+              >
+                {t.label}
+              </Link>
+            )
+          })}
+        </nav>
+
+        {/* Filters */}
+        <StrainFilters />
 
         {strains.length === 0 ? (
           <p className="text-gray-500 text-center py-16">
@@ -164,7 +233,16 @@ export default async function StrainsListing({
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {strains.map((strain) => (
-                <StrainCard key={strain.id} strain={strain} />
+                <StrainCard
+                  key={strain.id}
+                  strain={strain}
+                  basePath={basePath}
+                  compareSlug={compareSlug}
+                  preserveParams={{
+                    q:    searchParams.q,
+                    type: !lockedType ? searchParams.type : undefined,
+                  }}
+                />
               ))}
             </div>
 
@@ -203,7 +281,17 @@ export default async function StrainsListing({
   )
 }
 
-function StrainCard({ strain }: { strain: Strain }) {
+function StrainCard({
+  strain,
+  basePath,
+  compareSlug,
+  preserveParams,
+}: {
+  strain: Strain
+  basePath: string
+  compareSlug?: string
+  preserveParams: { q?: string; type?: string }
+}) {
   const topFlavors = strain.flavors?.slice(0, 2) ?? []
   const thcRange =
     strain.thc_min != null && strain.thc_max != null
@@ -211,6 +299,51 @@ function StrainCard({ strain }: { strain: Strain }) {
       : strain.thc_max != null
         ? `THC up to ${strain.thc_max}%`
         : null
+
+  // Build hrefs that preserve compare state across navigation
+  function hrefWithCompare(base: string, withCompare: string | null) {
+    const params = new URLSearchParams()
+    if (withCompare) params.set('compare', withCompare)
+    const qs = params.toString()
+    return qs ? `${base}?${qs}` : base
+  }
+
+  // View Strain link preserves ?compare so the user keeps their selection
+  const viewHref = hrefWithCompare(`/strains/${strain.slug}`, compareSlug ?? null)
+
+  // Compare button has three states
+  let compareLabel: string
+  let compareClasses: string
+  let compareHref: string
+  let compareAriaLabel: string
+
+  if (!compareSlug) {
+    // Start a new comparison — set ?compare on the current listing path
+    const params = new URLSearchParams()
+    if (preserveParams.q)    params.set('q', preserveParams.q)
+    if (preserveParams.type) params.set('type', preserveParams.type)
+    params.set('compare', strain.slug)
+    compareHref = `${basePath}?${params.toString()}`
+    compareLabel = 'Compare'
+    compareClasses = 'bg-white border border-gray-200 text-gray-600 hover:border-leaf-300 hover:text-leaf-700'
+    compareAriaLabel = `Compare ${strain.name} with another strain`
+  } else if (compareSlug === strain.slug) {
+    // This strain is already selected — clicking cancels selection
+    const params = new URLSearchParams()
+    if (preserveParams.q)    params.set('q', preserveParams.q)
+    if (preserveParams.type) params.set('type', preserveParams.type)
+    const qs = params.toString()
+    compareHref = qs ? `${basePath}?${qs}` : basePath
+    compareLabel = '✓ Selected'
+    compareClasses = 'bg-amber-100 text-amber-800 border border-amber-300 hover:bg-amber-200'
+    compareAriaLabel = `Cancel ${strain.name} selection`
+  } else {
+    // Other strain selected — go straight to comparison
+    compareHref = `/strains/compare/${compareSlug}-vs-${strain.slug}`
+    compareLabel = 'Compare with this'
+    compareClasses = 'bg-leaf-600 text-white hover:bg-leaf-700'
+    compareAriaLabel = `Compare ${compareSlug} with ${strain.name}`
+  }
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-6 flex flex-col gap-3 hover:border-[#2D5016]/30 hover:shadow-sm transition-all">
@@ -243,12 +376,21 @@ function StrainCard({ strain }: { strain: Strain }) {
         </div>
       )}
 
-      <Link
-        href={`/strains/${strain.slug}`}
-        className="mt-auto pt-2 text-sm font-medium text-[#2D5016] hover:text-[#3a6b1e] no-underline inline-flex items-center gap-1 transition-colors"
-      >
-        View Strain <span aria-hidden="true">→</span>
-      </Link>
+      <div className="mt-auto pt-2 flex items-center justify-between gap-2">
+        <Link
+          href={viewHref}
+          className="text-sm font-medium text-[#2D5016] hover:text-[#3a6b1e] no-underline inline-flex items-center gap-1 transition-colors"
+        >
+          View Strain <span aria-hidden="true">→</span>
+        </Link>
+        <Link
+          href={compareHref}
+          aria-label={compareAriaLabel}
+          className={`text-xs font-medium px-3 py-1.5 rounded-full transition-colors no-underline ${compareClasses}`}
+        >
+          {compareLabel}
+        </Link>
+      </div>
     </div>
   )
 }

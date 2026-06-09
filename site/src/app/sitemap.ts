@@ -1,27 +1,9 @@
 import { MetadataRoute } from 'next'
 import { getSortedPostsData } from '@/lib/posts'
 import { getSupabase } from '@/lib/supabase'
+import { COMPARISON_PAIRS } from '@/data/strainComparisonPairs'
 
 const baseUrl = 'https://strainreport.com'
-
-// Curated list of popular strain comparisons. Expand based on real traffic.
-const COMPARISON_PAIRS: [string, string][] = [
-  ['blue-dream',         'og-kush'],
-  ['sour-diesel',        'blue-dream'],
-  ['og-kush',            'girl-scout-cookies'],
-  ['granddaddy-purple',  'northern-lights'],
-  ['wedding-cake',       'gelato'],
-  ['pineapple-express',  'sour-diesel'],
-  ['gorilla-glue',       'og-kush'],
-  ['white-widow',        'ak-47'],
-  ['jack-herer',         'sour-diesel'],
-  ['bubba-kush',         'afghan-kush'],
-  ['green-crack',        'sour-diesel'],
-  ['purple-haze',        'amnesia-haze'],
-  ['chemdawg',           'og-kush'],
-  ['trainwreck',         'jack-herer'],
-  ['northern-lights',    'bubba-kush'],
-]
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = getSortedPostsData()
@@ -63,6 +45,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/strains/compare`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.6,
     },
     {
       url: `${baseUrl}/videos`,

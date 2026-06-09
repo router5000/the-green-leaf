@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   alternates: { canonical: `${baseUrl}/strains/sativa` },
 }
 
-type SearchParams = { q?: string; page?: string }
+type SearchParams = { q?: string; page?: string; compare?: string }
 
 export default async function SativaPage({
   searchParams,
