@@ -11,6 +11,7 @@ const navItems = [
   { href: '/topics', label: 'Topics' },
   { href: '/articles', label: 'Articles' },
   { href: '/strains', label: 'Strains' },
+  { href: '/terpenes', label: 'Terpenes' },
   { href: '/videos', label: 'Videos' },
 ]
 

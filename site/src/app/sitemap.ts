@@ -2,6 +2,7 @@ import { MetadataRoute } from 'next'
 import { getSortedPostsData } from '@/lib/posts'
 import { getSupabase } from '@/lib/supabase'
 import { COMPARISON_PAIRS } from '@/data/strainComparisonPairs'
+import { TERPENE_SLUGS } from '@/lib/terpenes'
 
 const baseUrl = 'https://strainreport.com'
 
@@ -52,6 +53,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly',
       priority: 0.6,
     },
+    {
+      url: `${baseUrl}/terpenes`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    ...TERPENE_SLUGS.map((slug) => ({
+      url: `${baseUrl}/terpenes/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    })),
     {
       url: `${baseUrl}/videos`,
       lastModified: new Date(),

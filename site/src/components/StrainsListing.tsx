@@ -2,6 +2,7 @@ import { getSupabase } from '@/lib/supabase'
 import Link from 'next/link'
 import BlinkingSquares from '@/components/ui/BlinkingSquares'
 import StrainFilters from '@/components/StrainFilters'
+import StrainCard from '@/components/StrainCard'
 
 const PAGE_SIZE = 24
 
@@ -14,12 +15,6 @@ type Strain = {
   thc_max: number | null
   short_description: string | null
   flavors: string[] | null
-}
-
-const TYPE_BADGE: Record<string, string> = {
-  indica: 'bg-purple-100 text-purple-700',
-  sativa: 'bg-green-100 text-green-700',
-  hybrid: 'bg-orange-100 text-orange-600',
 }
 
 const TYPE_HERO_COLOR: Record<string, string> = {
@@ -236,11 +231,13 @@ export default async function StrainsListing({
                 <StrainCard
                   key={strain.id}
                   strain={strain}
-                  basePath={basePath}
-                  compareSlug={compareSlug}
-                  preserveParams={{
-                    q:    searchParams.q,
-                    type: !lockedType ? searchParams.type : undefined,
+                  compare={{
+                    compareSlug,
+                    basePath,
+                    preserveParams: {
+                      q:    searchParams.q,
+                      type: !lockedType ? searchParams.type : undefined,
+                    },
                   }}
                 />
               ))}
@@ -281,116 +278,3 @@ export default async function StrainsListing({
   )
 }
 
-function StrainCard({
-  strain,
-  basePath,
-  compareSlug,
-  preserveParams,
-}: {
-  strain: Strain
-  basePath: string
-  compareSlug?: string
-  preserveParams: { q?: string; type?: string }
-}) {
-  const topFlavors = strain.flavors?.slice(0, 2) ?? []
-  const thcRange =
-    strain.thc_min != null && strain.thc_max != null
-      ? `THC ${strain.thc_min}–${strain.thc_max}%`
-      : strain.thc_max != null
-        ? `THC up to ${strain.thc_max}%`
-        : null
-
-  // Build hrefs that preserve compare state across navigation
-  function hrefWithCompare(base: string, withCompare: string | null) {
-    const params = new URLSearchParams()
-    if (withCompare) params.set('compare', withCompare)
-    const qs = params.toString()
-    return qs ? `${base}?${qs}` : base
-  }
-
-  // View Strain link preserves ?compare so the user keeps their selection
-  const viewHref = hrefWithCompare(`/strains/${strain.slug}`, compareSlug ?? null)
-
-  // Compare button has three states
-  let compareLabel: string
-  let compareClasses: string
-  let compareHref: string
-  let compareAriaLabel: string
-
-  if (!compareSlug) {
-    // Start a new comparison — set ?compare on the current listing path
-    const params = new URLSearchParams()
-    if (preserveParams.q)    params.set('q', preserveParams.q)
-    if (preserveParams.type) params.set('type', preserveParams.type)
-    params.set('compare', strain.slug)
-    compareHref = `${basePath}?${params.toString()}`
-    compareLabel = 'Compare'
-    compareClasses = 'bg-white border border-gray-200 text-gray-600 hover:border-leaf-300 hover:text-leaf-700'
-    compareAriaLabel = `Compare ${strain.name} with another strain`
-  } else if (compareSlug === strain.slug) {
-    // This strain is already selected — clicking cancels selection
-    const params = new URLSearchParams()
-    if (preserveParams.q)    params.set('q', preserveParams.q)
-    if (preserveParams.type) params.set('type', preserveParams.type)
-    const qs = params.toString()
-    compareHref = qs ? `${basePath}?${qs}` : basePath
-    compareLabel = '✓ Selected'
-    compareClasses = 'bg-amber-100 text-amber-800 border border-amber-300 hover:bg-amber-200'
-    compareAriaLabel = `Cancel ${strain.name} selection`
-  } else {
-    // Other strain selected — go straight to comparison
-    compareHref = `/strains/compare/${compareSlug}-vs-${strain.slug}`
-    compareLabel = 'Compare with this'
-    compareClasses = 'bg-leaf-600 text-white hover:bg-leaf-700'
-    compareAriaLabel = `Compare ${compareSlug} with ${strain.name}`
-  }
-
-  return (
-    <div className="bg-white rounded-xl border border-gray-200 p-6 flex flex-col gap-3 hover:border-[#2D5016]/30 hover:shadow-sm transition-all">
-      <div className="flex items-start justify-between gap-2">
-        <h2 className="font-serif text-xl text-gray-900 leading-tight">{strain.name}</h2>
-        <span
-          className={`shrink-0 text-xs font-medium px-2.5 py-1 rounded-full capitalize ${
-            TYPE_BADGE[strain.strain_type] ?? 'bg-gray-100 text-gray-600'
-          }`}
-        >
-          {strain.strain_type}
-        </span>
-      </div>
-
-      {thcRange && (
-        <p className="text-sm text-gray-500 font-medium">{thcRange}</p>
-      )}
-
-      {strain.short_description && (
-        <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed">{strain.short_description}</p>
-      )}
-
-      {topFlavors.length > 0 && (
-        <div className="flex gap-2 flex-wrap">
-          {topFlavors.map((f) => (
-            <span key={f} className="text-xs bg-gray-100 text-gray-500 px-2.5 py-1 rounded-full capitalize">
-              {f}
-            </span>
-          ))}
-        </div>
-      )}
-
-      <div className="mt-auto pt-2 flex items-center justify-between gap-2">
-        <Link
-          href={viewHref}
-          className="text-sm font-medium text-[#2D5016] hover:text-[#3a6b1e] no-underline inline-flex items-center gap-1 transition-colors"
-        >
-          View Strain <span aria-hidden="true">→</span>
-        </Link>
-        <Link
-          href={compareHref}
-          aria-label={compareAriaLabel}
-          className={`text-xs font-medium px-3 py-1.5 rounded-full transition-colors no-underline ${compareClasses}`}
-        >
-          {compareLabel}
-        </Link>
-      </div>
-    </div>
-  )
-}

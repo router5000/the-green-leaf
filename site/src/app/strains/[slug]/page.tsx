@@ -1,6 +1,7 @@
 import { getSupabase } from '@/lib/supabase'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import { hasTerpeneHub } from '@/lib/terpenes'
 import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
@@ -344,24 +345,38 @@ export default async function StrainDetailPage({
             {s.terpenes && s.terpenes.length > 0 && (
               <Section title="Terpenes">
                 <div className="flex flex-col gap-3">
-                  {s.terpenes.map((t) => (
-                    <div key={t.id}>
-                      <div className="flex justify-between text-sm mb-1">
-                        <span className="text-gray-700 capitalize font-medium">{t.terpene_name}</span>
+                  {s.terpenes.map((t) => {
+                    const terpeneSlug = t.terpene_name.toLowerCase()
+                    const hasHub = hasTerpeneHub(terpeneSlug)
+                    return (
+                      <div key={t.id}>
+                        <div className="flex justify-between text-sm mb-1 gap-3 flex-wrap">
+                          <div className="flex items-center gap-3 flex-wrap">
+                            <span className="text-gray-700 capitalize font-medium">{t.terpene_name}</span>
+                            {hasHub && (
+                              <Link
+                                href={`/terpenes/${terpeneSlug}`}
+                                className="text-xs font-medium text-[#2D5016] hover:text-[#3a6b1e] no-underline inline-flex items-center gap-0.5 transition-colors"
+                              >
+                                Learn about {t.terpene_name} <span aria-hidden="true">→</span>
+                              </Link>
+                            )}
+                          </div>
+                          {t.percentage != null && (
+                            <span className="text-gray-400">{t.percentage.toFixed(2)}%</span>
+                          )}
+                        </div>
                         {t.percentage != null && (
-                          <span className="text-gray-400">{t.percentage.toFixed(2)}%</span>
+                          <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                            <div
+                              className="h-full bg-[#2D5016] rounded-full"
+                              style={{ width: `${Math.min((t.percentage / maxTerpene) * 100, 100)}%` }}
+                            />
+                          </div>
                         )}
                       </div>
-                      {t.percentage != null && (
-                        <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-[#2D5016] rounded-full"
-                            style={{ width: `${Math.min((t.percentage / maxTerpene) * 100, 100)}%` }}
-                          />
-                        </div>
-                      )}
-                    </div>
-                  ))}
+                    )
+                  })}
                 </div>
               </Section>
             )}
