@@ -190,6 +190,15 @@ export const TERPENES: Record<string, TerpeneEntry> = {
 
 export const TERPENE_SLUGS = Object.keys(TERPENES)
 
+// Database stores terpene_name in title case (e.g. "Myrcene"), but our URL
+// slugs are lowercase. These display-name values are what to send to Supabase.
+export const TERPENE_DISPLAY_NAMES = Object.values(TERPENES).map((t) => t.displayName)
+
+// Map a stored DB value back to its slug — for grouping query results.
+export const TERPENE_DISPLAY_TO_SLUG: Record<string, string> = Object.fromEntries(
+  Object.values(TERPENES).map((t) => [t.displayName, t.slug]),
+)
+
 export function getTerpene(slug: string): TerpeneEntry | null {
   return TERPENES[slug] ?? null
 }

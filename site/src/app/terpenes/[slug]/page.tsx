@@ -69,7 +69,7 @@ export default async function TerpeneHubPage({
     const { data } = await getSupabase()
       .from('terpenes')
       .select('percentage, strains!inner(slug, name, strain_type, thc_min, thc_max, short_description, flavors, published)')
-      .eq('terpene_name', slug)
+      .eq('terpene_name', terpene.displayName)
       .eq('strains.published', true)
       .order('percentage', { ascending: false })
     rows = (data as unknown as StrainRow[]) ?? []

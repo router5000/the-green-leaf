@@ -1,7 +1,7 @@
 import { getSupabase } from '@/lib/supabase'
 import Link from 'next/link'
 import BlinkingSquares from '@/components/ui/BlinkingSquares'
-import { TERPENES, TERPENE_SLUGS } from '@/lib/terpenes'
+import { TERPENES, TERPENE_SLUGS, TERPENE_DISPLAY_NAMES, TERPENE_DISPLAY_TO_SLUG } from '@/lib/terpenes'
 import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
@@ -36,11 +36,12 @@ export default async function TerpenesIndexPage() {
     const { data } = await getSupabase()
       .from('terpenes')
       .select('terpene_name, strains!inner(published)')
-      .in('terpene_name', TERPENE_SLUGS)
+      .in('terpene_name', TERPENE_DISPLAY_NAMES)
       .eq('strains.published', true)
     const rows = (data as { terpene_name: string }[] | null) ?? []
     counts = rows.reduce<Record<string, number>>((acc, r) => {
-      acc[r.terpene_name] = (acc[r.terpene_name] ?? 0) + 1
+      const slug = TERPENE_DISPLAY_TO_SLUG[r.terpene_name]
+      if (slug) acc[slug] = (acc[slug] ?? 0) + 1
       return acc
     }, {})
   } catch {
