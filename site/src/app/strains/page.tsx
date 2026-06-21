@@ -34,8 +34,10 @@ export async function generateMetadata({
     if (sp.type) q = q.eq('strain_type', sp.type)
     const { count } = await q
     totalPages = Math.max(1, Math.ceil((count ?? 0) / PAGE_SIZE))
-  } catch {
-    // env unavailable during build
+  } catch (err) {
+    // Don't swallow: log so a missing-env / DB failure is visible in runtime logs
+    // instead of silently falling back to a single page of metadata links.
+    console.error('[strains/generateMetadata] Failed to compute total pages:', err)
   }
 
   const otherLinks: Record<string, string> = {}

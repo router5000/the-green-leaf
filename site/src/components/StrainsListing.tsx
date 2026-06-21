@@ -82,8 +82,10 @@ export default async function StrainsListing({
         .single()
       compareName = (nameRow as { name: string } | null)?.name ?? null
     }
-  } catch {
-    // env unavailable during build
+  } catch (err) {
+    // Don't swallow: a thrown error here (e.g. missing Supabase env vars) would
+    // otherwise silently render "0 strains". Log it so it's visible in runtime logs.
+    console.error('[StrainsListing] Failed to load strains from Supabase:', err)
   }
 
   const totalPages  = Math.max(1, Math.ceil(totalCount / PAGE_SIZE))
