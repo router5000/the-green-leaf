@@ -1028,7 +1028,7 @@ Output format (JSON):
     "tldr": "One sentence summary of the article (e.g., 'Blue Dream is a sativa-dominant hybrid with 17-24% THC that delivers a balanced euphoric head high with gentle body relaxation, making it ideal for daytime use.')"
 }}
 
-Return ONLY valid JSON, no other text."""
+Return ONLY valid JSON, no other text. All string values — especially "content" — must be valid JSON strings: escape any double quotes and newlines inside them so the entire response parses with a strict JSON parser."""
 
     # Rate limit Claude API calls
     wait_for_claude()
@@ -1063,35 +1063,59 @@ Return ONLY valid JSON, no other text."""
     # Clean the entire response first (this handles Claude Haiku's control characters)
     response_text = clean_json_string(response_text)
 
-    # Parse JSON response with robust extraction
-    try:
-        article_data = json.loads(response_text)
-    except json.JSONDecodeError as e:
-        # If direct parsing fails, try extracting from markdown blocks
-        # Note: response_text is already cleaned at this point
-        if "```json" in response_text:
-            json_str = response_text.split("```json")[1].split("```")[0].strip()
-            # Clean again in case extraction reintroduced issues
-            json_str = clean_json_string(json_str)
-            article_data = json.loads(json_str)
-        elif "```" in response_text:
-            # Try generic code block
-            json_str = response_text.split("```")[1].split("```")[0].strip()
-            # Remove language identifier if present
-            if json_str.startswith("json\n"):
-                json_str = json_str[5:]
-            json_str = clean_json_string(json_str)
-            article_data = json.loads(json_str)
-        elif "{" in response_text and "}" in response_text:
-            # Try to extract just the JSON object
-            start = response_text.index("{")
-            end = response_text.rindex("}") + 1
-            json_str = response_text[start:end]
-            json_str = clean_json_string(json_str)
-            article_data = json.loads(json_str)
-        else:
-            print(f"   ❌ Raw response (first 500 chars): {repr(response_text[:500])}...")
-            raise ValueError("Could not parse article JSON")
+    # Parse JSON response with robust extraction.
+    # Build candidate JSON strings (whole response, ```json / ``` fenced blocks,
+    # outermost {...} slice) and try each with the stdlib parser. Each candidate
+    # is guarded independently — previously a malformed fenced block raised an
+    # uncaught JSONDecodeError instead of falling through to the next strategy.
+    # If every candidate fails, attempt a repair pass before giving up
+    # (json_repair handles the common model edge cases: unescaped quotes in body
+    # text, trailing commas). Only accept a parse that yields a JSON object.
+    def _json_candidates(text):
+        candidates = [text]
+        if "```json" in text:
+            candidates.append(text.split("```json")[1].split("```")[0].strip())
+        if "```" in text:
+            block = text.split("```")[1].split("```")[0].strip()
+            if block.startswith("json\n"):
+                block = block[5:]
+            candidates.append(block)
+        if "{" in text and "}" in text:
+            candidates.append(text[text.index("{"):text.rindex("}") + 1])
+        return [clean_json_string(c) for c in candidates]
+
+    candidates = _json_candidates(response_text)
+    article_data = None
+    for candidate in candidates:
+        try:
+            parsed = json.loads(candidate)
+        except json.JSONDecodeError:
+            continue
+        if isinstance(parsed, dict):
+            article_data = parsed
+            break
+
+    if article_data is None:
+        # Last resort: repair the most JSON-like candidate (the {...} slice if we
+        # found one, else the raw response). json_repair is optional — if it isn't
+        # installed we fall through to the informative error below.
+        repair_target = candidates[-1] if candidates else response_text
+        try:
+            from json_repair import repair_json
+            parsed = json.loads(repair_json(repair_target))
+            if isinstance(parsed, dict):
+                article_data = parsed
+                print("   ⚠️  Article JSON was malformed; recovered with json_repair.")
+        except Exception:
+            article_data = None
+
+    if article_data is None:
+        # Log enough of the raw output to actually diagnose the bad response,
+        # instead of a bare "Expecting ',' delimiter" with no context.
+        print(f"   ❌ Could not parse article JSON ({len(response_text)} chars).")
+        print(f"   ❌ Raw output (first 200 chars): {response_text[:200]!r}")
+        print(f"   ❌ Raw output (last 200 chars):  {response_text[-200:]!r}")
+        raise ValueError("Could not parse article JSON after repair attempt")
     
     # Add metadata
     article_data["keyword"] = keyword

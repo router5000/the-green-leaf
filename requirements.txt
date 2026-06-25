@@ -4,6 +4,7 @@ requests>=2.31.0
 python-dotenv>=1.0.0
 Pillow==11.3.0  # pinned: tested version. Loose >=10 silently pulled a newer Pillow in CI
 PyYAML>=6.0
+json_repair==0.44.1  # repair malformed model JSON (unescaped quotes etc.) in article parsing
 
 # YouTube Integration
 google-api-python-client>=2.100.0
