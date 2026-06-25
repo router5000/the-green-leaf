@@ -1232,7 +1232,7 @@ Return ONLY valid JSON, no other text. All string values — especially "content
         critical_issues = [i for i in validation.get('link_issues', [])
                           if i.get('severity') == 'critical']
         if critical_issues:
-            print(f"   ⚠️  {len(critical_issues)} critical issue(s) remain - manual review needed")
+            print(f"   ⚠️  {len(critical_issues)} critical SEO issue(s) remain (informational; does not block publish)")
             for issue in critical_issues:
                 print(f"      • {issue['description']}")
         else:
@@ -1356,8 +1356,6 @@ def save_to_notion_format(article: dict, output_dir: str = "drafts"):
         frontmatter_dict['qa_score'] = article['qa_evaluation']['scores']['overall']
         frontmatter_dict['qa_passed'] = article.get('qa_passed', False)
         frontmatter_dict['refinement_rounds'] = article.get('refinement_rounds', 0)
-        if article.get('needs_manual_review'):
-            frontmatter_dict['needs_manual_review'] = True
 
     # Format frontmatter
     frontmatter = "---\n"
@@ -1503,6 +1501,13 @@ if __name__ == "__main__":
         print(f"✅ Generated: {article['title']}")
         if enable_qa and article.get('qa_passed'):
             print(f"   QA Score: {article['qa_evaluation']['scores']['overall']:.1f}/10 ✅")
+
+        # Machine-readable result line for the pipeline's score gate (parsed by
+        # weekly_content_pipeline.run_content_generator). Keep this format stable.
+        _qa_eval = article.get('qa_evaluation') or {}
+        _qa_score = _qa_eval.get('scores', {}).get('overall')
+        print(f"PIPELINE_RESULT qa_passed={bool(article.get('qa_passed'))} "
+              f"qa_score={_qa_score if _qa_score is not None else ''}")
 
         if args.publish:
             from auto_publish import auto_publish

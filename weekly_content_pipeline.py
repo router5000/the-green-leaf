@@ -12,6 +12,7 @@ Can be run manually or via GitHub Actions cron job.
 
 import os
 import sys
+import re
 import json
 import argparse
 import subprocess
@@ -30,7 +31,12 @@ load_dotenv()
 # Configuration
 CONTENT_GENERATOR_PATH = Path("content_generator.py")
 LOG_PATH = Path(".logs")
-MAX_RETRIES = 2
+
+# Auto-publish QA threshold. An article scoring >= this is published with no
+# human gate, ever. Below it, generation is retried once (fresh); if the retry
+# also falls short the keyword is skipped for the run (no manual-review state).
+# Keep in sync with article_qa.QUALITY_THRESHOLDS['overall'].
+PUBLISH_THRESHOLD = 8.0
 
 
 def log_pipeline_run(status: str, keyword: str, details: dict):
@@ -51,22 +57,34 @@ def log_pipeline_run(status: str, keyword: str, details: dict):
     print(f"📋 Logged to {log_file}")
 
 
-def run_content_generator(keyword: str, no_qa: bool = False) -> tuple[bool, str]:
+def run_content_generator(
+    keyword: str, no_qa: bool = False, force: bool = False
+) -> tuple[bool, str, Optional[bool], Optional[float]]:
     """
     Run the content generator script with the given keyword.
-    
+
+    Args:
+        keyword: Topic to generate.
+        no_qa: Skip the QA pipeline.
+        force: Skip the duplicate check (used when regenerating a keyword that
+            already wrote a draft on the first attempt).
+
     Returns:
-        Tuple of (success, output/error message)
+        (success, output, qa_passed, qa_score) where qa_passed/qa_score are
+        parsed from the generator's machine-readable PIPELINE_RESULT line
+        (None if generation failed or QA was skipped).
     """
     if not CONTENT_GENERATOR_PATH.exists():
-        return False, f"Content generator not found at {CONTENT_GENERATOR_PATH}"
-    
+        return False, f"Content generator not found at {CONTENT_GENERATOR_PATH}", None, None
+
     cmd = [sys.executable, str(CONTENT_GENERATOR_PATH), "--keyword", keyword]
     if no_qa:
         cmd.append("--no-qa")
-    
+    if force:
+        cmd.append("--force")
+
     print(f"🔧 Running: {' '.join(cmd)}")
-    
+
     try:
         result = subprocess.run(
             cmd,
@@ -74,16 +92,31 @@ def run_content_generator(keyword: str, no_qa: bool = False) -> tuple[bool, str]
             text=True,
             timeout=300  # 5 minute timeout
         )
-        
-        if result.returncode == 0:
-            return True, result.stdout
-        else:
-            return False, result.stderr or result.stdout
-            
+
+        if result.returncode != 0:
+            return False, result.stderr or result.stdout, None, None
+
+        qa_passed, qa_score = _parse_pipeline_result(result.stdout)
+        return True, result.stdout, qa_passed, qa_score
+
     except subprocess.TimeoutExpired:
-        return False, "Content generation timed out (5 min limit)"
+        return False, "Content generation timed out (5 min limit)", None, None
     except Exception as e:
-        return False, str(e)
+        return False, str(e), None, None
+
+
+def _parse_pipeline_result(stdout: str) -> tuple[Optional[bool], Optional[float]]:
+    """Parse the generator's `PIPELINE_RESULT qa_passed=.. qa_score=..` line."""
+    qa_passed, qa_score = None, None
+    for line in stdout.splitlines():
+        if line.startswith("PIPELINE_RESULT"):
+            m = re.search(r"qa_passed=(\w+)", line)
+            if m:
+                qa_passed = (m.group(1) == "True")
+            m = re.search(r"qa_score=([0-9.]+)", line)
+            if m:
+                qa_score = float(m.group(1))
+    return qa_passed, qa_score
 
 
 def send_notification(
@@ -158,6 +191,7 @@ def run_weekly_pipeline(
     
     generated_articles = []
     failed_keywords = []
+    skipped_keywords = []  # generated but scored below threshold on both attempts
     
     # Step 1: Keyword Research
     print("\n" + "─" * 40)
@@ -188,24 +222,48 @@ def run_weekly_pipeline(
             generated_articles.append(kw)
             continue
         
-        # Try generation with retries
-        success = False
-        for attempt in range(MAX_RETRIES + 1):
+        # Generate, gating purely on the QA score. An article scoring
+        # >= PUBLISH_THRESHOLD is accepted for publishing. If it falls short,
+        # regenerate ONCE from scratch (fresh attempt, --force to bypass the
+        # duplicate check on the draft the first attempt wrote). If the retry
+        # also falls short, log both scores and skip the keyword — no third
+        # attempt, no manual-review fallback.
+        attempt_scores = []
+        outcome = None  # "published" | "skipped" | "failed"
+        for attempt in range(2):  # initial attempt + one fresh retry
             if attempt > 0:
-                print(f"   Retry {attempt}/{MAX_RETRIES}...")
-            
-            success, output = run_content_generator(kw, no_qa=no_qa)
-            
-            if success:
-                print(f"   ✅ Successfully generated article")
+                print(f"   🔄 Score below {PUBLISH_THRESHOLD} — regenerating once (fresh attempt)...")
+
+            success, output, qa_passed, qa_score = run_content_generator(
+                kw, no_qa=no_qa, force=(attempt > 0)
+            )
+
+            if not success:
+                print(f"   ⚠️ Generation error: {output[:200]}")
+                attempt_scores.append(None)
+                continue
+
+            attempt_scores.append(qa_score)
+
+            if no_qa or qa_passed:
+                outcome = "published"
                 generated_articles.append(kw)
+                label = f"QA score: {qa_score}" if qa_score is not None else "QA skipped"
+                print(f"   ✅ Accepted for publish ({label})")
                 break
+
+            print(f"   ⚠️ QA score {qa_score} below threshold {PUBLISH_THRESHOLD}")
+
+        if outcome != "published":
+            if any(s is not None for s in attempt_scores):
+                # Generated both times but never cleared the bar — skip, don't fail.
+                skipped_keywords.append({"keyword": kw, "scores": attempt_scores})
+                print(f"   ⏭️  Skipping '{kw}' — QA scores {attempt_scores} below "
+                      f"{PUBLISH_THRESHOLD}. Not published; no manual review (none exists).")
             else:
-                print(f"   ⚠️ Generation failed: {output[:200]}")
-        
-        if not success:
-            failed_keywords.append(kw)
-            print(f"   ❌ Failed after {MAX_RETRIES + 1} attempts")
+                # Hard generation error on both attempts.
+                failed_keywords.append(kw)
+                print(f"   ❌ Generation failed for '{kw}' after retry")
     
     # Step 3: Auto-Publish
     print("\n" + "─" * 40)
@@ -215,7 +273,7 @@ def run_weekly_pipeline(
     if no_publish:
         print("⏭️  Skipping publish (--no-publish flag)")
     elif not generated_articles:
-        print("⏭️  Nothing to publish (no articles generated)")
+        print("⏭️  Nothing to publish (no article met the publish threshold this run)")
     else:
         if dry_run:
             status = check_git_status()
@@ -229,39 +287,58 @@ def run_weekly_pipeline(
     print("\n" + "=" * 60)
     print("PIPELINE SUMMARY")
     print("=" * 60)
-    print(f"✅ Generated: {len(generated_articles)} articles")
-    print(f"❌ Failed: {len(failed_keywords)} articles")
-    
+    print(f"✅ Published: {len(generated_articles)} articles")
+    print(f"⏭️  Skipped (below {PUBLISH_THRESHOLD}): {len(skipped_keywords)} articles")
+    print(f"❌ Failed (errors): {len(failed_keywords)} articles")
+
     if generated_articles:
-        print("\nGenerated articles:")
+        print("\nPublished articles:")
         for kw in generated_articles:
             print(f"  • {kw}")
-    
+
+    if skipped_keywords:
+        print("\nSkipped keywords (scored below threshold on both attempts):")
+        for item in skipped_keywords:
+            print(f"  • {item['keyword']} — scores: {item['scores']}")
+
     if failed_keywords:
-        print("\nFailed keywords:")
+        print("\nFailed keywords (generation errors):")
         for kw in failed_keywords:
             print(f"  • {kw}")
-    
-    # Log and notify
-    overall_success = len(generated_articles) > 0
-    
+
+    # Skips are a normal, non-failing outcome — only hard generation errors fail
+    # the run. (A run that publishes nothing because nothing cleared the bar is
+    # not an error; there is no human review to fall back to.)
+    overall_success = len(failed_keywords) == 0
+
     log_pipeline_run(
         status="success" if overall_success else "failed",
         keyword=keywords[0]["keyword"] if keywords else "none",
         details={
-            "generated": generated_articles,
+            "published": generated_articles,
+            "skipped": skipped_keywords,
             "failed": failed_keywords,
             "dry_run": dry_run
         }
     )
-    
+
     if not dry_run:
+        # Title must make a "nothing published" week obviously different from a
+        # normal one — never let an all-skipped run look like business as usual.
+        if not overall_success:
+            title = "⚠️ Weekly Pipeline: generation errors"
+        elif not generated_articles:
+            title = f"⚠️ Weekly Pipeline: 0 published, {len(skipped_keywords)} skipped (below {PUBLISH_THRESHOLD})"
+        else:
+            title = "🌿 Weekly Content Pipeline Complete"
         send_notification(
-            title="🌿 Weekly Content Pipeline Complete" if overall_success else "⚠️ Pipeline Issues",
-            message=f"Generated {len(generated_articles)} articles, {len(failed_keywords)} failed",
+            title=title,
+            message=(f"Published {len(generated_articles)}, "
+                     f"skipped {len(skipped_keywords)} (below {PUBLISH_THRESHOLD}), "
+                     f"{len(failed_keywords)} errored"),
             success=overall_success
         )
-    
+
     return overall_success
 
 

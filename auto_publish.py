@@ -25,6 +25,7 @@ REPO_ROOT = Path(__file__).parent  # Assumes script is in repo root
 SITE_PATH = REPO_ROOT / "site"
 CONTENT_PATH = SITE_PATH / "content" / "posts"
 DRAFTS_PATH = REPO_ROOT / "drafts"
+QA_LOGS_PATH = REPO_ROOT / "drafts" / "qa_logs"
 STATES_CONTENT_PATH = SITE_PATH / "content" / "states"
 IMAGES_PATH = SITE_PATH / "public" / "images" / "articles"
 STATES_IMAGES_PATH = SITE_PATH / "public" / "images" / "states"
@@ -201,9 +202,10 @@ def check_git_status() -> dict:
     return status
 
 
-def check_article_qa(md_file: Path, min_score: float = 7.0) -> tuple[bool, str]:
+def check_article_qa(md_file: Path, min_score: float = 8.0) -> tuple[bool, str]:
     """
-    Check if an article passes QA thresholds before publishing.
+    Check if an article passes the auto-publish QA threshold.
+    Purely score-based — there is no manual-review state.
     Returns (passed, reason).
     """
     try:
@@ -221,13 +223,9 @@ def check_article_qa(md_file: Path, min_score: float = 7.0) -> tuple[bool, str]:
 
         qa_passed = fm.get('qa_passed')
         qa_score = fm.get('qa_score', 0)
-        needs_review = fm.get('needs_manual_review', False)
-
-        if needs_review:
-            return False, f"Flagged for manual review (score: {qa_score})"
 
         if qa_passed is False:
-            return False, f"QA failed (score: {qa_score})"
+            return False, f"QA below threshold (score: {qa_score})"
 
         if qa_score and float(qa_score) < min_score:
             return False, f"QA score {qa_score} below threshold {min_score}"
@@ -308,6 +306,15 @@ def stage_content_files(skip_qa: bool = False) -> tuple[bool, list[str]]:
                             run_git_command(["add", str(img)])
                             staged.append(str(img))
 
+    # Stage QA feedback logs alongside any published article (audit trail).
+    # These are written during generation but were never git-added before, so
+    # they accumulated as untracked files and were lost on the ephemeral runner.
+    if staged and QA_LOGS_PATH.exists():
+        for log_file in QA_LOGS_PATH.glob("*.jsonl"):
+            ok, _ = run_git_command(["add", str(log_file)])
+            if ok:
+                staged.append(str(log_file))
+
     return len(staged) > 0, staged
 
 
@@ -344,6 +351,10 @@ def commit_changes(message: Optional[str] = None, auto: bool = False) -> tuple[b
         message = create_commit_message(status["new_articles"], status.get("new_state_articles", []), auto=auto)
     
     success, output = run_git_command(["commit", "-m", message])
+    # "nothing to commit" is a normal, non-failing outcome (e.g. everything was
+    # already committed, or nothing met the threshold this run).
+    if not success and "nothing to commit" in (output or "").lower():
+        return True, "Nothing to commit (no changes)"
     return success, output
 
 
@@ -443,9 +454,12 @@ def auto_publish(
     if skip_qa:
         _log("   ⏭️  QA validation skipped (--skip-qa)")
     success, staged = stage_content_files(skip_qa=skip_qa)
-    if not success:
-        _log("❌ Failed to stage files")
-        return False
+    if not staged:
+        # Nothing passed the QA threshold (or there was nothing publishable).
+        # That is a normal outcome, not a failure — don't attempt a commit and
+        # don't fail the run just because untracked artifacts are lying around.
+        _log("   ℹ️  Nothing to stage — no article met the publish threshold this run. Skipping commit.")
+        return True
     _log(f"   Staged: {', '.join(staged)}")
 
     # Commit

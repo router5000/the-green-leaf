@@ -24,7 +24,7 @@ QUALITY_THRESHOLDS = {
     'impact_score': 7.0,
     'structure_score': 7.0,
     'sources_score': 6.5,
-    'overall': 7.0
+    'overall': 8.0  # auto-publish threshold: score >= this publishes, no human gate ever
 }
 
 MAX_REFINEMENT_ROUNDS = 2
@@ -385,45 +385,49 @@ def quality_assurance_pipeline(article_data: dict) -> dict:
         print(f"      - Structure: {evaluation['scores']['structure_score']:.1f}")
         print(f"      - Sources: {evaluation['scores']['sources_score']:.1f}")
 
-        # Check if refinement needed
-        if overall_score >= QUALITY_THRESHOLDS['overall'] and not evaluation.get('requires_refinement', False):
-            print(f"   ✅ Quality threshold met!")
-            article_data['qa_evaluation'] = evaluation
-            article_data['qa_passed'] = True
-            article_data['refinement_rounds'] = refinement_count
+        # Already clears the publish bar — stop. Refining a passing article risks
+        # regressions (a refine round has historically dropped a score), and a
+        # passing score is all the auto-publish gate needs.
+        if overall_score >= QUALITY_THRESHOLDS['overall']:
             break
 
+        # Below the bar. Refinement is purely a quality-improvement step: try to
+        # lift the score if rounds remain, otherwise stop and let the score gate
+        # below decide. It never routes anything to a manual-review state.
         if refinement_count >= MAX_REFINEMENT_ROUNDS:
-            print(f"   ⚠️  Max refinements reached. Flagging for manual review.")
-            article_data['qa_evaluation'] = evaluation
-            article_data['qa_passed'] = False
-            article_data['needs_manual_review'] = True
-            article_data['refinement_rounds'] = refinement_count
             break
 
-        # Refine article
         print(f"   🔧 Refining article (round {refinement_count + 1}/{MAX_REFINEMENT_ROUNDS})...")
         refined = refine_article(content, keyword, title, meta_description, evaluation)
 
-        if refined:
-            content = refined['content']
-            title = refined.get('title', title)
-            meta_description = refined.get('meta_description', meta_description)
-
-            # Update article data
-            article_data['content'] = content
-            article_data['title'] = title
-            article_data['meta_description'] = meta_description
-
-            print(f"   ✨ Changes: {', '.join(refined.get('changes_made', ['Content refined']))}")
-        else:
-            print(f"   ❌ Refinement failed. Using original.")
-            article_data['qa_evaluation'] = evaluation
-            article_data['qa_passed'] = False
-            article_data['needs_manual_review'] = True
+        if not refined:
+            print(f"   ❌ Refinement failed. Keeping best version so far.")
             break
 
+        content = refined['content']
+        title = refined.get('title', title)
+        meta_description = refined.get('meta_description', meta_description)
+
+        # Update article data
+        article_data['content'] = content
+        article_data['title'] = title
+        article_data['meta_description'] = meta_description
+
+        print(f"   ✨ Changes: {', '.join(refined.get('changes_made', ['Content refined']))}")
         refinement_count += 1
+
+    # Pure score gate — no human-review state, ever. Whatever score the article
+    # has after any refinement is judged against the threshold; the pipeline
+    # decides whether to retry generation or skip publishing this keyword.
+    article_data['qa_evaluation'] = evaluation
+    article_data['refinement_rounds'] = refinement_count
+    article_data['qa_passed'] = overall_score >= QUALITY_THRESHOLDS['overall']
+
+    if article_data['qa_passed']:
+        print(f"   ✅ Quality threshold met (score {overall_score:.1f} >= {QUALITY_THRESHOLDS['overall']})")
+    else:
+        print(f"   ⚠️  Score {overall_score:.1f} below publish threshold "
+              f"{QUALITY_THRESHOLDS['overall']} — this draft will not be published.")
 
     return article_data
 
