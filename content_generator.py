@@ -19,7 +19,7 @@ import uuid
 from dotenv import load_dotenv
 import anthropic
 import requests
-from PIL import Image
+from PIL import Image, ImageStat
 from affiliate_linker import process_article_for_affiliates, generate_affiliate_metadata
 from article_qa import quality_assurance_pipeline
 from internal_linker import add_internal_links_to_new_article, load_article_index
@@ -497,13 +497,15 @@ def validate_image(image_bytes: bytes, expected_type: str = "hero") -> tuple[boo
         if image.width < min_w or image.height < min_h:
             return False, f"Image too small: {image.width}x{image.height}, minimum {min_w}x{min_h}"
 
-        # Check not blank (pixel variance check)
+        # Check not blank (pixel std-dev check).
+        # Use ImageStat instead of Image.getdata(): getdata() is deprecated in
+        # Pillow 12+ (slated for removal in Pillow 14), and its suggested
+        # replacement get_flattened_data() does not exist in older Pillow, so we
+        # can't rely on it. ImageStat is stable across Pillow versions and
+        # computes the population std-dev in C (faster, no 700k-element Python
+        # list). This matches the previous manual computation exactly.
         grayscale = image.convert("L")
-        pixels = list(grayscale.getdata())
-
-        mean = sum(pixels) / len(pixels)
-        variance = sum((p - mean) ** 2 for p in pixels) / len(pixels)
-        std_dev = variance ** 0.5
+        std_dev = ImageStat.Stat(grayscale).stddev[0]
 
         if std_dev < 10:  # Very low variance = likely blank or solid color
             return False, f"Image appears blank or uniform (std_dev: {std_dev:.1f})"

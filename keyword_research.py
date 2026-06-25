@@ -13,6 +13,8 @@ Intelligently selects keywords based on:
 import os
 import json
 import re
+import time
+import random
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Optional
@@ -245,6 +247,43 @@ def save_cache(data: dict):
     KEYWORD_CACHE_PATH.write_text(json.dumps(data, indent=2))
 
 
+# Google Trends rate-limiting controls.
+# Trends has no official API and aggressively returns HTTP 429 when requests
+# from one IP come too fast — which is exactly what happened in CI, where every
+# batch failed. We (a) space requests out with a jittered delay, and (b) retry
+# with exponential backoff when a request is throttled.
+TRENDS_BATCH_DELAY = (4.0, 8.0)   # (min, max) seconds of jittered pause between requests
+TRENDS_MAX_RETRIES = 4            # attempts per request before giving up
+TRENDS_BACKOFF_BASE = 5.0         # seconds; backoff is base * 2**attempt (+jitter)
+
+
+def _make_trends_client() -> "TrendReq":
+    """Build a TrendReq with transport-level retry/backoff for resilience."""
+    return TrendReq(hl='en-US', tz=360, timeout=(10, 30),
+                    retries=3, backoff_factor=0.5)
+
+
+def _trends_request_with_backoff(fn, label: str):
+    """
+    Run a pytrends call, retrying with exponential backoff on rate-limit / transient
+    errors. Returns the call result, or None if all retries are exhausted.
+    """
+    for attempt in range(TRENDS_MAX_RETRIES):
+        try:
+            return fn()
+        except Exception as e:
+            is_rate_limited = "429" in str(e) or "rate" in str(e).lower() or "too many" in str(e).lower()
+            if attempt == TRENDS_MAX_RETRIES - 1:
+                print(f"Google Trends gave up on {label} after {TRENDS_MAX_RETRIES} attempts: {e}")
+                return None
+            wait = TRENDS_BACKOFF_BASE * (2 ** attempt) + random.uniform(0, 2)
+            reason = "rate limited (429)" if is_rate_limited else f"error: {e}"
+            print(f"Google Trends {reason} on {label}; retrying in {wait:.1f}s "
+                  f"(attempt {attempt + 1}/{TRENDS_MAX_RETRIES})")
+            time.sleep(wait)
+    return None
+
+
 def get_google_trends_interest(keywords: list[str]) -> dict[str, int]:
     """
     Get relative interest scores from Google Trends.
@@ -253,33 +292,38 @@ def get_google_trends_interest(keywords: list[str]) -> dict[str, int]:
     if not PYTRENDS_AVAILABLE:
         # Return equal scores if pytrends not available
         return {kw: 50 for kw in keywords}
-    
+
     interest_scores = {}
-    pytrends = TrendReq(hl='en-US', tz=360)
-    
+    pytrends = _make_trends_client()
+
     # Google Trends only allows 5 keywords at a time
-    for i in range(0, len(keywords), 5):
-        batch = keywords[i:i+5]
-        try:
+    batches = [keywords[i:i+5] for i in range(0, len(keywords), 5)]
+    for batch_idx, batch in enumerate(batches):
+        # Pause between requests (skip before the first) to avoid tripping 429.
+        if batch_idx > 0:
+            time.sleep(random.uniform(*TRENDS_BATCH_DELAY))
+
+        def _fetch():
             pytrends.build_payload(batch, cat=0, timeframe='today 3-m', geo='US')
-            interest_over_time = pytrends.interest_over_time()
-            
-            if not interest_over_time.empty:
-                for kw in batch:
-                    if kw in interest_over_time.columns:
-                        # Get average interest over the period
-                        interest_scores[kw] = int(interest_over_time[kw].mean())
-                    else:
-                        interest_scores[kw] = 0
-            else:
-                for kw in batch:
-                    interest_scores[kw] = 0
-                    
-        except Exception as e:
-            print(f"Google Trends error for batch {batch}: {e}")
+            return pytrends.interest_over_time()
+
+        interest_over_time = _trends_request_with_backoff(_fetch, f"batch {batch}")
+
+        if interest_over_time is None:
+            # Request failed after retries — fall back to a neutral score.
             for kw in batch:
                 interest_scores[kw] = 50  # Default score on error
-    
+        elif not interest_over_time.empty:
+            for kw in batch:
+                if kw in interest_over_time.columns:
+                    # Get average interest over the period
+                    interest_scores[kw] = int(interest_over_time[kw].mean())
+                else:
+                    interest_scores[kw] = 0
+        else:
+            for kw in batch:
+                interest_scores[kw] = 0
+
     return interest_scores
 
 
@@ -498,28 +542,33 @@ def get_trending_cannabis_topics() -> list[str]:
     if not PYTRENDS_AVAILABLE:
         return []
 
-    pytrends = TrendReq(hl='en-US', tz=360)
+    pytrends = _make_trends_client()
     trending = []
 
     seed_terms = ["cannabis strains", "best weed strains", "cannabis effects", "marijuana strain review"]
 
-    for term in seed_terms:
-        try:
+    for term_idx, term in enumerate(seed_terms):
+        # Pause between requests (skip before the first) to avoid tripping 429.
+        if term_idx > 0:
+            time.sleep(random.uniform(*TRENDS_BATCH_DELAY))
+
+        def _fetch():
             pytrends.build_payload([term], cat=0, timeframe='today 1-m', geo='US')
-            related = pytrends.related_queries()
+            return pytrends.related_queries()
 
-            if term in related and related[term]["rising"] is not None:
-                rising = related[term]["rising"]
-                for _, row in rising.head(5).iterrows():
-                    query = row["query"]
-                    if any(word in query.lower() for word in [
-                        "cannabis", "marijuana", "weed", "cbd", "thc",
-                        "strain", "hemp", "dispensary", "edible", "terpene"
-                    ]):
-                        trending.append(query)
+        related = _trends_request_with_backoff(_fetch, f"related queries for '{term}'")
+        if related is None:
+            continue
 
-        except Exception as e:
-            print(f"Error getting related queries for {term}: {e}")
+        if term in related and related[term]["rising"] is not None:
+            rising = related[term]["rising"]
+            for _, row in rising.head(5).iterrows():
+                query = row["query"]
+                if any(word in query.lower() for word in [
+                    "cannabis", "marijuana", "weed", "cbd", "thc",
+                    "strain", "hemp", "dispensary", "edible", "terpene"
+                ]):
+                    trending.append(query)
 
     return list(set(trending))[:10]
 
