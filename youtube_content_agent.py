@@ -448,7 +448,7 @@ class ArticleGenerator:
 
     def __init__(self):
         self.client = Anthropic(api_key=ANTHROPIC_API_KEY)
-        self.model = "claude-sonnet-4-20250514"
+        self.model = "claude-sonnet-4-6"
 
     def generate_from_transcript(
         self,

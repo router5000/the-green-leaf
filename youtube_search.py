@@ -440,7 +440,7 @@ Only return the JSON array, no other text."""
         wait_for_claude()
 
         response = client.messages.create(
-            model="claude-sonnet-4-20250514",
+            model="claude-sonnet-4-6",
             max_tokens=1000,
             messages=[{"role": "user", "content": prompt}]
         )
@@ -586,7 +586,7 @@ Return ONLY valid JSON, no other text:
         wait_for_claude()
 
         response = client.messages.create(
-            model="claude-sonnet-4-20250514",
+            model="claude-sonnet-4-6",
             max_tokens=1000,
             messages=[{"role": "user", "content": prompt}]
         )

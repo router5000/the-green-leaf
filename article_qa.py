@@ -141,7 +141,7 @@ Return ONLY valid JSON, no other text."""
     wait_for_claude()
 
     message = client.messages.create(
-        model="claude-sonnet-4-20250514",
+        model="claude-sonnet-4-6",
         max_tokens=2000,
         messages=[{"role": "user", "content": evaluation_prompt}]
     )
@@ -149,7 +149,7 @@ Return ONLY valid JSON, no other text."""
     # Log Claude API usage for cost tracking
     tracker = get_tracker()
     if tracker:
-        tracker.log_claude_usage(message.usage, "claude-sonnet-4-20250514")
+        tracker.log_claude_usage(message.usage, "claude-sonnet-4-6")
 
     response_text = message.content[0].text
 
@@ -298,7 +298,7 @@ Return ONLY valid JSON, no other text."""
     wait_for_claude()
 
     message = client.messages.create(
-        model="claude-sonnet-4-20250514",
+        model="claude-sonnet-4-6",
         max_tokens=4000,
         messages=[{"role": "user", "content": refinement_prompt}]
     )
@@ -306,7 +306,7 @@ Return ONLY valid JSON, no other text."""
     # Log Claude API usage for cost tracking
     tracker = get_tracker()
     if tracker:
-        tracker.log_claude_usage(message.usage, "claude-sonnet-4-20250514")
+        tracker.log_claude_usage(message.usage, "claude-sonnet-4-6")
 
     response_text = message.content[0].text
 

@@ -14,7 +14,7 @@ COST_LOG_DIR = Path(".logs")
 
 # Claude pricing (per 1K tokens) - Update as pricing changes
 CLAUDE_PRICING = {
-    "claude-sonnet-4-20250514": {"input": 0.003, "output": 0.015},
+    "claude-sonnet-4-6": {"input": 0.003, "output": 0.015},
     "claude-3-5-sonnet-20241022": {"input": 0.003, "output": 0.015},
     "claude-3-haiku-20240307": {"input": 0.00025, "output": 0.00125},
 }
@@ -32,7 +32,7 @@ class CostTracker:
 
     Usage:
         tracker = CostTracker("my-article-slug")
-        tracker.log_claude_usage(message.usage, "claude-sonnet-4-20250514")
+        tracker.log_claude_usage(message.usage, "claude-sonnet-4-6")
         tracker.log_runware_cost("hero", 0.002)
         tracker.save()
     """
@@ -50,7 +50,7 @@ class CostTracker:
 
         Args:
             usage: The message.usage object from Claude API response
-            model: Model name (e.g., "claude-sonnet-4-20250514")
+            model: Model name (e.g., "claude-sonnet-4-6")
         """
         input_tokens = getattr(usage, 'input_tokens', 0)
         output_tokens = getattr(usage, 'output_tokens', 0)

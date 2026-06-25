@@ -258,9 +258,16 @@ TRENDS_BACKOFF_BASE = 5.0         # seconds; backoff is base * 2**attempt (+jitt
 
 
 def _make_trends_client() -> "TrendReq":
-    """Build a TrendReq with transport-level retry/backoff for resilience."""
-    return TrendReq(hl='en-US', tz=360, timeout=(10, 30),
-                    retries=3, backoff_factor=0.5)
+    """
+    Build a TrendReq.
+
+    Note: we deliberately do NOT pass retries=/backoff_factor= here. When those
+    are set, this pytrends version builds urllib3.Retry(..., method_whitelist=...),
+    and method_whitelist was removed in urllib3 2.x (renamed to allowed_methods) —
+    so every request raises TypeError on urllib3>=2. Retry/backoff is handled at
+    the application level by _trends_request_with_backoff() instead.
+    """
+    return TrendReq(hl='en-US', tz=360, timeout=(10, 30))
 
 
 def _trends_request_with_backoff(fn, label: str):
