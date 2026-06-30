@@ -29,6 +29,14 @@ const TYPE_BADGE: Record<string, string> = {
   hybrid: 'bg-orange-100 text-orange-600',
 }
 
+// Top-edge accent so each strain type is recognizable at a glance and the
+// card grid reads less like rows of identical white boxes.
+const TYPE_ACCENT: Record<string, string> = {
+  indica: 'border-t-purple-400',
+  sativa: 'border-t-green-500',
+  hybrid: 'border-t-orange-400',
+}
+
 export default function StrainCard({ strain, terpenePercentage, compare }: Props) {
   const topFlavors = strain.flavors?.slice(0, 2) ?? []
   const thcRange =
@@ -90,7 +98,11 @@ export default function StrainCard({ strain, terpenePercentage, compare }: Props
   }
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-6 flex flex-col gap-3 hover:border-[#2D5016]/30 hover:shadow-sm transition-all">
+    <div
+      className={`bg-white rounded-xl border border-t-4 border-gray-200 ${
+        TYPE_ACCENT[strain.strain_type] ?? 'border-t-leaf-500'
+      } p-6 flex flex-col gap-3 hover:border-[#2D5016]/30 hover:shadow-md hover:-translate-y-0.5 transition-all`}
+    >
       <div className="flex items-start justify-between gap-2">
         <h2 className="font-serif text-xl text-gray-900 leading-tight">{strain.name}</h2>
         <span
