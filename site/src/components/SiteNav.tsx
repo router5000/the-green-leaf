@@ -36,8 +36,8 @@ export default function SiteNav() {
         transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
         className="fixed top-0 left-0 right-0 z-50 h-16 print:hidden bg-[#f0f0f0]"
       >
-        {/* Mobile: logo | actions. md+: logo | centered nav | right actions */}
-        <div className="h-full px-4 sm:px-6 md:px-[160px] flex items-center justify-between md:grid md:grid-cols-3">
+        {/* Mobile: logo | actions. min-[1440px]: logo | centered nav | right actions */}
+        <div className="h-full px-4 sm:px-6 min-[1440px]:px-[160px] flex items-center justify-between min-[1440px]:grid min-[1440px]:grid-cols-3">
 
           {/* Col 1 — Logo left */}
           <motion.div
@@ -53,7 +53,7 @@ export default function SiteNav() {
 
           {/* Col 2 — Nav links absolutely centered */}
           <nav
-            className="hidden md:flex items-center justify-center gap-1"
+            className="hidden min-[1440px]:flex items-center justify-center gap-1"
             aria-label="Main navigation"
           >
             {navItems.map((item, i) => {
@@ -101,7 +101,7 @@ export default function SiteNav() {
             {/* Mobile hamburger */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden flex items-center justify-center w-9 h-9 rounded-lg text-gray-600 hover:text-[#2D5016] hover:bg-leaf-50 transition-colors"
+              className="min-[1440px]:hidden flex items-center justify-center w-9 h-9 rounded-lg text-gray-600 hover:text-[#2D5016] hover:bg-leaf-50 transition-colors"
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={mobileOpen}
             >
@@ -121,7 +121,7 @@ export default function SiteNav() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.15 }}
-              className="md:hidden fixed inset-0 top-16 bg-black/20 backdrop-blur-sm z-40"
+              className="min-[1440px]:hidden fixed inset-0 top-16 bg-black/20 backdrop-blur-sm z-40"
               onClick={() => setMobileOpen(false)}
               aria-hidden="true"
             />
@@ -131,7 +131,7 @@ export default function SiteNav() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
-              className="md:hidden fixed top-16 left-0 right-0 z-50 bg-[#f0f0f0] border-b border-[#e5e5e5] shadow-xl"
+              className="min-[1440px]:hidden fixed top-16 left-0 right-0 z-50 bg-[#f0f0f0] border-b border-[#e5e5e5] shadow-xl"
               aria-label="Mobile navigation"
             >
               <div className="max-w-7xl mx-auto px-4 py-3 flex flex-col gap-1">
