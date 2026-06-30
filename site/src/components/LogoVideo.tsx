@@ -10,10 +10,10 @@ export default function LogoLink({ className, dark = false }: { className: strin
         alt="The Strain Report logo"
         width={48}
         height={48}
-        style={{ width: '48px', height: '48px' }}
+        className="w-9 h-9 sm:w-12 sm:h-12 shrink-0"
       />
-      <span className={dark ? 'text-white' : 'text-leaf-900'} style={{ fontSize: '24px' }}>The Strain</span>
-      <span className={dark ? 'text-green-300' : 'text-leaf-900'} style={{ fontSize: '24px' }}>Report</span>
+      <span className={`text-lg sm:text-2xl whitespace-nowrap ${dark ? 'text-white' : 'text-leaf-900'}`}>The Strain</span>
+      <span className={`text-lg sm:text-2xl whitespace-nowrap ${dark ? 'text-green-300' : 'text-leaf-900'}`}>Report</span>
     </Link>
   )
 }

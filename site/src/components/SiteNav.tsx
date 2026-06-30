@@ -36,8 +36,8 @@ export default function SiteNav() {
         transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
         className="fixed top-0 left-0 right-0 z-50 h-16 print:hidden bg-[#f0f0f0]"
       >
-        {/* Three-column grid: logo | centered nav | right actions */}
-        <div className="h-full px-4 sm:px-6 md:px-[160px] grid grid-cols-3 items-center">
+        {/* Mobile: logo | actions. md+: logo | centered nav | right actions */}
+        <div className="h-full px-4 sm:px-6 md:px-[160px] flex items-center justify-between md:grid md:grid-cols-3">
 
           {/* Col 1 — Logo left */}
           <motion.div
