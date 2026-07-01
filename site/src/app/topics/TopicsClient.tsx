@@ -126,21 +126,22 @@ export default function TopicsClient({ clusters }: { clusters: ClusterData[] }) 
           {clusters.map((cluster, index) => (
             <motion.div
               key={cluster.id}
+              className="h-full"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              <Link href={`/topics/${cluster.id}`} className="no-underline block">
+              <Link href={`/topics/${cluster.id}`} className="no-underline block h-full">
                 <motion.div
-                  className="relative rounded-2xl overflow-hidden cursor-pointer hover:shadow-lg transition-shadow duration-300 group"
+                  className="relative h-full flex flex-col rounded-2xl overflow-hidden cursor-pointer hover:shadow-lg transition-shadow duration-300 group"
                   onMouseEnter={() => setHoveredIdx(index)}
                   onMouseLeave={() => setHoveredIdx(null)}
                   whileTap="tap"
                 >
                   {/* Card with gradient border */}
-                  <div className="p-[2px] pb-0 text-white" style={{ backgroundColor: cluster.color }}>
+                  <div className="p-[2px] pb-0 text-white flex flex-col flex-1" style={{ backgroundColor: cluster.color }}>
                     {/* Image */}
-                    <div className="relative w-full h-32 rounded-t-xl overflow-hidden">
+                    <div className="relative w-full h-32 rounded-t-xl overflow-hidden shrink-0">
                       <Image
                         src={categoryImages[cluster.id] || '/images/og-default.jpg'}
                         alt={cluster.title}
@@ -150,10 +151,10 @@ export default function TopicsClient({ clusters }: { clusters: ClusterData[] }) 
                       />
                     </div>
                     {/* Card Content */}
-                    <div className="p-6 pt-4">
+                    <div className="p-6 pt-4 flex flex-col flex-1">
                       <h2 className="text-xl font-bold mb-2">{cluster.title}</h2>
                       <p className="text-sm text-white/80">{cluster.description}</p>
-                      <div className="mt-4 flex items-center justify-between">
+                      <div className="mt-auto pt-4 flex items-center justify-between">
                         <span className="bg-white/20 px-3 py-1 rounded-full text-sm">
                           {cluster.posts.length} articles
                         </span>
