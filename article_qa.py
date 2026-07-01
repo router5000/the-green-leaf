@@ -7,6 +7,7 @@ Ensures articles are optimized for both search engines and LLM crawlers
 
 import os
 import json
+import time
 from datetime import datetime
 from pathlib import Path
 from dotenv import load_dotenv
@@ -15,7 +16,10 @@ from rate_limiter import wait_for_claude
 from cost_tracker import get_tracker
 
 load_dotenv()
-client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
+# Explicit per-request timeout — a slow/hung evaluate or refine call should
+# fail fast instead of silently eating the caller's overall time budget.
+CLAUDE_CALL_TIMEOUT = 90.0
+client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"), max_retries=2)
 
 # Quality thresholds
 QUALITY_THRESHOLDS = {
@@ -140,11 +144,14 @@ Return ONLY valid JSON, no other text."""
     # Rate limit Claude API calls
     wait_for_claude()
 
+    step_start = time.time()
     message = client.messages.create(
         model="claude-sonnet-4-6",
         max_tokens=2000,
+        timeout=CLAUDE_CALL_TIMEOUT,
         messages=[{"role": "user", "content": evaluation_prompt}]
     )
+    print(f"      ⏱️  QA evaluate call took {time.time() - step_start:.1f}s")
 
     # Log Claude API usage for cost tracking
     tracker = get_tracker()
@@ -297,11 +304,14 @@ Return ONLY valid JSON, no other text."""
     # Rate limit Claude API calls
     wait_for_claude()
 
+    step_start = time.time()
     message = client.messages.create(
         model="claude-sonnet-4-6",
         max_tokens=4000,
+        timeout=CLAUDE_CALL_TIMEOUT,
         messages=[{"role": "user", "content": refinement_prompt}]
     )
+    print(f"      ⏱️  QA refine call took {time.time() - step_start:.1f}s")
 
     # Log Claude API usage for cost tracking
     tracker = get_tracker()

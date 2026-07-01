@@ -15,6 +15,7 @@ Usage:
 import os
 import json
 import hashlib
+import time
 import requests
 import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -33,6 +34,10 @@ load_dotenv()
 YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 SUPADATA_API_KEY = os.getenv("SUPADATA_API_KEY")
+
+# Explicit per-request timeout — relevance scoring and transcript-insight
+# calls should fail fast instead of silently hanging toward the SDK default.
+CLAUDE_CALL_TIMEOUT = 90.0
 
 # Curated cannabis channels (optional - for higher quality results)
 # Add channel IDs of trusted cannabis YouTubers
@@ -439,11 +444,14 @@ Only return the JSON array, no other text."""
         # Rate limit Claude API calls
         wait_for_claude()
 
+        step_start = time.time()
         response = client.messages.create(
             model="claude-sonnet-4-6",
             max_tokens=1000,
+            timeout=CLAUDE_CALL_TIMEOUT,
             messages=[{"role": "user", "content": prompt}]
         )
+        print(f"   ⏱️  Video relevance scoring took {time.time() - step_start:.1f}s")
 
         # Parse response
         response_text = response.content[0].text.strip()
@@ -585,11 +593,14 @@ Return ONLY valid JSON, no other text:
         # Rate limit Claude API calls
         wait_for_claude()
 
+        step_start = time.time()
         response = client.messages.create(
             model="claude-sonnet-4-6",
             max_tokens=1000,
+            timeout=CLAUDE_CALL_TIMEOUT,
             messages=[{"role": "user", "content": prompt}]
         )
+        print(f"   ⏱️  Transcript insight extraction took {time.time() - step_start:.1f}s")
 
         response_text = response.content[0].text.strip()
 

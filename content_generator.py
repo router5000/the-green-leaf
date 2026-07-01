@@ -11,6 +11,7 @@ AI Models:
 import os
 import json
 import random
+import time
 from datetime import datetime
 from pathlib import Path
 import base64
@@ -36,7 +37,11 @@ from cost_tracker import CostTracker, set_tracker, get_tracker, clear_tracker
 load_dotenv()
 
 # Initialize API clients
-client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"), max_retries=3)
+# Explicit per-request timeout so a slow/hung call fails fast instead of
+# silently eating the weekly_content_pipeline subprocess budget with no
+# diagnostic trace (previously fell back to the SDK's ~10 min default).
+CLAUDE_CALL_TIMEOUT = 90.0
+client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"), max_retries=2)
 
 # Initialize Runware API client
 runware_api_key = os.environ.get("RUNWARE_API_KEY")
@@ -1033,13 +1038,16 @@ Return ONLY valid JSON, no other text. All string values — especially "content
     # Rate limit Claude API calls
     wait_for_claude()
 
+    step_start = time.time()
     message = client.messages.create(
         model="claude-sonnet-4-6",
         max_tokens=4000,
+        timeout=CLAUDE_CALL_TIMEOUT,
         messages=[
             {"role": "user", "content": prompt}
         ]
     )
+    print(f"   ⏱️  Article draft generated in {time.time() - step_start:.1f}s")
 
     # Log Claude API usage for cost tracking
     cost_tracker.log_claude_usage(message.usage, "claude-sonnet-4-6")
@@ -1138,14 +1146,18 @@ Return ONLY valid JSON, no other text. All string values — especially "content
     slug = article_data["slug"]
 
     # Generate hero image (16:9 ratio - see IMAGE_SIZES in regenerate_images.py)
+    step_start = time.time()
     hero_image_path, hero_metadata = generate_hero_image(keyword, slug, season)
+    print(f"   ⏱️  Hero image step took {time.time() - step_start:.1f}s")
     article_data["featured_image"] = hero_image_path
     article_data["featured_image_alt"] = generate_alt_text(keyword, article_data["title"], "hero")
     article_data["hero_image_metadata"] = hero_metadata
 
     # Generate section image (4:3 ratio - see IMAGE_SIZES in regenerate_images.py)
+    step_start = time.time()
     section_title = article_data.get("section_image_title", "Main Section")
     section_image_path, section_metadata = generate_section_image(keyword, slug, season, section_title)
+    print(f"   ⏱️  Section image step took {time.time() - step_start:.1f}s")
 
     if section_image_path:
         article_data["section_image"] = section_image_path
@@ -1178,7 +1190,9 @@ Return ONLY valid JSON, no other text. All string values — especially "content
 
     # Run QA evaluation and refinement pipeline (if enabled)
     if enable_qa:
+        step_start = time.time()
         article_data = quality_assurance_pipeline(article_data)
+        print(f"   ⏱️  QA pipeline took {time.time() - step_start:.1f}s")
     else:
         print("   ⚠️  QA pipeline skipped (disabled)")
 
@@ -1251,6 +1265,7 @@ Return ONLY valid JSON, no other text. All string values — especially "content
     print("\n📺 Searching for relevant YouTube videos...")
 
     try:
+        step_start = time.time()
         videos = find_videos_for_article(
             keyword=keyword,
             article_title=article_data["title"],
@@ -1259,6 +1274,7 @@ Return ONLY valid JSON, no other text. All string values — especially "content
             min_score=7.0,
             max_videos=2
         )
+        print(f"   ⏱️  YouTube video search took {time.time() - step_start:.1f}s")
 
         if videos:
             # Format for frontmatter
@@ -1283,7 +1299,7 @@ Return ONLY valid JSON, no other text. All string values — especially "content
             print("   ⚠️  No relevant videos found")
 
     except Exception as e:
-        print(f"   ❌ Video search error: {e}")
+        print(f"   ❌ Video search error after {time.time() - step_start:.1f}s: {e}")
         article_data["youtube"] = []
 
     # Save cost tracking data
