@@ -85,12 +85,22 @@ def run_content_generator(
 
     print(f"🔧 Running: {' '.join(cmd)}")
 
+    # Generating one article is a chain of ~9 sequential Claude calls (draft +
+    # up to 3 QA evaluate/2 QA refine rounds + YouTube relevance scoring + up
+    # to 2 transcript-insight extractions) plus 2 Runware image generations
+    # and several YouTube API calls. Each of those now has its own explicit
+    # per-request timeout (see CLAUDE_CALL_TIMEOUT in content_generator.py /
+    # article_qa.py / youtube_search.py) so a genuinely hung call fails fast
+    # instead of stalling silently — this outer timeout just needs to fit the
+    # realistic sequential total under normal-but-slow conditions, not guard
+    # against a single hang. 5 minutes never fit that; 8 does with headroom.
+    GENERATION_TIMEOUT = 480  # 8 minutes
     try:
         result = subprocess.run(
             cmd,
             capture_output=True,
             text=True,
-            timeout=300  # 5 minute timeout
+            timeout=GENERATION_TIMEOUT
         )
 
         if result.returncode != 0:
@@ -99,8 +109,16 @@ def run_content_generator(
         qa_passed, qa_score = _parse_pipeline_result(result.stdout)
         return True, result.stdout, qa_passed, qa_score
 
-    except subprocess.TimeoutExpired:
-        return False, "Content generation timed out (5 min limit)", None, None
+    except subprocess.TimeoutExpired as e:
+        # Surface whatever the generator had printed so far (including our
+        # new "⏱️" step-timing lines) instead of discarding it — that's the
+        # one piece of evidence that shows which step actually stalled.
+        partial_output = (e.stdout or b"").decode("utf-8", errors="replace") if isinstance(e.stdout, bytes) else (e.stdout or "")
+        tail = partial_output.strip()[-2000:]
+        detail = f"Content generation timed out ({GENERATION_TIMEOUT}s limit)"
+        if tail:
+            detail += f"\nLast output before timeout:\n{tail}"
+        return False, detail, None, None
     except Exception as e:
         return False, str(e), None, None
 

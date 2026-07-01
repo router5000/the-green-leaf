@@ -253,8 +253,16 @@ def save_cache(data: dict):
 # batch failed. We (a) space requests out with a jittered delay, and (b) retry
 # with exponential backoff when a request is throttled.
 TRENDS_BATCH_DELAY = (4.0, 8.0)   # (min, max) seconds of jittered pause between requests
-TRENDS_MAX_RETRIES = 4            # attempts per request before giving up
+TRENDS_MAX_RETRIES = 2            # attempts per request before giving up
 TRENDS_BACKOFF_BASE = 5.0         # seconds; backoff is base * 2**attempt (+jitter)
+
+# Circuit breaker: when the whole run's IP is rate-limited (the CI norm, per
+# the incident above), retrying every one of the ~26 batches burns 15+ minutes
+# for a signal that only accounts for 30% of the keyword score and already
+# falls back to a neutral score on failure. After this many CONSECUTIVE
+# batches exhaust their retries, stop calling Trends for the rest of this run
+# and default the remaining keywords to neutral immediately.
+TRENDS_CIRCUIT_BREAKER_THRESHOLD = 3
 
 
 def _make_trends_client() -> "TrendReq":
@@ -305,7 +313,17 @@ def get_google_trends_interest(keywords: list[str]) -> dict[str, int]:
 
     # Google Trends only allows 5 keywords at a time
     batches = [keywords[i:i+5] for i in range(0, len(keywords), 5)]
+    consecutive_failures = 0
+    circuit_open = False
     for batch_idx, batch in enumerate(batches):
+        if circuit_open:
+            # Trends has failed too many times in a row this run — assume the
+            # IP is rate-limited for the whole run and stop paying the retry
+            # tax on every remaining batch.
+            for kw in batch:
+                interest_scores[kw] = 50
+            continue
+
         # Pause between requests (skip before the first) to avoid tripping 429.
         if batch_idx > 0:
             time.sleep(random.uniform(*TRENDS_BATCH_DELAY))
@@ -320,6 +338,13 @@ def get_google_trends_interest(keywords: list[str]) -> dict[str, int]:
             # Request failed after retries — fall back to a neutral score.
             for kw in batch:
                 interest_scores[kw] = 50  # Default score on error
+            consecutive_failures += 1
+            if consecutive_failures >= TRENDS_CIRCUIT_BREAKER_THRESHOLD:
+                remaining = len(batches) - batch_idx - 1
+                print(f"Google Trends failed {consecutive_failures} batches in a row — "
+                      f"assuming this run's IP is rate-limited and skipping the "
+                      f"remaining {remaining} batch(es) (defaulting to neutral score).")
+                circuit_open = True
         elif not interest_over_time.empty:
             for kw in batch:
                 if kw in interest_over_time.columns:
