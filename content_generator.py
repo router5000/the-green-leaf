@@ -198,6 +198,70 @@ def categorize_article(title: str, keyword: str, tags: list) -> str:
     return best_cat
 
 
+# Randomized photographic variation attributes.
+# Even when two articles share the same keyword theme (and therefore the same
+# base scene), these give each generated image a distinct angle, light, framing
+# and color grade so images no longer look near-identical. See IMAGE_VARIATION_GUIDE.md.
+_VARIATION_ANGLES = {
+    "hero": [
+        "an eye-level perspective",
+        "a low three-quarter angle",
+        "a slightly elevated 45-degree angle",
+        "a wide establishing angle",
+        "a gentle overhead flat-lay angle",
+    ],
+    "section": [
+        "a straight-on macro angle",
+        "a top-down macro angle",
+        "a 45-degree macro angle",
+        "a raking side-lit macro angle",
+    ],
+}
+_VARIATION_LIGHTING = [
+    "warm golden-hour light",
+    "cool soft morning light",
+    "bright airy high-key lighting",
+    "moody low-key lighting with deep shadows",
+    "soft diffused overcast light",
+    "dramatic directional side light",
+]
+_VARIATION_COMPOSITION = {
+    "hero": [
+        "a rule-of-thirds composition",
+        "a centered symmetrical composition",
+        "an off-center composition with negative space",
+        "a layered composition with foreground depth",
+    ],
+    "section": [
+        "a tightly centered crop",
+        "an off-center crop with soft negative space",
+        "a diagonal composition",
+    ],
+}
+_VARIATION_PALETTE = [
+    "a rich warm color grade",
+    "cool muted tones",
+    "a vibrant saturated palette",
+    "earthy natural tones",
+]
+
+
+def _variation_clause(image_type="hero"):
+    """
+    Return a randomized photographic-variation sentence to append to a prompt.
+
+    Randomizing angle, lighting, composition and color grade per request is what
+    keeps images from looking identical when many articles share the same base
+    scene template.
+    """
+    key = "hero" if image_type == "hero" else "section"
+    angle = random.choice(_VARIATION_ANGLES[key])
+    lighting = random.choice(_VARIATION_LIGHTING)
+    composition = random.choice(_VARIATION_COMPOSITION[key])
+    palette = random.choice(_VARIATION_PALETTE)
+    return f"Shot from {angle} in {lighting}, {composition}, {palette}."
+
+
 def build_image_prompt(keyword, season, image_type="hero"):
     """
     Build an optimized prompt for cannabis education images.
@@ -422,12 +486,17 @@ def build_image_prompt(keyword, season, image_type="hero"):
         ),
     }
 
-    # Find matching activity or use generic cannabis fallback
+    # Find matching activity or use generic cannabis fallback.
+    # Prefer the MOST SPECIFIC (longest) matching key so that e.g.
+    # "best strains for anxiety" matches "anxiety"/"best strain" rather than
+    # collapsing into the generic "strain" bucket that appears earlier.
     activity_hero, activity_section = None, None
-    for key, (hero, section) in activities.items():
-        if key in keyword_lower:
-            activity_hero, activity_section = hero, section
-            break
+    matched_key = None
+    for key in activities:
+        if key in keyword_lower and (matched_key is None or len(key) > len(matched_key)):
+            matched_key = key
+    if matched_key:
+        activity_hero, activity_section = activities[matched_key]
 
     if not activity_hero:
         activity_hero = (
@@ -441,21 +510,23 @@ def build_image_prompt(keyword, season, image_type="hero"):
             f"soft bokeh background, macro botanical photography"
         )
 
-    # Build prompt optimized for Nano Banana 2 (google:4@3)
+    # Build prompt optimized for Nano Banana 2 (google:4@3).
+    # A randomized variation clause (angle / lighting / composition / color grade)
+    # is inserted per request so images built from the same base scene template
+    # no longer look near-identical.
+    variation = _variation_clause(image_type)
     if image_type == "hero":
         prompt = (
             f"Professional editorial photograph: {activity_hero}. "
-            f"Soft natural or studio light, warm tones, subtle shadows. "
-            f"Wide cinematic composition, shallow depth of field on the subject. "
-            f"Vivid saturated colors, ultra-sharp detail, photorealistic. "
+            f"{variation} "
+            f"Shallow depth of field on the subject, ultra-sharp detail, photorealistic. "
             f"No text, no watermarks, no logos, no UI elements."
         )
     else:
         prompt = (
             f"Professional editorial photograph: {activity_section}. "
-            f"Soft natural light with gentle bokeh background. "
-            f"Tight composition, tack-sharp focus on the subject, rich textures. "
-            f"Vivid saturated colors, photorealistic detail. "
+            f"{variation} "
+            f"Tack-sharp focus on the subject, rich textures, photorealistic detail. "
             f"No text, no watermarks, no logos."
         )
 
@@ -559,7 +630,10 @@ def _generate_image_via_runware(prompt: str, width: int, height: int, output_pat
                     "width": width,
                     "model": IMAGE_MODEL,
                     "numberResults": 1,
-                    "outputFormat": "JPEG"
+                    "outputFormat": "JPEG",
+                    # Random seed per request so identical prompts still produce
+                    # distinct images (and never return a cached/deduped result).
+                    "seed": random.randint(1, 2_147_483_647)
                 }],
                 timeout=90
             )
