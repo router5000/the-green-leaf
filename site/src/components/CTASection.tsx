@@ -139,17 +139,17 @@ export default function CTASection() {
               </p>
 
               {/* CTA row: email capture */}
-              <div className="flex flex-col items-center gap-1.5">
-                <div className="flex items-center gap-2">
+              <div className="flex flex-col items-center gap-1.5 w-full">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full max-w-[300px] sm:max-w-none">
                   <input
                     type="email"
                     placeholder="Enter your email"
-                    className="rounded-full text-sm outline-none"
-                    style={{ width: 220, padding: '11px 20px', backgroundColor: '#ffffff', color: '#1a3a0a' }}
+                    className="rounded-full text-sm outline-none w-full sm:w-[220px]"
+                    style={{ padding: '11px 20px', backgroundColor: '#ffffff', color: '#1a3a0a' }}
                   />
                   <button
                     type="button"
-                    className="rounded-full font-semibold text-sm whitespace-nowrap transition-colors hover:bg-green-50 shrink-0"
+                    className="rounded-full font-semibold text-sm whitespace-nowrap transition-colors hover:bg-green-50 shrink-0 w-full sm:w-auto"
                     style={{ padding: '11px 20px', backgroundColor: '#ffffff', color: '#1a3a0a' }}
                   >
                     Get on the list
