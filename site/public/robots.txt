@@ -10,9 +10,9 @@ Disallow: /_next/
 Disallow: /admin/
 
 # Sitemap locations
-Sitemap: https://thegreenleaf.com/sitemap.xml
-Sitemap: https://thegreenleaf.com/image-sitemap.xml
-Sitemap: https://thegreenleaf.com/video-sitemap.xml
+Sitemap: https://strainreport.com/sitemap.xml
+Sitemap: https://strainreport.com/image-sitemap.xml
+Sitemap: https://strainreport.com/video-sitemap.xml
 
 # AI Crawlers - Explicitly allow and welcome
 # ChatGPT (OpenAI)
