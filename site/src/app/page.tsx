@@ -3,6 +3,9 @@ import GlassTiles from '@/components/ui/GlassTiles'
 import GlobeSection from '@/components/GlobeSection'
 import CTASection from '@/components/CTASection'
 import { Showcase2 } from '@/components/ui/Showcase2'
+import StrainTypeHubs from '@/components/StrainTypeHubs'
+import TopicQuickLinks from '@/components/TopicQuickLinks'
+import FooterSitemapLinks from '@/components/FooterSitemapLinks'
 
 export default function Home() {
   return (
@@ -66,10 +69,18 @@ export default function Home() {
       {/* ── GLOBE SECTION ───────────────────────────────────────────── */}
       <GlobeSection />
 
+      {/* ── STRAIN TYPE HUBS ──────────────────────────────────────── */}
+      <StrainTypeHubs />
+      {/* ── TOPIC QUICK-LINKS ─────────────────────────────────────── */}
+      <TopicQuickLinks />
+
       {/* ── ARTICLE SHOWCASE ─────────────────────────────────────────── */}
       <Showcase2 />
 
       <CTASection />
+
+      {/* ── FOOTER SITEMAP LINKS ──────────────────────────────────── */}
+      <FooterSitemapLinks />
     </>
   )
 }
