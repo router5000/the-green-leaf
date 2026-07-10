@@ -71,10 +71,6 @@ export default function RootLayout({
       <head>
         <link rel="alternate" type="application/rss+xml" title="The Strain Report" href="https://strainreport.com/feed.xml" />
         <link rel="manifest" href="/manifest.json" />
-        {/* Vercel Web Analytics — script tag in SSR HTML (HUSA-75).
-            <Analytics /> from @vercel/analytics/next injects via JS post-hydration,
-            which doesn't satisfy the apex-curl verification. */}
-        <script defer src="/_vercel/insights/script.js" />
         <link rel="search" type="application/opensearchdescription+xml" title="The Strain Report" href="/opensearch.xml" />
         <meta name="theme-color" content="#2D5016" />
         {/* Organization Schema - Site-wide structured data for LLMs and search engines */}

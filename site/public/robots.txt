@@ -21,7 +21,7 @@ Allow: /
 Allow: /articles/
 
 # Claude (Anthropic)
-User-agent: Claude-Web
+User-agent: ClaudeBot
 Allow: /
 Allow: /articles/
 
@@ -55,10 +55,6 @@ User-agent: Googlebot
 Allow: /
 Crawl-delay: 0
 
-User-agent: Bingbot
-Allow: /
-Crawl-delay: 0
-
 User-agent: Slurp
 Allow: /
 Crawl-delay: 1
@@ -71,16 +67,3 @@ Crawl-delay: 2
 User-agent: SemrushBot
 Allow: /
 Crawl-delay: 2
-
-# Performance optimization
-# Allow caching of static assets
-User-agent: *
-Allow: /images/
-Allow: /fonts/
-Allow: /*.jpg$
-Allow: /*.jpeg$
-Allow: /*.png$
-Allow: /*.webp$
-Allow: /*.svg$
-Allow: /*.css$
-Allow: /*.js$

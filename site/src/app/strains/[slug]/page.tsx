@@ -160,13 +160,12 @@ export default async function StrainDetailPage({
   if (s.difficulty)                           productProps.push({ name: 'Difficulty', value: s.difficulty })
   if (s.origin_country)                       productProps.push({ name: 'Origin', value: s.origin_country })
 
-  const productSchema = {
+  const strainSchema = {
     '@context': 'https://schema.org',
-    '@type': 'Product',
+    '@type': 'Thing',
+    additionalType: 'CannabisStrainProfile',
     name: s.name,
     description: s.short_description ?? s.description ?? `${s.name} cannabis strain profile`,
-    category: `Cannabis Strain — ${s.strain_type}`,
-    brand: { '@type': 'Brand', name: 'The Strain Report' },
     url: `${baseUrl}/strains/${s.slug}`,
     additionalProperty: productProps.map((p) => ({ '@type': 'PropertyValue', ...p })),
   }
@@ -234,7 +233,7 @@ export default async function StrainDetailPage({
 
   return (
     <div className="min-h-screen bg-[#f0f0f0]">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(strainSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
