@@ -190,8 +190,8 @@ export default async function CompareStrainsPage({
         : `Both ${a.name} and ${b.name} contain sedating effects in similar measure.`
 
   // JSON-LD
-  const productSchemaA = buildProductSchema(a)
-  const productSchemaB = buildProductSchema(b)
+  const strainSchemaA = buildStrainSchema(a)
+  const strainSchemaB = buildStrainSchema(b)
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -214,8 +214,8 @@ export default async function CompareStrainsPage({
 
   return (
     <div className="min-h-screen bg-[#f0f0f0]">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchemaA) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchemaB) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(strainSchemaA) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(strainSchemaB) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
@@ -396,7 +396,7 @@ function winner(a: number | null, b: number | null): 'a' | 'b' | null {
   return null
 }
 
-function buildProductSchema(s: Strain) {
+function buildStrainSchema(s: Strain) {
   const props: Record<string, string>[] = []
   if (s.thc_min != null && s.thc_max != null) props.push({ name: 'THC', value: `${s.thc_min}-${s.thc_max}%` })
   if (s.cbd_min != null && s.cbd_max != null) props.push({ name: 'CBD', value: `${s.cbd_min}-${s.cbd_max}%` })
@@ -405,11 +405,10 @@ function buildProductSchema(s: Strain) {
 
   return {
     '@context': 'https://schema.org',
-    '@type': 'Product',
+    '@type': 'Thing',
+    additionalType: 'CannabisStrainProfile',
     name: s.name,
     description: s.short_description ?? s.description ?? `${s.name} cannabis strain profile`,
-    category: `Cannabis Strain — ${s.strain_type}`,
-    brand: { '@type': 'Brand', name: 'The Strain Report' },
     url: `${baseUrl}/strains/${s.slug}`,
     additionalProperty: props.map((p) => ({ '@type': 'PropertyValue', ...p })),
   }

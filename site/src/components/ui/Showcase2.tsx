@@ -170,6 +170,10 @@ export function Showcase2() {
                     <img
                       src={resolveArticleImage(item, item.id - 1)}
                       alt={item.title}
+                      width={320}
+                      height={400}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover object-top pointer-events-none"
                       draggable={false}
                     />

@@ -371,11 +371,17 @@ export async function getPostData(slug: string): Promise<PostData> {
   )
 
   // Optimize inline images with lazy loading and responsive sizing
+  // Use aspect-ratio CSS to prevent CLS (actual dimensions not knowable at build time)
   contentHtml = contentHtml.replace(
     /<img\s+([^>]*?)>/g,
     (match, attrs) => {
       if (attrs.includes('loading=')) return match
-      return `<img ${attrs} loading="lazy" decoding="async" sizes="(max-width: 768px) 100vw, 720px">`
+      // Add style with aspect-ratio if no explicit width/height present
+      const hasDimensions = attrs.includes('width=') && attrs.includes('height=')
+      const styleAttr = hasDimensions
+        ? ''
+        : 'style="aspect-ratio:16/9;width:100%;height:auto"'
+      return `<img ${attrs} loading="lazy" decoding="async" sizes="(max-width: 768px) 100vw, 720px"${styleAttr ? ' ' + styleAttr : ''}>`
     }
   )
 

@@ -3,6 +3,7 @@ import { getSortedPostsData } from '@/lib/posts'
 import { getSupabase } from '@/lib/supabase'
 import { COMPARISON_PAIRS } from '@/data/strainComparisonPairs'
 import { TERPENE_SLUGS } from '@/lib/terpenes'
+import { statesData } from '@/data/statesData'
 
 const baseUrl = 'https://strainreport.com'
 
@@ -103,13 +104,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ]
 
-  // Article pages
-  const articlePages: MetadataRoute.Sitemap = posts.map((post) => ({
-    url: `${baseUrl}/articles/${post.slug}`,
-    lastModified: new Date(post.generated_at),
-    changeFrequency: 'weekly',
-    priority: 0.8,
-  }))
+  // Article pages — use last_updated when it exists and is newer than generated_at
+  const articlePages: MetadataRoute.Sitemap = posts.map((post) => {
+    const gen = new Date(post.generated_at)
+    const last = post.last_updated ? new Date(post.last_updated) : null
+    const lastMod = last && last > gen ? last : gen
+    return {
+      url: `${baseUrl}/articles/${post.slug}`,
+      lastModified: lastMod,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    }
+  })
 
   // Strain pages — fetched live from Supabase
   let strainPages: MetadataRoute.Sitemap = []
@@ -138,5 +144,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.5,
   }))
 
-  return [...staticPages, ...articlePages, ...strainPages, ...comparisonPages]
+  // State pages (static data, no lastmod source — omit rather than guess)
+  const statePages: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}/states`,
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+    ...statesData.map((s) => ({
+      url: `${baseUrl}/states/${s.slug}`,
+      changeFrequency: 'monthly' as const,
+      priority: 0.5,
+    })),
+  ]
+
+  return [...staticPages, ...articlePages, ...strainPages, ...comparisonPages, ...statePages]
 }
