@@ -4,7 +4,7 @@ import { topicClusters, matchesCluster } from '../topicClusters'
 import CategoryDetailClient from './CategoryDetailClient'
 import type { Metadata } from 'next'
 
-const baseUrl = 'https://thegreenleaf.com'
+const baseUrl = 'https://strainreport.com'
 
 export function generateStaticParams() {
   return topicClusters.map(c => ({ slug: c.id }))

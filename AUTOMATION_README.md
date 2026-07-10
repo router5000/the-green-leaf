@@ -7,7 +7,7 @@ Fully automated content generation system that:
 4. **Links** articles internally and inserts relevant affiliate products
 5. **Publishes** automatically via Git push → Vercel deployment
 
-**Live Site:** https://thegreenleaf.com
+**Live Site:** https://strainreport.com
 **GitHub:** https://github.com/JakeTaylorDesign/cannabiscare-center
 
 ## Quick Start

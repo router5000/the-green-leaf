@@ -10,7 +10,7 @@ import { Analytics } from '@vercel/analytics/next'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://thegreenleaf.com'),
+  metadataBase: new URL('https://strainreport.com'),
   title: 'The Strain Report - Cannabis Education, Guides & News',
   description: 'Your trusted source for cannabis education — strain guides, growing tips, health & wellness, and industry news.',
   keywords: 'cannabis, marijuana, strains, growing cannabis, CBD, edibles, cannabis health, legalization',
@@ -18,13 +18,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'The Strain Report - Cannabis Education, Guides & News',
     description: 'Your trusted source for cannabis education — strain guides, growing tips, health & wellness, and industry news.',
-    url: 'https://thegreenleaf.com',
+    url: 'https://strainreport.com',
     siteName: 'The Strain Report',
     locale: 'en_US',
     type: 'website',
     images: [
       {
-        url: 'https://thegreenleaf.com/images/default-leaf-hero.jpg',
+        url: 'https://strainreport.com/images/default-leaf-hero.jpg',
         width: 1792,
         height: 1024,
         alt: 'The Strain Report - Cannabis education and guides',
@@ -35,10 +35,10 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'The Strain Report - Cannabis Education, Guides & News',
     description: 'Your trusted source for cannabis education — strain guides, growing tips, health & wellness, and industry news.',
-    images: ['https://thegreenleaf.com/images/default-leaf-hero.jpg'],
+    images: ['https://strainreport.com/images/default-leaf-hero.jpg'],
   },
   alternates: {
-    canonical: 'https://thegreenleaf.com',
+    canonical: 'https://strainreport.com',
   },
   robots: {
     index: true,
@@ -69,7 +69,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="alternate" type="application/rss+xml" title="The Strain Report" href="https://thegreenleaf.com/feed.xml" />
+        <link rel="alternate" type="application/rss+xml" title="The Strain Report" href="https://strainreport.com/feed.xml" />
         <link rel="manifest" href="/manifest.json" />
         {/* Vercel Web Analytics — script tag in SSR HTML (HUSA-75).
             <Analytics /> from @vercel/analytics/next injects via JS post-hydration,
@@ -84,12 +84,12 @@ export default function RootLayout({
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'Organization',
-              '@id': 'https://thegreenleaf.com/#organization',
+              '@id': 'https://strainreport.com/#organization',
               name: 'The Strain Report',
-              url: 'https://thegreenleaf.com',
+              url: 'https://strainreport.com',
               logo: {
                 '@type': 'ImageObject',
-                url: 'https://thegreenleaf.com/images/logo_accent.png',
+                url: 'https://strainreport.com/images/logo_accent.png',
                 width: 200,
                 height: 200,
               },
@@ -98,7 +98,7 @@ export default function RootLayout({
               contactPoint: {
                 '@type': 'ContactPoint',
                 contactType: 'customer service',
-                email: 'contact@thegreenleaf.com',
+                email: 'contact@strainreport.com',
               },
             }),
           }}
@@ -110,18 +110,18 @@ export default function RootLayout({
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'WebSite',
-              '@id': 'https://thegreenleaf.com/#website',
-              url: 'https://thegreenleaf.com',
+              '@id': 'https://strainreport.com/#website',
+              url: 'https://strainreport.com',
               name: 'The Strain Report',
               description: 'Cannabis education, strain guides, growing tips, and industry news',
               publisher: {
-                '@id': 'https://thegreenleaf.com/#organization',
+                '@id': 'https://strainreport.com/#organization',
               },
               potentialAction: {
                 '@type': 'SearchAction',
                 target: {
                   '@type': 'EntryPoint',
-                  urlTemplate: 'https://thegreenleaf.com/search?q={search_term_string}',
+                  urlTemplate: 'https://strainreport.com/search?q={search_term_string}',
                 },
                 'query-input': 'required name=search_term_string',
               },

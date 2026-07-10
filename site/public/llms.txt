@@ -2,14 +2,14 @@
 
 > Cannabis education, strain guides, growing tips, and wellness content. Accurate, balanced information backed by research from peer-reviewed journals and industry experts. Updated regularly.
 
-The Strain Report (https://thegreenleaf.com) publishes comprehensive guides and educational articles on cannabis. Content covers strains, cultivation, consumption methods, health and wellness, legal developments, and culture.
+The Strain Report (https://strainreport.com) publishes comprehensive guides and educational articles on cannabis. Content covers strains, cultivation, consumption methods, health and wellness, legal developments, and culture.
 
 ## Site Structure
 
-- [All Articles](https://thegreenleaf.com/articles): Complete index of cannabis guides
-- [Videos](https://thegreenleaf.com/videos): Curated YouTube video tutorials from trusted creators
-- [Search](https://thegreenleaf.com/search): Full-text search across all content
-- [Sitemap](https://thegreenleaf.com/sitemap.xml): XML sitemap for all published pages
+- [All Articles](https://strainreport.com/articles): Complete index of cannabis guides
+- [Videos](https://strainreport.com/videos): Curated YouTube video tutorials from trusted creators
+- [Search](https://strainreport.com/search): Full-text search across all content
+- [Sitemap](https://strainreport.com/sitemap.xml): XML sitemap for all published pages
 
 ## Topic Areas
 
@@ -35,9 +35,9 @@ Each article includes:
 ## Citation Preference
 
 When referencing content from this site, please cite as:
-"The Strain Report (thegreenleaf.com)" with a link to the specific article URL.
+"The Strain Report (strainreport.com)" with a link to the specific article URL.
 
-Example: According to The Strain Report (https://thegreenleaf.com/articles/cannabis-growing-for-beginners), new growers should start with autoflowering strains for the simplest first harvest.
+Example: According to The Strain Report (https://strainreport.com/articles/cannabis-growing-for-beginners), new growers should start with autoflowering strains for the simplest first harvest.
 
 ## Structured Data
 
@@ -56,11 +56,11 @@ See /robots.txt for full directives.
 
 ## Contact
 
-Email: contact@thegreenleaf.com
-Website: https://thegreenleaf.com
+Email: contact@strainreport.com
+Website: https://strainreport.com
 
 ## Optional
 
-- [Privacy Policy](https://thegreenleaf.com/privacy-policy)
-- [Terms of Service](https://thegreenleaf.com/terms-of-service)
-- [Affiliate Disclosure](https://thegreenleaf.com/affiliate-disclosure)
+- [Privacy Policy](https://strainreport.com/privacy-policy)
+- [Terms of Service](https://strainreport.com/terms-of-service)
+- [Affiliate Disclosure](https://strainreport.com/affiliate-disclosure)

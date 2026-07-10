@@ -38,7 +38,7 @@
 **How to Apply**:
 1. Visit https://www.google.com/adsense/start/
 2. Sign in with Google account
-3. Enter website URL: `thegreenleaf.com`
+3. Enter website URL: `strainreport.com`
 4. Paste ad code in `site/src/app/layout.tsx` (between `<head>` tags)
 5. Wait for approval (typically 1-2 weeks)
 
@@ -68,7 +68,7 @@
 **How to Apply**:
 1. Visit https://affiliate-program.amazon.com/
 2. Sign up with your Amazon account
-3. Enter website information: `thegreenleaf.com`
+3. Enter website information: `strainreport.com`
 4. Describe your website: "Cannabis tips and product recommendations"
 5. Wait for approval (usually instant)
 

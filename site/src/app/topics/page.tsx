@@ -2,7 +2,7 @@ import { getSortedPostsData } from '@/lib/posts'
 import TopicsClient from './TopicsClient'
 import { topicClusters, matchesCluster } from './topicClusters'
 
-const baseUrl = 'https://thegreenleaf.com'
+const baseUrl = 'https://strainreport.com'
 
 export default function TopicsPage() {
   const allPosts = getSortedPostsData()

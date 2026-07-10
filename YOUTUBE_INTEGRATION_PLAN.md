@@ -350,7 +350,7 @@ git push origin main
 3. **Vercel auto-deploys** within 60 seconds
 
 4. **Verify on production:**
-   - Visit thegreenleaf.com
+   - Visit strainreport.com
    - Check a few articles for video embeds
    - Test responsive behavior on mobile
 
@@ -405,7 +405,7 @@ git push origin main
 - [ ] Commit all changes
 - [ ] Push to GitHub
 - [ ] Verify Vercel deployment succeeds
-- [ ] Test on production (thegreenleaf.com)
+- [ ] Test on production (strainreport.com)
 - [ ] Generate 2-3 new articles with videos
 - [ ] Confirm videos display correctly
 

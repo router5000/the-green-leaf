@@ -2,7 +2,7 @@ import { statesData } from '@/data/statesData'
 import StatesClient from './StatesClient'
 import type { Metadata } from 'next'
 
-const baseUrl = 'https://thegreenleaf.com'
+const baseUrl = 'https://strainreport.com'
 
 export const metadata: Metadata = {
   title: 'Cannabis Laws by State - Possession Limits & Legality | The Strain Report',

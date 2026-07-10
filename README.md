@@ -1,6 +1,6 @@
 # The Green Leaf Content Engine
 
-Automated content generation for [thegreenleaf.com](https://thegreenleaf.com).
+Automated content generation for [strainreport.com](https://strainreport.com).
 
 ## Quick Start
 

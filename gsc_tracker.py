@@ -3,7 +3,7 @@
 Google Search Console Tracking Script
 
 Tracks indexing status, performance metrics, and identifies SEO opportunities
-for thegreenleaf.com articles.
+for strainreport.com articles.
 
 Setup:
 1. Go to Google Cloud Console → APIs & Services → Credentials
@@ -33,7 +33,7 @@ from google.auth.transport.requests import Request
 from googleapiclient.discovery import build
 
 # Constants
-SITE_URL = 'sc-domain:thegreenleaf.com'  # Domain property format
+SITE_URL = 'sc-domain:strainreport.com'  # Domain property format
 SCOPES = ['https://www.googleapis.com/auth/webmasters.readonly']
 CREDENTIALS_FILE = 'gsc_credentials.json'
 TOKEN_FILE = '.gsc_token.json'
@@ -42,7 +42,7 @@ REPORT_DIR = 'reports'
 
 # Local paths
 POSTS_DIR = 'site/content/posts'
-BASE_URL = 'https://thegreenleaf.com'
+BASE_URL = 'https://strainreport.com'
 
 
 def get_gsc_service():
@@ -262,7 +262,7 @@ def generate_report(indexed, not_indexed, opportunities, output_json=False):
 
     # Print formatted report
     print("\n" + "="*60)
-    print("📊 GSC TRACKING REPORT - thegreenleaf.com")
+    print("📊 GSC TRACKING REPORT - strainreport.com")
     print("="*60)
     print(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
 
@@ -329,7 +329,7 @@ def generate_report(indexed, not_indexed, opportunities, output_json=False):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='GSC Tracking for thegreenleaf.com')
+    parser = argparse.ArgumentParser(description='GSC Tracking for strainreport.com')
     parser.add_argument('--indexed-only', action='store_true', help='Only show indexed pages')
     parser.add_argument('--opportunities', action='store_true', help='Focus on opportunities')
     parser.add_argument('--json', action='store_true', help='Output as JSON')

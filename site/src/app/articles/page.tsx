@@ -7,7 +7,7 @@ import type React from 'react'
 
 export const revalidate = 3600
 
-const baseUrl = 'https://thegreenleaf.com'
+const baseUrl = 'https://strainreport.com'
 
 export const metadata: Metadata = {
   title: 'Cannabis Articles & Guides - Strain Reviews, Effects & Education',
