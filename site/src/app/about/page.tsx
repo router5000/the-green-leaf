@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 
-const baseUrl = 'https://thegreenleaf.com'
+const baseUrl = 'https://strainreport.com'
 
 export const metadata: Metadata = {
   title: 'About The Strain Report - Our Mission & Expert Sources',
@@ -39,7 +39,7 @@ export default function AboutPage() {
     foundingDate: '2025',
     contactPoint: {
       '@type': 'ContactPoint',
-      email: 'contact@thegreenleaf.com',
+      email: 'contact@strainreport.com',
       contactType: 'customer service',
     },
     knowsAbout: [
@@ -182,8 +182,8 @@ export default function AboutPage() {
               Have a question, suggestion, or correction? We welcome feedback.
             </p>
             <ul>
-              <li><strong>Email:</strong> <a href="mailto:contact@thegreenleaf.com" className="text-leaf-600 hover:text-leaf-800">contact@thegreenleaf.com</a></li>
-              <li><strong>Website:</strong> <a href="https://thegreenleaf.com" className="text-leaf-600 hover:text-leaf-800">thegreenleaf.com</a></li>
+              <li><strong>Email:</strong> <a href="mailto:contact@strainreport.com" className="text-leaf-600 hover:text-leaf-800">contact@strainreport.com</a></li>
+              <li><strong>Website:</strong> <a href="https://strainreport.com" className="text-leaf-600 hover:text-leaf-800">strainreport.com</a></li>
             </ul>
 
             <h2>Our Sources</h2>

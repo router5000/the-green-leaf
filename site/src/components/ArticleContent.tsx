@@ -212,7 +212,7 @@ export function AnimatedHeader({
         <time itemProp="timeRequired">{readTime}</time>
         <span className="text-gray-400">•</span>
         <span itemProp="wordCount">{wordCount} words</span>
-        <InlineShareIcons url={`https://thegreenleaf.com/articles/${slug}`} title={title} />
+        <InlineShareIcons url={`https://strainreport.com/articles/${slug}`} title={title} />
       </div>
 
       <motion.h1
@@ -577,7 +577,7 @@ export function PrintableChecklist({ title, steps }: { title: string; steps: Che
         </div>
         {/* Print footer */}
         <div className="hidden print:block border-t border-gray-300 pt-3 mt-4 text-xs text-gray-500">
-          <p>thegreenleaf.com - Your complete cannabis resource</p>
+          <p>strainreport.com - Your complete cannabis resource</p>
         </div>
       </div>
     </ScrollReveal>

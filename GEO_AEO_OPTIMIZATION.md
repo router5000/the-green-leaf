@@ -1,8 +1,8 @@
-# Claude Code Task List: GEO/AEO Optimization for thegreenleaf.com
+# Claude Code Task List: GEO/AEO Optimization for strainreport.com
 
 **Goal:** Maximize visibility in AI-generated answers (ChatGPT, Perplexity, Google AI Overviews) and traditional Google search results.
 
-**Project:** thegreenleaf.com
+**Project:** strainreport.com
 **GitHub:** https://github.com/JakeTaylorDesign/cannabiscare-center
 
 ---

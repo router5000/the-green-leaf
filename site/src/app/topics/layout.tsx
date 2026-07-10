@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Cannabis Topics & Guides',
     description: 'Explore comprehensive cannabis guides organized by topic: strains, growing, consumption, health, legal, and culture.',
-    url: 'https://thegreenleaf.com/topics',
+    url: 'https://strainreport.com/topics',
     siteName: 'The Strain Report',
     locale: 'en_US',
     type: 'website',
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     description: 'Explore comprehensive cannabis guides organized by topic.',
   },
   alternates: {
-    canonical: 'https://thegreenleaf.com/topics',
+    canonical: 'https://strainreport.com/topics',
   },
 }
 

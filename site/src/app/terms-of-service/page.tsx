@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 
-const baseUrl = 'https://thegreenleaf.com'
+const baseUrl = 'https://strainreport.com'
 
 export const metadata: Metadata = {
   title: 'Terms of Service - Usage Guidelines | The Strain Report',
@@ -199,8 +199,8 @@ export default function TermsOfServicePage() {
             If you have any questions about these Terms, please contact us:
           </p>
           <ul className="list-none text-gray-700">
-            <li>Email: legal@thegreenleaf.com</li>
-            <li>Website: <Link href="/" className="text-leaf-600 hover:text-leaf-800 underline">thegreenleaf.com</Link></li>
+            <li>Email: legal@strainreport.com</li>
+            <li>Website: <Link href="/" className="text-leaf-600 hover:text-leaf-800 underline">strainreport.com</Link></li>
           </ul>
         </section>
 

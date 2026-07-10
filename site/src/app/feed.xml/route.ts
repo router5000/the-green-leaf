@@ -1,6 +1,6 @@
 import { getSortedPostsData } from '@/lib/posts'
 
-const SITE_URL = 'https://thegreenleaf.com'
+const SITE_URL = 'https://strainreport.com'
 
 function escapeXml(str: string): string {
   return str

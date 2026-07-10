@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 
-const baseUrl = 'https://thegreenleaf.com'
+const baseUrl = 'https://strainreport.com'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy - How We Protect Your Data | The Strain Report',
@@ -43,7 +43,7 @@ export default function PrivacyPolicyPage() {
         <section className="mb-8">
           <h2 className="text-2xl font-bold text-leaf-800 mb-4">Introduction</h2>
           <p className="text-gray-700 leading-relaxed">
-            The Strain Report ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website thegreenleaf.com.
+            The Strain Report ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website strainreport.com.
           </p>
         </section>
 
@@ -175,8 +175,8 @@ export default function PrivacyPolicyPage() {
             If you have any questions about this Privacy Policy, please contact us:
           </p>
           <ul className="list-none text-gray-700">
-            <li>Email: privacy@thegreenleaf.com</li>
-            <li>Website: <Link href="/" className="text-leaf-600 hover:text-leaf-800 underline">thegreenleaf.com</Link></li>
+            <li>Email: privacy@strainreport.com</li>
+            <li>Website: <Link href="/" className="text-leaf-600 hover:text-leaf-800 underline">strainreport.com</Link></li>
           </ul>
         </section>
 

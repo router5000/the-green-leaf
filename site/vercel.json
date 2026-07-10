@@ -37,8 +37,8 @@
   "redirects": [
     {
       "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.thegreenleaf.com" }],
-      "destination": "https://thegreenleaf.com/:path*",
+      "has": [{ "type": "host", "value": "www.strainreport.com" }],
+      "destination": "https://strainreport.com/:path*",
       "permanent": true
     }
   ]

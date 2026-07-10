@@ -113,7 +113,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params
   try {
     const post = await getPostData(slug)
-    const baseUrl = 'https://thegreenleaf.com'
+    const baseUrl = 'https://strainreport.com'
     const imageUrl = post.featured_image
       ? `${baseUrl}${post.featured_image}`
       : `${baseUrl}/images/default-leaf-hero.jpg`
@@ -173,7 +173,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   const relatedPosts = getRelatedPosts(slug, 3)
 
   // Enhanced JSON-LD structured data for AI crawlers
-  const baseUrl = 'https://thegreenleaf.com'
+  const baseUrl = 'https://strainreport.com'
   const articleUrl = `${baseUrl}/articles/${slug}`
   const imageUrl = post.featured_image ? `${baseUrl}${post.featured_image}` : `${baseUrl}/images/default-leaf-hero.jpg`
 
@@ -435,7 +435,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             )}
 
             {/* Share Buttons */}
-            <ShareButtons url={`https://thegreenleaf.com/articles/${slug}`} title={post.title} />
+            <ShareButtons url={`https://strainreport.com/articles/${slug}`} title={post.title} />
 
             {/* Related Articles - Staggered reveal */}
             <AnimatedRelatedArticles posts={relatedPosts} />

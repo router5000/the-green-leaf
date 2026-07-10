@@ -9,7 +9,7 @@ import BlinkingSquares from '@/components/ui/BlinkingSquares'
 import type { Metadata } from 'next'
 import type React from 'react'
 
-const baseUrl = 'https://thegreenleaf.com'
+const baseUrl = 'https://strainreport.com'
 
 // ── Shared layout helpers ──────────────────────────────────────────────────
 

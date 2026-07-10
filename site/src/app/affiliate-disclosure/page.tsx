@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 
-const baseUrl = 'https://thegreenleaf.com'
+const baseUrl = 'https://strainreport.com'
 
 export const metadata: Metadata = {
   title: 'Affiliate Disclosure - Our Product Partnerships | The Strain Report',
@@ -144,8 +144,8 @@ export default function AffiliateDisclosurePage() {
             If you have questions about our affiliate relationships or would like to know whether a specific link is an affiliate link, please contact us:
           </p>
           <ul className="list-none text-gray-700">
-            <li>Email: affiliates@thegreenleaf.com</li>
-            <li>Website: <Link href="/" className="text-leaf-600 hover:text-leaf-800 underline">thegreenleaf.com</Link></li>
+            <li>Email: affiliates@strainreport.com</li>
+            <li>Website: <Link href="/" className="text-leaf-600 hover:text-leaf-800 underline">strainreport.com</Link></li>
           </ul>
         </section>
 

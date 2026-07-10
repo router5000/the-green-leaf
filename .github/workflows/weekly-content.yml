@@ -78,7 +78,7 @@ jobs:
       - name: Configure Git
         run: |
           git config user.name "Green Leaf Bot"
-          git config user.email "bot@thegreenleaf.com"
+          git config user.email "bot@strainreport.com"
       
       - name: Run content pipeline
         env:

@@ -1,4 +1,4 @@
-# robots.txt for thegreenleaf.com
+# robots.txt for strainreport.com
 # Cannabis education content site
 # Optimized for both traditional search engines and AI crawlers
 

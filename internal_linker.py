@@ -13,7 +13,7 @@ from collections import defaultdict
 
 # Directories
 POSTS_DIR = Path(__file__).parent / "site" / "content" / "posts"
-SITE_URL = "https://thegreenleaf.com"
+SITE_URL = "https://strainreport.com"
 
 
 def load_article_index() -> List[Dict]:

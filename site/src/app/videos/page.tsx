@@ -7,7 +7,7 @@ import BlinkingSquares from '@/components/ui/BlinkingSquares'
 
 export const revalidate = 3600
 
-const baseUrl = 'https://thegreenleaf.com'
+const baseUrl = 'https://strainreport.com'
 
 export const metadata: Metadata = {
   title: 'Cannabis Videos - Strain Reviews, Effects & Education',

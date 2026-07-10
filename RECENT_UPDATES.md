@@ -3,14 +3,14 @@
 **Last Updated:** January 2026
 **Project Status:** PRODUCTION - FULLY AUTOMATED
 **Current Season:** Winter
-**Live Site:** https://thegreenleaf.com
+**Live Site:** https://strainreport.com
 **GitHub:** https://github.com/JakeTaylorDesign/cannabiscare-center
 
 ---
 
 ## Project Overview
 
-An AI-powered, fully automated content generation and publishing system for **thegreenleaf.com**. Generates SEO-optimized cannabis articles using Claude AI with Runware-generated photorealistic images, YouTube video embeds, and Amazon affiliate links. Content is published automatically via GitHub Actions on a Monday/Wednesday schedule.
+An AI-powered, fully automated content generation and publishing system for **strainreport.com**. Generates SEO-optimized cannabis articles using Claude AI with Runware-generated photorealistic images, YouTube video embeds, and Amazon affiliate links. Content is published automatically via GitHub Actions on a Monday/Wednesday schedule.
 
 ### Core Capabilities
 - Automated keyword research via Google Trends with seasonal balancing
@@ -62,7 +62,7 @@ An AI-powered, fully automated content generation and publishing system for **th
 - **Analytics:** PostHog JS SDK
 - **Build:** Static site generation (SSG), standalone output
 - **Deployment:** Vercel (auto-deploys on push to main)
-- **Domain:** thegreenleaf.com (Hostinger DNS → Vercel)
+- **Domain:** strainreport.com (Hostinger DNS → Vercel)
 
 ---
 
@@ -272,7 +272,7 @@ Each generated article includes:
 ### Monthly (current schedule: 2 articles/week)
 - API costs: ~$0.80-1.20/month
 - Vercel hosting: Free
-- Domain: Owned (thegreenleaf.com)
+- Domain: Owned (strainreport.com)
 
 ---
 

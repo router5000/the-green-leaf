@@ -489,7 +489,7 @@ def setup_git_for_ci():
     Configure git for CI environment (GitHub Actions).
     """
     # Set git user for commits
-    run_git_command(["config", "user.email", "bot@thegreenleaf.com"])
+    run_git_command(["config", "user.email", "bot@strainreport.com"])
     run_git_command(["config", "user.name", "Green Leaf Bot"])
     
     print("✅ Git configured for CI environment")

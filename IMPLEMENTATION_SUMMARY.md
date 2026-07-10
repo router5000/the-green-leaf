@@ -156,7 +156,7 @@ All moved to site/content/posts/ for publishing
    - Initialize git repository
    - Push to GitHub
    - Deploy via Vercel
-   - Connect thegreenleaf.com domain
+   - Connect strainreport.com domain
 
 2. **Submit to Search Engines**
    - Google Search Console

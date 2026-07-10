@@ -1,12 +1,12 @@
 # AGENT.md - The Green Leaf Content Engine
 
-AI-powered content generation system for [thegreenleaf.com](https://thegreenleaf.com).
+AI-powered content generation system for [strainreport.com](https://strainreport.com).
 
 ## Quick Reference
 
 | Item | Value |
 |------|-------|
-| Live URL | https://thegreenleaf.com |
+| Live URL | https://strainreport.com |
 | Articles | 65 published |
 | Cost/article | ~$0.10-0.15 (tracked via cost_tracker.py) |
 | Hosting | Vercel (auto-deploy on push to main) |
