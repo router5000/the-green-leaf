@@ -107,7 +107,7 @@ Consumer data consistently shows that strain selection matters more to experienc
 
 ## Conclusion
 
-The endocannabinoid system is the reason cannabis works — and the reason it works differently for everyone. Understanding your ECS gives you a more informed framework for choosing strains, cannabinoid ratios, and terpene profiles that align with the experience you're looking for. If you're exploring cannabis for the first time or trying to refine your preferences, start by looking beyond THC percentages and paying attention to the full cannabinoid and terpene profile of a strain. Dive into our strain guides and terpene breakdowns here at The Green Leaf to put this science to practical use.
+The endocannabinoid system is the reason cannabis works — and the reason it works differently for everyone. Understanding your ECS gives you a more informed framework for choosing strains, cannabinoid ratios, and terpene profiles that align with the experience you're looking for. If you're exploring cannabis for the first time or trying to refine your preferences, start by looking beyond THC percentages and paying attention to the full cannabinoid and terpene profile of a strain. Dive into our strain guides and terpene breakdowns here at The Strain Report to put this science to practical use.
 
 ## Sources
 

@@ -1,6 +1,6 @@
 ---
 title: "Girl Scout Cookies Strain Profile: Effects & Terpenes"
-meta_description: "Explore the Girl Scout Cookies strain profile: THC levels, terpenes, effects, flavor, and who it's best for. A complete guide from The Green Leaf."
+meta_description: "Explore the Girl Scout Cookies strain profile: THC levels, terpenes, effects, flavor, and who it's best for. A complete guide from The Strain Report."
 slug: "girl-scout-cookies-strain-profile"
 keyword: "Girl Scout Cookies strain profile"
 featured_image: "/images/articles/girl-scout-cookies-strain-profile.jpg"

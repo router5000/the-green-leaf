@@ -94,7 +94,7 @@ export default function RootLayout({
               contactPoint: {
                 '@type': 'ContactPoint',
                 contactType: 'customer service',
-                email: 'contact@strainreport.com',
+                email: 'info@strainreport.com',
               },
             }),
           }}

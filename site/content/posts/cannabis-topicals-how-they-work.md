@@ -124,7 +124,7 @@ Cannabis topicals offer a unique delivery method that works locally through the 
 
 Start by reading the label carefully, verifying third-party lab results, and considering whether a standard topical or a transdermal patch better fits your needs.
 
-Ready to explore more cannabis science? Check out our guides on cannabinoids, terpene profiles, and strain recommendations at The Green Leaf.
+Ready to explore more cannabis science? Check out our guides on cannabinoids, terpene profiles, and strain recommendations at The Strain Report.
 
 ---
 

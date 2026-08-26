@@ -1,4 +1,4 @@
-# The Green Leaf Content Engine
+# The Strain Report Content Engine
 
 Automated content generation for [strainreport.com](https://strainreport.com).
 

@@ -1,6 +1,6 @@
 # GPT-Image-1 Hero Image Implementation Guide
 
-**Project:** The Green Leaf Content Engine
+**Project:** The Strain Report Content Engine
 **Feature:** Automated Hero Image Generation
 **Date:** November 16, 2025
 **Status:** ✅ Implemented and Active

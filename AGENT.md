@@ -1,4 +1,4 @@
-# AGENT.md - The Green Leaf Content Engine
+# AGENT.md - The Strain Report Content Engine
 
 AI-powered content generation system for [strainreport.com](https://strainreport.com).
 

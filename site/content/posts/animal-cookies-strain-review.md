@@ -1,6 +1,6 @@
 ---
 title: "Animal Cookies Strain Review: Effects, Flavor & More"
-meta_description: "Discover Animal Cookies: a potent indica-dominant hybrid with 22-27% THC, rich cookie flavors, and deep relaxing effects. Full strain review at The Green Leaf."
+meta_description: "Discover Animal Cookies: a potent indica-dominant hybrid with 22-27% THC, rich cookie flavors, and deep relaxing effects. Full strain review at The Strain Report."
 slug: "animal-cookies-strain-review"
 keyword: "Animal Cookies strain review"
 featured_image: "/images/articles/animal-cookies-strain-review.jpg"

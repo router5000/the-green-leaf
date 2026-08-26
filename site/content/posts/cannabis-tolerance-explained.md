@@ -90,7 +90,7 @@ For consumers who aren't ready for a full break, several approaches can help man
 
 ## Conclusion
 
-Cannabis tolerance is biology, not failure — and it's entirely manageable once you understand the mechanism. Whether you take a structured T-break, shift toward lower-THC or balanced CBD strains like **Harlequin** or **ACDC**, or simply rotate your strain selection more intentionally, you have real tools to keep your experience fresh and effective[[5]](#user-content-fn-5)[[6]](#user-content-fn-6). Explore The Green Leaf's strain guides to find lower-THC and high-CBD options that match your goals — your receptors will thank you.
+Cannabis tolerance is biology, not failure — and it's entirely manageable once you understand the mechanism. Whether you take a structured T-break, shift toward lower-THC or balanced CBD strains like **Harlequin** or **ACDC**, or simply rotate your strain selection more intentionally, you have real tools to keep your experience fresh and effective[[5]](#user-content-fn-5)[[6]](#user-content-fn-6). Explore The Strain Report's strain guides to find lower-THC and high-CBD options that match your goals — your receptors will thank you.
 
 ## Sources
 

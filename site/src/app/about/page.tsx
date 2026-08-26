@@ -39,7 +39,7 @@ export default function AboutPage() {
     foundingDate: '2025',
     contactPoint: {
       '@type': 'ContactPoint',
-      email: 'contact@strainreport.com',
+      email: 'info@strainreport.com',
       contactType: 'customer service',
     },
     knowsAbout: [
@@ -182,7 +182,7 @@ export default function AboutPage() {
               Have a question, suggestion, or correction? We welcome feedback.
             </p>
             <ul>
-              <li><strong>Email:</strong> <a href="mailto:contact@strainreport.com" className="text-leaf-600 hover:text-leaf-800">contact@strainreport.com</a></li>
+              <li><strong>Email:</strong> <a href="mailto:info@strainreport.com" className="text-leaf-600 hover:text-leaf-800">info@strainreport.com</a></li>
               <li><strong>Website:</strong> <a href="https://strainreport.com" className="text-leaf-600 hover:text-leaf-800">strainreport.com</a></li>
             </ul>
 

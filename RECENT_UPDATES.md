@@ -1,4 +1,4 @@
-# The Green Leaf Content Engine - Project Overview & Updates
+# The Strain Report Content Engine - Project Overview & Updates
 
 **Last Updated:** January 2026
 **Project Status:** PRODUCTION - FULLY AUTOMATED
@@ -357,7 +357,7 @@ npm run lint      # Lint check
 ## Owner & Maintenance
 
 **Owner:** Jacob Taylor
-**Project Location:** `/Users/jacobtaylor/Desktop/The Green Leaf 2025/cannabiscare-content-engine`
+**Project Location:** `/Users/jacobtaylor/Desktop/The Strain Report 2025/cannabiscare-content-engine`
 
 **Automated:**
 - Content generation: Monday & Wednesday (GitHub Actions)

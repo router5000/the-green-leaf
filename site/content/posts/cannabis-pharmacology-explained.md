@@ -1,5 +1,5 @@
 ---
-title: "Cannabis Pharmacology Explained | The Green Leaf"
+title: "Cannabis Pharmacology Explained | The Strain Report"
 meta_description: "Learn how cannabis works in your body — from THC and CBD to the endocannabinoid system, terpenes, and why strains feel different. Cannabis pharmacology explained."
 slug: "cannabis-pharmacology-explained"
 keyword: "cannabis pharmacology explained"

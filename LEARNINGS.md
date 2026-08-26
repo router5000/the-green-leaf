@@ -1,6 +1,6 @@
 # Learnings & Lessons Learned
 
-This document captures key learnings from developing and maintaining the The Green Leaf Content Engine.
+This document captures key learnings from developing and maintaining the The Strain Report Content Engine.
 
 ---
 

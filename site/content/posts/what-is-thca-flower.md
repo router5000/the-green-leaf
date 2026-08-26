@@ -104,7 +104,7 @@ Exploring strain databases and reading verified consumer reviews can help you na
 
 ## Conclusion
 
-THCA flower is, in practical terms, cannabis — it carries the full terpene and cannabinoid profile of traditional flower, converts to Delta-9 THC when heated, and delivers comparable experiences to dispensary products. Understanding the distinction between THCA and Delta-9 THC, staying informed about rapidly changing legal landscapes, reading lab reports carefully, and paying attention to terpene profiles are the keys to making informed choices. Ready to explore specific strains? Browse our strain profiles at The Green Leaf to find THCA flower options matched to your experience preferences and desired effects.
+THCA flower is, in practical terms, cannabis — it carries the full terpene and cannabinoid profile of traditional flower, converts to Delta-9 THC when heated, and delivers comparable experiences to dispensary products. Understanding the distinction between THCA and Delta-9 THC, staying informed about rapidly changing legal landscapes, reading lab reports carefully, and paying attention to terpene profiles are the keys to making informed choices. Ready to explore specific strains? Browse our strain profiles at The Strain Report to find THCA flower options matched to your experience preferences and desired effects.
 
 ## Sources
 

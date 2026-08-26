@@ -1,5 +1,5 @@
 ---
-title: "The Entourage Effect Explained | The Green Leaf"
+title: "The Entourage Effect Explained | The Strain Report"
 meta_description: "The entourage effect explains how THC, CBD, and terpenes work together to shape your cannabis experience. Learn how it works and which strains benefit most."
 slug: "entourage-effect-explained"
 keyword: "entourage effect explained"

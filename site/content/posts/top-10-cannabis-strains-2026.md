@@ -125,7 +125,7 @@ For consumers seeking minimal psychoactivity, **MAC 1** (Miracle Alien Cookies, 
 
 The best cannabis strain in 2026 is the one that fits *your* goals — not just the one with the highest THC. Start by identifying your desired effect (relaxation, creativity, social energy, or calm), then use terpene profiles as your guide. Ask your dispensary budtender for lab-tested products with visible terpene panels, and start with a lower dose until you understand how a new strain affects you.
 
-Explore individual strain profiles right here on The Green Leaf to dig deeper into lineage, flavor notes, and consumer experiences for each strain on this list.
+Explore individual strain profiles right here on The Strain Report to dig deeper into lineage, flavor notes, and consumer experiences for each strain on this list.
 
 ---
 

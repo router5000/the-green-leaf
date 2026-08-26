@@ -113,7 +113,7 @@ If a brand or dispensary can't produce a COA on request — walk away.
 
 Third-party testing is the foundation of an informed cannabis purchase. Whether you're exploring a new indica-dominant strain known for its caryophyllene and myrcene content, choosing a CBD-rich product for daily wellness, or simply buying your favorite flower, the COA tells the real story behind the label.
 
-Before your next dispensary visit, ask to see the COA. Check the lab's accreditation, verify the batch number, and scan the terpene and contaminant panels. It takes two minutes and ensures you're getting exactly what you paid for — and nothing you didn't sign up for. At The Green Leaf, every strain profile we feature reflects lab-verified data so you can explore with confidence.
+Before your next dispensary visit, ask to see the COA. Check the lab's accreditation, verify the batch number, and scan the terpene and contaminant panels. It takes two minutes and ensures you're getting exactly what you paid for — and nothing you didn't sign up for. At The Strain Report, every strain profile we feature reflects lab-verified data so you can explore with confidence.
 
 ## Sources
 

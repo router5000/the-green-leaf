@@ -110,7 +110,7 @@ Different consumption methods deliver different amounts of cannabinoids to your 
 
 ## Conclusion
 
-Microdosing cannabis is less about restraint and more about intention. By starting with 1–2.5mg of THC, selecting strains with balanced or CBD-forward cannabinoid profiles, and paying attention to terpene composition, you can engage the endocannabinoid system in a subtle, controlled way[[3]](#user-content-fn-3). If you're new to cannabis or re-entering after a break, microdosing is arguably the smartest starting point. Explore strain profiles at The Green Leaf to find balanced, low-THC options that fit your desired terpene experience — and build from there, one small step at a time.
+Microdosing cannabis is less about restraint and more about intention. By starting with 1–2.5mg of THC, selecting strains with balanced or CBD-forward cannabinoid profiles, and paying attention to terpene composition, you can engage the endocannabinoid system in a subtle, controlled way[[3]](#user-content-fn-3). If you're new to cannabis or re-entering after a break, microdosing is arguably the smartest starting point. Explore strain profiles at The Strain Report to find balanced, low-THC options that fit your desired terpene experience — and build from there, one small step at a time.
 
 ## Sources
 

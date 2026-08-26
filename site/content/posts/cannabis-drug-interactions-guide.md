@@ -105,7 +105,7 @@ Pharmacists are often the most accessible resource for quick interaction screeni
 
 ## Conclusion
 
-Cannabis drug interactions are real, measurable, and — in some cases — clinically significant. The good news is that with the right information, they're largely manageable. Before adding any cannabis product to your routine, review your current medication list against the CYP450 interaction categories above, use the grapefruit warning as a quick screening tool, and bring an open, honest conversation to your pharmacist or doctor. For strain-specific cannabinoid and terpene profiles that can inform that conversation, explore The Green Leaf's strain database to understand exactly what you're consuming before you consume it.
+Cannabis drug interactions are real, measurable, and — in some cases — clinically significant. The good news is that with the right information, they're largely manageable. Before adding any cannabis product to your routine, review your current medication list against the CYP450 interaction categories above, use the grapefruit warning as a quick screening tool, and bring an open, honest conversation to your pharmacist or doctor. For strain-specific cannabinoid and terpene profiles that can inform that conversation, explore The Strain Report's strain database to understand exactly what you're consuming before you consume it.
 
 ## Sources
 

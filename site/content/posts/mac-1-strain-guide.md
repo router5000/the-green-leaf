@@ -1,6 +1,6 @@
 ---
 title: "MAC 1 Strain Guide: Effects, Terpenes & More"
-meta_description: "Discover the MAC 1 strain: THC levels, terpene profile, effects, flavors, and who it's best for. Your complete MAC 1 strain guide from The Green Leaf."
+meta_description: "Discover the MAC 1 strain: THC levels, terpene profile, effects, flavors, and who it's best for. Your complete MAC 1 strain guide from The Strain Report."
 slug: "mac-1-strain-guide"
 keyword: "MAC 1 strain guide"
 featured_image: "/images/articles/mac-1-strain-guide.jpg"

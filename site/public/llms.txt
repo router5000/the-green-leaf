@@ -56,7 +56,7 @@ See /robots.txt for full directives.
 
 ## Contact
 
-Email: contact@strainreport.com
+Email: info@strainreport.com
 Website: https://strainreport.com
 
 ## Optional
