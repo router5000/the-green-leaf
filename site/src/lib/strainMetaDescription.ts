@@ -1,5 +1,3 @@
-import type { Metadata } from 'next'
-
 export type StrainSeo = { meta_title: string | null; meta_description: string | null }
 
 export type StrainMetaRow = {
