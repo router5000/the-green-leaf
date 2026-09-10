@@ -1,6 +1,7 @@
 import { Suspense } from 'react'
 import { getSortedPostsData } from '@/lib/posts'
 import ArticlesTabs from '@/components/ArticlesTabs'
+import ArticlesStaticList from '@/components/ArticlesStaticList'
 import BlinkingSquares from '@/components/ui/BlinkingSquares'
 import type { Metadata } from 'next'
 import type React from 'react'
@@ -125,37 +126,27 @@ export default function ArticlesPage() {
                   </div>
                 </div>
               ) : (
-                <Suspense fallback={
-                  <div>
-                    <div className="flex flex-wrap justify-center gap-2 mb-8">
-                      {Array.from({ length: 6 }).map((_, i) => (
-                        <div key={i} className="h-10 w-20 bg-gray-200 rounded-full animate-pulse" />
-                      ))}
-                    </div>
-                    <div className="grid md:grid-cols-2 gap-6">
-                      {Array.from({ length: 6 }).map((_, i) => (
-                        <div key={i} className="bg-white rounded-xl shadow-md overflow-hidden">
-                          <div className="md:flex">
-                            <div className="md:w-64 md:flex-shrink-0">
-                              <div className="h-48 bg-gray-200 animate-pulse" />
-                            </div>
-                            <div className="p-6 flex-1 space-y-3">
-                              <div className="flex gap-2">
-                                <div className="h-5 w-16 bg-gray-200 rounded-full animate-pulse" />
-                                <div className="h-5 w-20 bg-gray-200 rounded animate-pulse" />
-                              </div>
-                              <div className="h-6 w-3/4 bg-gray-200 rounded animate-pulse" />
-                              <div className="h-4 w-full bg-gray-200 rounded animate-pulse" />
-                              <div className="h-4 w-2/3 bg-gray-200 rounded animate-pulse" />
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+                <>
+                  {/*
+                    Crawlable inventory OUTSIDE Suspense.
+                    ArticlesTabs uses useSearchParams(), which makes Next.js serve the
+                    Suspense fallback for static/crawler HTML — previously that was
+                    skeletons with zero article links. Keep a full server list here
+                    so every slug is always present as a real <a href>.
+                  */}
+                  <div className="mb-10">
+                    <ArticlesStaticList posts={allPosts} />
                   </div>
-                }>
-                  <ArticlesTabs posts={allPosts} />
-                </Suspense>
+
+                  <Suspense fallback={null}>
+                    <div className="border-t border-dashed border-neutral-300 pt-10">
+                      <p className="text-center text-sm text-leaf-700 mb-6">
+                        Filter and browse interactively
+                      </p>
+                      <ArticlesTabs posts={allPosts} />
+                    </div>
+                  </Suspense>
+                </>
               )}
             </div>
           </div>
