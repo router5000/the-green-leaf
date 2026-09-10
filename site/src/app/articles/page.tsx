@@ -128,24 +128,20 @@ export default function ArticlesPage() {
               ) : (
                 <>
                   {/*
-                    Crawlable inventory OUTSIDE Suspense.
-                    ArticlesTabs uses useSearchParams(), which makes Next.js serve the
-                    Suspense fallback for static/crawler HTML — previously that was
-                    skeletons with zero article links. Keep a full server list here
-                    so every slug is always present as a real <a href>.
+                    ArticlesTabs uses useSearchParams(), so Next.js static/crawler HTML
+                    uses this Suspense fallback instead of the client tree. The old
+                    fallback was skeletons with zero article links — that starved SEO.
+                    ArticlesStaticList server-renders every published slug as a real
+                    <a href="/articles/...">.
                   */}
-                  <div className="mb-10">
-                    <ArticlesStaticList posts={allPosts} />
-                  </div>
-
-                  <Suspense fallback={null}>
-                    <div className="border-t border-dashed border-neutral-300 pt-10">
-                      <p className="text-center text-sm text-leaf-700 mb-6">
-                        Filter and browse interactively
-                      </p>
-                      <ArticlesTabs posts={allPosts} />
-                    </div>
+                  <Suspense fallback={<ArticlesStaticList posts={allPosts} />}>
+                    <ArticlesTabs posts={allPosts} />
                   </Suspense>
+
+                  {/* No-JS / extra crawl path — same inventory as plain anchors */}
+                  <noscript>
+                    <ArticlesStaticList posts={allPosts} />
+                  </noscript>
                 </>
               )}
             </div>
