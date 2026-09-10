@@ -1,5 +1,5 @@
 ---
-title: "Organic Cannabis Soil Preparation Guide (2024)"
+title: "Organic Cannabis Soil Preparation Guide (2026)"
 meta_description: "Learn how to prepare organic cannabis soil for healthier plants and better yields. Simple steps, key amendments, and expert tips for growers."
 slug: "organic-cannabis-soil-preparation"
 keyword: "organic cannabis soil preparation"
@@ -25,7 +25,7 @@ faqs:
     answer: "Yes — one of the biggest advantages of living soil is that it can be recycled and improved over multiple grow cycles. After harvest, amend the used soil with fresh compost, worm castings, and dry minerals, then let it cook again before replanting. Over time, a well-maintained living soil actually becomes more biologically rich."
 key_stat: "A properly prepared organic cannabis soil should contain 20–30% perlite for drainage and be allowed to 'cook' for 2–4 weeks before planting to activate microbial life."
 tldr: "Preparing organic cannabis soil means blending a quality base mix with worm castings, compost, perlite, and dry mineral amendments, then letting it 'cook' for 2–4 weeks to build a living, biologically active foundation for healthy plants."
-last_updated: "2026-05-14T15:44:31.377520"
+last_updated: "2026-09-10T13:50:00.000000"
 has_affiliate_links: True
 affiliate_count: 4
 qa_score: 8.7
