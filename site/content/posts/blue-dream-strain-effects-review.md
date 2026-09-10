@@ -1,5 +1,5 @@
 ---
-title: "Blue Dream Strain Effects & Review (2024)"
+title: "Blue Dream Strain Effects & Review (2026)"
 meta_description: "Blue Dream delivers balanced euphoria and gentle relaxation with 17–24% THC. Read our full strain review covering effects, terpenes, flavor, and who it's best for."
 slug: "blue-dream-strain-effects-review"
 keyword: "Blue Dream strain effects and review"
@@ -34,7 +34,7 @@ faqs:
     answer: "Yes — Blue Dream is widely considered one of the best daytime strains available. Its balanced effect profile provides mood elevation and mild energy without heavy sedation, making it suitable for social situations, creative tasks, and light activity. Most users remain clear-headed and functional."
 key_stat: "Blue Dream typically tests at 17–24% THC with myrcene as its dominant terpene, contributing to its signature balance of gentle cerebral euphoria and mild body relaxation that made it the best-selling strain in multiple U.S. legal markets."
 tldr: "Blue Dream is a sativa-dominant hybrid (Blueberry × Haze) with 17–24% THC that delivers uplifting euphoria and gentle body relaxation, making it one of the most versatile and beginner-friendly daytime strains available."
-last_updated: "2026-05-15T16:41:14.566467"
+last_updated: "2026-09-10T13:50:00.000000"
 qa_score: 8.9
 qa_passed: True
 refinement_rounds: 2
