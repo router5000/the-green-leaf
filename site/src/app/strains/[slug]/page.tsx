@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { hasTerpeneHub } from '@/lib/terpenes'
 import type { Metadata } from 'next'
+import { findArticlesForStrain } from '@/lib/strainArticleLinks'
+import RelatedArticlesForStrain from '@/components/RelatedArticlesForStrain'
 
 export const dynamic = 'force-dynamic'
 
@@ -142,6 +144,7 @@ export default async function StrainDetailPage({
   if (!strain) notFound()
 
   const s = strain as unknown as Strain
+  const relatedArticles = findArticlesForStrain(s.slug)
   const effectsByType = (s.effects ?? []).reduce<Record<string, Effect[]>>((acc, e) => {
     ;(acc[e.effect_type] ??= []).push(e)
     return acc
@@ -307,6 +310,9 @@ export default async function StrainDetailPage({
                 <p className="text-gray-600 leading-relaxed whitespace-pre-line">{s.description}</p>
               </Section>
             )}
+
+            {/* Editorial guides that cover this strain */}
+            <RelatedArticlesForStrain strainName={s.name} articles={relatedArticles} />
 
             {/* Effects */}
             {s.effects && s.effects.length > 0 && (
