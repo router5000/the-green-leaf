@@ -1,5 +1,5 @@
 ---
-title: "Cannabis Consumption Methods Compared (2024 Guide)"
+title: "Cannabis Consumption Methods Compared (2026 Guide)"
 meta_description: "Compare smoking, vaping, edibles, tinctures, and more. Learn how each cannabis consumption method affects onset time, duration, and potency."
 slug: "cannabis-consumption-methods-compared"
 keyword: "cannabis consumption methods compared"
@@ -34,7 +34,7 @@ faqs:
     answer: "Standard cannabis topicals like balms and lotions do not produce psychoactive effects because cannabinoids do not enter the bloodstream in significant quantities through typical skin application. Transdermal patches are designed differently and can deliver systemic effects."
 key_stat: "Edibles can take 30–120 minutes to produce effects but last 4–8 hours — two to three times longer than inhaled cannabis — because the liver converts THC into 11-hydroxy-THC, a more potent metabolite."
 tldr: "Smoking and vaping act fastest (2–10 min) but last 1–3 hours, while edibles take up to 2 hours to kick in but deliver 4–8 hours of stronger effects — making your choice of consumption method the single biggest factor in shaping your cannabis experience."
-last_updated: "2026-05-15T15:48:34.993033"
+last_updated: "2026-09-10T13:50:00.000000"
 qa_score: 8.7
 qa_passed: True
 refinement_rounds: 1

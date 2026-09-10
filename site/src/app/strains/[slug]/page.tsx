@@ -2,9 +2,9 @@ import { getSupabase } from '@/lib/supabase'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { hasTerpeneHub } from '@/lib/terpenes'
-import type { Metadata } from 'next'
 import { findArticlesForStrain } from '@/lib/strainArticleLinks'
 import RelatedArticlesForStrain from '@/components/RelatedArticlesForStrain'
+export { generateMetadata } from '@/lib/strainMetaDescription'
 
 export const dynamic = 'force-dynamic'
 
@@ -67,47 +67,6 @@ type Strain = {
   effects: Effect[]
   terpenes: Terpene[]
   genetics: Genetic[]
-}
-
-// ── Metadata ───────────────────────────────────────────────────────────────
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>
-}): Promise<Metadata> {
-  const { slug } = await params
-  let data: { name: string; strain_seo: StrainSeo[] } | null = null
-  try {
-    const result = await getSupabase()
-      .from('strains')
-      .select('name, strain_seo(meta_title, meta_description)')
-      .eq('slug', slug)
-      .single()
-    data = result.data as unknown as { name: string; strain_seo: StrainSeo[] }
-  } catch {
-    // env vars unavailable during static build
-  }
-
-  if (!data) return {}
-
-  const seo = data.strain_seo?.[0]
-  const title = seo?.meta_title ?? `${data.name} Strain | The Strain Report`
-  const description = seo?.meta_description ?? undefined
-
-  return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-      url: `${baseUrl}/strains/${slug}`,
-      siteName: 'The Strain Report',
-      type: 'website',
-    },
-    twitter: { card: 'summary_large_image', title, description },
-    alternates: { canonical: `${baseUrl}/strains/${slug}` },
-  }
 }
 
 // ── Page ───────────────────────────────────────────────────────────────────

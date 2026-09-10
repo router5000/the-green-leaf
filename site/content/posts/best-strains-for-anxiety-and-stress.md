@@ -1,5 +1,5 @@
 ---
-title: "Best Strains for Anxiety and Stress in 2025"
+title: "Best Strains for Anxiety and Stress in 2026"
 meta_description: "Discover the best cannabis strains for anxiety and stress relief. Learn which cannabinoid profiles and terpenes may help you feel calmer and more relaxed."
 slug: "best-strains-for-anxiety-and-stress"
 keyword: "best strains for anxiety and stress"
@@ -34,13 +34,13 @@ faqs:
     answer: "Linalool, myrcene, beta-caryophyllene, and limonene are the terpenes most commonly associated with calming and stress-relieving effects. Look for these on a product's Certificate of Analysis (COA) when choosing a strain."
 key_stat: "High-CBD strains with a CBD:THC ratio of 20:1 (like ACDC) can provide notable relaxation with minimal psychoactive effects, making them among the most widely recommended options for anxiety-prone cannabis users."
 tldr: "For anxiety and stress, choose CBD-rich or balanced CBD:THC strains with calming terpenes like linalool and myrcene, and keep THC intake moderate to avoid making anxiety worse."
-last_updated: "2026-05-14T17:27:56.550739"
+last_updated: "2026-09-10T13:50:00.000000"
 qa_score: 8.3
 qa_passed: True
 refinement_rounds: 0
 ---
 
-# Best Strains for Anxiety and Stress in 2025
+# Best Strains for Anxiety and Stress in 2026
 
 ## Quick Answer
 Many cannabis users report that strains high in CBD, low-to-moderate in THC, and rich in calming terpenes like linalool and myrcene tend to feel the most relaxing[[1]](#user-content-fn-1). Popular choices include ACDC, Granddaddy Purple, and Cannatonic. That said, individual responses vary widely — what calms one person may increase anxiety in another[[2]](#user-content-fn-2).
