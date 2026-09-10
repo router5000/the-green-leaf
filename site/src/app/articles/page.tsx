@@ -1,6 +1,7 @@
 import { Suspense } from 'react'
 import { getSortedPostsData } from '@/lib/posts'
 import ArticlesTabs from '@/components/ArticlesTabs'
+import ArticlesStaticList from '@/components/ArticlesStaticList'
 import BlinkingSquares from '@/components/ui/BlinkingSquares'
 import type { Metadata } from 'next'
 import type React from 'react'
@@ -125,37 +126,23 @@ export default function ArticlesPage() {
                   </div>
                 </div>
               ) : (
-                <Suspense fallback={
-                  <div>
-                    <div className="flex flex-wrap justify-center gap-2 mb-8">
-                      {Array.from({ length: 6 }).map((_, i) => (
-                        <div key={i} className="h-10 w-20 bg-gray-200 rounded-full animate-pulse" />
-                      ))}
-                    </div>
-                    <div className="grid md:grid-cols-2 gap-6">
-                      {Array.from({ length: 6 }).map((_, i) => (
-                        <div key={i} className="bg-white rounded-xl shadow-md overflow-hidden">
-                          <div className="md:flex">
-                            <div className="md:w-64 md:flex-shrink-0">
-                              <div className="h-48 bg-gray-200 animate-pulse" />
-                            </div>
-                            <div className="p-6 flex-1 space-y-3">
-                              <div className="flex gap-2">
-                                <div className="h-5 w-16 bg-gray-200 rounded-full animate-pulse" />
-                                <div className="h-5 w-20 bg-gray-200 rounded animate-pulse" />
-                              </div>
-                              <div className="h-6 w-3/4 bg-gray-200 rounded animate-pulse" />
-                              <div className="h-4 w-full bg-gray-200 rounded animate-pulse" />
-                              <div className="h-4 w-2/3 bg-gray-200 rounded animate-pulse" />
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                }>
-                  <ArticlesTabs posts={allPosts} />
-                </Suspense>
+                <>
+                  {/*
+                    ArticlesTabs uses useSearchParams(), so Next.js static/crawler HTML
+                    uses this Suspense fallback instead of the client tree. The old
+                    fallback was skeletons with zero article links — that starved SEO.
+                    ArticlesStaticList server-renders every published slug as a real
+                    <a href="/articles/...">.
+                  */}
+                  <Suspense fallback={<ArticlesStaticList posts={allPosts} />}>
+                    <ArticlesTabs posts={allPosts} />
+                  </Suspense>
+
+                  {/* No-JS / extra crawl path — same inventory as plain anchors */}
+                  <noscript>
+                    <ArticlesStaticList posts={allPosts} />
+                  </noscript>
+                </>
               )}
             </div>
           </div>
