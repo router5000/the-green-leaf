@@ -21,6 +21,8 @@ import {
 } from '@/components/ArticleContent'
 import ShareButtons from '@/components/ShareButtons'
 import ReadingProgress from '@/components/ReadingProgress'
+import RelatedStrainCard from '@/components/RelatedStrainCard'
+import { getStrainLinkForArticle } from '@/lib/strainArticleLinks'
 
 // YouTube Video Embed Component with optional collapsible insights
 function YouTubeEmbed({
@@ -171,6 +173,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
   // Get related articles
   const relatedPosts = getRelatedPosts(slug, 3)
+  const strainLink = getStrainLinkForArticle(slug)
 
   // Enhanced JSON-LD structured data for AI crawlers
   const baseUrl = 'https://strainreport.com'
@@ -420,6 +423,9 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             {post.tldr && (
               <TLDRSummary summary={post.tldr} />
             )}
+
+            {/* Strain profile + terpene hubs (SEO cross-links) */}
+            {strainLink && <RelatedStrainCard link={strainLink} />}
           </div>
 
           {/* Printable Checklist - for step-by-step articles */}
