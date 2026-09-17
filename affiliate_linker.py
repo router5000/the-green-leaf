@@ -1,16 +1,16 @@
-"""
-Automated Amazon Affiliate Link System
-Detects product opportunities in cannabis content and inserts affiliate links.
-"""
-
+"""Amazon affiliate link insertion for generated articles."""
 import json
 import os
 import re
 from pathlib import Path
 from typing import List, Dict, Tuple
 
-# Amazon Affiliate Tag
-AFFILIATE_TAG = os.getenv('AMAZON_AFFILIATE_TAG', 'amazonlinkp00-20')
+# Amazon Affiliate Tag — MUST come from env / GitHub Actions secret.
+# Do not hardcode the store tag in source. Set AMAZON_AFFILIATE_TAG in:
+#   - local .env
+#   - GitHub Actions secret AMAZON_AFFILIATE_TAG (e.g. thegreenleaf2-20)
+# Empty/missing tag => affiliate insertion is skipped (no broken/untagged links).
+AFFILIATE_TAG = (os.getenv('AMAZON_AFFILIATE_TAG') or '').strip()
 
 # FTC Disclosure
 AFFILIATE_DISCLOSURE = """
@@ -19,52 +19,33 @@ AFFILIATE_DISCLOSURE = """
 
 
 def load_product_database():
-    """Load the curated product database."""
     db_path = Path(__file__).parent / "products" / "cannabis_products.json"
     with open(db_path, 'r') as f:
         return json.load(f)
 
 
 def build_affiliate_url(search_term: str, asin: str = None) -> str:
-    """
-    Build Amazon affiliate link.
+    if not AFFILIATE_TAG:
+        return ''
 
-    Args:
-        search_term: Product search query
-        asin: Optional direct product ASIN for higher conversion
+    # Prefer ASIN deep links when available (higher conversion); else search URL.
+    # Commission still applies to anything purchased within the cookie window.
+    if asin:
+        return f"https://www.amazon.com/dp/{asin}?tag={AFFILIATE_TAG}"
 
-    Returns:
-        Amazon URL with affiliate tag
-    """
-    # Always use search URLs for now - more reliable and still earns commission
-    # User gets commission on anything they buy within 24 hours after clicking
     encoded = search_term.replace(' ', '+')
     return f"https://www.amazon.com/s?k={encoded}&tag={AFFILIATE_TAG}"
 
 
 def find_product_opportunities(content: str, product_db: dict, max_links: int = 5) -> List[Dict]:
-    """
-    Scan content for product mention opportunities.
-
-    Args:
-        content: Article markdown content
-        product_db: Product database
-        max_links: Maximum affiliate links per article (default 5)
-
-    Returns:
-        List of product opportunities with metadata
-    """
     opportunities = []
     content_lower = content.lower()
 
     for category in product_db['products']:
         for product in category['items']:
-            # Check if any product keywords appear in content
             for keyword in product['keywords']:
-                # Use word boundaries to avoid partial matches
                 pattern = r'\b' + re.escape(keyword) + r'\b'
                 if re.search(pattern, content_lower, re.IGNORECASE):
-                    # Found a match!
                     opportunities.append({
                         'product_name': product['name'],
                         'keyword': keyword,
@@ -74,30 +55,16 @@ def find_product_opportunities(content: str, product_db: dict, max_links: int = 
                         'best_for': product.get('best_for', ''),
                         'price_range': product.get('price_range', '')
                     })
-                    break  # Only add product once even if multiple keywords match
+                    break
 
-    # Sort by keyword length (longer = more specific = better match)
     opportunities.sort(key=lambda x: len(x['keyword']), reverse=True)
-
-    # Return top opportunities up to max_links
     return opportunities[:max_links]
 
 
 def insert_affiliate_links(content: str, opportunities: List[Dict]) -> Tuple[str, List[Dict]]:
-    """
-    Insert affiliate links into content naturally.
-
-    Args:
-        content: Article markdown content (body only, no frontmatter)
-        opportunities: List of product opportunities
-
-    Returns:
-        Tuple of (modified content, list of inserted links metadata)
-    """
     inserted_links = []
     modified_content = content
 
-    # Find where Sources section starts (don't insert links there)
     sources_start = len(content)
     sources_match = re.search(r'^## Sources\s*$', content, re.MULTILINE)
     if sources_match:
@@ -105,14 +72,10 @@ def insert_affiliate_links(content: str, opportunities: List[Dict]) -> Tuple[str
 
     for opp in opportunities:
         keyword = opp['keyword']
+        url = build_affiliate_url(opp['amazon_search'], asin=opp.get('asin'))
+        if not url:
+            continue
 
-        # Build affiliate URL (prefer ASIN if available)
-        url = build_affiliate_url(
-            opp['amazon_search'],
-            asin=opp.get('asin')
-        )
-
-        # Find first occurrence of keyword (case-insensitive but preserve original case)
         pattern = r'\b(' + re.escape(keyword) + r')\b'
         match = re.search(pattern, modified_content, re.IGNORECASE)
 
@@ -120,32 +83,22 @@ def insert_affiliate_links(content: str, opportunities: List[Dict]) -> Tuple[str
             original_text = match.group(1)
             start, end = match.span()
 
-            # Skip if in Sources section
             if start >= sources_start:
                 continue
 
-            # Skip if in H1 heading (first line starting with #)
             line_start = modified_content.rfind('\n', 0, start) + 1
             line = modified_content[line_start:start]
             if line.strip().startswith('# '):
                 continue
 
-            # Check if already linked (avoid double-linking)
-            # Look back to see if we're already inside a markdown link
             preceding_text = modified_content[max(0, start-50):start]
             if '[' in preceding_text and ']' not in preceding_text:
-                continue  # Already inside a link, skip
+                continue
 
-            # Create markdown link
             linked_text = f'[{original_text}]({url})'
-
-            # Replace in content
             modified_content = modified_content[:start] + linked_text + modified_content[end:]
-
-            # Adjust sources_start since we added characters
             sources_start += len(linked_text) - len(original_text)
 
-            # Track inserted link
             inserted_links.append({
                 'keyword': keyword,
                 'product': opp['product_name'],
@@ -157,32 +110,18 @@ def insert_affiliate_links(content: str, opportunities: List[Dict]) -> Tuple[str
 
 
 def add_affiliate_disclosure(content: str, has_links: bool = True) -> str:
-    """
-    Add FTC-required affiliate disclosure to article.
-
-    Args:
-        content: Article content
-        has_links: Whether article contains affiliate links
-
-    Returns:
-        Content with disclosure added
-    """
     if not has_links:
         return content
 
-    # Check if disclosure already exists to prevent duplicates
     if AFFILIATE_DISCLOSURE in content or "This article contains affiliate links" in content:
         return content
 
-    # Add disclosure at the top, right after the first H1
     lines = content.split('\n')
     new_lines = []
     h1_found = False
 
     for line in lines:
         new_lines.append(line)
-
-        # Insert disclosure after first H1 and its following blank line
         if not h1_found and line.startswith('# '):
             h1_found = True
             new_lines.append('')
@@ -192,44 +131,42 @@ def add_affiliate_disclosure(content: str, has_links: bool = True) -> str:
 
 
 def process_article_for_affiliates(content: str, max_links: int = 5) -> Dict:
-    """
-    Complete affiliate processing pipeline for an article.
+    empty = {
+        'content': content,
+        'affiliate_links': [],
+        'link_count': 0,
+        'has_affiliates': False,
+    }
 
-    Args:
-        content: Article markdown content
-        max_links: Maximum links to insert
+    if not AFFILIATE_TAG:
+        print("   ⚠️  AMAZON_AFFILIATE_TAG not set — skipping affiliate insertion.")
+        print("       Set GitHub Actions secret AMAZON_AFFILIATE_TAG (e.g. thegreenleaf2-20).")
+        return empty
 
-    Returns:
-        Dict with processed content and metadata
-    """
-    # Load product database
     product_db = load_product_database()
 
-    # Split frontmatter from body - ONLY process body content
-    # This prevents inserting links into YAML title, tags, youtube insights, etc.
-    parts = content.split('---', 2)
-    if len(parts) >= 3:
-        frontmatter = parts[0] + '---' + parts[1] + '---'
-        body = parts[2]
+    # Only treat leading YAML as frontmatter. Splitting on every '---' breaks
+    # body-only markdown that contains horizontal rules.
+    if content.startswith('---'):
+        parts = content.split('---', 2)
+        if len(parts) >= 3:
+            frontmatter = parts[0] + '---' + parts[1] + '---'
+            body = parts[2]
+        else:
+            frontmatter = ''
+            body = content
     else:
         frontmatter = ''
         body = content
 
-    # Find product opportunities (only in body)
     opportunities = find_product_opportunities(body, product_db, max_links)
-
-    # Insert links (only in body)
     modified_body, inserted_links = insert_affiliate_links(body, opportunities)
 
-    # Add disclosure if we inserted any links
     if inserted_links:
         modified_body = add_affiliate_disclosure(modified_body, True)
 
-    # Recombine frontmatter + modified body
-    modified_content = frontmatter + modified_body
-
     return {
-        'content': modified_content,
+        'content': frontmatter + modified_body,
         'affiliate_links': inserted_links,
         'link_count': len(inserted_links),
         'has_affiliates': len(inserted_links) > 0
@@ -237,15 +174,6 @@ def process_article_for_affiliates(content: str, max_links: int = 5) -> Dict:
 
 
 def generate_affiliate_metadata(inserted_links: List[Dict]) -> Dict:
-    """
-    Generate frontmatter metadata for tracking affiliate links.
-
-    Args:
-        inserted_links: List of inserted link metadata
-
-    Returns:
-        Dict suitable for article frontmatter
-    """
     if not inserted_links:
         return {}
 
@@ -262,35 +190,3 @@ def generate_affiliate_metadata(inserted_links: List[Dict]) -> Dict:
             for link in inserted_links
         ]
     }
-
-
-# Example usage
-if __name__ == "__main__":
-    # Test with sample content
-    sample_content = """# How to Set Up Your Indoor Cannabis Grow Room
-
-Setting up a proper indoor grow room is essential for healthy cannabis plants. Using quality grow lights and ventilation helps ensure optimal growth and yield.
-
-## Equipment You'll Need
-
-For indoor growing, you'll need LED grow lights, a grow tent, inline fan with carbon filter, and fabric pots. Hydroponic setups benefit from a quality nutrient solution.
-
-## Best Practices
-
-Monitor pH levels regularly and maintain proper humidity during the flowering stage. Use a digital thermometer to track temperature.
-"""
-
-    result = process_article_for_affiliates(sample_content, max_links=5)
-
-    print("=" * 60)
-    print("AFFILIATE LINK TEST RESULTS")
-    print("=" * 60)
-    print(f"\nInserted {result['link_count']} affiliate links:")
-    for link in result['affiliate_links']:
-        print(f"  • {link['keyword']} → {link['product']}")
-        print(f"    {link['url']}")
-
-    print("\n" + "=" * 60)
-    print("MODIFIED CONTENT:")
-    print("=" * 60)
-    print(result['content'])
