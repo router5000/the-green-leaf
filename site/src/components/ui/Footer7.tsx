@@ -86,23 +86,11 @@ export default function Footer7() {
 
         </motion.div>
 
-        {/* Medical disclaimer — sitewide on every page via root layout */}
-        <div className="mt-12 pt-8 border-t border-neutral-300">
-          <p className="text-neutral-500 text-xs sm:text-sm leading-relaxed max-w-4xl">
-            <strong className="text-neutral-700">Medical disclaimer:</strong> Content on The Strain Report
-            is for educational and informational purposes only and is{' '}
-            <strong className="text-neutral-700">not medical advice</strong>. It does not diagnose, treat,
-            cure, or prevent any disease. Cannabis laws vary by jurisdiction — know your local laws.
-            Always consult a qualified healthcare professional before using cannabis for any health-related
-            purpose, especially if you are pregnant, nursing, take medications, or have a medical condition.
-          </p>
-        </div>
-
-        {/* Bottom bar */}
-        <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8 items-end">
+        {/* Bottom bar: copyright/links left, medical disclaimer right (replaces email signup) */}
+        <div className="mt-12 pt-8 border-t border-neutral-300 grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
           <div className="flex flex-col gap-2 text-neutral-500 text-xs sm:text-sm">
             <p>© 2026 • The Strain Report • Cannabis education for everyone.</p>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               <Link href="/privacy-policy" className="hover:text-neutral-900 transition-colors no-underline">Privacy Policy</Link>
               <span className="text-neutral-400">•</span>
               <Link href="/terms-of-service" className="hover:text-neutral-900 transition-colors no-underline">Terms of Service</Link>
@@ -111,21 +99,17 @@ export default function Footer7() {
             </div>
           </div>
 
-          <div>
-            <form className="flex items-center rounded-full border border-neutral-300 bg-transparent p-1.5">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 min-w-0 bg-transparent rounded-full px-5 py-2 text-neutral-900 text-sm tracking-[0.15em] uppercase placeholder:text-neutral-400 focus:outline-none"
-              />
-              <button
-                type="submit"
-                className="rounded-full bg-neutral-900 text-white px-5 py-2.5 text-xs tracking-[0.15em] uppercase font-medium hover:bg-neutral-700 transition-colors cursor-pointer whitespace-nowrap"
-              >
-                Get on the list
-              </button>
-            </form>
-            <p className="text-xs text-neutral-500 mt-2 text-center">Free cannabis education, no spam ever.</p>
+          <div className="flex flex-col gap-2">
+            <h4 className="text-xs tracking-[0.2em] uppercase text-neutral-500">
+              Medical disclaimer
+            </h4>
+            <p className="text-neutral-500 text-xs sm:text-sm leading-relaxed">
+              Content on The Strain Report is for educational and informational purposes only and is{' '}
+              <strong className="text-neutral-700">not medical advice</strong>. It does not diagnose, treat,
+              cure, or prevent any disease. Cannabis laws vary by jurisdiction — know your local laws.
+              Always consult a qualified healthcare professional before using cannabis for any health-related
+              purpose, especially if you are pregnant, nursing, take medications, or have a medical condition.
+            </p>
           </div>
         </div>
       </div>
