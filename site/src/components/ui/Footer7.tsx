@@ -86,14 +86,28 @@ export default function Footer7() {
 
         </motion.div>
 
+        {/* Medical disclaimer — sitewide on every page via root layout */}
+        <div className="mt-12 pt-8 border-t border-neutral-300">
+          <p className="text-neutral-500 text-xs sm:text-sm leading-relaxed max-w-4xl">
+            <strong className="text-neutral-700">Medical disclaimer:</strong> Content on The Strain Report
+            is for educational and informational purposes only and is{' '}
+            <strong className="text-neutral-700">not medical advice</strong>. It does not diagnose, treat,
+            cure, or prevent any disease. Cannabis laws vary by jurisdiction — know your local laws.
+            Always consult a qualified healthcare professional before using cannabis for any health-related
+            purpose, especially if you are pregnant, nursing, take medications, or have a medical condition.
+          </p>
+        </div>
+
         {/* Bottom bar */}
-        <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-8 items-end">
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8 items-end">
           <div className="flex flex-col gap-2 text-neutral-500 text-xs sm:text-sm">
             <p>© 2026 • The Strain Report • Cannabis education for everyone.</p>
             <div className="flex items-center gap-3">
               <Link href="/privacy-policy" className="hover:text-neutral-900 transition-colors no-underline">Privacy Policy</Link>
               <span className="text-neutral-400">•</span>
               <Link href="/terms-of-service" className="hover:text-neutral-900 transition-colors no-underline">Terms of Service</Link>
+              <span className="text-neutral-400">•</span>
+              <Link href="/affiliate-disclosure" className="hover:text-neutral-900 transition-colors no-underline">Affiliate Disclosure</Link>
             </div>
           </div>
 
