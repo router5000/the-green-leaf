@@ -1,9 +1,4 @@
-"""P0 shim: body-only internal linking + Related Reading fallback.
-
-content_generator imports add_internal_links_to_new_article from here instead of
-internal_linker so we can fix the frontmatter early-return without rewriting the
-whole linker module in one MCP payload.
-"""
+"""P0 shim: body-only internal linking + Related Reading fallback."""
 from typing import Dict, List, Tuple
 
 from internal_linker import (
