@@ -101,10 +101,9 @@ export default function Footer7() {
 
           <p className="text-neutral-500 text-xs sm:text-sm leading-relaxed">
             Content on The Strain Report is for educational and informational purposes only and is
-            not medical advice. It does not diagnose, treat, cure, or prevent any disease. Cannabis
-            laws vary by jurisdiction — know your local laws. Always consult a qualified healthcare
-            professional before using cannabis for any health-related purpose, especially if you are
-            pregnant, nursing, take medications, or have a medical condition.
+            not medical advice. It does not diagnose, treat, cure, or prevent any disease. Always
+            consult a qualified healthcare professional before using cannabis for any health-related
+            purpose.
           </p>
         </div>
       </div>
