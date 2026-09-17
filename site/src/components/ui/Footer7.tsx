@@ -99,18 +99,13 @@ export default function Footer7() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-2">
-            <h4 className="text-xs tracking-[0.2em] uppercase text-neutral-500">
-              Medical disclaimer
-            </h4>
-            <p className="text-neutral-500 text-xs sm:text-sm leading-relaxed">
-              Content on The Strain Report is for educational and informational purposes only and is{' '}
-              <strong className="text-neutral-700">not medical advice</strong>. It does not diagnose, treat,
-              cure, or prevent any disease. Cannabis laws vary by jurisdiction — know your local laws.
-              Always consult a qualified healthcare professional before using cannabis for any health-related
-              purpose, especially if you are pregnant, nursing, take medications, or have a medical condition.
-            </p>
-          </div>
+          <p className="text-neutral-500 text-xs sm:text-sm leading-relaxed">
+            Content on The Strain Report is for educational and informational purposes only and is
+            not medical advice. It does not diagnose, treat, cure, or prevent any disease. Cannabis
+            laws vary by jurisdiction — know your local laws. Always consult a qualified healthcare
+            professional before using cannabis for any health-related purpose, especially if you are
+            pregnant, nursing, take medications, or have a medical condition.
+          </p>
         </div>
       </div>
     </footer>
