@@ -10,11 +10,9 @@ from pathlib import Path
 from typing import List, Dict, Tuple, Optional
 from collections import defaultdict
 
-
 # Directories
 POSTS_DIR = Path(__file__).parent / "site" / "content" / "posts"
 SITE_URL = "https://strainreport.com"
-
 
 def load_article_index() -> List[Dict]:
     """
@@ -37,7 +35,7 @@ def load_article_index() -> List[Dict]:
                 parts = content.split('---', 2)
                 if len(parts) >= 3:
                     frontmatter = yaml.safe_load(parts[1])
-                    if frontmatter and frontmatter.get('status') == 'published':
+                    if frontmatter and str(frontmatter.get('status', 'published')).lower() in ('published', 'publish', 'live', 'true', '1'):
                         # Build search terms from title, keyword, tags
                         search_terms = set()
 
@@ -74,7 +72,6 @@ def load_article_index() -> List[Dict]:
             print(f"Warning: Could not parse {md_file.name}: {e}")
 
     return articles
-
 
 def extract_key_phrases(text: str) -> List[str]:
     """
@@ -133,7 +130,6 @@ def extract_key_phrases(text: str) -> List[str]:
             phrases.append(word)
 
     return phrases
-
 
 def find_internal_link_opportunities(
     content: str,
@@ -212,7 +208,6 @@ def find_internal_link_opportunities(
     opportunities.sort(key=lambda x: x['position'])
 
     return opportunities[:max_links]
-
 
 def insert_internal_links(
     content: str,
@@ -300,7 +295,6 @@ def insert_internal_links(
 
     return modified, inserted
 
-
 def process_article_for_internal_links(
     file_path: str,
     article_index: List[Dict],
@@ -364,7 +358,6 @@ def process_article_for_internal_links(
         'links': inserted
     }
 
-
 def process_all_articles(
     max_links_per_article: int = 5,
     dry_run: bool = False
@@ -407,43 +400,68 @@ def process_all_articles(
         'results': results
     }
 
+def _split_frontmatter(content: str) -> Tuple[str, str]:
+    """Split leading YAML frontmatter from body; body-only returns ('', content)."""
+    if content.startswith('---'):
+        parts = content.split('---', 2)
+        if len(parts) >= 3:
+            return parts[0] + '---' + parts[1] + '---', parts[2]
+    return '', content
+
+def _append_related_reading(
+    body: str,
+    slug: str,
+    article_index: List[Dict],
+    already_linked: List[Dict],
+    target_total: int = 5,
+) -> Tuple[str, List[Dict]]:
+    """Ensure new posts get several real /articles links via Related Reading."""
+    linked = {link.get('target_slug') or link.get('slug') for link in already_linked}
+    linked.add(slug)
+    candidates = [a for a in article_index if a.get('slug') and a['slug'] not in linked]
+    needed = max(0, target_total - len(already_linked))
+    picks = candidates[:needed]
+    if not picks:
+        return body, already_linked
+
+    lines = ['', '## Related Reading', '']
+    inserted = list(already_linked)
+    for article in picks:
+        title = article.get('title') or article['slug'].replace('-', ' ').title()
+        url = f"/articles/{article['slug']}"
+        lines.append(f"- [{title}]({url})")
+        inserted.append({
+            'target_slug': article['slug'],
+            'target_title': title,
+            'anchor_text': title,
+            'url': url,
+        })
+    lines.append('')
+    return body.rstrip() + '\n' + '\n'.join(lines), inserted
 
 def add_internal_links_to_new_article(content: str, slug: str) -> Tuple[str, List[Dict]]:
     """
     Add internal links to a newly generated article.
-    Called from content_generator.py during article creation.
-
-    Args:
-        content: Full article content with frontmatter
-        slug: Article slug
-
-    Returns:
-        Tuple of (modified content, list of added links)
+    Supports body-only markdown (publish path passes body before frontmatter is written).
     """
-    # Build index from existing articles
     article_index = load_article_index()
+    frontmatter_text, body = _split_frontmatter(content)
 
-    # Parse content
-    if content.startswith('---'):
-        parts = content.split('---', 2)
-        if len(parts) >= 3:
-            frontmatter_text = parts[0] + '---' + parts[1] + '---'
-            body = parts[2]
-        else:
-            return content, []
-    else:
-        return content, []
-
-    # Find and insert links
     opportunities = find_internal_link_opportunities(body, slug, article_index, max_links=5)
+    modified_body, inserted = (
+        insert_internal_links(body, opportunities) if opportunities else (body, [])
+    )
 
-    if not opportunities:
+    # Guarantee several real internal links on every new publish
+    if len(inserted) < 3 and article_index:
+        modified_body, inserted = _append_related_reading(
+            modified_body, slug, article_index, inserted, target_total=5
+        )
+
+    if not inserted:
         return content, []
-
-    modified_body, inserted = insert_internal_links(body, opportunities)
 
     return frontmatter_text + modified_body, inserted
-
 
 # CLI interface
 if __name__ == "__main__":
