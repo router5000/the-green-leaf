@@ -1,10 +1,19 @@
-# Dual-deploy cleanup (P1)
+# P1 Dual Deploy / Workflow note
 
-**Confirmed:** `auto_publish.py` pushes to `main` and logs that Vercel auto-deploys from main.
+## Confirmed
+- `auto_publish.py` pushes commits to `main`, which triggers Vercel git integration.
+- Dry-run safety in the weekly pipeline is preserved (`INPUT_DRY_RUN` / `--dry-run`).
 
-**Intended Actions workflow change** (`.github/workflows/weekly-content.yml`):
-- Remove the `Deploy to Vercel` CLI step (and its `VERCEL_TOKEN` / `VERCEL_ORG_ID` / `VERCEL_PROJECT_ID` usage in that step).
-- Rename Configure Git `user.name` from `Green Leaf Bot` to `Strain Report Bot` (keep `bot@strainreport.com`).
-- Keep `dry_run` input and pipeline `--dry-run` safety.
+## Blocked by PAT scope
+Editing `.github/workflows/weekly-content.yml` via the GitHub Contents API returns:
 
-**Blocked in this PR:** GitHub returned `403 Resource not accessible by personal access token` when updating `.github/workflows/*` (PAT lacks `workflow` scope). Bot rename for commits is applied in `auto_publish.setup_git_for_ci()` which the pipeline calls under `--ci`.
+`403 Resource not accessible by personal access token`
+
+The connected GitHub PAT lacks the `workflow` scope required to change workflow files.
+
+## Intended YAML change (apply manually or with a workflow-scoped token)
+1. Configure Git: `user.name` → `Strain Report Bot` (keep `bot@strainreport.com`).
+2. Remove the entire **Deploy to Vercel** CLI step and its `VERCEL_TOKEN` / org / project secret usage.
+3. Leave a short comment that deploy is git-push-only via `auto_publish.py` → main → Vercel.
+
+Bot rename in `auto_publish.py` `setup_git_for_ci()` is already on this branch and covers CI commits when `--ci` runs.
