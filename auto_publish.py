@@ -1,1 +1,1 @@
-PLACEHOLDER_LOAD_FROM_/workspace/p1-files/out/auto_publish.py
+@file:///workspace/p1-files/out/auto_publish.py
