@@ -1,0 +1,18 @@
+{
+  "remove": [
+    "Zkittlez strain guide"
+  ],
+  "replace": {
+    "best cannabis strains for beginners": "best beginner-friendly low-THC strains",
+    "top 10 cannabis strains 2026": "top 10 highest THC cannabis strains 2026",
+    "cannabis strains high in myrcene": "best high-myrcene strains for body relaxation",
+    "cannabis strains high in limonene": "best high-limonene strains for mood lift",
+    "cannabis strains high in linalool": "best high-linalool strains for calm",
+    "best CBD-dominant strains guide": "best CBD strains for daytime clarity",
+    "best strains for focus and ADHD": "best low-anxiety strains for ADHD focus",
+    "best strains for insomnia": "best CBD:THC ratios for insomnia"
+  },
+  "brand": {
+    "The Green Leaf": "The Strain Report"
+  }
+}
