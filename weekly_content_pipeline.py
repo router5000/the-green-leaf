@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Weekly Content Pipeline for The Green Leaf Content Engine
+Weekly Content Pipeline for The Strain Report Content Engine
 
 Orchestrates the full automated content workflow:
 1. Keyword Research - Find best topic to write about
@@ -196,7 +196,7 @@ def run_weekly_pipeline(
         True if successful, False otherwise
     """
     print("=" * 60)
-    print("🌿 CANNABIS CARE WEEKLY CONTENT PIPELINE")
+    print("🌿 THE STRAIN REPORT WEEKLY CONTENT PIPELINE")
     print(f"📅 {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"📋 Active pillars: {', '.join(get_content_pillars())}")
     print("=" * 60)

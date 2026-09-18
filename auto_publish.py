@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-Auto-Publish Module for The Green Leaf Cannabis Content Engine
+Auto-Publish Module for The Strain Report Cannabis Content Engine
 
 Handles automatic Git operations after content generation:
 - Promotes articles from drafts/ to site/content/posts/
 - Commits new articles and images
 - Pushes to main branch
-- Triggers Vercel deployment
+- Triggers Vercel deployment via git integration (push to main)
 
 Can be run standalone or imported by the pipeline.
 """
@@ -490,7 +490,7 @@ def setup_git_for_ci():
     """
     # Set git user for commits
     run_git_command(["config", "user.email", "bot@strainreport.com"])
-    run_git_command(["config", "user.name", "Green Leaf Bot"])
+    run_git_command(["config", "user.name", "Strain Report Bot"])
     
     print("✅ Git configured for CI environment")
 

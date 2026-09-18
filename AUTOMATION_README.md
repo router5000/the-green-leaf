@@ -8,7 +8,7 @@ Fully automated content generation system that:
 5. **Publishes** automatically via Git push → Vercel deployment
 
 **Live Site:** https://strainreport.com
-**GitHub:** https://github.com/JakeTaylorDesign/cannabiscare-center
+**GitHub:** https://github.com/router5000/the-green-leaf
 
 ## Quick Start
 
@@ -23,7 +23,7 @@ python weekly_content_pipeline.py
 python weekly_content_pipeline.py --count 3
 
 # Use a specific keyword
-python weekly_content_pipeline.py --keyword "spring cannabis fertilizer schedule"
+python weekly_content_pipeline.py --keyword "best indica strains for sleep 2026"
 
 # Dry run (see what would happen)
 python weekly_content_pipeline.py --dry-run
@@ -82,7 +82,7 @@ python weekly_content_pipeline.py --dry-run
 ### Content Enhancement
 | File | Purpose |
 |------|---------|
-| `affiliate_linker.py` | Amazon affiliate link insertion (34 products, 14 categories) |
+| `affiliate_linker.py` | Amazon affiliate link insertion (38 products, 14 categories) |
 | `internal_linker.py` | Auto-links related articles for SEO |
 | `article_qa.py` | Multi-dimensional quality assurance scoring |
 | `youtube_search.py` | Video discovery, transcript extraction, caching |
@@ -145,7 +145,7 @@ The workflow file at `.github/workflows/weekly-content.yml` will:
 
 ### How It Works
 
-1. **Topic Bank**: 75+ curated cannabis topics organized by season
+1. **Topic Bank**: 130 curated cannabis topics across 4 content pillars (strain database, discovery, education, reviews/culture)
 2. **Google Trends**: Gets relative interest scores (0-100)
 3. **Seasonal Relevance**: Prioritizes current + upcoming season
 4. **Duplicate Check**: Filters out already-published topics
@@ -159,11 +159,11 @@ Score = (Trends × 0.30) + (Volume × 0.30) + (Seasonal × 0.30) + (Novelty × 0
 
 ### Adding Custom Keywords
 
-Edit `CANNABIS_TOPICS` in `keyword_research.py`:
+Edit `CONTENT_PILLARS` in `keyword_research.py`:
 
 ```python
-CANNABIS_TOPICS = {
-    "spring": [
+CONTENT_PILLARS = {
+    "strain_database": [
         "your new keyword here",
         # ...
     ],
@@ -197,7 +197,7 @@ python auto_publish.py --dry-run  # See what would happen
 python auto_publish.py --status  # Just show git status
 
 # Pipeline with options
-python weekly_content_pipeline.py --keyword "cannabis aeration tips"
+python weekly_content_pipeline.py --keyword "cannabis terpenes complete guide"
 python weekly_content_pipeline.py --count 3 --no-qa
 python weekly_content_pipeline.py --no-publish  # Generate but don't push
 python weekly_content_pipeline.py --dry-run  # Preview only
@@ -255,7 +255,7 @@ https://hooks.slack.com/services/xxx/yyy/zzz
 ### "No suitable keywords found"
 
 All topic bank keywords have been published. Solutions:
-1. Add more topics to `CANNABIS_TOPICS`
+1. Add more topics to `CONTENT_PILLARS`
 2. Use `--keyword` to specify a custom keyword
 3. Run `python keyword_research.py --trending` to discover new topics
 
@@ -301,7 +301,7 @@ schedule:
 
 The topic bank is designed for US-based cannabis. For other regions:
 1. Adjust season dates in `get_current_season()`
-2. Add region-specific topics to `CANNABIS_TOPICS`
+2. Add region-specific topics to `CONTENT_PILLARS`
 
 ### Different Notification Service
 
@@ -309,12 +309,13 @@ Modify `send_notification()` in `weekly_content_pipeline.py` for other services.
 
 ## Current Stats
 
-- **Published articles:** 66
-- **Generated images:** 158
-- **Affiliate products database:** 34 products across 14 categories
-- **Embedded YouTube videos:** 132+
-- **Schedule:** Monday & Wednesday at 8am UTC
+- **Published articles:** 31 (in `site/content/posts/`)
+- **Generated article images:** 68 (hero + section pairs under `site/public/images/articles/`)
+- **Affiliate products database:** 38 products across 14 categories
+- **Topic bank:** 130 keywords across 4 pillars
+- **Deploy path:** `auto_publish.py` git-pushes to `main` → Vercel git integration (no CLI deploy in Actions)
+- **Schedule:** Monday & Wednesday at 8am UTC (3am ET)
 
 ---
 
-**Last Updated:** January 2026
+**Last Updated:** September 2026
