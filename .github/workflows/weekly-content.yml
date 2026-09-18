@@ -95,14 +95,15 @@ jobs:
           INPUT_SKIP_QA: ${{ github.event.inputs.skip_qa }}
           INPUT_DRY_RUN: ${{ github.event.inputs.dry_run }}
         run: |
-          ARGS="--ci"
-          [ -n "$INPUT_KEYWORD" ] && ARGS="$ARGS --keyword $INPUT_KEYWORD"
-          [ -n "$INPUT_COUNT" ] && ARGS="$ARGS --count $INPUT_COUNT"
-          [ "$INPUT_SEASON" != "auto" ] && [ -n "$INPUT_SEASON" ] && ARGS="$ARGS --season $INPUT_SEASON"
-          [ "$INPUT_SKIP_QA" = "true" ] && ARGS="$ARGS --no-qa"
-          [ "$INPUT_DRY_RUN" = "true" ] && ARGS="$ARGS --dry-run"
-          echo "Running: python weekly_content_pipeline.py $ARGS"
-          python weekly_content_pipeline.py $ARGS
+          # Use "$@" so multi-word keywords stay one argument
+          set -- --ci
+          [ -n "$INPUT_KEYWORD" ] && set -- "$@" --keyword "$INPUT_KEYWORD"
+          [ -n "$INPUT_COUNT" ] && set -- "$@" --count "$INPUT_COUNT"
+          [ "$INPUT_SEASON" != "auto" ] && [ -n "$INPUT_SEASON" ] && set -- "$@" --season "$INPUT_SEASON"
+          [ "$INPUT_SKIP_QA" = "true" ] && set -- "$@" --no-qa
+          [ "$INPUT_DRY_RUN" = "true" ] && set -- "$@" --dry-run
+          echo "Running: python weekly_content_pipeline.py $*"
+          python weekly_content_pipeline.py "$@"
 
       # Deploy is via Vercel Git integration on push to main (auto_publish).
       # Do not add a second Vercel CLI deploy here — it races / double-deploys.
