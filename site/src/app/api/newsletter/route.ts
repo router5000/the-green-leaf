@@ -42,10 +42,10 @@ export async function POST(req: NextRequest) {
 
   try {
     const supabase = getSupabase()
-    const { error } = await supabase.from('newsletter_subscribers').insert({
-      email,
-      source,
-    })
+    // Untyped client has no Database schema, so insert() expects never[].
+    const { error } = await supabase.from('newsletter_subscribers').insert([
+      { email, source },
+    ] as never)
 
     if (error) {
       // Unique violation → already subscribed (treat as success)
