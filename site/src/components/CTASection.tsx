@@ -1,5 +1,7 @@
 'use client'
 
+import { FormEvent, useState } from 'react'
+
 function DashedLine() {
   return (
     <svg width="100%" height="1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
@@ -58,7 +60,7 @@ function FloatIcon({ icon }: { icon: string }) {
   )
   if (icon === 'beaker') return (
     <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="rgba(255,255,255,0.85)" strokeWidth={1.5}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
     </svg>
   )
   if (icon === 'dropper') return (
@@ -68,7 +70,7 @@ function FloatIcon({ icon }: { icon: string }) {
   )
   if (icon === 'book') return (
     <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="rgba(255,255,255,0.85)" strokeWidth={1.5}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0118 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
     </svg>
   )
   return (
@@ -79,6 +81,48 @@ function FloatIcon({ icon }: { icon: string }) {
 }
 
 export default function CTASection() {
+  const [email, setEmail] = useState('')
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [message, setMessage] = useState('')
+
+  async function onSubmit(e: FormEvent) {
+    e.preventDefault()
+    if (status === 'loading') return
+
+    setStatus('loading')
+    setMessage('')
+
+    try {
+      const res = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, source: 'homepage_cta', website: '' }),
+      })
+      const data = (await res.json().catch(() => ({}))) as {
+        ok?: boolean
+        error?: string
+        alreadySubscribed?: boolean
+      }
+
+      if (!res.ok || !data.ok) {
+        setStatus('error')
+        setMessage(data.error || 'Something went wrong. Please try again.')
+        return
+      }
+
+      setStatus('success')
+      setMessage(
+        data.alreadySubscribed
+          ? "You're already on the list — thanks for being here."
+          : "You're on the list. We'll keep it useful and spam-free."
+      )
+      setEmail('')
+    } catch {
+      setStatus('error')
+      setMessage('Network error. Check your connection and try again.')
+    }
+  }
+
   return (
     <div className="relative bg-[#f0f0f0]">
 
@@ -139,26 +183,61 @@ export default function CTASection() {
               </p>
 
               {/* CTA row: email capture */}
-              <div className="flex flex-col items-center gap-1.5">
-                <div className="flex items-center gap-2">
+              <form onSubmit={onSubmit} className="flex flex-col items-center gap-1.5 w-full max-w-md">
+                <div className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto justify-center">
+                  <label htmlFor="newsletter-email" className="sr-only">Email address</label>
                   <input
+                    id="newsletter-email"
                     type="email"
+                    name="email"
+                    autoComplete="email"
+                    required
+                    value={email}
+                    onChange={(ev) => {
+                      setEmail(ev.target.value)
+                      if (status === 'error' || status === 'success') {
+                        setStatus('idle')
+                        setMessage('')
+                      }
+                    }}
+                    disabled={status === 'loading' || status === 'success'}
                     placeholder="Enter your email"
-                    className="rounded-full text-sm outline-none"
-                    style={{ width: 220, padding: '11px 20px', backgroundColor: '#ffffff', color: '#1a3a0a' }}
+                    className="rounded-full text-sm outline-none disabled:opacity-70"
+                    style={{ width: 220, maxWidth: '100%', padding: '11px 20px', backgroundColor: '#ffffff', color: '#1a3a0a' }}
+                  />
+                  <input
+                    type="text"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                    className="sr-only"
+                    defaultValue=""
                   />
                   <button
-                    type="button"
-                    className="rounded-full font-semibold text-sm whitespace-nowrap transition-colors hover:bg-green-50 shrink-0"
+                    type="submit"
+                    disabled={status === 'loading' || status === 'success'}
+                    className="rounded-full font-semibold text-sm whitespace-nowrap transition-colors hover:bg-green-50 shrink-0 disabled:opacity-70"
                     style={{ padding: '11px 20px', backgroundColor: '#ffffff', color: '#1a3a0a' }}
                   >
-                    Get on the list
+                    {status === 'loading' ? 'Joining…' : status === 'success' ? 'Joined' : 'Get on the list'}
                   </button>
                 </div>
-                <p className="text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>
-                  Free cannabis education, no spam ever.
+                <p
+                  className="text-xs min-h-[1rem]"
+                  style={{
+                    color:
+                      status === 'error'
+                        ? 'rgba(255,180,180,0.95)'
+                        : status === 'success'
+                          ? 'rgba(180,255,200,0.9)'
+                          : 'rgba(255,255,255,0.35)',
+                  }}
+                  role={status === 'error' ? 'alert' : undefined}
+                >
+                  {message || 'Free cannabis education, no spam ever.'}
                 </p>
-              </div>
+              </form>
             </div>
 
             {/* Ticker bar */}
