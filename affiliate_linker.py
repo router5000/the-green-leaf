@@ -12,7 +12,10 @@ from typing import List, Dict, Tuple
 # Empty/missing tag => affiliate insertion is skipped (no broken/untagged links).
 AFFILIATE_TAG = (os.getenv('AMAZON_AFFILIATE_TAG') or '').strip()
 
-# FTC Disclosure
+# Policy: at most ONE affiliate link per article; zero is fine (optional, never forced).
+DEFAULT_MAX_AFFILIATE_LINKS = 1
+
+# FTC Disclosure (shown only when at least one link was inserted)
 AFFILIATE_DISCLOSURE = """
 *This article contains affiliate links. If you purchase through these links, we may earn a small commission at no extra cost to you.*
 """.strip()
@@ -37,7 +40,7 @@ def build_affiliate_url(search_term: str, asin: str = None) -> str:
     return f"https://www.amazon.com/s?k={encoded}&tag={AFFILIATE_TAG}"
 
 
-def find_product_opportunities(content: str, product_db: dict, max_links: int = 5) -> List[Dict]:
+def find_product_opportunities(content: str, product_db: dict, max_links: int = DEFAULT_MAX_AFFILIATE_LINKS) -> List[Dict]:
     opportunities = []
     content_lower = content.lower()
 
@@ -106,6 +109,10 @@ def insert_affiliate_links(content: str, opportunities: List[Dict]) -> Tuple[str
                 'category': opp['category']
             })
 
+            # Hard stop: never more than one affiliate link per article
+            if len(inserted_links) >= DEFAULT_MAX_AFFILIATE_LINKS:
+                break
+
     return modified_content, inserted_links
 
 
@@ -130,7 +137,7 @@ def add_affiliate_disclosure(content: str, has_links: bool = True) -> str:
     return '\n'.join(new_lines)
 
 
-def process_article_for_affiliates(content: str, max_links: int = 5) -> Dict:
+def process_article_for_affiliates(content: str, max_links: int = DEFAULT_MAX_AFFILIATE_LINKS) -> Dict:
     empty = {
         'content': content,
         'affiliate_links': [],
@@ -158,6 +165,9 @@ def process_article_for_affiliates(content: str, max_links: int = 5) -> Dict:
     else:
         frontmatter = ''
         body = content
+
+    # Clamp so callers cannot accidentally request more than one link
+    max_links = min(max(0, max_links), DEFAULT_MAX_AFFILIATE_LINKS)
 
     opportunities = find_product_opportunities(body, product_db, max_links)
     modified_body, inserted_links = insert_affiliate_links(body, opportunities)
