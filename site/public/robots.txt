@@ -4,7 +4,9 @@
 
 # Default rules for all bots
 User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
+Allow: /api/v1/
 Disallow: /api/
 Disallow: /admin/
 

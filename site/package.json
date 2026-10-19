@@ -13,6 +13,7 @@
     "@next/third-parties": "^16.2.7",
     "@react-three/fiber": "^9.6.1",
     "@supabase/supabase-js": "^2.108.1",
+    "@types/turndown": "^5.0.6",
     "@vercel/analytics": "^2.0.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -30,7 +31,8 @@
     "remark-html": "^16.0.1",
     "tailwind-merge": "^3.6.0",
     "tailwindcss-animate": "^1.0.7",
-    "three": "^0.184.0"
+    "three": "^0.184.0",
+    "turndown": "^7.2.4"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
