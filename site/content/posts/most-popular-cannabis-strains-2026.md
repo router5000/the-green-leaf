@@ -44,7 +44,7 @@ refinement_rounds: 2
 
 ## Quick Answer
 
-The most popular cannabis strains in 2026 include longtime favorites like Blue Dream and OG Kush alongside newer heavy-hitters like Runtz and Jealousy that have dominated dispensary sales charts[[1]](#user-content-fn-1). Consumer demand continues to shift toward high-terpene, balanced hybrids in the 20–28% THC range that deliver nuanced effects rather than raw potency alone[[2]](#user-content-fn-2).
+The most popular cannabis strains in 2026 include longtime favorites like [Blue Dream](/strains/blue-dream) and [OG Kush](/strains/og-kush) alongside newer heavy-hitters like [Runtz](/strains/runtz) and Jealousy that have dominated dispensary sales charts[[1]](#user-content-fn-1). Consumer demand continues to shift toward high-terpene, balanced hybrids in the 20–28% THC range that deliver nuanced effects rather than raw potency alone[[2]](#user-content-fn-2).
 
 **Key Takeaways**
 
@@ -52,7 +52,7 @@ The most popular cannabis strains in 2026 include longtime favorites like Blue D
 - Terpene profiles — especially myrcene, caryophyllene, and limonene — are increasingly driving consumer purchasing decisions[[3]](#user-content-fn-3)
 - THC percentages for top strains typically range from 20–30%, but higher THC does not always mean a better experience
 - Strain lineage matters: knowing a strain's parent genetics helps predict effects and flavor
-- New releases like Jealousy and Gary Payton have joined classic strains in the top-seller rankings at major dispensary chains[[2]](#user-content-fn-2)
+- New releases like Jealousy and [Gary Payton](/strains/gary-payton) have joined classic strains in the top-seller rankings at major dispensary chains[[2]](#user-content-fn-2)
 
 ---
 
@@ -88,7 +88,7 @@ Blue Dream is an ideal starting point for newer consumers and a reliable daily d
 
 ### OG Kush — The Foundation of Modern Cannabis
 
-OG Kush (20–26% THC) is arguably the most influential strain in modern cannabis genetics — Runtz, Gelato, and Wedding Cake all trace lineage back to it[[4]](#user-content-fn-4). Its pungent fuel-and-pine aroma comes largely from beta-caryophyllene and limonene.
+OG Kush (20–26% THC) is arguably the most influential strain in modern cannabis genetics — Runtz, [Gelato](/strains/gelato), and Wedding Cake all trace lineage back to it[[4]](#user-content-fn-4). Its pungent fuel-and-pine aroma comes largely from beta-caryophyllene and limonene.
 
 Caryophyllene is notable among terpenes because it also interacts with CB2 receptors in the endocannabinoid system[[5]](#user-content-fn-5), which researchers believe may contribute to its distinctive physical effect profile.
 

@@ -3,6 +3,7 @@ import Link from 'next/link'
 import BlinkingSquares from '@/components/ui/BlinkingSquares'
 import StrainFilters from '@/components/StrainFilters'
 import StrainCard from '@/components/StrainCard'
+import { CompareAwareLink } from '@/components/CompareNav'
 
 const PAGE_SIZE = 24
 
@@ -101,14 +102,14 @@ export default async function StrainsListing({
     const params = new URLSearchParams()
     if (searchParams.q)                   params.set('q', searchParams.q)
     if (!lockedType && searchParams.type) params.set('type', searchParams.type)
-    if (compareSlug)                      params.set('compare', compareSlug)
     if (p > 1)                            params.set('page', String(p))
     const qs = params.toString()
     return qs ? `${basePath}?${qs}` : basePath
   }
 
-  // Tab suffix preserves ?compare across route switches
-  const tabSuffix = compareSlug ? `?compare=${encodeURIComponent(compareSlug)}` : ''
+  // Links stay clean (no crawlable ?compare=); CompareAwareLink re-adds the
+  // compare state on click so the flow survives tab/page switches.
+  const tabSuffix = ''
 
   // Cancel-compare href: current path with all other params, just no `compare`
   function cancelCompareHref() {
@@ -127,6 +128,7 @@ export default async function StrainsListing({
     { label: 'Indica',      href: `/strains/indica${tabSuffix}`, match: 'indica'  },
     { label: 'Sativa',      href: `/strains/sativa${tabSuffix}`, match: 'sativa'  },
     { label: 'Hybrid',      href: `/strains/hybrid${tabSuffix}`, match: 'hybrid'  },
+    { label: 'A–Z Index',   href: '/strains/a-z',                match: 'a-z'     },
   ] as const
 
   return (
@@ -200,9 +202,10 @@ export default async function StrainsListing({
           {tabs.map((t) => {
             const active = t.match === lockedType
             return (
-              <Link
+              <CompareAwareLink
                 key={t.href}
                 href={t.href}
+                compareSlug={compareSlug}
                 className={`px-5 py-2 rounded-full text-sm font-medium transition-colors no-underline ${
                   active
                     ? 'bg-leaf-700 text-white'
@@ -211,7 +214,7 @@ export default async function StrainsListing({
                 aria-current={active ? 'page' : undefined}
               >
                 {t.label}
-              </Link>
+              </CompareAwareLink>
             )
           })}
         </nav>
@@ -248,29 +251,50 @@ export default async function StrainsListing({
             {totalPages > 1 && (
               <div className="flex items-center justify-between mt-12 pt-6 border-t border-gray-200 flex-wrap gap-4">
                 <p className="text-sm text-gray-500">
-                  Showing {showingFrom}–{showingTo} of {totalCount} strains
+                  Showing {showingFrom}–{showingTo} of {totalCount} strains ·{' '}
+                  <Link href="/strains/a-z" className="text-leaf-700 hover:text-leaf-800">Browse A–Z</Link>
                 </p>
-                <div className="flex gap-2 items-center">
+                <nav className="flex gap-2 items-center flex-wrap" aria-label="Strain pages">
                   {page > 1 && (
-                    <Link
+                    <CompareAwareLink
                       href={pageHref(page - 1)}
+                      compareSlug={compareSlug}
+                      rel="prev"
                       className="px-4 py-2 rounded-full text-sm font-medium bg-white border border-gray-200 text-gray-700 hover:bg-leaf-50 hover:border-leaf-300 transition-colors no-underline"
                     >
                       ← Previous
-                    </Link>
+                    </CompareAwareLink>
                   )}
-                  <span className="px-4 py-2 text-sm font-medium text-gray-500">
-                    Page {page} of {totalPages}
-                  </span>
+                  {pageNumbers(page, totalPages).map((p, i) =>
+                    p === null ? (
+                      <span key={`gap-${i}`} className="px-2 text-sm text-gray-400" aria-hidden="true">…</span>
+                    ) : p === page ? (
+                      <span key={p} aria-current="page" className="min-w-9 text-center px-3 py-2 rounded-full text-sm font-semibold bg-leaf-700 text-white">
+                        {p}
+                      </span>
+                    ) : (
+                      <CompareAwareLink
+                        key={p}
+                        href={pageHref(p)}
+                        compareSlug={compareSlug}
+                        aria-label={`Page ${p}`}
+                        className="min-w-9 text-center px-3 py-2 rounded-full text-sm font-medium bg-white border border-gray-200 text-gray-700 hover:bg-leaf-50 hover:border-leaf-300 transition-colors no-underline"
+                      >
+                        {p}
+                      </CompareAwareLink>
+                    ),
+                  )}
                   {page < totalPages && (
-                    <Link
+                    <CompareAwareLink
                       href={pageHref(page + 1)}
+                      compareSlug={compareSlug}
+                      rel="next"
                       className="px-4 py-2 rounded-full text-sm font-medium bg-leaf-600 text-white hover:bg-leaf-700 transition-colors no-underline"
                     >
                       Next →
-                    </Link>
+                    </CompareAwareLink>
                   )}
-                </div>
+                </nav>
               </div>
             )}
           </>
@@ -280,3 +304,18 @@ export default async function StrainsListing({
   )
 }
 
+
+/** Every page number when the set is small (keeps all listing pages one
+ *  click from page 1 for crawlers); otherwise first/last + a ±2 window. */
+function pageNumbers(current: number, total: number): (number | null)[] {
+  if (total <= 20) return Array.from({ length: total }, (_, i) => i + 1)
+  const out: (number | null)[] = []
+  const lo = Math.max(2, current - 2)
+  const hi = Math.min(total - 1, current + 2)
+  out.push(1)
+  if (lo > 2) out.push(null)
+  for (let p = lo; p <= hi; p++) out.push(p)
+  if (hi < total - 1) out.push(null)
+  out.push(total)
+  return out
+}

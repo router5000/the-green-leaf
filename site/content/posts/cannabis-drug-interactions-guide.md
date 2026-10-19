@@ -53,12 +53,12 @@ This cannabis drug interactions guide explains how cannabis affects the body's d
 - CBD is a known inhibitor of the CYP3A4 and CYP2C19 liver enzymes, which process roughly 60% of all prescription drugs
 - High-THC strains (above 20% THC) may amplify the sedative effects of CNS depressants like benzodiazepines and opioids
 - The "grapefruit warning" on medication labels is a reliable proxy — if your drug warns against grapefruit, cannabis may carry similar interaction risks
-- Terpenes like myrcene, found prominently in strains like OG Kush and Granddaddy Purple, may enhance sedation when combined with sleep aids or muscle relaxants
+- Terpenes like myrcene, found prominently in strains like [OG Kush](/strains/og-kush) and [Granddaddy Purple](/strains/granddaddy-purple), may enhance sedation when combined with sleep aids or muscle relaxants
 - Always disclose cannabis use to your healthcare provider, as interactions can be dose-dependent and vary by consumption method
 
 ## Introduction
 
-As cannabis becomes more widely used for recreational and wellness purposes, understanding how it interacts with other substances has never been more important. Whether you reach for a high-CBD tincture or a THC-dominant flower like Blue Dream (17–24% THC), the compounds you're consuming don't exist in isolation — they enter a complex biochemical environment alongside any other medications or supplements you may be taking[[3]](#user-content-fn-3). This cannabis drug interactions guide breaks down the science in plain language, so you can make smarter, safer choices.
+As cannabis becomes more widely used for recreational and wellness purposes, understanding how it interacts with other substances has never been more important. Whether you reach for a high-CBD tincture or a THC-dominant flower like [Blue Dream](/strains/blue-dream) (17–24% THC), the compounds you're consuming don't exist in isolation — they enter a complex biochemical environment alongside any other medications or supplements you may be taking[[3]](#user-content-fn-3). This cannabis drug interactions guide breaks down the science in plain language, so you can make smarter, safer choices.
 
 ## How Cannabis Interacts With Medications: The CYP450 Enzyme System
 
@@ -88,7 +88,7 @@ A practical rule of thumb: if your medication label includes a grapefruit warnin
 
 Yes — how you consume cannabis meaningfully affects the interaction equation. Inhalation produces rapid, short-duration peaks in cannabinoid blood levels, while edibles and tinctures create slower, more sustained exposure — prolonging the window during which enzyme inhibition can occur[[5]](#user-content-fn-5).
 
-Strain cannabinoid profiles also matter. A high-CBD strain like ACDC (typically 14–20% CBD, under 1% THC) poses a different interaction risk than a balanced 1:1 strain or a THC-dominant cultivar like Gorilla Glue #4 (25–30% THC). Terpene content adds another layer: linalool (found in Zkittlez and Do-Si-Dos) has shown mild sedative properties that could amplify certain medication effects[[6]](#user-content-fn-6).
+Strain cannabinoid profiles also matter. A high-CBD strain like [ACDC](/strains/acdc) (typically 14–20% CBD, under 1% THC) poses a different interaction risk than a balanced 1:1 strain or a THC-dominant cultivar like Gorilla Glue #4 (25–30% THC). Terpene content adds another layer: linalool (found in [Zkittlez](/strains/zkittlez) and Do-Si-Dos) has shown mild sedative properties that could amplify certain medication effects[[6]](#user-content-fn-6).
 
 Dosing frequency matters too. Occasional, low-dose use poses substantially less interaction risk than daily, high-dose consumption.
 

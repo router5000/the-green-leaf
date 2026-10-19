@@ -75,12 +75,12 @@ Here's how the most common ratios break down in practice:
 Ratios don't exist in a vacuum — the strain's terpene profile works in tandem with cannabinoids to shape the overall experience. Here are some well-known strain categories that align with popular sleep ratios:
 
 ### Balanced 1:1 Strains
-- **Cannatonic** — A cross of MK Ultra and G13 Haze, Cannatonic typically tests at 6–12% CBD and 6–10% THC. Its dominant terpene is myrcene, which is associated with earthy, sedative qualities[[6]](#user-content-fn-6).
-- **Pennywise** — A Harlequin x Jack the Ripper cross averaging a near-1:1 ratio. Linalool is a notable terpene here, the same compound found in lavender and widely studied for calming properties[[2]](#user-content-fn-2).
+- **[Cannatonic](/strains/cannatonic)** — A cross of [MK Ultra](/strains/mk-ultra) and G13 Haze, Cannatonic typically tests at 6–12% CBD and 6–10% THC. Its dominant terpene is myrcene, which is associated with earthy, sedative qualities[[6]](#user-content-fn-6).
+- **Pennywise** — A [Harlequin](/strains/harlequin) x Jack the Ripper cross averaging a near-1:1 ratio. Linalool is a notable terpene here, the same compound found in lavender and widely studied for calming properties[[2]](#user-content-fn-2).
 
 ### Higher-CBD Strains (2:1 to 4:1)
-- **Harlequin** — One of the most recognized high-CBD strains, Harlequin (Colombian Gold x Thai x Swiss Landrace lineage) averages 8–16% CBD and 4–7% THC. Myrcene and pinene dominate its terpene profile[[6]](#user-content-fn-6).
-- **ACDC** — Derived from Cannatonic, ACDC can test as high as 20% CBD with THC often below 1%, though some phenotypes hit a true 2:1 range. It's almost non-intoxicating and popular among THC-sensitive consumers.
+- **Harlequin** — One of the most recognized high-CBD strains, Harlequin ([Colombian Gold](/strains/colombian-gold) x Thai x Swiss Landrace lineage) averages 8–16% CBD and 4–7% THC. Myrcene and pinene dominate its terpene profile[[6]](#user-content-fn-6).
+- **[ACDC](/strains/acdc)** — Derived from Cannatonic, ACDC can test as high as 20% CBD with THC often below 1%, though some phenotypes hit a true 2:1 range. It's almost non-intoxicating and popular among THC-sensitive consumers.
 
 ### THC-Dominant Options for Deeper Sedation
 - **Granddaddy Purple** — A classic indica (Big Bud x Purple Urkle) testing at 17–23% THC with myrcene as the primary terpene. Widely reviewed on Leafly for its heavy body effects and sleep-promoting reputation[[3]](#user-content-fn-3).

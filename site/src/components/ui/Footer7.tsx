@@ -12,6 +12,7 @@ const navLinks = [
 
 const resourceLinks = [
   { label: "Strains",  href: "/strains" },
+  { label: "Strains A–Z", href: "/strains/a-z" },
   { label: "Terpenes", href: "/terpenes" },
   { label: "States",   href: "/states" },
   { label: "About",    href: "/about" },

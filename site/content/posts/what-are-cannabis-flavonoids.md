@@ -60,7 +60,7 @@ What are cannabis flavonoids? They are naturally occurring polyphenolic plant co
 
 Most cannabis consumers are familiar with THC, CBD, and even terpenes like myrcene or limonene. But there is a third class of compounds quietly at work in every strain you consume: flavonoids. These phytonutrients are responsible for more than meets the eye — or the nose[[2]](#user-content-fn-2).
 
-Understanding what cannabis flavonoids are can deepen your appreciation of why strains like **Purple Punch** display deep violet hues, or why certain strains deliver a complexity of flavor that goes far beyond what terpenes alone can explain[[3]](#user-content-fn-3).
+Understanding what cannabis flavonoids are can deepen your appreciation of why strains like **[Purple Punch](/strains/purple-punch)** display deep violet hues, or why certain strains deliver a complexity of flavor that goes far beyond what terpenes alone can explain[[3]](#user-content-fn-3).
 
 ## What Are Cannabis Flavonoids, Exactly?
 
@@ -71,7 +71,7 @@ Among the most notable cannabis flavonoids are:
 - **Quercetin** — also found in apples and onions; contributes antioxidant properties
 - **Kaempferol** — present in many plant foods; associated with yellow pigmentation in the plant
 - **Apigenin** — found in chamomile as well as cannabis; contributes subtle floral aroma notes
-- **Anthocyanins** — responsible for the purple, blue, and red hues seen in strains like **Granddaddy Purple** and **Blue Cheese**[[3]](#user-content-fn-3)
+- **Anthocyanins** — responsible for the purple, blue, and red hues seen in strains like **[Granddaddy Purple](/strains/granddaddy-purple)** and **[Blue Cheese](/strains/blue-cheese)**[[3]](#user-content-fn-3)
 - **Cannaflavin A and Cannaflavin B** — unique to cannabis and found in no other known plant species[[4]](#user-content-fn-4)
 
 Cannaflavins are the most cannabis-specific of the group. Research published in peer-reviewed journals has highlighted their biological activity, sparking interest in how they might work alongside other cannabis compounds[[4]](#user-content-fn-4)[[5]](#user-content-fn-5).
@@ -96,7 +96,7 @@ The emerging consensus among cannabis researchers is that whole-plant, full-spec
 
 ## Why Do Some Cannabis Strains Have More Flavonoids Than Others?
 
-Flavonoid content varies naturally between strains due to genetics, and the presence of certain flavonoids is directly tied to a strain's lineage. **Granddaddy Purple** owes its iconic violet coloring to high anthocyanin expression inherited from its Purple Urkle parent[[3]](#user-content-fn-3). Strains without anthocyanin-producing genetics — like **Sour Diesel** or **Green Crack** — typically display the golden-green hues associated with kaempferol and quercetin instead[[1]](#user-content-fn-1).
+Flavonoid content varies naturally between strains due to genetics, and the presence of certain flavonoids is directly tied to a strain's lineage. **Granddaddy Purple** owes its iconic violet coloring to high anthocyanin expression inherited from its [Purple Urkle](/strains/purple-urkle) parent[[3]](#user-content-fn-3). Strains without anthocyanin-producing genetics — like **[Sour Diesel](/strains/sour-diesel)** or **Green Crack** — typically display the golden-green hues associated with kaempferol and quercetin instead[[1]](#user-content-fn-1).
 
 Environmental factors such as temperature, light exposure, and soil conditions during cultivation can also influence flavonoid expression[[6]](#user-content-fn-6). Full-spectrum cannabis products and whole-flower consumption tend to preserve the broadest range of flavonoids, while distillates and broad-spectrum extracts may contain fewer of these compounds depending on processing methods.
 

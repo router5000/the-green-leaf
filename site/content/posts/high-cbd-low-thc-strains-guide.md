@@ -62,7 +62,7 @@ Not every cannabis consumer is looking for an intense psychoactive experience. T
 
 High CBD, low THC strains are cannabis varieties selectively bred to produce elevated levels of cannabidiol (CBD) while keeping tetrahydrocannabinol (THC) levels minimal — typically below 1%[[2]](#user-content-fn-2). This cannabinoid ratio means the intoxicating effects of THC are largely absent, while the calming, non-intoxicating properties of CBD remain prominent[[3]](#user-content-fn-3).
 
-These strains often trace their genetics back to industrial hemp lineages crossed with high-resin cannabis varieties. Notable parent genetics include **Cannatonic**, **Ruderalis**, and **ACDC** — all foundational to the modern CBD-dominant breeding movement[[5]](#user-content-fn-5).
+These strains often trace their genetics back to industrial hemp lineages crossed with high-resin cannabis varieties. Notable parent genetics include **[Cannatonic](/strains/cannatonic)**, **Ruderalis**, and **[ACDC](/strains/acdc)** — all foundational to the modern CBD-dominant breeding movement[[5]](#user-content-fn-5).
 
 ### How CBD and THC Interact
 
@@ -82,16 +82,16 @@ Here are the top-recommended high CBD, low THC strains based on cannabinoid data
 | Elektra (Hemp) | Sativa-dominant Hybrid | <0.3% | 14–20% | Clear-headed calm, aroma | Myrcene, Farnesene |
 | Sour Space Candy | Sativa-dominant Hybrid | <0.3% | 16–20% | Mood lift, daytime use | Myrcene, Caryophyllene |
 
-*Note: Harlequin contains moderate THC levels (4-7%) and may produce mild psychoactive effects, making it a bridge strain between high-THC and pure CBD varieties[[4]](#user-content-fn-4).
+*Note: [Harlequin](/strains/harlequin) contains moderate THC levels (4-7%) and may produce mild psychoactive effects, making it a bridge strain between high-THC and pure CBD varieties[[4]](#user-content-fn-4).
 
 ### ACDC
 ACDC is arguably the most well-known high-CBD strain in existence. A phenotype of Cannatonic, it consistently tests at 14–20% CBD with THC below 1%, delivering one of the cleanest CBD experiences available[[5]](#user-content-fn-5). Its dominant terpene is **myrcene**, contributing an earthy, herbal aroma. Consumers report feeling calm and clear-headed — functional throughout the day without sedation.
 
 ### Harlequin
-Unique among CBD-dominant strains, Harlequin carries a moderate THC level of 4–7% alongside 8–16% CBD — creating a mild, approachable effect that's slightly more dynamic than pure CBD strains[[4]](#user-content-fn-4). Its sativa-dominant genetics (Colombian Gold, Thai, Swiss Sativa lineage) support a gentle uplift. Myrcene leads the terpene profile, with earthy and mango-like notes.
+Unique among CBD-dominant strains, Harlequin carries a moderate THC level of 4–7% alongside 8–16% CBD — creating a mild, approachable effect that's slightly more dynamic than pure CBD strains[[4]](#user-content-fn-4). Its sativa-dominant genetics ([Colombian Gold](/strains/colombian-gold), Thai, Swiss Sativa lineage) support a gentle uplift. Myrcene leads the terpene profile, with earthy and mango-like notes.
 
 ### Cannatonic
-A foundational breeding strain, Cannatonic (MK Ultra × G13 Haze) typically tests at 12–17% CBD and 2–4% THC[[5]](#user-content-fn-5). Its balanced ratio produces mild relaxation without heaviness. Myrcene is primary, giving it an earthy, slightly woody scent. It's well-suited for those transitioning from CBD isolate products to whole-flower experiences.
+A foundational breeding strain, Cannatonic ([MK Ultra](/strains/mk-ultra) × G13 Haze) typically tests at 12–17% CBD and 2–4% THC[[5]](#user-content-fn-5). Its balanced ratio produces mild relaxation without heaviness. Myrcene is primary, giving it an earthy, slightly woody scent. It's well-suited for those transitioning from CBD isolate products to whole-flower experiences.
 
 ### Charlotte's Web
 Developed by the Stanley Brothers, Charlotte's Web is one of the most recognized CBD hemp cultivars globally, testing under 0.3% THC with 13–20% CBD[[6]](#user-content-fn-6). Caryophyllene is a key terpene here, adding a subtle spice and potential complementary effects. Its indica-dominant profile translates to a quietly calming experience ideal for evening use or for highly THC-sensitive consumers.

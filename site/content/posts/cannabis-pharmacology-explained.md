@@ -70,15 +70,15 @@ This is why cannabis affects so many different functions at once. It's not targe
 
 ## How THC and CBD Affect the Brain Differently
 
-THC (tetrahydrocannabinol) is the primary psychoactive compound in cannabis. It binds directly and strongly to CB1 receptors in the brain, which is what produces the classic cannabis "high" — euphoria, altered perception, increased appetite, and in some cases, anxiety at high doses[[2]](#user-content-fn-2). Most dispensary flower today tests between 15–30% THC, with many popular strains like Gelato or Wedding Cake regularly reaching 22–26%[[4]](#user-content-fn-4).
+THC (tetrahydrocannabinol) is the primary psychoactive compound in cannabis. It binds directly and strongly to CB1 receptors in the brain, which is what produces the classic cannabis "high" — euphoria, altered perception, increased appetite, and in some cases, anxiety at high doses[[2]](#user-content-fn-2). Most dispensary flower today tests between 15–30% THC, with many popular strains like [Gelato](/strains/gelato) or [Wedding Cake](/strains/wedding-cake) regularly reaching 22–26%[[4]](#user-content-fn-4).
 
 CBD (cannabidiol) works very differently. Rather than binding directly to CB1 receptors, CBD acts as a modulator — it can actually reduce THC's binding efficiency, which is one reason high-CBD strains tend to produce gentler, less anxious experiences[[2]](#user-content-fn-2). CBD also interacts with serotonin receptors (5-HT1A) and other non-ECS pathways, which may help explain why consumers often report feeling calmer or more grounded with CBD-forward products — though it's important to note this does not constitute a medical claim[[3]](#user-content-fn-3).
 
-Strains like Harlequin (typically 8–16% CBD, 4–7% THC) or ACDC (up to 20% CBD, under 1% THC) demonstrate how dramatically different a cannabis experience can feel when the CBD-to-THC ratio shifts[[4]](#user-content-fn-4).
+Strains like [Harlequin](/strains/harlequin) (typically 8–16% CBD, 4–7% THC) or [ACDC](/strains/acdc) (up to 20% CBD, under 1% THC) demonstrate how dramatically different a cannabis experience can feel when the CBD-to-THC ratio shifts[[4]](#user-content-fn-4).
 
 ## What Role Do Terpenes Play in Cannabis Pharmacology?
 
-Terpenes are aromatic compounds found in cannabis — and in thousands of other plants. They're responsible for the distinct smell of strains like Blue Dream (sweet and berry, driven by myrcene and pinene) or Super Lemon Haze (citrusy and sharp, dominated by limonene and terpinolene)[[5]](#user-content-fn-5).
+Terpenes are aromatic compounds found in cannabis — and in thousands of other plants. They're responsible for the distinct smell of strains like [Blue Dream](/strains/blue-dream) (sweet and berry, driven by myrcene and pinene) or Super Lemon Haze (citrusy and sharp, dominated by limonene and terpinolene)[[5]](#user-content-fn-5).
 
 But terpenes do more than smell good. Research suggests they interact with cannabinoids to modulate overall effects — a phenomenon known as the **entourage effect**[[6]](#user-content-fn-6). Here's how some key terpenes are thought to influence your experience:
 

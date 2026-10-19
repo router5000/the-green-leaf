@@ -45,7 +45,7 @@ refinement_rounds: 2
 
 ## Quick Answer
 
-Granddaddy Purple strain effects are defined by deep physical relaxation, full-body sedation, and a dreamy, euphoric mental state. With THC levels typically ranging from 17–23%, GDP produces powerful and long-lasting effects that make it one of the most recognized indica strains in cannabis culture[[1]](#user-content-fn-1). Most consumers report feeling calm, sleepy, and pleasantly uplifted within minutes of consumption.
+[Granddaddy Purple](/strains/granddaddy-purple) strain effects are defined by deep physical relaxation, full-body sedation, and a dreamy, euphoric mental state. With THC levels typically ranging from 17–23%, GDP produces powerful and long-lasting effects that make it one of the most recognized indica strains in cannabis culture[[1]](#user-content-fn-1). Most consumers report feeling calm, sleepy, and pleasantly uplifted within minutes of consumption.
 
 ---
 
@@ -66,7 +66,7 @@ Granddaddy Purple strain effects are defined by deep physical relaxation, full-b
 
 ## Key Takeaways
 
-- Granddaddy Purple is an indica-dominant hybrid (Purple Urkle × Big Bud) with THC typically between 17–23%
+- Granddaddy Purple is an indica-dominant hybrid ([Purple Urkle](/strains/purple-urkle) × Big Bud) with THC typically between 17–23%
 - Effects include deep body relaxation, euphoria, and sedation — most prominent in the body
 - Myrcene is the dominant terpene, contributing to its signature sedating, earthy character
 - GDP is best suited for evening or nighttime use due to its heavy, couch-locking tendencies
@@ -136,9 +136,9 @@ These side effects are generally dose-dependent and manageable[[6]](#user-conten
 
 If GDP's profile appeals to you, these strains share overlapping characteristics:
 
-- **Purple Kush** – Another deeply sedating indica with similar grape and earthy notes, slightly higher THC ceiling
-- **Northern Lights** – A classic indica with comparable relaxation effects and a spicy, pine-forward aroma
-- **Grape Ape** – Shares GDP's lineage roots and sweet grape flavor with heavy body effects
+- **[Purple Kush](/strains/purple-kush)** – Another deeply sedating indica with similar grape and earthy notes, slightly higher THC ceiling
+- **[Northern Lights](/strains/northern-lights)** – A classic indica with comparable relaxation effects and a spicy, pine-forward aroma
+- **[Grape Ape](/strains/grape-ape)** – Shares GDP's lineage roots and sweet grape flavor with heavy body effects
 - **Blueberry** – Fruity and calming with a softer, less sedating body effect — a good entry point before trying GDP
 
 ---

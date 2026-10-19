@@ -6,7 +6,28 @@ import { findArticlesForStrain } from '@/lib/strainArticleLinks'
 import RelatedArticlesForStrain from '@/components/RelatedArticlesForStrain'
 export { generateMetadata } from '@/lib/strainMetaDescription'
 
-export const dynamic = 'force-dynamic'
+import { StrainCompareButton } from '@/components/CompareNav'
+import {
+  getStrainCatalog,
+  getStrainCatalogSafe,
+  getRelatedStrains,
+  buildNameIndex,
+  resolveStrainSlug,
+} from '@/lib/strainCatalog'
+
+// ISR: profiles are pre-rendered from the catalog and refreshed daily.
+// Unknown/new slugs still render on demand (dynamicParams defaults to true).
+export const revalidate = 86400
+
+export async function generateStaticParams() {
+  try {
+    const catalog = await getStrainCatalog()
+    return catalog.map((s) => ({ slug: s.slug }))
+  } catch {
+    // Supabase env unavailable at build: render everything on demand instead.
+    return []
+  }
+}
 
 const baseUrl = 'https://strainreport.com'
 
@@ -73,13 +94,10 @@ type Strain = {
 
 export default async function StrainDetailPage({
   params,
-  searchParams,
 }: {
   params: Promise<{ slug: string }>
-  searchParams: Promise<{ compare?: string }>
 }) {
   const { slug } = await params
-  const sp = await searchParams
 
   let strain: unknown = null
   try {
@@ -104,6 +122,10 @@ export default async function StrainDetailPage({
 
   const s = strain as unknown as Strain
   const relatedArticles = findArticlesForStrain(s.slug)
+  const catalog = await getStrainCatalogSafe()
+  const nameIndex = buildNameIndex(catalog)
+  const catalogSelf = catalog.find((c) => c.slug === s.slug)
+  const relatedStrains = catalogSelf ? getRelatedStrains(catalogSelf, catalog) : []
   const effectsByType = (s.effects ?? []).reduce<Record<string, Effect[]>>((acc, e) => {
     ;(acc[e.effect_type] ??= []).push(e)
     return acc
@@ -239,20 +261,9 @@ export default async function StrainDetailPage({
           )}
         </div>
 
-        {/* Compare with another strain */}
+        {/* Compare with another strain (button: no crawlable ?compare= URL) */}
         <div className="mb-6">
-          <Link
-            href={
-              sp.compare && sp.compare !== s.slug
-                ? `/strains/compare/${sp.compare}-vs-${s.slug}`
-                : `/strains?compare=${s.slug}`
-            }
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-leaf-600 text-white text-sm font-medium hover:bg-leaf-700 no-underline transition-colors"
-          >
-            {sp.compare && sp.compare !== s.slug
-              ? `Compare with ${sp.compare} →`
-              : 'Compare with another strain →'}
-          </Link>
+          <StrainCompareButton slug={s.slug} />
         </div>
 
         {s.short_description && (
@@ -352,10 +363,45 @@ export default async function StrainDetailPage({
                   {s.genetics.map((g) => (
                     <div key={g.id} className="bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-sm">
                       <p className="text-xs text-gray-400 capitalize mb-0.5">{g.parent_type}</p>
-                      <p className="text-gray-800 font-medium">{g.parent_strain_name}</p>
+                      {(() => {
+                        const parentSlug = resolveStrainSlug(g.parent_strain_name, nameIndex)
+                        return parentSlug && parentSlug !== s.slug ? (
+                          <Link href={`/strains/${parentSlug}`} className="text-leaf-700 hover:text-leaf-800 font-medium underline-offset-2 hover:underline">
+                            {g.parent_strain_name}
+                          </Link>
+                        ) : (
+                          <p className="text-gray-800 font-medium">{g.parent_strain_name}</p>
+                        )
+                      })()}
                     </div>
                   ))}
                 </div>
+              </Section>
+            )}
+
+            {/* Related strains (internal links between profiles) */}
+            {relatedStrains.length > 0 && (
+              <Section title={`Strains similar to ${s.name}`}>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {relatedStrains.map((r) => (
+                    <li key={r.slug}>
+                      <Link
+                        href={`/strains/${r.slug}`}
+                        className="flex items-center justify-between gap-3 bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-sm hover:border-leaf-300 no-underline transition-colors"
+                      >
+                        <span className="text-gray-800 font-medium">{r.name}</span>
+                        <span className={`shrink-0 text-xs font-medium px-2 py-0.5 rounded-full capitalize ${TYPE_BADGE[r.strain_type] ?? 'bg-gray-100 text-gray-600'}`}>
+                          {r.strain_type}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-4 text-sm">
+                  <Link href={`/strains/${s.strain_type}`} className="text-leaf-700 hover:text-leaf-800">More {s.strain_type} strains →</Link>
+                  <span className="text-gray-300 mx-2">·</span>
+                  <Link href="/strains/a-z" className="text-leaf-700 hover:text-leaf-800">All strains A–Z →</Link>
+                </p>
               </Section>
             )}
           </div>

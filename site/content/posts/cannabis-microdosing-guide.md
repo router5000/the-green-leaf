@@ -77,12 +77,12 @@ Strain selection matters enormously when microdosing, and the best choices tend 
 
 ### Low-THC and Balanced Strains to Consider
 
-- **Harlequin** — A sativa-dominant hybrid with a typical 5:2 CBD:THC ratio and THC levels around 7–15%. Its dominant terpenes include myrcene and pinene, offering a clear-headed, grounding profile without strong intoxication[[4]](#user-content-fn-4).
-- **Cannatonic** — A balanced hybrid (Reina Madre × NYC Diesel lineage) that often tests at a near 1:1 CBD:THC ratio, around 6–10% THC. Myrcene and ocimene are common terpenes, producing a mellow, functional effect[[4]](#user-content-fn-4).
+- **[Harlequin](/strains/harlequin)** — A sativa-dominant hybrid with a typical 5:2 CBD:THC ratio and THC levels around 7–15%. Its dominant terpenes include myrcene and pinene, offering a clear-headed, grounding profile without strong intoxication[[4]](#user-content-fn-4).
+- **[Cannatonic](/strains/cannatonic)** — A balanced hybrid (Reina Madre × NYC Diesel lineage) that often tests at a near 1:1 CBD:THC ratio, around 6–10% THC. Myrcene and ocimene are common terpenes, producing a mellow, functional effect[[4]](#user-content-fn-4).
 - **AC/DC** — A high-CBD phenotype of Cannatonic with CBD:THC ratios sometimes reaching 20:1 and THC as low as 1–6%. Ideal for those who want the entourage effect with virtually no psychoactivity[[5]](#user-content-fn-5).
 - **Remedy** — A CBD-dominant strain (Cannatonic × Afghan Skunk) with THC typically under 1%, making it one of the most microdose-friendly options for THC-sensitive individuals[[4]](#user-content-fn-4).
 
-For higher-THC consumers microdosing with familiar strains like Blue Dream (17–24% THC) or Sour Diesel (20–25% THC), the key is simply using far less — a single small inhalation rather than multiple.
+For higher-THC consumers microdosing with familiar strains like [Blue Dream](/strains/blue-dream) (17–24% THC) or [Sour Diesel](/strains/sour-diesel) (20–25% THC), the key is simply using far less — a single small inhalation rather than multiple.
 
 ### The Role of Terpenes in Microdosing
 

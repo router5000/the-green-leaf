@@ -98,7 +98,7 @@ Because both concentrates are high in THC — far exceeding the **15–25% THC**
 
 ### Flavor Differences
 
-Live resin has a reputation for **more vibrant, true-to-strain flavor** because its fresh-frozen process captures the plant's full terpene expression at peak freshness[[4]](#user-content-fn-4). If you're consuming a live resin made from **Mimosa** (a cross of Clementine and Purple Punch), for example, you're likely to taste the bright citrus and berry notes the strain is known for — dominated by terpenes like limonene and myrcene.
+Live resin has a reputation for **more vibrant, true-to-strain flavor** because its fresh-frozen process captures the plant's full terpene expression at peak freshness[[4]](#user-content-fn-4). If you're consuming a live resin made from **Mimosa** (a cross of Clementine and [Purple Punch](/strains/purple-punch)), for example, you're likely to taste the bright citrus and berry notes the strain is known for — dominated by terpenes like limonene and myrcene.
 
 Hash rosin, on the other hand, can deliver a deeply rich, nuanced flavor that many connoisseurs prefer for its perceived "cleanness." The absence of any solvent contact means the flavor profile is unaltered by processing chemistry[[2]](#user-content-fn-2).
 

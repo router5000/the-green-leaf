@@ -98,11 +98,11 @@ Not all cannabis topicals are created equal. The cannabinoid and terpene profile
 
 **Terpenes** are aromatic compounds found naturally in cannabis that may play an underappreciated role in topicals. Key terpenes to look for include:
 
-- **Myrcene** — found in strains like Blue Dream and OG Kush; may support absorption through the skin due to its ability to influence cell membrane permeability
-- **Linalool** — common in lavender and cannabis strains like Zkittlez; associated with calming aromatic properties[[4]](#user-content-fn-4)
+- **Myrcene** — found in strains like [Blue Dream](/strains/blue-dream) and [OG Kush](/strains/og-kush); may support absorption through the skin due to its ability to influence cell membrane permeability
+- **Linalool** — common in lavender and cannabis strains like [Zkittlez](/strains/zkittlez); associated with calming aromatic properties[[4]](#user-content-fn-4)
 - **Beta-caryophyllene** — uniquely binds to CB2 receptors directly, making it especially relevant in topical formulations[[6]](#user-content-fn-6)
 
-Looking for a topical with beta-caryophyllene? Seek out products formulated with full-spectrum extracts from strains known to be high in this terpene, such as **Girl Scout Cookies** or **Sour Diesel**.
+Looking for a topical with beta-caryophyllene? Seek out products formulated with full-spectrum extracts from strains known to be high in this terpene, such as **[Girl Scout Cookies](/strains/girl-scout-cookies)** or **[Sour Diesel](/strains/sour-diesel)**.
 
 ---
 

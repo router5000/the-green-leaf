@@ -70,6 +70,8 @@ export async function generateMetadata({
       description: 'Browse our comprehensive cannabis strain database.',
     },
     alternates: { canonical },
+    // Compare-selection state is a UI mode, not a page: keep it out of the index.
+    ...(sp.compare ? { robots: { index: false, follow: true } } : {}),
     other: otherLinks,
   }
 }

@@ -72,11 +72,11 @@ In every practical sense, THCA flower is cannabis flower. It consists of the sam
 
 The aroma, flavor, and effect character of any THCA flower product are primarily shaped by its **terpene profile** — the aromatic compounds that work alongside cannabinoids to influence the overall experience[[6]](#user-content-fn-6). For example:
 
-- A THCA flower strain dominant in **myrcene** (such as OG Kush lineage strains) tends to deliver earthy, musky notes and a more relaxing, heavy-bodied effect
-- Strains dominant in **limonene** (such as Gelato or Wedding Cake crosses) lean citrusy and uplifting
-- **Terpinolene**-forward strains like Jack Herer crosses often present floral, piney profiles associated with more energetic, clear-headed experiences[[6]](#user-content-fn-6)
+- A THCA flower strain dominant in **myrcene** (such as [OG Kush](/strains/og-kush) lineage strains) tends to deliver earthy, musky notes and a more relaxing, heavy-bodied effect
+- Strains dominant in **limonene** (such as [Gelato](/strains/gelato) or [Wedding Cake](/strains/wedding-cake) crosses) lean citrusy and uplifting
+- **Terpinolene**-forward strains like [Jack Herer](/strains/jack-herer) crosses often present floral, piney profiles associated with more energetic, clear-headed experiences[[6]](#user-content-fn-6)
 
-Popular THCA flower strains you'll frequently encounter include **Bacio Gelato** (a Sunset Sherbet × Thin Mint GSC cross), **Runtz** (Zkittlez × Gelato), and **Apple Fritter** (Sour Apple × Animal Cookies) — all strains with well-documented terpene profiles and strong consumer followings[[4]](#user-content-fn-4).
+Popular THCA flower strains you'll frequently encounter include **Bacio Gelato** (a [Sunset Sherbet](/strains/sunset-sherbet) × Thin Mint GSC cross), **Runtz** (Zkittlez × Gelato), and **Apple Fritter** (Sour Apple × Animal Cookies) — all strains with well-documented terpene profiles and strong consumer followings[[4]](#user-content-fn-4).
 
 ## Is THCA Flower Legal?
 

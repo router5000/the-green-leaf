@@ -65,7 +65,7 @@ If you've ever wondered why two strains with identical THC levels can feel compl
 
 Cannabis contains over 100 known cannabinoids and more than 200 terpenes[[5]](#user-content-fn-5). The entourage effect proposes that these compounds don't just coexist — they interact. THC binds to CB1 receptors in the brain to produce psychoactive effects, but the presence of other compounds appears to influence how that interaction plays out.
 
-CBD is perhaps the best-documented example. Research suggests CBD can reduce some of the anxiety or paranoia that high doses of THC sometimes trigger, essentially acting as a moderator[[3]](#user-content-fn-3). A strain like Harlequin — which typically tests at 7–15% CBD and 5–10% THC — is a popular example of this balancing act in action. Many consumers report a clear-headed, functional effect rather than an overwhelming high.
+CBD is perhaps the best-documented example. Research suggests CBD can reduce some of the anxiety or paranoia that high doses of THC sometimes trigger, essentially acting as a moderator[[3]](#user-content-fn-3). A strain like [Harlequin](/strains/harlequin) — which typically tests at 7–15% CBD and 5–10% THC — is a popular example of this balancing act in action. Many consumers report a clear-headed, functional effect rather than an overwhelming high.
 
 ### How Cannabinoids Interact With Each Other
 
@@ -73,11 +73,11 @@ Beyond THC and CBD, minor cannabinoids like CBG (cannabigerol) and CBN (cannabin
 
 ## How Do Terpenes Fit Into the Entourage Effect?
 
-Terpenes are aromatic compounds found in the essential oils of cannabis and many other plants. They're responsible for the distinct scents of strains — the pine of Jack Herer, the citrus of Super Lemon Haze, the earthy musk of OG Kush. But terpenes may do more than just smell good[[4]](#user-content-fn-4).
+Terpenes are aromatic compounds found in the essential oils of cannabis and many other plants. They're responsible for the distinct scents of strains — the pine of [Jack Herer](/strains/jack-herer), the citrus of [Super Lemon Haze](/strains/super-lemon-haze), the earthy musk of [OG Kush](/strains/og-kush). But terpenes may do more than just smell good[[4]](#user-content-fn-4).
 
 Dr. Ethan Russo's 2011 research suggested that terpenes interact with cannabinoid receptors and may amplify or redirect the effects of THC and CBD[[4]](#user-content-fn-4). Here's a quick look at key players:
 
-- **Myrcene** — The most common cannabis terpene, found in strains like Blue Dream (which tests around 17–24% THC with myrcene as its dominant terpene). Associated with relaxing, sedating qualities.
+- **Myrcene** — The most common cannabis terpene, found in strains like [Blue Dream](/strains/blue-dream) (which tests around 17–24% THC with myrcene as its dominant terpene). Associated with relaxing, sedating qualities.
 - **Limonene** — Prevalent in citrusy strains like Strawberry Banana. Often linked to uplifted, stress-relieving effects.
 - **Linalool** — Found in Do-Si-Dos and some Purple strains. Also present in lavender, it's associated with calming, anxiolytic qualities[[5]](#user-content-fn-5).
 - **Pinene** — Common in Jack Herer and Pineapple Express. Some research points to alertness and memory retention.

@@ -60,7 +60,7 @@ The best dry herb vaporizer is one that heats cannabis at precise temperatures t
 
 ## Introduction
 
-For cannabis consumers who care about strain flavor, effect precision, and a smoother experience, dry herb vaporizers have become the go-to consumption method. Unlike joints or pipes that burn flower at temperatures exceeding 900°F — destroying many of the plant's delicate compounds — vaporizers work by gently heating cannabis to release its active ingredients as vapor rather than smoke[[1]](#user-content-fn-1). Whether you're drawn to the citrus burst of a Tangie or the earthy pine of an OG Kush, a quality vaporizer can dramatically change how you experience your favorite strains.
+For cannabis consumers who care about strain flavor, effect precision, and a smoother experience, dry herb vaporizers have become the go-to consumption method. Unlike joints or pipes that burn flower at temperatures exceeding 900°F — destroying many of the plant's delicate compounds — vaporizers work by gently heating cannabis to release its active ingredients as vapor rather than smoke[[1]](#user-content-fn-1). Whether you're drawn to the citrus burst of a [Tangie](/strains/tangie) or the earthy pine of an [OG Kush](/strains/og-kush), a quality vaporizer can dramatically change how you experience your favorite strains.
 
 ## What Is a Dry Herb Vaporizer and How Does It Work?
 
@@ -82,8 +82,8 @@ This is where dry herb vaping becomes especially interesting for strain enthusia
 
 Here's a practical temperature guide:
 
-- **315–330°F (157–165°C):** Light, clear-headed effects; highlights delicate terpenes like terpinolene and ocimene — great for strains like Jack Herer or Durban Poison
-- **330–370°F (165–187°C):** The sweet spot for most consumers; activates THC efficiently and brings out myrcene, limonene, and linalool — ideal for balanced hybrids like [Blue Dream](/articles/top-10-cannabis-strains-2026) (17–24% THC) or Gelato
+- **315–330°F (157–165°C):** Light, clear-headed effects; highlights delicate terpenes like terpinolene and ocimene — great for strains like [Jack Herer](/strains/jack-herer) or [Durban Poison](/strains/durban-poison)
+- **330–370°F (165–187°C):** The sweet spot for most consumers; activates THC efficiently and brings out myrcene, limonene, and linalool — ideal for balanced hybrids like [Blue Dream](/articles/top-10-cannabis-strains-2026) (17–24% THC) or [Gelato](/strains/gelato)
 - **370–420°F (187–215°C):** Fuller body effects and more pronounced CBD activation; terpenes like beta-[caryophyllene](/articles/mac-1-strain-guide) and humulene shine — well-suited to high-CBD strains or indica-leaning varieties[[5]](#user-content-fn-5)
 - **420–440°F (215–227°C):** Maximum cannabinoid extraction; heavier, more sedating vapor — best for experienced consumers seeking deep relaxation
 

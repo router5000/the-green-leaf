@@ -44,7 +44,7 @@ refinement_rounds: 1
 
 ## Quick Answer
 
-This Jack Herer strain guide covers a legendary sativa-dominant hybrid known for its clear-headed, energizing euphoria and rich piney, earthy aroma. Named after the famous cannabis activist and author, it typically tests between 18–24% THC and is celebrated for uplifting creativity and focus without overwhelming intensity. It remains one of the most decorated and recognizable strains in cannabis history.
+This [Jack Herer](/strains/jack-herer) strain guide covers a legendary sativa-dominant hybrid known for its clear-headed, energizing euphoria and rich piney, earthy aroma. Named after the famous cannabis activist and author, it typically tests between 18–24% THC and is celebrated for uplifting creativity and focus without overwhelming intensity. It remains one of the most decorated and recognizable strains in cannabis history.
 
 **Strain Overview**
 
@@ -106,10 +106,10 @@ Consuming water, starting with a low dose, and choosing a comfortable environmen
 
 If you enjoy Jack Herer, the following strains share similar energizing, uplifting qualities and may be worth exploring:
 
-- **Durban Poison** — A pure sativa with a sweet anise aroma and sharp mental clarity
-- **Super Silver Haze** — A Haze-heavy hybrid with overlapping genetics and comparable cerebral lift
-- **Green Crack** — A fruity, fast-acting sativa-dominant strain popular for focus and energy
-- **Strawberry Cough** — A gentler, berry-forward option with a similar mood-lifting character
+- **[Durban Poison](/strains/durban-poison)** — A pure sativa with a sweet anise aroma and sharp mental clarity
+- **[Super Silver Haze](/strains/super-silver-haze)** — A Haze-heavy hybrid with overlapping genetics and comparable cerebral lift
+- **[Green Crack](/strains/green-crack)** — A fruity, fast-acting sativa-dominant strain popular for focus and energy
+- **[Strawberry Cough](/strains/strawberry-cough)** — A gentler, berry-forward option with a similar mood-lifting character
 
 All four share Jack Herer's daytime-friendly profile, though each brings its own distinct flavor and intensity[[3]](#user-content-fn-3).
 

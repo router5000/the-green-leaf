@@ -44,7 +44,7 @@ refinement_rounds: 0
 
 ## Quick Answer
 
-Girl Scout Cookies (GSC) is a legendary indica-dominant hybrid known for its euphoric, full-body effects and a complex sweet, earthy flavor profile. With THC levels typically ranging from 19–28%, it's considered a potent, well-rounded strain that appeals to both recreational users and medical cannabis patients. GSC remains one of the most recognizable and widely consumed strains in the world.
+[Girl Scout Cookies](/strains/girl-scout-cookies) (GSC) is a legendary indica-dominant hybrid known for its euphoric, full-body effects and a complex sweet, earthy flavor profile. With THC levels typically ranging from 19–28%, it's considered a potent, well-rounded strain that appeals to both recreational users and medical cannabis patients. GSC remains one of the most recognizable and widely consumed strains in the world.
 
 ---
 
@@ -66,7 +66,7 @@ Girl Scout Cookies (GSC) is a legendary indica-dominant hybrid known for its eup
 
 ## Key Takeaways
 
-- Girl Scout Cookies is an indica-dominant hybrid crossing OG Kush and Durban Poison, delivering a balanced but powerful high[[1]](#user-content-fn-1)
+- Girl Scout Cookies is an indica-dominant hybrid crossing [OG Kush](/strains/og-kush) and [Durban Poison](/strains/durban-poison), delivering a balanced but powerful high[[1]](#user-content-fn-1)
 - THC content typically falls between 19–28%, making this a high-potency strain not recommended for beginners[[2]](#user-content-fn-2)
 - The dominant terpene, caryophyllene, contributes to its spicy, peppery aroma and may interact with the body's endocannabinoid system[[3]](#user-content-fn-3)
 - Effects include euphoria, full-body relaxation, and mood uplift, with a relatively long duration of 2–3 hours
@@ -82,7 +82,7 @@ Few strains have achieved the cultural staying power of Girl Scout Cookies. Born
 
 ## What Are the Origins and Genetics of Girl Scout Cookies?
 
-Girl Scout Cookies was developed by crossing two iconic strains: OG Kush, a California-bred indica-dominant classic, and Durban Poison, a pure sativa landrace originating from South Africa[[1]](#user-content-fn-1). This pairing produces a genetic profile that leans indica but carries enough sativa energy to prevent complete sedation. The result is a uniquely balanced hybrid that became the parent strain for numerous popular crosses, including Gelato, Sherbet, and Wedding Cake[[2]](#user-content-fn-2).
+Girl Scout Cookies was developed by crossing two iconic strains: OG Kush, a California-bred indica-dominant classic, and Durban Poison, a pure sativa landrace originating from South Africa[[1]](#user-content-fn-1). This pairing produces a genetic profile that leans indica but carries enough sativa energy to prevent complete sedation. The result is a uniquely balanced hybrid that became the parent strain for numerous popular crosses, including [Gelato](/strains/gelato), Sherbet, and [Wedding Cake](/strains/wedding-cake)[[2]](#user-content-fn-2).
 
 The original GSC phenotype has spawned several notable variations, including Thin Mint GSC and Platinum GSC, each offering slight differences in aroma, potency, and effect intensity. All share the same foundational genetics and recognizable flavor signature.
 

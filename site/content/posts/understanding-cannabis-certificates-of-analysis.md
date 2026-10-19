@@ -80,7 +80,7 @@ The cannabinoid panel is usually the first section consumers look at, and it's w
 - Most legal market flower falls between **15–30% Total THC**, while CBD-dominant strains typically range from **10–20% CBD** with less than 0.3% THC
 - Minor cannabinoids like **CBG** (often 0.5–2%), **CBN** (usually under 1% in fresh flower), and **CBC** also appear and contribute to the overall experience
 
-A strain like Sour Diesel, for example, might show 22% Total THC, 0.1% CBD, and 0.8% CBG on its COA — giving you a clear picture of its potency profile before you buy[[5]](#user-content-fn-5).
+A strain like [Sour Diesel](/strains/sour-diesel), for example, might show 22% Total THC, 0.1% CBD, and 0.8% CBG on its COA — giving you a clear picture of its potency profile before you buy[[5]](#user-content-fn-5).
 
 ## What Does the Terpene Profile on a COA Tell You?
 
@@ -88,8 +88,8 @@ Not all COAs include terpene data, but those that do offer valuable insight beyo
 
 Here's what common terpene findings look like in practice:
 
-- **Myrcene** (>0.5% is considered high): earthy, musky notes; associated with relaxing, sedating qualities; dominant in strains like Granddaddy Purple and OG Kush
-- **Limonene** (typically 0.3–1%): bright citrus aroma; often linked to uplifting, mood-elevating effects; prominent in Lemon Haze and Wedding Cake
+- **Myrcene** (>0.5% is considered high): earthy, musky notes; associated with relaxing, sedating qualities; dominant in strains like [Granddaddy Purple](/strains/granddaddy-purple) and [OG Kush](/strains/og-kush)
+- **Limonene** (typically 0.3–1%): bright citrus aroma; often linked to uplifting, mood-elevating effects; prominent in [Lemon Haze](/strains/lemon-haze) and [Wedding Cake](/strains/wedding-cake)
 - **Caryophyllene** (0.2–0.8% range): spicy, peppery; the only terpene known to interact directly with CB2 receptors[[6]](#user-content-fn-6); common in GSC (Girl Scout Cookies) and Gelato
 - **Linalool** (usually under 0.5%): floral, lavender-like; associated with calming qualities; found in strains like LA Confidential
 - **Pinene** (alpha and beta forms): fresh pine scent; associated with alertness and clarity; prevalent in Jack Herer and Blue Dream

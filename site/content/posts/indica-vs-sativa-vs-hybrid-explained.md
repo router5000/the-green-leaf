@@ -94,13 +94,13 @@ What actually drives your experience?
 - **Terpenes** like myrcene (earthy, sedating), limonene (citrusy, mood-lifting), and beta-caryophyllene (spicy, stress-relieving) interact with cannabinoids to shape the full effect profile[[6]](#user-content-fn-6)
 - **Individual biology** — your [endocannabinoid system](/articles/cannabis-pharmacology-explained), tolerance, and metabolism — plays a significant role
 
-For example, Granddaddy Purple (a classic indica) contains high levels of myrcene and linalool, which are associated with calming effects. Meanwhile, Durban Poison (a sativa landrace) is dominant in terpinolene and ocimene, linked to more alert, energetic experiences. The terpene difference — not the indica/sativa label — is doing most of the work[[5]](#user-content-fn-5).
+For example, [Granddaddy Purple](/strains/granddaddy-purple) (a classic indica) contains high levels of myrcene and linalool, which are associated with calming effects. Meanwhile, [Durban Poison](/strains/durban-poison) (a sativa landrace) is dominant in terpinolene and ocimene, linked to more alert, energetic experiences. The terpene difference — not the indica/sativa label — is doing most of the work[[5]](#user-content-fn-5).
 
 ---
 
 ## What Are Hybrid Strains and Why Do They Dominate Dispensaries?
 
-Hybrids were developed to capture the best traits from both indica and sativa genetics. Strains like Blue Dream (Blueberry × Haze) deliver a balance of cerebral uplift and mild body relaxation, while Gelato (Sunset Sherbet × Thin Mint GSC) offers euphoric effects with a creamy terpene profile dominated by caryophyllene and limonene[[1]](#user-content-fn-1).
+Hybrids were developed to capture the best traits from both indica and sativa genetics. Strains like [Blue Dream](/strains/blue-dream) (Blueberry × Haze) deliver a balance of cerebral uplift and mild body relaxation, while [Gelato](/strains/gelato) ([Sunset Sherbet](/strains/sunset-sherbet) × Thin Mint GSC) offers euphoric effects with a creamy terpene profile dominated by caryophyllene and limonene[[1]](#user-content-fn-1).
 
 According to consumer data from Leafly, hybrids represent the largest and fastest-growing segment of dispensary menus[[1]](#user-content-fn-1). This makes the old binary of indica vs sativa even less useful — when nearly everything is a hybrid, the labels lose most of their practical value.
 
