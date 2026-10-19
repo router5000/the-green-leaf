@@ -1,0 +1,10 @@
+{
+  "$schema": "https://agentskills.io/schemas/index.json",
+  "skills": [
+    {
+      "name": "strainreport-lookup",
+      "description": "Look up cannabis strain profiles, educational articles, and US state cannabis-law summaries from The Strain Report.",
+      "url": "https://strainreport.com/.well-known/agent-skills/strainreport-lookup/SKILL.md"
+    }
+  ]
+}

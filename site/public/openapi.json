@@ -1,0 +1,30 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "The Strain Report public lookup API",
+    "version": "1.0.0",
+    "description": "Read-only, unauthenticated lookup of cannabis strain profiles, educational articles, and state cannabis-law summaries from strainreport.com. General information only; not medical or legal advice."
+  },
+  "servers": [{ "url": "https://strainreport.com" }],
+  "paths": {
+    "/api/v1/search": {
+      "get": {
+        "operationId": "search",
+        "summary": "Search strains, articles, and state law pages",
+        "parameters": [
+          { "name": "q", "in": "query", "required": true, "schema": { "type": "string", "maxLength": 100 }, "description": "Search text, e.g. a strain name, topic, or US state" },
+          { "name": "type", "in": "query", "schema": { "type": "string", "enum": ["all", "strain", "article", "state"], "default": "all" } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer", "minimum": 1, "maximum": 50, "default": 10 } }
+        ],
+        "responses": { "200": { "description": "Matching results grouped by type" }, "400": { "description": "Missing q" } }
+      }
+    },
+    "/api/v1/states": {
+      "get": {
+        "operationId": "listStates",
+        "summary": "Cannabis law summaries for all 50 US states",
+        "responses": { "200": { "description": "All states with status, possession limit, home grow, minimum age, and official source link" } }
+      }
+    }
+  }
+}

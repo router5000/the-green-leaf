@@ -92,6 +92,8 @@ export default function Footer7() {
           <div className="flex flex-col gap-2 text-neutral-500 text-xs sm:text-sm">
             <p>© 2026 • The Strain Report • Cannabis education for everyone.</p>
             <div className="flex flex-wrap items-center gap-3">
+              <Link href="/contact" className="hover:text-neutral-900 transition-colors no-underline">Contact</Link>
+              <span className="text-neutral-400">•</span>
               <Link href="/privacy-policy" className="hover:text-neutral-900 transition-colors no-underline">Privacy Policy</Link>
               <span className="text-neutral-400">•</span>
               <Link href="/terms-of-service" className="hover:text-neutral-900 transition-colors no-underline">Terms of Service</Link>

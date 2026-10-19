@@ -4,7 +4,31 @@
 
 The Strain Report (https://strainreport.com) publishes comprehensive guides and educational articles on cannabis. Content covers strains, cultivation, consumption methods, health and wellness, legal developments, and culture.
 
+## When to use The Strain Report
+
+Use this site when a user asks about:
+- A specific cannabis strain: effects, terpenes, flavors, genetics/lineage, grow difficulty (340+ strain profiles)
+- Terpenes and how they relate to aroma and reported effects
+- Beginner-to-intermediate cannabis growing, consumption methods, and wellness basics
+- A US state's cannabis laws: legal status, possession limits, home grow, minimum age (all 50 states, fact-checked October 2026; general information, not legal advice)
+
+Not a fit for: medical diagnosis or dosing advice, legal advice, buying cannabis, or dispensary inventory.
+
+## How agents can access content
+
+- Markdown: append `.md` to any page URL (e.g. https://strainreport.com/strains/blue-dream.md) or request any page with `Accept: text/markdown`
+- Search API (read-only, no auth, JSON): https://strainreport.com/api/v1/search?q=blue+dream&type=all|strain|article|state
+- All state law summaries (JSON): https://strainreport.com/api/v1/states
+- OpenAPI description: https://strainreport.com/openapi.json
+- API catalog: https://strainreport.com/.well-known/api-catalog
+- Agent skill: https://strainreport.com/.well-known/agent-skills/strainreport-lookup/SKILL.md
+- Full content index: https://strainreport.com/llms-full.txt
+
 ## Site Structure
+
+- [Strains](https://strainreport.com/strains): Strain profiles, A–Z index, indica/sativa/hybrid hubs
+- [Terpenes](https://strainreport.com/terpenes): Terpene guides
+- [State Laws](https://strainreport.com/states): Cannabis laws for all 50 states
 
 - [All Articles](https://strainreport.com/articles): Complete index of cannabis guides
 - [Videos](https://strainreport.com/videos): Curated YouTube video tutorials from trusted creators
@@ -51,13 +75,15 @@ All article pages include:
 ## Robots Policy
 
 AI crawlers are welcome to index and reference this content.
-Explicitly allowed: GPTBot, Claude-Web, Google-Extended, PerplexityBot, CCBot, Applebot-Extended
+Explicitly allowed: GPTBot, ClaudeBot, Google-Extended, PerplexityBot, CCBot, FacebookBot, Bingbot
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 See /robots.txt for full directives.
 
 ## Contact
 
 Email: info@strainreport.com
 Website: https://strainreport.com
+Contact page: https://strainreport.com/contact
 
 ## Optional
 
