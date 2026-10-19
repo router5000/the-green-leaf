@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { useEffect, useState, useTransition } from 'react'
-import Link from 'next/link'
+import { CompareAwareLink } from '@/components/CompareNav'
 
 export default function StrainFilters() {
   const router = useRouter()
@@ -40,9 +40,7 @@ export default function StrainFilters() {
   const hasSearch = !!params.get('q')
 
   // Preserve ?compare across clear-search
-  const clearHref = params.get('compare')
-    ? `${pathname}?compare=${params.get('compare')}`
-    : pathname
+  const clearHref = pathname
 
   return (
     <div className="flex flex-col gap-4 mb-8">
@@ -57,12 +55,13 @@ export default function StrainFilters() {
 
       {hasSearch && (
         <div>
-          <Link
+          <CompareAwareLink
             href={clearHref}
+            compareSlug={params.get('compare') ?? undefined}
             className="text-sm font-medium text-gray-500 hover:text-leaf-700 transition-colors"
           >
             Clear search
-          </Link>
+          </CompareAwareLink>
         </div>
       )}
     </div>

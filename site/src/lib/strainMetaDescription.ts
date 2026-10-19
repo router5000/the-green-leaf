@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { getSupabase } from '@/lib/supabase'
+import { getStrainCatalogSafe, isThinStrain } from '@/lib/strainCatalog'
 
 const baseUrl = 'https://strainreport.com'
 
@@ -63,6 +64,11 @@ export async function generateMetadata({
   const title = seo?.meta_title ?? `${data.name} Strain | The Strain Report`
   const description = resolveStrainDescription(data)
 
+  // Thin-page gate: below THIN_STRAIN_WORD_THRESHOLD visible words the
+  // profile stays live and linked but is kept out of the index.
+  const catalogRow = (await getStrainCatalogSafe()).find((c) => c.slug === slug)
+  const thin = catalogRow ? isThinStrain(catalogRow) : false
+
   return {
     title,
     description,
@@ -75,5 +81,6 @@ export async function generateMetadata({
     },
     twitter: { card: 'summary_large_image', title, description },
     alternates: { canonical: `${baseUrl}/strains/${slug}` },
+    ...(thin ? { robots: { index: false, follow: true } } : {}),
   }
 }

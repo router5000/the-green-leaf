@@ -72,7 +72,7 @@ Importantly, CBD does not appear to cause the same receptor downregulation. In f
 
 Not all cannabis affects tolerance equally — and THC potency plays a major role. Today's market features strains regularly testing between 25–30% THC, a dramatic increase from the 10–15% averages common two decades ago[[1]](#user-content-fn-1). Higher THC concentration means more aggressive CB1 receptor stimulation per session, which can accelerate tolerance development.
 
-If you're consuming a heavy-hitter like **Gorilla Glue #4** (GG4, 25–30% THC) or **Ghost OG** (20–28% THC) daily, your receptors are under sustained, intense pressure. By contrast, strains like **Harlequin** (typically 7–15% THC, 6–15% CBD) or **ACDC** (1–6% THC, 14–20% CBD) provide psychoactive input at a much lower intensity, making tolerance buildup significantly slower[[5]](#user-content-fn-5).
+If you're consuming a heavy-hitter like **Gorilla Glue #4** (GG4, 25–30% THC) or **Ghost OG** (20–28% THC) daily, your receptors are under sustained, intense pressure. By contrast, strains like **[Harlequin](/strains/harlequin)** (typically 7–15% THC, 6–15% CBD) or **[ACDC](/strains/acdc)** (1–6% THC, 14–20% CBD) provide psychoactive input at a much lower intensity, making tolerance buildup significantly slower[[5]](#user-content-fn-5).
 
 Terpenes — the aromatic compounds that give strains their distinct scents and contribute to their effects — don't directly cause tolerance. However, terpenes like **myrcene** (earthy, sedative), **linalool** (floral, calming), and **beta-caryophyllene** (spicy, stress-relieving) shape how the overall cannabis experience lands, which can influence whether consumers chase higher doses seeking lost effects[[6]](#user-content-fn-6).
 
@@ -82,7 +82,7 @@ The most effective strategy for resetting cannabis tolerance is a **tolerance br
 
 For consumers who aren't ready for a full break, several approaches can help manage tolerance:
 
-- **Switch to lower-THC strains** — Try strains in the 10–16% THC range like **Blue Dream** (17–21% THC on the moderate end) or **Cannatonic** (~6% THC, ~12% CBD)
+- **Switch to lower-THC strains** — Try strains in the 10–16% THC range like **[Blue Dream](/strains/blue-dream)** (17–21% THC on the moderate end) or **[Cannatonic](/strains/cannatonic)** (~6% THC, ~12% CBD)
 - **Try microdosing** — Using very small amounts (2.5–5mg THC) spaced throughout the day rather than larger single doses can reduce receptor stimulation
 - **Rotate your strains** — Different terpene and cannabinoid profiles may engage your ECS differently, potentially slowing single-receptor pathway fatigue
 - **Incorporate high-CBD options** — Balancing THC sessions with CBD-dominant strains gives CB1 receptors recovery time without full abstinence

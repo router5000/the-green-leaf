@@ -3,6 +3,7 @@ Internal Linking System for SEO
 Automatically inserts internal links between related articles to improve SEO and user experience.
 """
 
+import json
 import os
 import re
 import yaml
@@ -439,6 +440,123 @@ def _append_related_reading(
     lines.append('')
     return body.rstrip() + '\n' + '\n'.join(lines), inserted
 
+# ── Strain profile links (/strains/<slug>) ──────────────────────────────────
+
+STRAIN_INDEX_PATH = Path(__file__).parent / "strain_index.json"
+
+# Strain names that are also everyday words/foods/places; linking them on an
+# exact match would produce false positives ("Ice", "Thai", "Cheese"...).
+AMBIGUOUS_STRAIN_NAMES = {
+    "Aceh", "Afghani", "Argyle", "Biscotti", "Blueberry", "Candyland", "Carnival",
+    "Cheese", "Chitral", "Chronic", "Clementine", "Congolese", "Disco", "Electra",
+    "Grapefruit", "Gumbo", "Gushers", "Haze", "Headband", "Headbanger", "Horchata",
+    "Ice", "Jealousy", "Kerala", "Kilimanjaro", "Kombucha", "Menthol", "Mimosa",
+    "Mochi", "Nepalese", "OMG", "Pancakes", "Papaya", "Pave", "Pennywise", "Remedy",
+    "Snowman", "Thai", "Trident", "Watermelon", "Lemon Tree", "Space Cake",
+    "Pink Lemonade", "Strawberry Lemonade", "Key Lime Pie", "Birthday Cake",
+    "Honey Bun", "French Toast", "Peaches and Cream", "Gas Mask", "Sub Zero",
+    "Cake Mix", "Cake Pop", "Lava Cake", "Waffle Cone", "Triple Scoop", "Grape Jelly",
+    "Pineapple Mojito", "Cherry Limeade", "Sundae Float", "Sand Castles",
+    "Trophy Wife", "Wedding Crashers", "Popping Candy", "White Truffle",
+    "Black Truffle", "Rainbow Sherbet", "Strawberry Shortcake", "Orange Creamsicle",
+    "Glitter Bomb", "Ice Cream Beans", "Cotton Candy Lobster", "Tigers Blood",
+}
+
+
+def load_strain_index(path: Path = STRAIN_INDEX_PATH) -> List[Dict]:
+    """Strains from the committed cache (see refresh_strain_index.py)."""
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return []
+    return [s for s in data.get("strains", []) if s.get("name") and s.get("slug")]
+
+
+def _protected_spans(body: str) -> List[Tuple[int, int]]:
+    """Regions where no link may be inserted: code, headings, links, images,
+    HTML tags, URLs, and the Sources section."""
+    spans = []
+    patterns = [
+        r"```.*?```",                     # fenced code
+        r"`[^`\n]*`",                     # inline code
+        r"^\s{0,3}#{1,6}[^\n]*$",         # headings
+        r"!?\[[^\]]*\]\([^)]*\)",          # markdown links / images
+        r"<a\b.*?</a>",                   # html anchors
+        r"<[^>\n]+>",                     # other html tags
+        r"https?://\S+",                  # bare urls
+        r"^\|.*\|\s*$",                   # table rows (keep tables clean)
+    ]
+    for pat in patterns:
+        for m in re.finditer(pat, body, re.MULTILINE | re.DOTALL | re.IGNORECASE):
+            spans.append((m.start(), m.end()))
+    src = re.search(r"^##\s+(Sources|References)\b", body, re.MULTILINE)
+    if src:
+        spans.append((src.start(), len(body)))
+    return spans
+
+
+def add_strain_links(body: str, max_links: int = 5, strains: Optional[List[Dict]] = None) -> Tuple[str, List[Dict]]:
+    """
+    Link the first exact (case-sensitive) mention of known strain names to
+    /strains/<slug>. Skips headings, code, tables, existing links, the Sources
+    section, ambiguous names, and strains the article already links to.
+    Longer names win over contained shorter ones ("Blue Dream" before "Dream").
+    """
+    strains = load_strain_index() if strains is None else strains
+    if not strains or max_links <= 0:
+        return body, []
+
+    already = set(re.findall(r"\]\(/strains/([a-z0-9-]+)\)", body))
+    budget = max_links - len(already)
+    if budget <= 0:
+        return body, []
+
+    protected = _protected_spans(body)
+    candidates = []  # (start, end, name, slug)
+    taken: List[Tuple[int, int]] = []
+
+    def overlaps(a, b, spans):
+        return any(a < e and b > s for s, e in spans)
+
+    for s in sorted(strains, key=lambda x: -len(x["name"])):
+        name, slug = s["name"], s["slug"]
+        if slug in already or name in AMBIGUOUS_STRAIN_NAMES or len(name) < 3:
+            continue
+        pat = re.compile(r"(?<![\w#/-])" + re.escape(name) + r"(?![\w-])(?!\s*#?\d)")
+        for m in pat.finditer(body):
+            if overlaps(m.start(), m.end(), protected) or overlaps(m.start(), m.end(), taken):
+                continue
+            candidates.append((m.start(), m.end(), name, slug))
+            taken.append((m.start(), m.end()))
+            break
+
+    # Earliest mentions first, capped
+    candidates.sort()
+    chosen = sorted(candidates[:budget], reverse=True)
+    inserted = []
+    for start, end, name, slug in chosen:
+        url = f"/strains/{slug}"
+        body = body[:start] + f"[{body[start:end]}]({url})" + body[end:]
+        inserted.append({"target_slug": slug, "target_title": name, "anchor_text": name, "url": url, "kind": "strain"})
+    inserted.reverse()
+    return body, inserted
+
+
+def process_all_articles_strain_links(max_links: int = 5, dry_run: bool = False) -> Dict:
+    strains = load_strain_index()
+    total, per = 0, []
+    for path in sorted(POSTS_DIR.glob("*.md")):
+        content = path.read_text(encoding="utf-8")
+        fm, body = _split_frontmatter(content)
+        new_body, links = add_strain_links(body, max_links, strains)
+        if links:
+            total += len(links)
+            per.append((path.stem, links))
+            if not dry_run:
+                path.write_text(fm + new_body, encoding="utf-8")
+    return {"total_links_added": total, "articles": per}
+
+
 def add_internal_links_to_new_article(content: str, slug: str) -> Tuple[str, List[Dict]]:
     """
     Add internal links to a newly generated article.
@@ -458,6 +576,10 @@ def add_internal_links_to_new_article(content: str, slug: str) -> Tuple[str, Lis
             modified_body, slug, article_index, inserted, target_total=5
         )
 
+    # Link strain mentions to their /strains/<slug> profiles (separate budget)
+    modified_body, strain_links = add_strain_links(modified_body, max_links=5)
+    inserted = inserted + strain_links
+
     if not inserted:
         return content, []
 
@@ -471,8 +593,26 @@ if __name__ == "__main__":
     parser.add_argument("--dry-run", action="store_true", help="Preview changes without modifying files")
     parser.add_argument("--max-links", type=int, default=5, help="Maximum links per article (default: 5)")
     parser.add_argument("--article", type=str, help="Process single article by slug or path")
+    parser.add_argument("--strains", action="store_true", help="Only add /strains/<slug> links (all posts, or --article)")
 
     args = parser.parse_args()
+
+    if args.strains:
+        if args.article:
+            p = Path(args.article) if Path(args.article).exists() else POSTS_DIR / f"{args.article}.md"
+            fm, body = _split_frontmatter(p.read_text(encoding="utf-8"))
+            new_body, links = add_strain_links(body, args.max_links)
+            if links and not args.dry_run:
+                p.write_text(fm + new_body, encoding="utf-8")
+            print(f"{p.stem}: +{len(links)} strain links")
+            for l in links:
+                print(f"  → {l['anchor_text']} → {l['url']}")
+        else:
+            summary = process_all_articles_strain_links(args.max_links, args.dry_run)
+            for slug, links in summary["articles"]:
+                print(f"{slug}: +{len(links)} → " + ", ".join(l['anchor_text'] for l in links))
+            print(f"Total strain links added: {summary['total_links_added']}" + (" (dry run)" if args.dry_run else ""))
+        raise SystemExit(0)
 
     print("=" * 60)
     print("INTERNAL LINKING SYSTEM")

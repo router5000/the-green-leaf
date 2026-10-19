@@ -1,0 +1,1365 @@
+{
+ "source": "supabase",
+ "strains": [
+  {
+   "name": "Acapulco Gold",
+   "slug": "acapulco-gold"
+  },
+  {
+   "name": "ACDC",
+   "slug": "acdc"
+  },
+  {
+   "name": "Aceh",
+   "slug": "aceh"
+  },
+  {
+   "name": "Afghan Kush",
+   "slug": "afghan-kush"
+  },
+  {
+   "name": "Afghani",
+   "slug": "afghani"
+  },
+  {
+   "name": "AK-47",
+   "slug": "ak-47"
+  },
+  {
+   "name": "Alaskan Thunder Fuck",
+   "slug": "alaskan-thunder-fuck"
+  },
+  {
+   "name": "Alien OG",
+   "slug": "alien-og"
+  },
+  {
+   "name": "Amnesia Haze",
+   "slug": "amnesia-haze"
+  },
+  {
+   "name": "Amnesia Haze Auto",
+   "slug": "amnesia-haze-auto"
+  },
+  {
+   "name": "Animal Cocktail",
+   "slug": "animal-cocktail"
+  },
+  {
+   "name": "Animal Cookies",
+   "slug": "animal-cookies"
+  },
+  {
+   "name": "Animal Face",
+   "slug": "animal-face"
+  },
+  {
+   "name": "Animal Mints",
+   "slug": "animal-mints"
+  },
+  {
+   "name": "Apple Fritter",
+   "slug": "apple-fritter"
+  },
+  {
+   "name": "Apple Tartz",
+   "slug": "apple-tartz"
+  },
+  {
+   "name": "Apples and Bananas",
+   "slug": "apples-and-bananas"
+  },
+  {
+   "name": "Argyle",
+   "slug": "argyle"
+  },
+  {
+   "name": "Badazz Cookies",
+   "slug": "badazz-cookies"
+  },
+  {
+   "name": "Banana Cream Cake",
+   "slug": "banana-cream-cake"
+  },
+  {
+   "name": "Banana Kush",
+   "slug": "banana-kush"
+  },
+  {
+   "name": "Birthday Cake",
+   "slug": "birthday-cake"
+  },
+  {
+   "name": "Biscotti",
+   "slug": "biscotti"
+  },
+  {
+   "name": "Black Maple",
+   "slug": "black-maple"
+  },
+  {
+   "name": "Black Truffle",
+   "slug": "black-truffle"
+  },
+  {
+   "name": "Black Zoap",
+   "slug": "black-zoap"
+  },
+  {
+   "name": "Blackberry Kush",
+   "slug": "blackberry-kush"
+  },
+  {
+   "name": "Blockberry",
+   "slug": "blockberry"
+  },
+  {
+   "name": "Blue Cheese",
+   "slug": "blue-cheese"
+  },
+  {
+   "name": "Blue Dream",
+   "slug": "blue-dream"
+  },
+  {
+   "name": "Blue Dream Auto",
+   "slug": "blue-dream-auto"
+  },
+  {
+   "name": "Blue Gushers",
+   "slug": "blue-gushers"
+  },
+  {
+   "name": "Blue Nerds",
+   "slug": "blue-nerds"
+  },
+  {
+   "name": "Blueberry",
+   "slug": "blueberry"
+  },
+  {
+   "name": "Blueberry Auto",
+   "slug": "blueberry-auto"
+  },
+  {
+   "name": "Blueberry Caviar",
+   "slug": "blueberry-caviar"
+  },
+  {
+   "name": "Blueberry Muffins",
+   "slug": "blueberry-muffins"
+  },
+  {
+   "name": "Bruce Banner",
+   "slug": "bruce-banner"
+  },
+  {
+   "name": "Bubba Kush",
+   "slug": "bubba-kush"
+  },
+  {
+   "name": "Cadillac Rainbow",
+   "slug": "cadillac-rainbow"
+  },
+  {
+   "name": "Cake Mix",
+   "slug": "cake-mix"
+  },
+  {
+   "name": "Cake Pop",
+   "slug": "cake-pop"
+  },
+  {
+   "name": "Candy Fumez",
+   "slug": "candy-fumez"
+  },
+  {
+   "name": "Candy Rain",
+   "slug": "candy-rain"
+  },
+  {
+   "name": "Candyland",
+   "slug": "candyland"
+  },
+  {
+   "name": "Canna-Tsu",
+   "slug": "canna-tsu"
+  },
+  {
+   "name": "Cannatonic",
+   "slug": "cannatonic"
+  },
+  {
+   "name": "Cap Junky",
+   "slug": "cap-junky"
+  },
+  {
+   "name": "Carbon Candy",
+   "slug": "carbon-candy"
+  },
+  {
+   "name": "Carbon Fiber",
+   "slug": "carbon-fiber"
+  },
+  {
+   "name": "Carnival",
+   "slug": "carnival"
+  },
+  {
+   "name": "Casey Jones",
+   "slug": "casey-jones"
+  },
+  {
+   "name": "CBD Critical Mass",
+   "slug": "cbd-critical-mass"
+  },
+  {
+   "name": "CBD Mango Haze",
+   "slug": "cbd-mango-haze"
+  },
+  {
+   "name": "CBD Shark",
+   "slug": "cbd-shark"
+  },
+  {
+   "name": "Cereal Milk",
+   "slug": "cereal-milk"
+  },
+  {
+   "name": "Charlotte's Web",
+   "slug": "charlottes-web"
+  },
+  {
+   "name": "Cheese",
+   "slug": "cheese"
+  },
+  {
+   "name": "Cheetah Piss",
+   "slug": "cheetah-piss"
+  },
+  {
+   "name": "Cheeze Wiz",
+   "slug": "cheeze-wiz"
+  },
+  {
+   "name": "Chemdawg",
+   "slug": "chemdawg"
+  },
+  {
+   "name": "Cherry Gelato",
+   "slug": "cherry-gelato"
+  },
+  {
+   "name": "Cherry Limeade",
+   "slug": "cherry-limeade"
+  },
+  {
+   "name": "Cherry Pie",
+   "slug": "cherry-pie"
+  },
+  {
+   "name": "Cherry Popperz",
+   "slug": "cherry-popperz"
+  },
+  {
+   "name": "Chitral",
+   "slug": "chitral"
+  },
+  {
+   "name": "Chocolatina",
+   "slug": "chocolatina"
+  },
+  {
+   "name": "Chocolope",
+   "slug": "chocolope"
+  },
+  {
+   "name": "Chrome Dome",
+   "slug": "chrome-dome"
+  },
+  {
+   "name": "Chronic",
+   "slug": "chronic"
+  },
+  {
+   "name": "Cinderella 99",
+   "slug": "cinderella-99"
+  },
+  {
+   "name": "Citrique",
+   "slug": "citrique"
+  },
+  {
+   "name": "Clementine",
+   "slug": "clementine"
+  },
+  {
+   "name": "Colombian Gold",
+   "slug": "colombian-gold"
+  },
+  {
+   "name": "Congolese",
+   "slug": "congolese"
+  },
+  {
+   "name": "Cookies and Cream",
+   "slug": "cookies-and-cream"
+  },
+  {
+   "name": "Cotton Candy Lobster",
+   "slug": "cotton-candy-lobster"
+  },
+  {
+   "name": "Cream Caramel Auto",
+   "slug": "cream-caramel-auto"
+  },
+  {
+   "name": "Critical Auto",
+   "slug": "critical-auto"
+  },
+  {
+   "name": "Critical Kush",
+   "slug": "critical-kush"
+  },
+  {
+   "name": "Critical Mass",
+   "slug": "critical-mass"
+  },
+  {
+   "name": "Crunch Berries",
+   "slug": "crunch-berries"
+  },
+  {
+   "name": "Dance World",
+   "slug": "dance-world"
+  },
+  {
+   "name": "Dante's Inferno",
+   "slug": "dantes-inferno"
+  },
+  {
+   "name": "Death Star",
+   "slug": "death-star"
+  },
+  {
+   "name": "Devil Driver",
+   "slug": "devil-driver"
+  },
+  {
+   "name": "Disco",
+   "slug": "disco"
+  },
+  {
+   "name": "Do-Si-Dos",
+   "slug": "do-si-dos"
+  },
+  {
+   "name": "Donny Burger",
+   "slug": "donny-burger"
+  },
+  {
+   "name": "Durban Cookies",
+   "slug": "durban-cookies"
+  },
+  {
+   "name": "Durban Poison",
+   "slug": "durban-poison"
+  },
+  {
+   "name": "Dutch Treat",
+   "slug": "dutch-treat"
+  },
+  {
+   "name": "E85",
+   "slug": "e85"
+  },
+  {
+   "name": "Easy Bud",
+   "slug": "easy-bud"
+  },
+  {
+   "name": "Electra",
+   "slug": "electra"
+  },
+  {
+   "name": "Fire OG",
+   "slug": "fire-og"
+  },
+  {
+   "name": "First Class Funk",
+   "slug": "first-class-funk"
+  },
+  {
+   "name": "Forbidden Fruit",
+   "slug": "forbidden-fruit"
+  },
+  {
+   "name": "Forbidden V",
+   "slug": "forbidden-v"
+  },
+  {
+   "name": "French Toast",
+   "slug": "french-toast"
+  },
+  {
+   "name": "Frosted Cherry Cookies",
+   "slug": "frosted-cherry-cookies"
+  },
+  {
+   "name": "Gary Payton",
+   "slug": "gary-payton"
+  },
+  {
+   "name": "Gas Mask",
+   "slug": "gas-mask"
+  },
+  {
+   "name": "Gastro Pop",
+   "slug": "gastro-pop"
+  },
+  {
+   "name": "Gelato",
+   "slug": "gelato"
+  },
+  {
+   "name": "Gelato 33",
+   "slug": "gelato-33"
+  },
+  {
+   "name": "Gelato 41",
+   "slug": "gelato-41"
+  },
+  {
+   "name": "Gelato Auto",
+   "slug": "gelato-auto"
+  },
+  {
+   "name": "Gelato Cake",
+   "slug": "gelato-cake"
+  },
+  {
+   "name": "Gello Shotz",
+   "slug": "gello-shotz"
+  },
+  {
+   "name": "Gelonade",
+   "slug": "gelonade"
+  },
+  {
+   "name": "Georgia Pie",
+   "slug": "georgia-pie"
+  },
+  {
+   "name": "Ghost Train Haze",
+   "slug": "ghost-train-haze"
+  },
+  {
+   "name": "Girl Scout Cookies",
+   "slug": "girl-scout-cookies"
+  },
+  {
+   "name": "Girl Scout Cookies Auto",
+   "slug": "girl-scout-cookies-auto"
+  },
+  {
+   "name": "Glitter Bomb",
+   "slug": "glitter-bomb"
+  },
+  {
+   "name": "GMO Cookies",
+   "slug": "gmo-cookies"
+  },
+  {
+   "name": "Golden Goat",
+   "slug": "golden-goat"
+  },
+  {
+   "name": "Gorilla Glue",
+   "slug": "gorilla-glue"
+  },
+  {
+   "name": "Gorilla Glue Auto",
+   "slug": "gorilla-glue-auto"
+  },
+  {
+   "name": "Granddaddy Purple",
+   "slug": "granddaddy-purple"
+  },
+  {
+   "name": "Grape Ape",
+   "slug": "grape-ape"
+  },
+  {
+   "name": "Grape Cake",
+   "slug": "grape-cake"
+  },
+  {
+   "name": "Grape Gas",
+   "slug": "grape-gas"
+  },
+  {
+   "name": "Grape Jelly",
+   "slug": "grape-jelly"
+  },
+  {
+   "name": "Grape Pie",
+   "slug": "grape-pie"
+  },
+  {
+   "name": "Grape Runtz",
+   "slug": "grape-runtz"
+  },
+  {
+   "name": "Grapefruit",
+   "slug": "grapefruit"
+  },
+  {
+   "name": "Grease Monkey",
+   "slug": "grease-monkey"
+  },
+  {
+   "name": "Green Crack",
+   "slug": "green-crack"
+  },
+  {
+   "name": "Guava Cake",
+   "slug": "guava-cake"
+  },
+  {
+   "name": "Guava Kush",
+   "slug": "guava-kush"
+  },
+  {
+   "name": "Gumbo",
+   "slug": "gumbo"
+  },
+  {
+   "name": "Gush Mints",
+   "slug": "gush-mints"
+  },
+  {
+   "name": "Gushers",
+   "slug": "gushers"
+  },
+  {
+   "name": "Harle-Tsu",
+   "slug": "harle-tsu"
+  },
+  {
+   "name": "Harlequin",
+   "slug": "harlequin"
+  },
+  {
+   "name": "Hash Burger",
+   "slug": "hash-burger"
+  },
+  {
+   "name": "Haze",
+   "slug": "haze"
+  },
+  {
+   "name": "Headband",
+   "slug": "headband"
+  },
+  {
+   "name": "Headbanger",
+   "slug": "headbanger"
+  },
+  {
+   "name": "Hindu Kush",
+   "slug": "hindu-kush"
+  },
+  {
+   "name": "Honey Bun",
+   "slug": "honey-bun"
+  },
+  {
+   "name": "Horchata",
+   "slug": "horchata"
+  },
+  {
+   "name": "Hyperion F1",
+   "slug": "hyperion-f1"
+  },
+  {
+   "name": "I-95",
+   "slug": "i-95"
+  },
+  {
+   "name": "Ice",
+   "slug": "ice"
+  },
+  {
+   "name": "Ice Cream Beans",
+   "slug": "ice-cream-beans"
+  },
+  {
+   "name": "Ice Cream Cake",
+   "slug": "ice-cream-cake"
+  },
+  {
+   "name": "Island Sweet Skunk",
+   "slug": "island-sweet-skunk"
+  },
+  {
+   "name": "J1",
+   "slug": "j1"
+  },
+  {
+   "name": "Jack Herer",
+   "slug": "jack-herer"
+  },
+  {
+   "name": "Jealousy",
+   "slug": "jealousy"
+  },
+  {
+   "name": "Jet Fuel",
+   "slug": "jet-fuel"
+  },
+  {
+   "name": "Jillybean",
+   "slug": "jillybean"
+  },
+  {
+   "name": "John Connor",
+   "slug": "john-connor"
+  },
+  {
+   "name": "Jungle Cake",
+   "slug": "jungle-cake"
+  },
+  {
+   "name": "Kali Mist",
+   "slug": "kali-mist"
+  },
+  {
+   "name": "Kandy Kush",
+   "slug": "kandy-kush"
+  },
+  {
+   "name": "Kerala",
+   "slug": "kerala"
+  },
+  {
+   "name": "Key Lime Pie",
+   "slug": "key-lime-pie"
+  },
+  {
+   "name": "Khalifa Kush",
+   "slug": "khalifa-kush"
+  },
+  {
+   "name": "Khalifa Mints",
+   "slug": "khalifa-mints"
+  },
+  {
+   "name": "Kilimanjaro",
+   "slug": "kilimanjaro"
+  },
+  {
+   "name": "Kombucha",
+   "slug": "kombucha"
+  },
+  {
+   "name": "Kosher Kush",
+   "slug": "kosher-kush"
+  },
+  {
+   "name": "Kush Mints",
+   "slug": "kush-mints"
+  },
+  {
+   "name": "LA Confidential",
+   "slug": "la-confidential"
+  },
+  {
+   "name": "LA Kush Cake",
+   "slug": "la-kush-cake"
+  },
+  {
+   "name": "Lamb's Bread",
+   "slug": "lambs-bread"
+  },
+  {
+   "name": "Larry OG",
+   "slug": "larry-og"
+  },
+  {
+   "name": "Lava Cake",
+   "slug": "lava-cake"
+  },
+  {
+   "name": "Lemon Cherry Gelato",
+   "slug": "lemon-cherry-gelato"
+  },
+  {
+   "name": "Lemon Gushers",
+   "slug": "lemon-gushers"
+  },
+  {
+   "name": "Lemon Haze",
+   "slug": "lemon-haze"
+  },
+  {
+   "name": "Lemon OG",
+   "slug": "lemon-og"
+  },
+  {
+   "name": "Lemon Skunk",
+   "slug": "lemon-skunk"
+  },
+  {
+   "name": "Lemon Tree",
+   "slug": "lemon-tree"
+  },
+  {
+   "name": "Lime Skunk",
+   "slug": "lime-skunk"
+  },
+  {
+   "name": "London Pound Cake",
+   "slug": "london-pound-cake"
+  },
+  {
+   "name": "Mac 1",
+   "slug": "mac-1"
+  },
+  {
+   "name": "Malawi Gold",
+   "slug": "malawi-gold"
+  },
+  {
+   "name": "Mandarin Cookies",
+   "slug": "mandarin-cookies"
+  },
+  {
+   "name": "Mango Fruz",
+   "slug": "mango-fruz"
+  },
+  {
+   "name": "Mango Kush",
+   "slug": "mango-kush"
+  },
+  {
+   "name": "Master Kush",
+   "slug": "master-kush"
+  },
+  {
+   "name": "Maui Wowie",
+   "slug": "maui-wowie"
+  },
+  {
+   "name": "Mazar I Sharif",
+   "slug": "mazar-i-sharif"
+  },
+  {
+   "name": "Member Berry",
+   "slug": "member-berry"
+  },
+  {
+   "name": "Mendo Breath",
+   "slug": "mendo-breath"
+  },
+  {
+   "name": "Menthol",
+   "slug": "menthol"
+  },
+  {
+   "name": "Mexican Sativa",
+   "slug": "mexican-sativa"
+  },
+  {
+   "name": "Mimosa",
+   "slug": "mimosa"
+  },
+  {
+   "name": "MK Ultra",
+   "slug": "mk-ultra"
+  },
+  {
+   "name": "Moby Dick",
+   "slug": "moby-dick"
+  },
+  {
+   "name": "Mochi",
+   "slug": "mochi"
+  },
+  {
+   "name": "Modified Grapes",
+   "slug": "modified-grapes"
+  },
+  {
+   "name": "Moroccan Peaches",
+   "slug": "moroccan-peaches"
+  },
+  {
+   "name": "Motorbreath",
+   "slug": "motorbreath"
+  },
+  {
+   "name": "Mule Fuel",
+   "slug": "mule-fuel"
+  },
+  {
+   "name": "Nectarine Jelly",
+   "slug": "nectarine-jelly"
+  },
+  {
+   "name": "Nepalese",
+   "slug": "nepalese"
+  },
+  {
+   "name": "Neville's Haze",
+   "slug": "nevilles-haze"
+  },
+  {
+   "name": "Northern Lights",
+   "slug": "northern-lights"
+  },
+  {
+   "name": "Northern Lights Auto",
+   "slug": "northern-lights-auto"
+  },
+  {
+   "name": "Oaxacan Highland",
+   "slug": "oaxacan-highland"
+  },
+  {
+   "name": "Obama Runtz",
+   "slug": "obama-runtz"
+  },
+  {
+   "name": "OG Kush",
+   "slug": "og-kush"
+  },
+  {
+   "name": "OG Kush Auto",
+   "slug": "og-kush-auto"
+  },
+  {
+   "name": "OMG",
+   "slug": "omg"
+  },
+  {
+   "name": "Omrita Rx3",
+   "slug": "omrita-rx3"
+  },
+  {
+   "name": "Orange Creamsicle",
+   "slug": "orange-creamsicle"
+  },
+  {
+   "name": "Oreoz",
+   "slug": "oreoz"
+  },
+  {
+   "name": "Panama Red",
+   "slug": "panama-red"
+  },
+  {
+   "name": "Pancakes",
+   "slug": "pancakes"
+  },
+  {
+   "name": "Papaya",
+   "slug": "papaya"
+  },
+  {
+   "name": "Papaya Cake",
+   "slug": "papaya-cake"
+  },
+  {
+   "name": "Papaya Frosting",
+   "slug": "papaya-frosting"
+  },
+  {
+   "name": "Papaya Punch",
+   "slug": "papaya-punch"
+  },
+  {
+   "name": "Pave",
+   "slug": "pave"
+  },
+  {
+   "name": "Peach Ringz",
+   "slug": "peach-ringz"
+  },
+  {
+   "name": "Peaches and Cream",
+   "slug": "peaches-and-cream"
+  },
+  {
+   "name": "Peanut Butter Breath",
+   "slug": "peanut-butter-breath"
+  },
+  {
+   "name": "Pennywise",
+   "slug": "pennywise"
+  },
+  {
+   "name": "Permanent Gas",
+   "slug": "permanent-gas"
+  },
+  {
+   "name": "Permanent Marker",
+   "slug": "permanent-marker"
+  },
+  {
+   "name": "Pineapple Express",
+   "slug": "pineapple-express"
+  },
+  {
+   "name": "Pineapple Express Auto",
+   "slug": "pineapple-express-auto"
+  },
+  {
+   "name": "Pineapple Fruz",
+   "slug": "pineapple-fruz"
+  },
+  {
+   "name": "Pineapple Kush",
+   "slug": "pineapple-kush"
+  },
+  {
+   "name": "Pineapple Mojito",
+   "slug": "pineapple-mojito"
+  },
+  {
+   "name": "Pink Certz",
+   "slug": "pink-certz"
+  },
+  {
+   "name": "Pink Champagne",
+   "slug": "pink-champagne"
+  },
+  {
+   "name": "Pink Lemonade",
+   "slug": "pink-lemonade"
+  },
+  {
+   "name": "Pink Panties",
+   "slug": "pink-panties"
+  },
+  {
+   "name": "Pink Rozay",
+   "slug": "pink-rozay"
+  },
+  {
+   "name": "Pink Runtz",
+   "slug": "pink-runtz"
+  },
+  {
+   "name": "Platinum OG",
+   "slug": "platinum-og"
+  },
+  {
+   "name": "Plum Gelato",
+   "slug": "plum-gelato"
+  },
+  {
+   "name": "Popping Candy",
+   "slug": "popping-candy"
+  },
+  {
+   "name": "Pre-98 Bubba Kush",
+   "slug": "pre-98-bubba-kush"
+  },
+  {
+   "name": "Punto Rojo",
+   "slug": "punto-rojo"
+  },
+  {
+   "name": "Pure Kush",
+   "slug": "pure-kush"
+  },
+  {
+   "name": "Pure Michigan",
+   "slug": "pure-michigan"
+  },
+  {
+   "name": "Purple Gushers",
+   "slug": "purple-gushers"
+  },
+  {
+   "name": "Purple Haze",
+   "slug": "purple-haze"
+  },
+  {
+   "name": "Purple Kush",
+   "slug": "purple-kush"
+  },
+  {
+   "name": "Purple Kush Auto",
+   "slug": "purple-kush-auto"
+  },
+  {
+   "name": "Purple Punch",
+   "slug": "purple-punch"
+  },
+  {
+   "name": "Purple Urkle",
+   "slug": "purple-urkle"
+  },
+  {
+   "name": "Quick One",
+   "slug": "quick-one"
+  },
+  {
+   "name": "Rainbow Beltz",
+   "slug": "rainbow-beltz"
+  },
+  {
+   "name": "Rainbow Sherbet",
+   "slug": "rainbow-sherbet"
+  },
+  {
+   "name": "Red Bullz",
+   "slug": "red-bullz"
+  },
+  {
+   "name": "Red Congolese",
+   "slug": "red-congolese"
+  },
+  {
+   "name": "Remedy",
+   "slug": "remedy"
+  },
+  {
+   "name": "Ringo's Gift",
+   "slug": "ringos-gift"
+  },
+  {
+   "name": "Royal Dwarf",
+   "slug": "royal-dwarf"
+  },
+  {
+   "name": "RS11",
+   "slug": "rs11"
+  },
+  {
+   "name": "Runtz",
+   "slug": "runtz"
+  },
+  {
+   "name": "Runtz Auto",
+   "slug": "runtz-auto"
+  },
+  {
+   "name": "Sand Castles",
+   "slug": "sand-castles"
+  },
+  {
+   "name": "SFV OG",
+   "slug": "sfv-og"
+  },
+  {
+   "name": "Sin Mints",
+   "slug": "sin-mints"
+  },
+  {
+   "name": "Skunk #1",
+   "slug": "skunk-1"
+  },
+  {
+   "name": "Skywalker OG",
+   "slug": "skywalker-og"
+  },
+  {
+   "name": "Slurricane",
+   "slug": "slurricane"
+  },
+  {
+   "name": "Slurty",
+   "slug": "slurty"
+  },
+  {
+   "name": "Snickerz",
+   "slug": "snickerz"
+  },
+  {
+   "name": "Snoop Dogg OG",
+   "slug": "snoop-dogg-og"
+  },
+  {
+   "name": "Snowman",
+   "slug": "snowman"
+  },
+  {
+   "name": "Sour Belts",
+   "slug": "sour-belts"
+  },
+  {
+   "name": "Sour Diesel",
+   "slug": "sour-diesel"
+  },
+  {
+   "name": "Sour Poison",
+   "slug": "sour-poison"
+  },
+  {
+   "name": "Sour Tsunami",
+   "slug": "sour-tsunami"
+  },
+  {
+   "name": "Space Cake",
+   "slug": "space-cake"
+  },
+  {
+   "name": "Space Runtz",
+   "slug": "space-runtz"
+  },
+  {
+   "name": "Stardawg",
+   "slug": "stardawg"
+  },
+  {
+   "name": "Stephen Hawking Kush",
+   "slug": "stephen-hawking-kush"
+  },
+  {
+   "name": "Strawberry Auto",
+   "slug": "strawberry-auto"
+  },
+  {
+   "name": "Strawberry Banana",
+   "slug": "strawberry-banana"
+  },
+  {
+   "name": "Strawberry Cough",
+   "slug": "strawberry-cough"
+  },
+  {
+   "name": "Strawberry Lemonade",
+   "slug": "strawberry-lemonade"
+  },
+  {
+   "name": "Strawberry OG",
+   "slug": "strawberry-og"
+  },
+  {
+   "name": "Strawberry Shortcake",
+   "slug": "strawberry-shortcake"
+  },
+  {
+   "name": "Stud Muffin",
+   "slug": "stud-muffin"
+  },
+  {
+   "name": "Sub Zero",
+   "slug": "sub-zero"
+  },
+  {
+   "name": "Sundae Driver",
+   "slug": "sundae-driver"
+  },
+  {
+   "name": "Sundae Float",
+   "slug": "sundae-float"
+  },
+  {
+   "name": "Sunset Sherbet",
+   "slug": "sunset-sherbet"
+  },
+  {
+   "name": "Super Boof",
+   "slug": "super-boof"
+  },
+  {
+   "name": "Super Lemon Haze",
+   "slug": "super-lemon-haze"
+  },
+  {
+   "name": "Super Runtz",
+   "slug": "super-runtz"
+  },
+  {
+   "name": "Super Silver Haze",
+   "slug": "super-silver-haze"
+  },
+  {
+   "name": "Swazi Gold",
+   "slug": "swazi-gold"
+  },
+  {
+   "name": "Sweet and Sour Widow",
+   "slug": "sweet-and-sour-widow"
+  },
+  {
+   "name": "Tahoe OG",
+   "slug": "tahoe-og"
+  },
+  {
+   "name": "Tangelo Biscotti",
+   "slug": "tangelo-biscotti"
+  },
+  {
+   "name": "Tangie",
+   "slug": "tangie"
+  },
+  {
+   "name": "Thai",
+   "slug": "thai"
+  },
+  {
+   "name": "Tiger's Blood",
+   "slug": "tigers-blood"
+  },
+  {
+   "name": "Titan Express",
+   "slug": "titan-express"
+  },
+  {
+   "name": "Toad Venom",
+   "slug": "toad-venom"
+  },
+  {
+   "name": "Trainwreck",
+   "slug": "trainwreck"
+  },
+  {
+   "name": "Triangle Kush",
+   "slug": "triangle-kush"
+  },
+  {
+   "name": "Trident",
+   "slug": "trident"
+  },
+  {
+   "name": "Triple Scoop",
+   "slug": "triple-scoop"
+  },
+  {
+   "name": "Trophy Wife",
+   "slug": "trophy-wife"
+  },
+  {
+   "name": "Tropical Gushers",
+   "slug": "tropical-gushers"
+  },
+  {
+   "name": "Tropicana Cookies",
+   "slug": "tropicana-cookies"
+  },
+  {
+   "name": "Tropicana Punch",
+   "slug": "tropicana-punch"
+  },
+  {
+   "name": "Valentine X",
+   "slug": "valentine-x"
+  },
+  {
+   "name": "Violator Kush",
+   "slug": "violator-kush"
+  },
+  {
+   "name": "Waffle Cone",
+   "slug": "waffle-cone"
+  },
+  {
+   "name": "Watermelon",
+   "slug": "watermelon"
+  },
+  {
+   "name": "Watermelon Runtz",
+   "slug": "watermelon-runtz"
+  },
+  {
+   "name": "Watermelon Zkittlez",
+   "slug": "watermelon-zkittlez"
+  },
+  {
+   "name": "Wedding Cake",
+   "slug": "wedding-cake"
+  },
+  {
+   "name": "Wedding Cake Auto",
+   "slug": "wedding-cake-auto"
+  },
+  {
+   "name": "Wedding Crashers",
+   "slug": "wedding-crashers"
+  },
+  {
+   "name": "Wedding Pie",
+   "slug": "wedding-pie"
+  },
+  {
+   "name": "White Cherries",
+   "slug": "white-cherries"
+  },
+  {
+   "name": "White Cherry Gelato",
+   "slug": "white-cherry-gelato"
+  },
+  {
+   "name": "White Fire OG",
+   "slug": "white-fire-og"
+  },
+  {
+   "name": "White Rhino",
+   "slug": "white-rhino"
+  },
+  {
+   "name": "White Runtz",
+   "slug": "white-runtz"
+  },
+  {
+   "name": "White Russian",
+   "slug": "white-russian"
+  },
+  {
+   "name": "White Truffle",
+   "slug": "white-truffle"
+  },
+  {
+   "name": "White Widow",
+   "slug": "white-widow"
+  },
+  {
+   "name": "White Widow Auto",
+   "slug": "white-widow-auto"
+  },
+  {
+   "name": "Whitethorn Rose",
+   "slug": "whitethorn-rose"
+  },
+  {
+   "name": "Wonka Bars",
+   "slug": "wonka-bars"
+  },
+  {
+   "name": "Yoda's Brain",
+   "slug": "yodas-brain"
+  },
+  {
+   "name": "Z Cube",
+   "slug": "z-cube"
+  },
+  {
+   "name": "Zkittlez",
+   "slug": "zkittlez"
+  },
+  {
+   "name": "Zkittlez Auto",
+   "slug": "zkittlez-auto"
+  },
+  {
+   "name": "Zkittlez Cake",
+   "slug": "zkittlez-cake"
+  },
+  {
+   "name": "Zlush",
+   "slug": "zlush"
+  },
+  {
+   "name": "Zoap",
+   "slug": "zoap"
+  },
+  {
+   "name": "Zparkiez",
+   "slug": "zparkiez"
+  }
+ ]
+}

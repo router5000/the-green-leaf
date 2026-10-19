@@ -86,7 +86,7 @@ Whether you're a seasoned consumer looking for a new heavy hitter or a curious n
 
 GG4 was created by GG Strains, developed by breeders Joesy Whales and Lone Watie. The strain is a three-way cross of **Chem's Sister**, **Sour Dubb**, and **Chocolate Diesel** — a powerhouse lineage that explains its intense potency and complex aroma[[2]](#user-content-fn-2).
 
-The name "Gorilla Glue" comes directly from the experience it produces: a heavy, sticky feeling that reportedly locks users in place. The strain gained mainstream recognition after winning first place at the 2014 Los Angeles Cannabis Cup and the Michigan and Los Angeles High Times Cannabis Cups that same year[[1]](#user-content-fn-1).
+The name "[Gorilla Glue](/strains/gorilla-glue)" comes directly from the experience it produces: a heavy, sticky feeling that reportedly locks users in place. The strain gained mainstream recognition after winning first place at the 2014 Los Angeles Cannabis Cup and the Michigan and Los Angeles High Times Cannabis Cups that same year[[1]](#user-content-fn-1).
 
 GG Strains later rebranded it as "Original Glue" following a trademark dispute with the adhesive company, though consumers and dispensaries still widely use the GG4 name. By genetics, GG4 is a true hybrid, but its effects skew heavily toward Indica-style sedation at typical doses[[2]](#user-content-fn-2).
 
@@ -116,7 +116,7 @@ The high THC content — often exceeding 27% in tested batches — means effects
 
 Myrcene, GG4's dominant terpene, has been studied for its potential role in producing sedative-adjacent effects and may contribute to the strain's characteristic heaviness[[3]](#user-content-fn-3). Caryophyllene is the only terpene known to interact directly with the endocannabinoid system's CB2 receptors, adding another layer of complexity to GG4's overall experience[[6]](#user-content-fn-6).
 
-**Similar strains to explore:** If you enjoy GG4, you may also appreciate **Wedding Cake**, **GSC (Girl Scout Cookies)**, or **Granddaddy Purple** for comparable potency and relaxation profiles.
+**Similar strains to explore:** If you enjoy GG4, you may also appreciate **[Wedding Cake](/strains/wedding-cake)**, **GSC ([Girl Scout Cookies](/strains/girl-scout-cookies))**, or **[Granddaddy Purple](/strains/granddaddy-purple)** for comparable potency and relaxation profiles.
 
 ---
 

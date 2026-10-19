@@ -45,7 +45,7 @@ refinement_rounds: 2
 
 ## Quick Answer
 
-The best beginner-friendly low-THC strains are those testing under 15% THC — often with elevated CBD or balanced cannabinoid ratios — that deliver gentle, manageable effects without overwhelming new consumers. Top picks include Harlequin, ACDC, Cannatonic, [Blue Dream](/articles/top-10-cannabis-strains-2026) (in lower-testing phenotypes), and Pennywise, all known for smooth onset and forgiving experiences.
+The best beginner-friendly low-THC strains are those testing under 15% THC — often with elevated CBD or balanced cannabinoid ratios — that deliver gentle, manageable effects without overwhelming new consumers. Top picks include [Harlequin](/strains/harlequin), [ACDC](/strains/acdc), [Cannatonic](/strains/cannatonic), [Blue Dream](/articles/top-10-cannabis-strains-2026) (in lower-testing phenotypes), and Pennywise, all known for smooth onset and forgiving experiences.
 
 ![Best beginner-friendly low-THC strains displayed with cannabis buds and strain names](/images/articles/best-beginner-friendly-low-thc-strains-section.jpg)
 
@@ -71,7 +71,7 @@ For a first-time consumer whose [endocannabinoid system](/articles/cannabis-endo
 
 ### Harlequin (CBD:THC ~5:2)
 
-Harlequin is one of the most recommended strains for beginners and CBD-curious consumers. A sativa-dominant hybrid descending from Colombian Gold, Thai, and Swiss Sativa genetics, it typically tests at 6–10% THC and 10–15% CBD[[1]](#user-content-fn-1). Its dominant terpenes — myrcene, pinene, and caryophyllene — contribute to a clear-headed, gently uplifting effect that most beginners find easy to manage. Users commonly describe alert relaxation without sedation.
+Harlequin is one of the most recommended strains for beginners and CBD-curious consumers. A sativa-dominant hybrid descending from [Colombian Gold](/strains/colombian-gold), Thai, and Swiss Sativa genetics, it typically tests at 6–10% THC and 10–15% CBD[[1]](#user-content-fn-1). Its dominant terpenes — myrcene, pinene, and caryophyllene — contribute to a clear-headed, gently uplifting effect that most beginners find easy to manage. Users commonly describe alert relaxation without sedation.
 
 ### ACDC (CBD:THC ~20:1)
 
@@ -79,7 +79,7 @@ An exceptional phenotype of Cannatonic, ACDC routinely tests at just 1–6% THC 
 
 ### Cannatonic (1:1 THC:CBD Ratio)
 
-Cannatonic — a cross of MK Ultra and G13 Haze — typically lands between 6–12% THC and 5–12% CBD, often achieving a near 1:1 ratio[[3]](#user-content-fn-3). That balanced ratio is meaningful: research suggests CBD and THC interact at cannabinoid receptors in ways that soften the psychoactive edge of THC[[2]](#user-content-fn-2). Myrcene and caryophyllene dominate its terpene profile, producing relaxed, body-focused effects without heavy sedation.
+Cannatonic — a cross of [MK Ultra](/strains/mk-ultra) and G13 Haze — typically lands between 6–12% THC and 5–12% CBD, often achieving a near 1:1 ratio[[3]](#user-content-fn-3). That balanced ratio is meaningful: research suggests CBD and THC interact at cannabinoid receptors in ways that soften the psychoactive edge of THC[[2]](#user-content-fn-2). Myrcene and caryophyllene dominate its terpene profile, producing relaxed, body-focused effects without heavy sedation.
 
 ### Pennywise (1:1 THC:CBD)
 

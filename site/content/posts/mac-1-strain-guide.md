@@ -85,7 +85,7 @@ Whether you've spotted it on a dispensary menu or heard it praised online, this 
 
 ## What Are MAC 1's Origins and Genetics?
 
-MAC 1 was developed by a breeder known as Capulator, who crossed Alien Cookies F2 with a hybrid of Colombian Gold and Starfighter[[2]](#user-content-fn-2). The result was a phenotype so exceptional that Capulator reportedly locked down the genetics, limiting distribution to maintain quality control. This selectivity is part of why MAC 1 commands premium prices and why its genetic authenticity is closely watched by the cannabis community.
+MAC 1 was developed by a breeder known as Capulator, who crossed Alien Cookies F2 with a hybrid of [Colombian Gold](/strains/colombian-gold) and Starfighter[[2]](#user-content-fn-2). The result was a phenotype so exceptional that Capulator reportedly locked down the genetics, limiting distribution to maintain quality control. This selectivity is part of why MAC 1 commands premium prices and why its genetic authenticity is closely watched by the cannabis community.
 
 The "1" in MAC 1 refers to the specific phenotype selected from the MAC line — a detail that matters to enthusiasts who prize consistency and lineage accuracy. Its parent strains bring together the sweet, cookie-forward profile of Alien Cookies with the earthy, fuel-driven character of Starfighter and the tropical brightness of Colombian Gold[[1]](#user-content-fn-1).
 
@@ -126,10 +126,10 @@ At 20–28% THC, MAC 1 is firmly in the high-potency category[[4]](#user-content
 
 If MAC 1 appeals to you but isn't available at your local dispensary, a few strains share similar characteristics[[1]](#user-content-fn-1):
 
-- **Gelato 41** — Comparable creamy sweetness and balanced hybrid effects with heavy [trichome](https://www.amazon.com/s?k=jewelers+loupe+60x+trichome+cannabis&tag=thegreenleaf2-20) production
-- **Wedding Cake** — Similar potency range and mood-lifting qualities with more cake-forward sweetness
+- **[Gelato 41](/strains/gelato-41)** — Comparable creamy sweetness and balanced hybrid effects with heavy [trichome](https://www.amazon.com/s?k=jewelers+loupe+60x+trichome+cannabis&tag=thegreenleaf2-20) production
+- **[Wedding Cake](/strains/wedding-cake)** — Similar potency range and mood-lifting qualities with more cake-forward sweetness
 - **Alien Cookies** — MAC 1's parent strain; earthier and more indica-leaning but shares the cookie-fuel genetic foundation
-- **Runtz** — Fruitier and slightly more relaxing, but delivers a comparable euphoric onset
+- **[Runtz](/strains/runtz)** — Fruitier and slightly more relaxing, but delivers a comparable euphoric onset
 
 MAC 1 distinguishes itself from these alternatives through its unique diesel-citrus terpene combination and its unusually clean, balanced high that doesn't skew too far in either direction[[3]](#user-content-fn-3).
 

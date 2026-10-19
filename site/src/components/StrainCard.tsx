@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { CompareButton } from '@/components/CompareNav'
 
 type StrainCardData = {
   id: string
@@ -47,9 +48,8 @@ export default function StrainCard({ strain, terpenePercentage, compare }: Props
         : null
 
   // View Strain href preserves ?compare if a compare flow is active
-  const viewHref = compare?.compareSlug
-    ? `/strains/${strain.slug}?compare=${encodeURIComponent(compare.compareSlug)}`
-    : `/strains/${strain.slug}`
+  // Always a clean, crawlable profile URL; compare state travels via buttons.
+  const viewHref = `/strains/${strain.slug}`
 
   // Build Compare button state (only when compare context provided)
   let compareBlock: React.ReactNode = null
@@ -87,13 +87,13 @@ export default function StrainCard({ strain, terpenePercentage, compare }: Props
     }
 
     compareBlock = (
-      <Link
-        href={href}
-        aria-label={aria}
-        className={`text-xs font-medium px-3 py-1.5 rounded-full transition-colors no-underline ${classes}`}
+      <CompareButton
+        to={href}
+        ariaLabel={aria}
+        className={`text-xs font-medium px-3 py-1.5 rounded-full transition-colors cursor-pointer ${classes}`}
       >
         {label}
-      </Link>
+      </CompareButton>
     )
   }
 

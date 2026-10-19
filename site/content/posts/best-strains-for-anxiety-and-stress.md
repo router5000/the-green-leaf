@@ -43,7 +43,7 @@ refinement_rounds: 0
 # Best Strains for Anxiety and Stress in 2026
 
 ## Quick Answer
-Many cannabis users report that strains high in CBD, low-to-moderate in THC, and rich in calming terpenes like linalool and myrcene tend to feel the most relaxing[[1]](#user-content-fn-1). Popular choices include ACDC, Granddaddy Purple, and Cannatonic. That said, individual responses vary widely — what calms one person may increase anxiety in another[[2]](#user-content-fn-2).
+Many cannabis users report that strains high in CBD, low-to-moderate in THC, and rich in calming terpenes like linalool and myrcene tend to feel the most relaxing[[1]](#user-content-fn-1). Popular choices include [ACDC](/strains/acdc), [Granddaddy Purple](/strains/granddaddy-purple), and [Cannatonic](/strains/cannatonic). That said, individual responses vary widely — what calms one person may increase anxiety in another[[2]](#user-content-fn-2).
 
 
 ![Detailed view of best strains for anxiety and stress technique on green cannabis](/images/articles/best-strains-for-anxiety-and-stress-section.jpg)
@@ -91,7 +91,7 @@ An indica-leaning classic with high myrcene and linalool content. GDP is better 
 A sativa-leaning CBD-rich strain that tends to feel uplifting rather than sedating. It's a good option for daytime stress without mental fog[[6]](#user-content-fn-6).
 
 ### Blue Dream
-One of the most popular strains in the U.S., Blue Dream offers a gentle, balanced high with mood-lifting effects. It's not CBD-dominant, but its moderate THC and high myrcene content make it more forgiving than high-potency options[[5]](#user-content-fn-5).
+One of the most popular strains in the U.S., [Blue Dream](/strains/blue-dream) offers a gentle, balanced high with mood-lifting effects. It's not CBD-dominant, but its moderate THC and high myrcene content make it more forgiving than high-potency options[[5]](#user-content-fn-5).
 
 ## How Should You Choose the Right Strain for You?
 
@@ -105,7 +105,7 @@ Strain names alone won't tell you everything — batch-to-batch variation is rea
 
 ## Conclusion
 
-Finding the best strains for anxiety and stress is a personal process — but starting with CBD-rich strains, learning to read terpene profiles, and keeping your THC intake moderate gives you the best foundation. ACDC, Cannatonic, Harlequin, Granddaddy Purple, and Blue Dream are all solid starting points backed by consumer data and cannabinoid science. As always, this is educational information — consult a healthcare provider if you're managing a diagnosed anxiety condition. And remember: less is often more when it comes to cannabis and stress relief.
+Finding the best strains for anxiety and stress is a personal process — but starting with CBD-rich strains, learning to read terpene profiles, and keeping your THC intake moderate gives you the best foundation. ACDC, Cannatonic, [Harlequin](/strains/harlequin), Granddaddy Purple, and Blue Dream are all solid starting points backed by consumer data and cannabinoid science. As always, this is educational information — consult a healthcare provider if you're managing a diagnosed anxiety condition. And remember: less is often more when it comes to cannabis and stress relief.
 
 ## Sources
 

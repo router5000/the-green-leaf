@@ -76,9 +76,9 @@ For consumers seeking a less intoxicating nighttime option, strains or products 
 
 Terpenes are the aromatic compounds that give cannabis strains their distinct scents and contribute to their effects profile — a concept often called the entourage effect[[7]](#user-content-fn-7). When it comes to sleep, three terpenes stand out most frequently in both consumer reports and early research:
 
-- **Myrcene** — The most common terpene in cannabis overall, myrcene has an earthy, musky scent and is associated with relaxing, body-heavy effects[[8]](#user-content-fn-8). Strains like Granddaddy Purple and OG Kush are typically myrcene-dominant.
-- **Linalool** — Also found in lavender, linalool is linked to calming, stress-reducing properties in preliminary studies[[3]](#user-content-fn-3). Strains such as Lavender Kush and Do-Si-Dos often carry notable linalool levels.
-- **Terpinolene** — Found in strains like Ghost Train Haze and Dutch Treat, terpinolene is more complex — sometimes uplifting, sometimes relaxing depending on the full cannabinoid profile it's paired with[[8]](#user-content-fn-8).
+- **Myrcene** — The most common terpene in cannabis overall, myrcene has an earthy, musky scent and is associated with relaxing, body-heavy effects[[8]](#user-content-fn-8). Strains like [Granddaddy Purple](/strains/granddaddy-purple) and [OG Kush](/strains/og-kush) are typically myrcene-dominant.
+- **Linalool** — Also found in lavender, linalool is linked to calming, stress-reducing properties in preliminary studies[[3]](#user-content-fn-3). Strains such as Lavender Kush and [Do-Si-Dos](/strains/do-si-dos) often carry notable linalool levels.
+- **Terpinolene** — Found in strains like [Ghost Train Haze](/strains/ghost-train-haze) and [Dutch Treat](/strains/dutch-treat), terpinolene is more complex — sometimes uplifting, sometimes relaxing depending on the full cannabinoid profile it's paired with[[8]](#user-content-fn-8).
 
 Because terpene profiles vary by batch and grow environment, checking the Certificate of Analysis (COA) at your dispensary is the best way to confirm what's actually in the product you're buying[[9]](#user-content-fn-9).
 

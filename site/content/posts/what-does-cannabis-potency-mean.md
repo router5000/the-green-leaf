@@ -84,7 +84,7 @@ This is one of the most important — and most misunderstood — aspects of cann
 
 **Tolerance** plays a massive role. A seasoned consumer may feel little effect from a 22% THC flower that would be overwhelming for a beginner. Regular use desensitizes CB1 receptors, the primary targets of THC in the brain[[1]](#user-content-fn-1).
 
-**The entourage effect** describes how cannabinoids and terpenes work together to shape the overall experience[[3]](#user-content-fn-3). A 20% THC strain rich in myrcene — a sedating terpene found in strains like Granddaddy Purple — may produce a heavier, more relaxing effect than a 28% THC strain dominated by limonene, which tends to feel more uplifting and energetic[[5]](#user-content-fn-5).
+**The entourage effect** describes how cannabinoids and terpenes work together to shape the overall experience[[3]](#user-content-fn-3). A 20% THC strain rich in myrcene — a sedating terpene found in strains like [Granddaddy Purple](/strains/granddaddy-purple) — may produce a heavier, more relaxing effect than a 28% THC strain dominated by limonene, which tends to feel more uplifting and energetic[[5]](#user-content-fn-5).
 
 **Consumption method** significantly affects how potency is delivered. Smoking and vaping produce near-immediate effects, while edibles are processed through the liver and can take 30–90 minutes to peak — often at greater intensity[[2]](#user-content-fn-2).
 
@@ -94,8 +94,8 @@ Terpenes are the aromatic compounds that give each strain its distinctive scent 
 
 Here are a few key examples:
 
-- **Myrcene** (earthy, musky): Associated with relaxing, sedating effects; dominant in strains like Blue Dream and OG Kush
-- **Limonene** (citrus): Linked to uplifting, mood-elevating effects; prominent in Lemon Haze and Super Lemon Haze
+- **Myrcene** (earthy, musky): Associated with relaxing, sedating effects; dominant in strains like [Blue Dream](/strains/blue-dream) and [OG Kush](/strains/og-kush)
+- **Limonene** (citrus): Linked to uplifting, mood-elevating effects; prominent in [Lemon Haze](/strains/lemon-haze) and [Super Lemon Haze](/strains/super-lemon-haze)
 - **Caryophyllene** (spicy, peppery): Uniquely binds to CB2 receptors; found in strains like GSC (Girl Scout Cookies) and Chemdog[[5]](#user-content-fn-5)
 - **Pinene** (pine): Associated with alertness and mental clarity; common in Jack Herer and Dutch Treat
 

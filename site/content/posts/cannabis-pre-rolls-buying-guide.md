@@ -67,7 +67,7 @@ The pre-roll category has expanded far beyond a simple joint. Understanding the 
 
 ### Standard Flower Pre-Rolls
 
-These are filled with ground cannabis flower — ideally whole flower or premium shake from a clearly labeled strain. A well-made standard pre-roll from a quality strain like **Blue Dream** (a sativa-dominant hybrid of Blueberry × Haze) typically tests between 17–22% THC with a terpene profile led by myrcene, caryophyllene, and pinene[[4]](#user-content-fn-4). Standard pre-rolls are the best starting point for beginners or anyone who wants a manageable, predictable session.
+These are filled with ground cannabis flower — ideally whole flower or premium shake from a clearly labeled strain. A well-made standard pre-roll from a quality strain like **[Blue Dream](/strains/blue-dream)** (a sativa-dominant hybrid of Blueberry × Haze) typically tests between 17–22% THC with a terpene profile led by myrcene, caryophyllene, and pinene[[4]](#user-content-fn-4). Standard pre-rolls are the best starting point for beginners or anyone who wants a manageable, predictable session.
 
 ### Infused Pre-Rolls
 
@@ -81,7 +81,7 @@ Some brands blend multiple strains or mix flower with hash for a layered experie
 
 The label is your most important tool when buying pre-rolls. Here's what to evaluate before you purchase:
 
-- **Strain name and lineage** — a named strain (e.g., Gelato #41, a cross of Sunset Sherbet × Thin Mint GSC) gives you something to research and revisit[[4]](#user-content-fn-4)
+- **Strain name and lineage** — a named strain (e.g., Gelato #41, a cross of [Sunset Sherbet](/strains/sunset-sherbet) × Thin Mint GSC) gives you something to research and revisit[[4]](#user-content-fn-4)
 - **Total THC and CBD percentages** — standard pre-rolls typically range from 15–28% THC; anything labeled above 30% in a non-infused product warrants scrutiny
 - **Terpene profile** — dominant terpenes like myrcene (relaxing, earthy), limonene (uplifting, citrus), and linalool (calming, floral) shape your experience as meaningfully as THC content[[1]](#user-content-fn-1)
 - **Packaging or harvest date** — cannabis degrades over time; fresher is better, and anything over six months old may taste stale
@@ -94,11 +94,11 @@ Once you understand the label, you can align your choice with what you're actual
 
 ### For Uplifting, Social, or Creative Effects
 
-Look for pre-rolls featuring strains with dominant **limonene** or **terpinolene** terpenes. Strains like **Jack Herer** (a sativa-leaning hybrid of Haze × Northern Lights #5 × Shiva Skunk) or **Durban Poison** tend to deliver energetic, clear-headed experiences[[4]](#user-content-fn-4). THC in the 18–22% range is plenty for this purpose.
+Look for pre-rolls featuring strains with dominant **limonene** or **terpinolene** terpenes. Strains like **[Jack Herer](/strains/jack-herer)** (a sativa-leaning hybrid of Haze × Northern Lights #5 × Shiva Skunk) or **[Durban Poison](/strains/durban-poison)** tend to deliver energetic, clear-headed experiences[[4]](#user-content-fn-4). THC in the 18–22% range is plenty for this purpose.
 
 ### For Relaxing or Unwinding Effects
 
-Seek out pre-rolls with **myrcene** and **linalool** as primary terpenes. Indica-leaning strains like **[Granddaddy Purple](/articles/granddaddy-purple-strain-effects)** (a cross of Purple Urkle × Big Bud) or **Bubba Kush** are popular choices, typically testing 17–22% THC[[4]](#user-content-fn-4). Research suggests myrcene may contribute to sedative-adjacent effects, though individual responses vary[[1]](#user-content-fn-1).
+Seek out pre-rolls with **myrcene** and **linalool** as primary terpenes. Indica-leaning strains like **[Granddaddy Purple](/articles/granddaddy-purple-strain-effects)** (a cross of [Purple Urkle](/strains/purple-urkle) × Big Bud) or **Bubba Kush** are popular choices, typically testing 17–22% THC[[4]](#user-content-fn-4). Research suggests myrcene may contribute to sedative-adjacent effects, though individual responses vary[[1]](#user-content-fn-1).
 
 ### For Balanced or Mild Experiences
 

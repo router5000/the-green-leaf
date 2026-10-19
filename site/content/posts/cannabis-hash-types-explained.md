@@ -94,7 +94,7 @@ Top-tier bubble hash can reach 60–70% THC while preserving a wide spectrum of 
 
 Hash rosin is made by applying heat and pressure to bubble hash using a rosin press, causing the trichomes to release their oils without any solvents. It represents the cleanest and most terpene-rich concentrate available in the solventless category[[5]](#user-content-fn-5). Hash rosin regularly tests at 65–80% THC and maintains terpene percentages that closely reflect the source strain.
 
-This makes rosin particularly valuable for consumers who care about the [entourage effect](/articles/cannabis-pharmacology-explained) — the theory that cannabinoids and terpenes work together to shape the overall experience[[6]](#user-content-fn-6). A rosin pressed from a strain like Gelato (known for caryophyllene and limonene) will carry those same aromas and contribute to its characteristically euphoric, relaxing effect profile.
+This makes rosin particularly valuable for consumers who care about the [entourage effect](/articles/cannabis-pharmacology-explained) — the theory that cannabinoids and terpenes work together to shape the overall experience[[6]](#user-content-fn-6). A rosin pressed from a strain like [Gelato](/strains/gelato) (known for caryophyllene and limonene) will carry those same aromas and contribute to its characteristically euphoric, relaxing effect profile.
 
 ## How Terpenes Affect the Hash Experience
 
@@ -103,7 +103,7 @@ Terpenes are volatile aromatic compounds, and how well they survive the hash-mak
 - **Myrcene** (earthy, musky) — common in traditional Afghani-derived hash; associated with relaxing, heavy body sensations
 - **Caryophyllene** (spicy, peppery) — survives heat well; present in many modern rosin products
 - **Limonene** (citrus) — more volatile, better preserved in bubble hash and rosin than in traditionally cured brick hash
-- **Terpinolene** (floral, piney) — found in high-grade ice water hash made from strains like Jack Herer or Dutch Treat
+- **Terpinolene** (floral, piney) — found in high-grade ice water hash made from strains like [Jack Herer](/strains/jack-herer) or [Dutch Treat](/strains/dutch-treat)
 
 Solventless methods like bubble hash and rosin preserve the broadest terpene spectrum, which is why these products are often described as more flavorful and nuanced than older pressed formats[[1]](#user-content-fn-1)[[5]](#user-content-fn-5). Peer-reviewed research supports the idea that terpenes contribute meaningfully to the overall cannabis experience beyond THC alone[[6]](#user-content-fn-6).
 

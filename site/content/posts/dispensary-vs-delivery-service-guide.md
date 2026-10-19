@@ -67,7 +67,7 @@ This dispensary vs delivery service guide walks you through everything you need 
 
 At their core, both dispensaries and delivery services operate under state-licensed regulations and sell the same types of cannabis products — flower, edibles, concentrates, tinctures, and more[[1]](#user-content-fn-1). The key differences lie in *how* you access those products.
 
-A **brick-and-mortar dispensary** is a physical retail location staffed by trained budtenders. You can browse products, read lab testing labels, ask questions about terpene profiles, and sometimes even smell flower before purchasing. For consumers who want guidance — say, understanding the difference between a myrcene-forward indica like **Granddaddy Purple** (typically 17–23% THC) and a limonene-dominant sativa like **Super Lemon Haze** (18–25% THC) — a dispensary visit allows for real-time, personalized recommendations[[4]](#user-content-fn-4).
+A **brick-and-mortar dispensary** is a physical retail location staffed by trained budtenders. You can browse products, read lab testing labels, ask questions about terpene profiles, and sometimes even smell flower before purchasing. For consumers who want guidance — say, understanding the difference between a myrcene-forward indica like **[Granddaddy Purple](/strains/granddaddy-purple)** (typically 17–23% THC) and a limonene-dominant sativa like **[Super Lemon Haze](/strains/super-lemon-haze)** (18–25% THC) — a dispensary visit allows for real-time, personalized recommendations[[4]](#user-content-fn-4).
 
 A **cannabis delivery service** is a licensed platform or retailer that brings products directly to your door. Ordering is done online or via app, and most platforms display the same COA (Certificate of Analysis) lab data you'd find in-store. Delivery is a strong fit for experienced consumers who already know their preferred strains, terpenes, or cannabinoid ratios and don't need in-person consultation[[2]](#user-content-fn-2).
 
@@ -85,7 +85,7 @@ A **cannabis delivery service** is a licensed platform or retailer that brings p
 
 If you're new to cannabis, navigating a dispensary is one of the best decisions you can make. Budtenders are trained to walk you through cannabinoid profiles, explain what terpenes like **linalool**, **caryophyllene**, and **pinene** actually do, and help you match a product to your desired experience[[3]](#user-content-fn-3). That kind of nuanced conversation is hard to replicate in a chat box.
 
-Dispensaries also tend to carry a wider rotating selection of flower strains, limited-run concentrates, and exclusive local brands. If you're chasing a specific cultivar — like a batch of **Wedding Cake** (20–25% THC, dominant in caryophyllene and limonene) or a high-CBD strain like **ACDC** (1–6% THC, 14–20% CBD) — being on-site gives you first access to new inventory[[4]](#user-content-fn-4).
+Dispensaries also tend to carry a wider rotating selection of flower strains, limited-run concentrates, and exclusive local brands. If you're chasing a specific cultivar — like a batch of **[Wedding Cake](/strains/wedding-cake)** (20–25% THC, dominant in caryophyllene and limonene) or a high-CBD strain like **[ACDC](/strains/acdc)** (1–6% THC, 14–20% CBD) — being on-site gives you first access to new inventory[[4]](#user-content-fn-4).
 
 Dispensaries are also ideal when you want to verify packaging, read COAs directly, or compare two products side by side before committing[[5]](#user-content-fn-5).
 
@@ -93,7 +93,7 @@ Dispensaries are also ideal when you want to verify packaging, read COAs directl
 
 Delivery services shine in scenarios where access or privacy is the priority. Medical cannabis patients who experience chronic discomfort or mobility challenges benefit enormously from home delivery options[[2]](#user-content-fn-2). Similarly, consumers in suburban or rural areas who live far from the nearest dispensary find delivery both practical and time-saving.
 
-For consumers who have already found their go-to products — whether that's a familiar **Blue Dream** (17–24% THC, myrcene-dominant) vape cartridge or a consistent CBD:THC 1:1 tincture — reordering through a delivery platform is fast and efficient. Many platforms also offer subscription features, loyalty discounts, and first-time delivery promotions[[6]](#user-content-fn-6).
+For consumers who have already found their go-to products — whether that's a familiar **[Blue Dream](/strains/blue-dream)** (17–24% THC, myrcene-dominant) vape cartridge or a consistent CBD:THC 1:1 tincture — reordering through a delivery platform is fast and efficient. Many platforms also offer subscription features, loyalty discounts, and first-time delivery promotions[[6]](#user-content-fn-6).
 
 One important note: delivery windows can range from 30 minutes to several hours depending on your location and the service. If you need something same-day, always check estimated times before placing your order[[1]](#user-content-fn-1).
 

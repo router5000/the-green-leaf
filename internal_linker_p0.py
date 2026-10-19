@@ -5,6 +5,7 @@ from internal_linker import (
     find_internal_link_opportunities,
     insert_internal_links,
     load_article_index,
+    add_strain_links,
 )
 
 
@@ -63,6 +64,9 @@ def add_internal_links_to_new_article(content: str, slug: str) -> Tuple[str, Lis
         modified_body, inserted = _append_related_reading(
             modified_body, slug, article_index, inserted, target_total=5
         )
+
+    modified_body, strain_links = add_strain_links(modified_body, max_links=5)
+    inserted = inserted + strain_links
 
     if not inserted:
         return content, []

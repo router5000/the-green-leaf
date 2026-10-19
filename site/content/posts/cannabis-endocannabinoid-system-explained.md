@@ -87,11 +87,11 @@ CBD (cannabidiol) works differently. Rather than binding directly to CB1 or CB2 
 
 ### What Role Do Terpenes Play in the ECS?
 
-Terpenes — the aromatic compounds that give strains like Blue Dream, Gelato, and Wedding Cake their distinctive scents — don't bind to ECS receptors in the same direct way cannabinoids do. However, emerging research suggests terpenes may modulate cannabinoid activity through what's commonly called the entourage effect[[4]](#user-content-fn-4)[[6]](#user-content-fn-6).
+Terpenes — the aromatic compounds that give strains like [Blue Dream](/strains/blue-dream), [Gelato](/strains/gelato), and [Wedding Cake](/strains/wedding-cake) their distinctive scents — don't bind to ECS receptors in the same direct way cannabinoids do. However, emerging research suggests terpenes may modulate cannabinoid activity through what's commonly called the entourage effect[[4]](#user-content-fn-4)[[6]](#user-content-fn-6).
 
 For example:
 
-- **Myrcene**, the most common cannabis terpene, is associated with sedating, body-heavy effects and is dominant in strains like OG Kush and Granddaddy Purple
+- **Myrcene**, the most common cannabis terpene, is associated with sedating, body-heavy effects and is dominant in strains like [OG Kush](/strains/og-kush) and [Granddaddy Purple](/strains/granddaddy-purple)
 - **Limonene**, found in citrus-forward strains like Super Lemon Haze, is linked to uplifting, mood-elevating experiences
 - **Linalool**, a floral terpene prominent in Lavender Kush, is associated with calming effects
 

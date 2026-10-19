@@ -43,7 +43,7 @@ refinement_rounds: 2
 # Blue Dream Strain Effects & Review: Everything You Need to Know
 
 ## Quick Answer
-Blue Dream strain effects and review show this sativa-dominant hybrid delivers balanced, feel-good results — providing a gentle cerebral lift alongside mild full-body relaxation. With THC levels typically ranging from 17–24%, it's approachable for beginners yet satisfying for experienced consumers[[1]](#user-content-fn-1). Its sweet berry aroma and smooth smoke have made it consistently one of the top-performing strains in legal cannabis markets across multiple states[[2]](#user-content-fn-2).
+[Blue Dream](/strains/blue-dream) strain effects and review show this sativa-dominant hybrid delivers balanced, feel-good results — providing a gentle cerebral lift alongside mild full-body relaxation. With THC levels typically ranging from 17–24%, it's approachable for beginners yet satisfying for experienced consumers[[1]](#user-content-fn-1). Its sweet berry aroma and smooth smoke have made it consistently one of the top-performing strains in legal cannabis markets across multiple states[[2]](#user-content-fn-2).
 
 **Key Takeaways**
 - Blue Dream is a sativa-dominant hybrid (roughly 60% sativa / 40% indica) crossed from Blueberry and Haze
@@ -114,10 +114,10 @@ Because the high is functional rather than sedating, Blue Dream is frequently ch
 
 If you enjoy Blue Dream strain effects and review results, these strains share a similar profile and may be worth exploring:
 
-- **Strawberry Cough** — equally uplifting and social, with a fruitier, berry-forward flavor and a slightly more energetic sativa lean
-- **Green Crack** — sharper and more energizing, ideal if you want more mental drive with less body ease
-- **Trainwreck** — a more intense hybrid option for consumers who want Blue Dream's euphoria with added potency
-- **Pineapple Express** — similar sweet, fruity profile with a comparable balanced hybrid effect
+- **[Strawberry Cough](/strains/strawberry-cough)** — equally uplifting and social, with a fruitier, berry-forward flavor and a slightly more energetic sativa lean
+- **[Green Crack](/strains/green-crack)** — sharper and more energizing, ideal if you want more mental drive with less body ease
+- **[Trainwreck](/strains/trainwreck)** — a more intense hybrid option for consumers who want Blue Dream's euphoria with added potency
+- **[Pineapple Express](/strains/pineapple-express)** — similar sweet, fruity profile with a comparable balanced hybrid effect
 
 Blue Dream sits in a sweet spot: approachable, predictable, and pleasurable without being one-dimensional. That reliability is a big reason it has remained a dispensary staple, with cultivation difficulty rated as moderate, making it accessible to both commercial and home growers[[4]](#user-content-fn-4).
 

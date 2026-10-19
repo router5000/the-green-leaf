@@ -44,7 +44,7 @@ refinement_rounds: 0
 
 ## Quick Answer
 
-Animal Cookies is a potent indica-dominant hybrid crossing Girl Scout Cookies and Fire OG, typically testing between 22–27% THC. It delivers a heavy, full-body relaxation paired with an uplifting euphoric onset, wrapped in a sweet, earthy, and slightly sour flavor profile. This strain is best suited for experienced consumers looking for strong sedating and mood-elevating effects.
+[Animal Cookies](/strains/animal-cookies) is a potent indica-dominant hybrid crossing [Girl Scout Cookies](/strains/girl-scout-cookies) and [Fire OG](/strains/fire-og), typically testing between 22–27% THC. It delivers a heavy, full-body relaxation paired with an uplifting euphoric onset, wrapped in a sweet, earthy, and slightly sour flavor profile. This strain is best suited for experienced consumers looking for strong sedating and mood-elevating effects.
 
 ---
 
@@ -78,7 +78,7 @@ Animal Cookies — sometimes called Animal Crackers — was bred by BC Bud Depot
 
 Girl Scout Cookies brought the sweet, dessert-like flavor profile and euphoric cerebral punch that made it a modern classic[[1]](#user-content-fn-1). Fire OG added fuel to the fire — literally — contributing that strain's notoriously intense potency and deep physical sedation. The result is a cultivar that punches well above average in both THC content and effect intensity.
 
-Animal Cookies has since become a genetic cornerstone in its own right, serving as a parent strain in popular crosses like **Animal Mints** and **Gushers**[[3]](#user-content-fn-3).
+Animal Cookies has since become a genetic cornerstone in its own right, serving as a parent strain in popular crosses like **[Animal Mints](/strains/animal-mints)** and **Gushers**[[3]](#user-content-fn-3).
 
 ## What Does Animal Cookies Look Like, Smell Like, and Taste Like?
 
@@ -114,7 +114,7 @@ Common reported side effects include dry mouth, dry eyes, and occasional dizzine
 If you enjoy Animal Cookies, you may also appreciate:
 
 - **Girl Scout Cookies** — lighter and more balanced, great for exploring the GSC lineage with less intensity
-- **Gelato** — shares the dessert-forward flavor profile with a slightly more balanced hybrid effect
+- **[Gelato](/strains/gelato)** — shares the dessert-forward flavor profile with a slightly more balanced hybrid effect
 - **Wedding Cake** — another GSC descendant with similar THC levels and relaxing, euphoric effects[[3]](#user-content-fn-3)
 - **Fire OG** — for those who want Animal Cookies' intensity with a more classically OG, fuel-forward flavor
 

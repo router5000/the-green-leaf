@@ -84,7 +84,7 @@ Vaporizers, by contrast, heat cannabis to temperatures between 315°F and 440°F
 
 ## How Does the Vaping vs Smoking Cannabis Comparison Affect Terpenes and Potency?
 
-If you've ever noticed that a vaporized strain tastes noticeably different from the same strain smoked in a joint, terpene preservation is the reason. Strains like **Zkittlez** (dominant terpenes: limonene, linalool, caryophyllene) or **Gelato** (myrcene, caryophyllene, limonene) deliver far more of their characteristic flavor through a vaporizer than through combustion[[4]](#user-content-fn-4).
+If you've ever noticed that a vaporized strain tastes noticeably different from the same strain smoked in a joint, terpene preservation is the reason. Strains like **[Zkittlez](/strains/zkittlez)** (dominant terpenes: limonene, linalool, caryophyllene) or **[Gelato](/strains/gelato)** (myrcene, caryophyllene, limonene) deliver far more of their characteristic flavor through a vaporizer than through combustion[[4]](#user-content-fn-4).
 
 Potency is a more nuanced story. A 2021 study published in JAMA Network Open found that vaporized cannabis produced higher blood THC concentrations than the same dose smoked, particularly among infrequent users[[1]](#user-content-fn-1). This means that consumers switching from smoking to vaping — especially with high-THC strains testing at 25–30% THC — may notice stronger effects from equivalent amounts of cannabis.
 
@@ -94,9 +94,9 @@ For consumers who prefer strain-specific experiences driven by the [full spectru
 
 The answer depends largely on your priorities as a consumer.
 
-**For flavor-focused consumers:** Vaping is the clear winner. A terpene-rich strain like **Papaya Cake** (myrcene-dominant, ~23% THC) or **Strawberry Cough** (terpinolene, myrcene, ocimene) will express dramatically more of its aromatic complexity through a quality dry herb vaporizer than through combustion[[4]](#user-content-fn-4).
+**For flavor-focused consumers:** Vaping is the clear winner. A terpene-rich strain like **[Papaya Cake](/strains/papaya-cake)** (myrcene-dominant, ~23% THC) or **[Strawberry Cough](/strains/strawberry-cough)** (terpinolene, myrcene, ocimene) will express dramatically more of its aromatic complexity through a quality dry herb vaporizer than through combustion[[4]](#user-content-fn-4).
 
-**For casual or social consumers:** Smoking remains accessible, shareable, and requires no charging or device maintenance. Pre-rolls featuring strains like **Blue Dream** (myrcene, caryophyllene, pinene; 17–24% THC) or **Sour Diesel** (caryophyllene, myrcene, limonene; 20–25% THC) remain popular for good reason[[5]](#user-content-fn-5).
+**For casual or social consumers:** Smoking remains accessible, shareable, and requires no charging or device maintenance. Pre-rolls featuring strains like **[Blue Dream](/strains/blue-dream)** (myrcene, caryophyllene, pinene; 17–24% THC) or **Sour Diesel** (caryophyllene, myrcene, limonene; 20–25% THC) remain popular for good reason[[5]](#user-content-fn-5).
 
 **For consumers sensitive to harshness:** Vapor is generally smoother on the throat and lungs than smoke. The National Institute on Drug Abuse notes that combustion produces irritants not found in vapor, which may explain why many users report less coughing with vaporizers[[6]](#user-content-fn-6).
 

@@ -44,7 +44,7 @@ refinement_rounds: 2
 
 ## Quick Answer
 
-The Northern Lights strain profile is defined by deeply relaxing, sedating effects and an earthy-sweet aroma rooted in Afghani and Thai landrace genetics. It typically tests between 16–21% THC and is celebrated for its fast-acting body high and mood-lifting qualities[[1]](#user-content-fn-1). Few strains have earned the iconic status Northern Lights holds in cannabis culture — and for good reason.
+The [Northern Lights](/strains/northern-lights) strain profile is defined by deeply relaxing, sedating effects and an earthy-sweet aroma rooted in Afghani and Thai landrace genetics. It typically tests between 16–21% THC and is celebrated for its fast-acting body high and mood-lifting qualities[[1]](#user-content-fn-1). Few strains have earned the iconic status Northern Lights holds in cannabis culture — and for good reason.
 
 **Strain Overview**
 | Attribute | Details |
@@ -73,7 +73,7 @@ Some strains come and go with the seasons, but Northern Lights has been a corner
 
 The Northern Lights strain profile begins with two powerful landrace parents: an Afghani indica and a Thai sativa[[1]](#user-content-fn-1). The Afghani genetics dominate heavily, accounting for the strain's quintessential indica traits — dense buds, heavy resin production, and full-body sedation. The small sativa influence from the Thai parent adds just enough mental clarity to keep the experience from feeling overwhelming.
 
-The strain is believed to have been developed in Seattle, Washington before being refined and popularized by Sensi Seeds in the Netherlands during the 1980s[[2]](#user-content-fn-2). It went on to win the High Times Cannabis Cup multiple times, cementing its place in cannabis history. Today, Northern Lights serves as a foundational parent strain for many popular hybrids, including Shiva Skunk and Super Silver Haze[[1]](#user-content-fn-1).
+The strain is believed to have been developed in Seattle, Washington before being refined and popularized by Sensi Seeds in the Netherlands during the 1980s[[2]](#user-content-fn-2). It went on to win the High Times Cannabis Cup multiple times, cementing its place in cannabis history. Today, Northern Lights serves as a foundational parent strain for many popular hybrids, including Shiva Skunk and [Super Silver Haze](/strains/super-silver-haze)[[1]](#user-content-fn-1).
 
 ## What Does Northern Lights Look, Smell, and Taste Like?
 
@@ -99,8 +99,8 @@ At 16–21% THC, Northern Lights is potent but not overwhelming for most experie
 
 **Similar strains to explore:**
 - Afghani — shares the pure indica lineage and earthy, hash-forward character
-- Granddaddy Purple — comparable body sedation with added grape and berry notes
-- Hindu Kush — another landrace-derived indica with similar calming, resinous qualities
+- [Granddaddy Purple](/strains/granddaddy-purple) — comparable body sedation with added grape and berry notes
+- [Hindu Kush](/strains/hindu-kush) — another landrace-derived indica with similar calming, resinous qualities
 
 ## Who Is Northern Lights Best For?
 

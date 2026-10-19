@@ -98,7 +98,7 @@ Rosin typically tests between 65–80% THC[[1]](#user-content-fn-1), so a rice g
 
 Live resin is made from flash-frozen cannabis, preserving volatile terpenes that would otherwise degrade during drying and curing. The result is one of the most aromatic and flavorful concentrate types available[[3]](#user-content-fn-3).
 
-Strains like **Gelato** (a cross of Sunset Sherbet and Thin Mint GSC) and **Wedding Cake** (Triangle Kush × Animal Mints) translate beautifully into live resin, carrying dominant terpenes like **beta-caryophyllene** and **limonene** that deliver complex, layered effects.
+Strains like **[Gelato](/strains/gelato)** (a cross of [Sunset Sherbet](/strains/sunset-sherbet) and Thin Mint GSC) and **[Wedding Cake](/strains/wedding-cake)** ([Triangle Kush](/strains/triangle-kush) × [Animal Mints](/strains/animal-mints)) translate beautifully into live resin, carrying dominant terpenes like **beta-caryophyllene** and **limonene** that deliver complex, layered effects.
 
 ## How Do Terpenes Affect Your Concentrate Experience?
 

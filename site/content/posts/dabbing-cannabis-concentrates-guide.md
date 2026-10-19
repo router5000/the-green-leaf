@@ -101,7 +101,7 @@ Low-temperature dabs in the 315–450°F range protect delicate terpenes like li
 If you're new to dabbing cannabis concentrates, the sheer variety of products can feel overwhelming. Here's a practical breakdown by experience level and preference:
 
 - **Beginners** — Start with wax or budder. These are easy to handle, widely available, and typically well-labeled for potency. Look for products in the 60–70% THC range rather than jumping to 90%+ distillates[[1]](#user-content-fn-1)
-- **Flavor seekers** — Live resin and rosin are excellent choices. Live resin from strains like Gelato or Blue Dream preserves terpene profiles that echo the flower experience with amplified intensity[[4]](#user-content-fn-4)
+- **Flavor seekers** — Live resin and rosin are excellent choices. Live resin from strains like [Gelato](/strains/gelato) or [Blue Dream](/strains/blue-dream) preserves terpene profiles that echo the flower experience with amplified intensity[[4]](#user-content-fn-4)
 - **CBD-focused consumers** — High-CBD live resins and CBD concentrates are available, often derived from strains with naturally elevated CBD levels. These may offer a more balanced cannabinoid ratio for those sensitive to high THC[[6]](#user-content-fn-6)
 
 Always check the certificate of analysis (COA) on any concentrate product. A reputable dispensary will provide third-party lab results confirming cannabinoid percentages and the absence of residual solvents or contaminants[[3]](#user-content-fn-3).
@@ -110,7 +110,7 @@ Always check the certificate of analysis (COA) on any concentrate product. A rep
 
 The effects of dabbing come on faster and hit harder than smoking flower. Because concentrates are so potent, even experienced consumers can be surprised by the intensity[[1]](#user-content-fn-1). Effects typically onset within minutes and can last 1–3 hours depending on the dose, product type, and individual tolerance.
 
-Terpene-rich concentrates like live resin tend to produce more nuanced, strain-specific effects. A live resin made from a myrcene-dominant strain like OG Kush will feel different from one derived from a limonene-heavy strain like Super Lemon Haze — reinforcing how much terpenes shape the overall experience beyond just THC percentage[[5]](#user-content-fn-5).
+Terpene-rich concentrates like live resin tend to produce more nuanced, strain-specific effects. A live resin made from a myrcene-dominant strain like [OG Kush](/strains/og-kush) will feel different from one derived from a limonene-heavy strain like [Super Lemon Haze](/strains/super-lemon-haze) — reinforcing how much terpenes shape the overall experience beyond just THC percentage[[5]](#user-content-fn-5).
 
 For consumers who have previously only experienced flower, dabbing represents a meaningful step up in potency. It's best approached with intention: know your product, know your dose, and give yourself time to gauge the effects before consuming more[[3]](#user-content-fn-3).
 
