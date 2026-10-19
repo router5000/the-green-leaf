@@ -374,6 +374,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
               title={post.title}
               description={post.meta_description}
               generatedAt={post.generated_at}
+              updatedAt={post.last_updated || post.generated_at}
               slug={slug}
             />
 

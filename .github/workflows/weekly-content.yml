@@ -111,6 +111,18 @@ jobs:
       # Deploy is via Vercel Git integration on push to main (auto_publish).
       # Do not add a second Vercel CLI deploy here — it races / double-deploys.
 
+      - name: Submit new articles to IndexNow
+        # auto_publish queues new article URLs in .logs/indexnow_pending.txt.
+        # Wait (up to 15 min) for the Vercel deploy to serve them, then submit.
+        if: success() && github.event.inputs.dry_run != 'true'
+        continue-on-error: true
+        run: |
+          if [ -f .logs/indexnow_pending.txt ]; then
+            python indexnow.py --pending --wait-live 900
+          else
+            echo "No new URLs queued for IndexNow."
+          fi
+
       - name: Upload logs as artifact
         if: always()
         uses: actions/upload-artifact@v4

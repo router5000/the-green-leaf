@@ -84,6 +84,7 @@ type Strain = {
   height_indoor: string | null
   height_outdoor: string | null
   origin_country: string | null
+  updated_at: string | null
   strain_seo: StrainSeo[]
   effects: Effect[]
   terpenes: Terpene[]
@@ -265,6 +266,15 @@ export default async function StrainDetailPage({
         <div className="mb-6">
           <StrainCompareButton slug={s.slug} />
         </div>
+
+        {s.updated_at && (
+          <p className="text-sm text-gray-500 mb-3">
+            Updated{' '}
+            <time dateTime={s.updated_at}>
+              {new Date(s.updated_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })}
+            </time>
+          </p>
+        )}
 
         {s.short_description && (
           <p className="text-lg text-gray-600 leading-relaxed mb-10 max-w-3xl">{s.short_description}</p>
