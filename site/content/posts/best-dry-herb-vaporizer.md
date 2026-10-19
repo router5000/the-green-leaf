@@ -1,5 +1,5 @@
 ---
-title: "Best Dry Herb Vaporizer: What to Look For in 2025"
+title: "Best Dry Herb Vaporizer: What to Look For"
 meta_description: "Looking for the best dry herb vaporizer? Learn what features matter most, how vaping affects terpenes and cannabinoids, and how to choose the right device for your needs."
 slug: "best-dry-herb-vaporizer"
 keyword: "best dry herb vaporizer"
@@ -41,7 +41,7 @@ qa_passed: True
 refinement_rounds: 0
 ---
 
-# Best Dry Herb Vaporizer: What to Look For in 2025
+# Best Dry Herb Vaporizer: What to Look For
 
 ## Quick Answer
 

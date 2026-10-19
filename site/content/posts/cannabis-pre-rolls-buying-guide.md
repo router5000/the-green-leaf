@@ -1,5 +1,5 @@
 ---
-title: "Cannabis Pre-Rolls Buying Guide (2025)"
+title: "Cannabis Pre-Rolls Buying Guide"
 meta_description: "Learn how to buy better pre-rolls with this expert guide covering flower quality, infusion types, THC levels, terpenes, and what to avoid at the dispensary."
 slug: "cannabis-pre-rolls-buying-guide"
 keyword: "cannabis pre-rolls buying guide"
@@ -41,7 +41,7 @@ qa_passed: True
 refinement_rounds: 1
 ---
 
-# Cannabis Pre-Rolls Buying Guide (2025)
+# Cannabis Pre-Rolls Buying Guide
 
 ## Quick Answer
 

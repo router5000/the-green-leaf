@@ -1,5 +1,5 @@
 ---
-title: "High CBD Low THC Strains Guide (2025)"
+title: "High CBD Low THC Strains Guide"
 meta_description: "Discover the best high CBD low THC strains, with real THC/CBD percentages, top terpenes, and effects to help you choose the right strain confidently."
 slug: "high-cbd-low-thc-strains-guide"
 keyword: "high CBD low THC strains guide"
@@ -40,7 +40,7 @@ qa_passed: True
 refinement_rounds: 1
 ---
 
-# High CBD Low THC Strains Guide: Best Options for 2025
+# High CBD Low THC Strains Guide: Best Options
 
 ## Quick Answer
 High CBD, low THC strains typically contain 10–20%+ CBD and under 1% THC, delivering calming, clear-headed effects without the intoxicating "high" associated with THC-dominant cannabis[[1]](#user-content-fn-1). They're popular among consumers seeking the potential wellness benefits of cannabinoids while staying mentally clear and functional[[2]](#user-content-fn-2).

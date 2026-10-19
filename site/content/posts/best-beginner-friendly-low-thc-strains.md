@@ -1,5 +1,5 @@
 ---
-title: "Best Beginner-Friendly Low-THC Strains (2025)"
+title: "Best Beginner-Friendly Low-THC Strains"
 meta_description: "New to cannabis? Discover the best beginner-friendly low-THC strains with gentle effects, calming terpenes, and balanced cannabinoid profiles for a smooth, confident start."
 slug: "best-beginner-friendly-low-thc-strains"
 keyword: "best beginner-friendly low-THC strains"

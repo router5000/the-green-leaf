@@ -1,6 +1,6 @@
 ---
-title: "Cannabis Concentrates for Beginners (2024 Guide)"
-meta_description: "New to cannabis concentrates? Learn the types, potency levels, terpenes, and how to start low and go slow with this beginner-friendly 2024 guide."
+title: "Cannabis Concentrates for Beginners: A Guide"
+meta_description: "New to cannabis concentrates? Learn the types, potency levels, terpenes, and how to start low and go slow with this beginner-friendly guide."
 slug: "cannabis-concentrates-for-beginners"
 keyword: "cannabis concentrates for beginners"
 featured_image: "/images/articles/cannabis-concentrates-for-beginners.jpg"

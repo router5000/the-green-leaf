@@ -1,5 +1,5 @@
 ---
-title: "Indica vs Sativa vs Hybrid Explained (2024)"
+title: "Indica vs Sativa vs Hybrid Explained"
 meta_description: "What's the difference between indica, sativa, and hybrid cannabis? Learn how terpenes, cannabinoids, and the entourage effect actually determine your experience."
 slug: "indica-vs-sativa-vs-hybrid-explained"
 keyword: "indica vs sativa vs hybrid explained"
