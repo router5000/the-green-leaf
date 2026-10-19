@@ -117,6 +117,20 @@ export default function StatesClient({ states }: { states: StateData[] }) {
               {counts.illegal} illegal
             </span>
           </div>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Link
+              href="/states/compare"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium bg-[#1a3a0a] text-white hover:bg-[#2d5016] transition-colors no-underline"
+            >
+              Compare all 50 states in one table →
+            </Link>
+            <a
+              href="/states/cannabis-laws.csv"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium bg-white text-neutral-800 shadow-sm hover:bg-neutral-50 no-underline"
+            >
+              Download CSV
+            </a>
+          </div>
         </div>
       </div>
 

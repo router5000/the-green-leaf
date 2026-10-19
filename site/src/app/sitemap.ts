@@ -177,6 +177,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly',
       priority: 0.6,
     },
+    {
+      url: `${baseUrl}/states/compare`,
+      lastModified: new Date('2026-10-19'),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
     ...statesData.map((s) => ({
       url: `${baseUrl}/states/${s.slug}`,
       changeFrequency: 'monthly' as const,

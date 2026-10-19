@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { statesData, getStateBySlug } from '@/data/statesData'
 import type { StateData } from '@/data/statesData'
 import { getStateContent, STATES_LAST_REVIEWED } from '@/data/statesContent'
+import { getStateFaqs } from '@/data/statesCompare'
 import BlinkingSquares from '@/components/ui/BlinkingSquares'
 import type { Metadata } from 'next'
 import type React from 'react'
@@ -108,6 +109,12 @@ export default async function StateDetailPage({
   const state = getStateBySlug(slug)
   if (!state) notFound()
   const content = getStateContent(slug)
+  const faqs = getStateFaqs(state)
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  }
 
   const heroPath = path.join(process.cwd(), 'public', 'images', 'states', `${slug}-hero.jpg`)
   const hasHeroImage = fs.existsSync(heroPath)
@@ -122,6 +129,7 @@ export default async function StateDetailPage({
 
   return (
     <div className="bg-[#f0f0f0]">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       {/* ── Separator — below nav ─────────────────────────────────────────── */}
       <svg width="100%" height="1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
         <line x1="0" y1="0.5" x2="100%" y2="0.5" stroke="#d4d4d4" strokeWidth="1" strokeDasharray="16,16" />
@@ -312,6 +320,23 @@ export default async function StateDetailPage({
                   adult-use marijuana remains a Schedule I substance, and rescheduling does not legalize interstate
                   transport. Separate federal changes to the legal definition of hemp take effect in late 2026 and
                   will restrict many intoxicating hemp-derived THC products.
+                </p>
+              </div>
+
+              {/* ── FAQ ──────────────────────────────────────────────── */}
+              <div className="bg-white rounded-xl p-6 shadow-sm">
+                <h2 className="text-xl font-bold text-neutral-900 mb-4">{state.name} Cannabis FAQ</h2>
+                <div className="space-y-4">
+                  {faqs.map(f => (
+                    <div key={f.q}>
+                      <h3 className="font-semibold text-neutral-800 mb-1">{f.q}</h3>
+                      <p className="text-neutral-600 leading-relaxed">{f.a}</p>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-sm text-neutral-500 mt-4">
+                  Compare {state.name} with every other state in our{' '}
+                  <Link href="/states/compare" className="text-leaf-700 underline">cannabis laws comparison table</Link>.
                 </p>
               </div>
 
