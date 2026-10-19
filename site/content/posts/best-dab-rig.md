@@ -128,5 +128,5 @@ Choosing the best dab rig comes down to matching the tool to your priorities. If
 ## Related Reading
 
 - [Organic Cannabis Soil Preparation Guide (2026)](/articles/organic-cannabis-soil-preparation)
-- [Best Dry Herb Vaporizer: What to Look For in 2025](/articles/best-dry-herb-vaporizer)
+- [Best Dry Herb Vaporizer: What to Look For](/articles/best-dry-herb-vaporizer)
 - [Girl Scout Cookies Strain Profile: Effects & Terpenes](/articles/girl-scout-cookies-strain-profile)

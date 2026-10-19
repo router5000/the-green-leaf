@@ -1,5 +1,5 @@
 ---
-title: "Cannabis Drug Interactions Guide (2025)"
+title: "Cannabis Drug Interactions Guide"
 meta_description: "Learn how cannabis interacts with common medications, which cannabinoids pose the most risk, and what to ask your doctor before combining cannabis with prescriptions."
 slug: "cannabis-drug-interactions-guide"
 keyword: "cannabis drug interactions guide"
@@ -40,7 +40,7 @@ qa_passed: True
 refinement_rounds: 2
 ---
 
-# Cannabis Drug Interactions Guide (2025)
+# Cannabis Drug Interactions Guide
 
 ## Quick Answer
 

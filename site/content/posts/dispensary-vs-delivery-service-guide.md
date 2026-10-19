@@ -1,5 +1,5 @@
 ---
-title: "Dispensary vs Delivery Service Guide (2024)"
+title: "Dispensary vs Delivery Service Guide"
 meta_description: "Dispensary or delivery service? This guide breaks down the key differences, pros, cons, and when each option is the right choice for cannabis consumers."
 slug: "dispensary-vs-delivery-service-guide"
 keyword: "dispensary vs delivery service guide"

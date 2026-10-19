@@ -1,5 +1,5 @@
 ---
-title: "Best CBD:THC Ratios for Insomnia (2024 Guide)"
+title: "Best CBD:THC Ratios for Insomnia: A Guide"
 meta_description: "Discover the best CBD:THC ratios for insomnia, including 1:1, 2:1, and high-CBD options, plus top strains and terpenes that may support better sleep."
 slug: "best-cbd-thc-ratios-for-insomnia"
 keyword: "best CBD:THC ratios for insomnia"
