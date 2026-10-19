@@ -19,6 +19,8 @@ Not a fit for: medical diagnosis or dosing advice, legal advice, buying cannabis
 - Markdown: append `.md` to any page URL (e.g. https://strainreport.com/strains/blue-dream.md) or request any page with `Accept: text/markdown`
 - Search API (read-only, no auth, JSON): https://strainreport.com/api/v1/search?q=blue+dream&type=all|strain|article|state
 - All state law summaries (JSON): https://strainreport.com/api/v1/states
+- State law comparison table (HTML): https://strainreport.com/states/compare
+- State law dataset (CSV, CC BY 4.0): https://strainreport.com/states/cannabis-laws.csv
 - OpenAPI description: https://strainreport.com/openapi.json
 - API catalog: https://strainreport.com/.well-known/api-catalog
 - Agent skill: https://strainreport.com/.well-known/agent-skills/strainreport-lookup/SKILL.md

@@ -15,6 +15,11 @@ export function GET() {
         'service-desc': [{ href: `${BASE}/openapi.json`, type: 'application/openapi+json' }],
         'service-doc': [{ href: `${BASE}/llms.txt`, type: 'text/markdown' }],
       },
+      {
+        anchor: `${BASE}/states/cannabis-laws.csv`,
+        'describedby': [{ href: `${BASE}/states/compare`, type: 'text/html' }],
+        'service-doc': [{ href: `${BASE}/llms.txt`, type: 'text/markdown' }],
+      },
     ],
   }
   return new Response(JSON.stringify(body, null, 2), {
