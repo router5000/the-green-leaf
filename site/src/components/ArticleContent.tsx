@@ -1,9 +1,8 @@
 'use client'
 
-import { motion, useReducedMotion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ReactNode, useState } from 'react'
+import { CSSProperties, ReactNode, useState } from 'react'
 
 const CATEGORY_LABELS: Record<string, string> = {
   'strains-genetics': 'Strains & Genetics',
@@ -19,7 +18,11 @@ function formatCategory(category?: string, fallback?: string): string {
   return fallback || 'Cannabis'
 }
 
-// Reusable scroll-triggered animation wrapper
+// Reusable reveal wrapper.
+// CSS-only (SSR fix): previously framer-motion rendered this with inline
+// opacity:0 until hydration + intersection, hiding the article body in the
+// server HTML. Now the content is visible in the SSR HTML and gets a short
+// CSS fade-up on first paint (see .animate-entrance-fade-up in globals.css).
 export function ScrollReveal({
   children,
   delay = 0,
@@ -29,21 +32,18 @@ export function ScrollReveal({
   delay?: number
   className?: string
 }) {
-  const shouldReduceMotion = useReducedMotion()
+  const style: CSSProperties | undefined = delay ? { animationDelay: `${delay}s` } : undefined
   return (
-    <motion.div
-      className={className}
-      initial={shouldReduceMotion ? false : { opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay, ease: "easeOut" }}
-    >
+    <div className={`animate-entrance-fade-up ${className}`.trim()} style={style}>
       {children}
-    </motion.div>
+    </div>
   )
 }
 
-// Page load animation for hero section
+// Page load animation for hero section.
+// CSS-only entrance (SSR/LCP fix): the hero is visible in the SSR HTML and the
+// fade starts on first paint without waiting for hydration. Reduced-motion
+// users get no animation via the @media rule in globals.css.
 export function HeroImage({
   src,
   alt
@@ -51,13 +51,9 @@ export function HeroImage({
   src: string
   alt: string
 }) {
-  const shouldReduceMotion = useReducedMotion()
   return (
-    <motion.figure
-      className="relative h-56 sm:h-72 md:h-96 w-full mb-8 overflow-hidden"
-      initial={shouldReduceMotion ? false : { opacity: 0, scale: 1.05 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.7, ease: "easeOut" }}
+    <figure
+      className="relative h-56 sm:h-72 md:h-96 w-full mb-8 overflow-hidden animate-entrance-fade-scale"
       itemProp="image"
     >
       <Image
@@ -69,26 +65,20 @@ export function HeroImage({
         sizes="100vw"
         itemProp="url"
       />
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.3 }}
+      <div
+        className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent animate-entrance-fade"
+        style={{ animationDelay: '0.3s' }}
       />
-    </motion.figure>
+    </figure>
   )
 }
 
-// Animated breadcrumb navigation
+// Animated breadcrumb navigation (CSS-only entrance — visible in SSR HTML)
 export function AnimatedBreadcrumb({ title, category }: { title: string; category?: string }) {
-  const shouldReduceMotion = useReducedMotion()
   return (
-    <motion.nav
-      className="text-sm text-gray-500 mb-8"
+    <nav
+      className="text-sm text-gray-500 mb-8 animate-entrance-fade-right"
       aria-label="Breadcrumb"
-      initial={shouldReduceMotion ? false : { opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: shouldReduceMotion ? 0 : 0.4, delay: shouldReduceMotion ? 0 : 0.2 }}
     >
       <Link href="/" className="hover:text-leaf-600">Home</Link>
       <span className="mx-2">/</span>
@@ -101,7 +91,7 @@ export function AnimatedBreadcrumb({ title, category }: { title: string; categor
       )}
       <span className="mx-2">/</span>
       <span className="text-leaf-700">{title}</span>
-    </motion.nav>
+    </nav>
   )
 }
 
@@ -192,55 +182,40 @@ export function AnimatedHeader({
   generatedAt: string
   slug: string
 }) {
+  // CSS-only entrance (SSR/LCP fix): the h1 is visible in the SSR HTML and the
+  // fade-up starts on first paint without waiting for hydration.
   return (
-    <motion.header
-      className="mb-10"
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.3 }}
-    >
+    <header className="mb-10 animate-entrance-fade-up">
       <div className="flex flex-wrap items-center gap-3 text-sm text-leaf-600 mb-4">
-        <motion.span
+        <span
           className="bg-leaf-100 px-3 py-1 rounded-full font-medium"
           itemProp="articleSection"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.3, delay: 0.5 }}
         >
           {formatCategory(category, season)}
-        </motion.span>
+        </span>
         <time itemProp="timeRequired">{readTime}</time>
         <span className="text-gray-400">•</span>
         <span itemProp="wordCount">{wordCount} words</span>
         <InlineShareIcons url={`https://strainreport.com/articles/${slug}`} title={title} />
       </div>
 
-      <motion.h1
+      <h1
         className="text-2xl sm:text-3xl md:text-4xl font-bold text-leaf-900 mb-4"
         itemProp="headline"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.4 }}
       >
         {title}
-      </motion.h1>
+      </h1>
 
-      <motion.p
-        className="text-xl text-gray-600"
-        itemProp="description"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.5 }}
-      >
+      <p className="text-xl text-gray-600" itemProp="description">
         {description}
-      </motion.p>
+      </p>
 
       {/* Hidden metadata for AI crawlers */}
       <meta itemProp="datePublished" content={generatedAt} />
       <meta itemProp="dateModified" content={generatedAt} />
       <meta itemProp="inLanguage" content="en-US" />
       <meta itemProp="author" content="The Strain Report" />
-    </motion.header>
+    </header>
   )
 }
 
@@ -264,17 +239,13 @@ export function AnimatedTags({ tags }: { tags: string[] }) {
       <div className="mb-6">
         <h3 className="text-sm font-semibold text-gray-700 mb-3">Tags:</h3>
         <div className="flex flex-wrap gap-2">
-          {tags?.map((tag, index) => (
-            <motion.span
+          {tags?.map((tag) => (
+            <span
               key={tag}
               className="bg-leaf-100 text-leaf-700 px-3 py-1 rounded-full text-sm"
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.3, delay: index * 0.05 }}
             >
               {tag}
-            </motion.span>
+            </span>
           ))}
         </div>
       </div>
@@ -304,14 +275,8 @@ export function AnimatedRelatedArticles({ posts }: { posts: RelatedPost[] }) {
           Related Articles
         </h3>
         <div className="grid md:grid-cols-3 gap-5">
-          {posts.map((post, index) => (
-            <motion.div
-              key={post.slug}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-            >
+          {posts.map((post) => (
+            <div key={post.slug}>
               <Link
                 href={`/articles/${post.slug}`}
                 className="group block bg-white border border-gray-200 rounded-xl overflow-hidden hover:border-leaf-500 hover:shadow-lg transition-all"
@@ -344,7 +309,7 @@ export function AnimatedRelatedArticles({ posts }: { posts: RelatedPost[] }) {
                   </p>
                 </div>
               </Link>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
@@ -376,14 +341,11 @@ export function AnimatedCTA() {
 
 // Animated YouTube embed wrapper
 export function AnimatedYouTubeSection({ children, delay = 0 }: { children: ReactNode, delay?: number }) {
+  const style: CSSProperties = { animationDelay: `${0.6 + delay}s` }
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.6 + delay }}
-    >
+    <div className="animate-entrance-fade-up" style={style}>
       {children}
-    </motion.div>
+    </div>
   )
 }
 
@@ -601,13 +563,9 @@ export function FAQSection({ faqs }: { faqs: FAQItem[] }) {
         </h2>
         <div className="space-y-4">
           {faqs.map((faq, index) => (
-            <motion.details
+            <details
               key={index}
               className="group bg-white rounded-lg border border-gray-200 overflow-hidden"
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
             >
               <summary className="flex items-center justify-between cursor-pointer p-4 hover:bg-leaf-50 transition-colors">
                 <h3 className="font-semibold text-gray-900 pr-4">{faq.question}</h3>
@@ -620,7 +578,7 @@ export function FAQSection({ faqs }: { faqs: FAQItem[] }) {
               <div className="px-4 pb-4 text-gray-700 leading-relaxed border-t border-gray-100 pt-3">
                 {faq.answer}
               </div>
-            </motion.details>
+            </details>
           ))}
         </div>
       </div>

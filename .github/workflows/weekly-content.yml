@@ -76,9 +76,12 @@ jobs:
           pip install -r requirements.txt
       
       - name: Configure Git
+        # Author must be a recognized identity or Vercel BLOCKS the production
+        # deploy on this private repo (unrecognized "Strain Report Bot
+        # <bot@strainreport.com>" commits are not deployed).
         run: |
-          git config user.name "Strain Report Bot"
-          git config user.email "bot@strainreport.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       
       - name: Run content pipeline
         env:

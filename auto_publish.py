@@ -488,9 +488,11 @@ def setup_git_for_ci():
     """
     Configure git for CI environment (GitHub Actions).
     """
-    # Set git user for commits
-    run_git_command(["config", "user.email", "bot@strainreport.com"])
-    run_git_command(["config", "user.name", "Strain Report Bot"])
+    # Set git user for commits. Must be a recognized identity or Vercel
+    # BLOCKS the production deploy on this private repo (an unrecognized
+    # "Strain Report Bot <bot@strainreport.com>" author is not deployed).
+    run_git_command(["config", "user.email", "41898282+github-actions[bot]@users.noreply.github.com"])
+    run_git_command(["config", "user.name", "github-actions[bot]"])
     
     print("✅ Git configured for CI environment")
 
