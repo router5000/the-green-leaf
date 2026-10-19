@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { statesData, getStateBySlug } from '@/data/statesData'
 import type { StateData } from '@/data/statesData'
+import { getStateContent, STATES_LAST_REVIEWED } from '@/data/statesContent'
 import BlinkingSquares from '@/components/ui/BlinkingSquares'
 import type { Metadata } from 'next'
 import type React from 'react'
@@ -106,6 +107,7 @@ export default async function StateDetailPage({
   const { slug } = await params
   const state = getStateBySlug(slug)
   if (!state) notFound()
+  const content = getStateContent(slug)
 
   const heroPath = path.join(process.cwd(), 'public', 'images', 'states', `${slug}-hero.jpg`)
   const hasHeroImage = fs.existsSync(heroPath)
@@ -239,6 +241,15 @@ export default async function StateDetailPage({
                 </div>
               </div>
 
+              {/* ── Overview ──────────────────────────────────────────── */}
+              {content && (
+                <div className="bg-white rounded-xl p-6 shadow-sm">
+                  <h2 className="text-xl font-bold text-neutral-900 mb-3">Overview</h2>
+                  <p className="text-neutral-600 leading-relaxed">{content.overview}</p>
+                  <p className="text-xs text-neutral-400 mt-3">Last reviewed {STATES_LAST_REVIEWED}. General information, not legal advice.</p>
+                </div>
+              )}
+
               {/* ── What's Legal ──────────────────────────────────────── */}
               <div className="bg-white rounded-xl p-6 shadow-sm">
                 <h2 className="text-xl font-bold text-neutral-900 mb-3">What&apos;s Legal</h2>
@@ -270,11 +281,47 @@ export default async function StateDetailPage({
                 )}
               </div>
 
+              {/* ── Recent Changes ────────────────────────────────────── */}
+              {content?.recentChanges && (
+                <div className="bg-white rounded-xl p-6 shadow-sm">
+                  <h2 className="text-xl font-bold text-neutral-900 mb-3">Recent Changes</h2>
+                  <p className="text-neutral-600 leading-relaxed">{content.recentChanges}</p>
+                </div>
+              )}
+
+              {/* ── Driving ───────────────────────────────────────────── */}
+              <div className="bg-white rounded-xl p-6 shadow-sm">
+                <h2 className="text-xl font-bold text-neutral-900 mb-3">Driving and Cannabis</h2>
+                <p className="text-neutral-600 leading-relaxed">
+                  Driving while impaired by cannabis is illegal in {state.name}, as it is in every state, whether or not
+                  the cannabis was obtained legally. Officers may rely on field sobriety tests, drug recognition
+                  evaluations, and blood tests, and some states set specific THC limits or zero-tolerance rules.
+                  Consuming cannabis in a vehicle and carrying open or unsealed packages where the driver can reach
+                  them are commonly prohibited. If you have used cannabis, the safest choice is not to drive.
+                </p>
+              </div>
+
+              {/* ── Crossing State Lines ──────────────────────────────── */}
+              <div className="bg-white rounded-xl p-6 shadow-sm">
+                <h2 className="text-xl font-bold text-neutral-900 mb-3">Crossing State Lines and Federal Law</h2>
+                <p className="text-neutral-600 leading-relaxed">
+                  Taking marijuana across state lines is illegal under federal law, even between two states where
+                  cannabis is legal, and it may also violate the law of the state you enter. Marijuana is
+                  also prohibited on federal land, in national parks, and at airports under TSA jurisdiction. In 2026 the federal
+                  government moved FDA-approved products and state-licensed medical marijuana to Schedule III, but
+                  adult-use marijuana remains a Schedule I substance, and rescheduling does not legalize interstate
+                  transport. Separate federal changes to the legal definition of hemp take effect in late 2026 and
+                  will restrict many intoxicating hemp-derived THC products.
+                </p>
+              </div>
+
               {/* ── Official Resource ─────────────────────────────────── */}
               <div className="bg-white rounded-xl p-6 shadow-sm">
                 <h2 className="text-xl font-bold text-neutral-900 mb-2">Official Resource</h2>
                 <p className="text-neutral-500 text-sm mb-4">
-                  For the most up-to-date rules and licensing information, visit the official state agency.
+                  Cannabis laws change often, and limits, penalties, and program rules can differ from what is
+                  summarized here. This page is general information, not legal advice. Before you rely on any
+                  detail, check the official state source below or consult a licensed attorney in {state.name}.
                 </p>
                 <a
                   href={state.officialLink}
