@@ -37,9 +37,6 @@ export const metadata: Metadata = {
     description: 'Your trusted source for cannabis education — strain guides, growing tips, health & wellness, and industry news.',
     images: ['https://strainreport.com/images/default-leaf-hero.jpg'],
   },
-  alternates: {
-    canonical: 'https://strainreport.com',
-  },
   robots: {
     index: true,
     follow: true,

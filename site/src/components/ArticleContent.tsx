@@ -171,6 +171,7 @@ export function AnimatedHeader({
   title,
   description,
   generatedAt,
+  updatedAt,
   slug
 }: {
   season: string
@@ -180,8 +181,10 @@ export function AnimatedHeader({
   title: string
   description: string
   generatedAt: string
+  updatedAt?: string
   slug: string
 }) {
+  const modified = updatedAt || generatedAt
   // CSS-only entrance (SSR/LCP fix): the h1 is visible in the SSR HTML and the
   // fade-up starts on first paint without waiting for hydration.
   return (
@@ -196,6 +199,14 @@ export function AnimatedHeader({
         <time itemProp="timeRequired">{readTime}</time>
         <span className="text-gray-400">•</span>
         <span itemProp="wordCount">{wordCount} words</span>
+        {modified && (
+          <>
+            <span className="text-gray-400">•</span>
+            <span>
+              Updated <time dateTime={modified}>{formatUtcDate(modified)}</time>
+            </span>
+          </>
+        )}
         <InlineShareIcons url={`https://strainreport.com/articles/${slug}`} title={title} />
       </div>
 
@@ -212,7 +223,7 @@ export function AnimatedHeader({
 
       {/* Hidden metadata for AI crawlers */}
       <meta itemProp="datePublished" content={generatedAt} />
-      <meta itemProp="dateModified" content={generatedAt} />
+      <meta itemProp="dateModified" content={modified} />
       <meta itemProp="inLanguage" content="en-US" />
       <meta itemProp="author" content="The Strain Report" />
     </header>
@@ -433,6 +444,13 @@ export function TLDRSummary({ summary }: { summary: string }) {
       </div>
     </ScrollReveal>
   )
+}
+
+/** Deterministic (UTC) date label so SSR and hydration agree. */
+function formatUtcDate(date: string): string {
+  const d = new Date(date)
+  if (Number.isNaN(d.getTime())) return ''
+  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })
 }
 
 // Last Updated display

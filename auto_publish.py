@@ -480,6 +480,21 @@ def auto_publish(
 
     _log("\n✅ Auto-publish complete!")
     _log("🔄 Vercel will auto-deploy from main branch")
+
+    # Queue newly published article URLs for IndexNow; the workflow submits
+    # them once the Vercel deploy is live (indexnow.py --pending --wait-live).
+    try:
+        from indexnow import queue_pending
+        new_urls = [
+            f"https://strainreport.com/articles/{Path(f).stem}"
+            for f in status["new_articles"]
+            if f.endswith(".md") and any(Path(f).name == Path(x).name for x in staged)
+        ]
+        queue_pending(new_urls)
+        if new_urls:
+            _log(f"🔔 Queued {len(new_urls)} URL(s) for IndexNow")
+    except Exception as e:  # never fail a publish over IndexNow
+        _log(f"⚠️  IndexNow queue skipped: {e}")
     
     return True
 

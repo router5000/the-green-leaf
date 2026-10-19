@@ -4,6 +4,11 @@ import GlobeSection from '@/components/GlobeSection'
 import CTASection from '@/components/CTASection'
 import { Showcase2 } from '@/components/ui/Showcase2'
 import { getSortedPostsData, type PostData } from '@/lib/posts'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  alternates: { canonical: 'https://strainreport.com' },
+}
 
 /** Keep in sync with SHOWCASE_ITEMS in Showcase2.tsx */
 const FEATURED_SLUGS = [

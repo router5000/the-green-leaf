@@ -6,7 +6,6 @@
 User-agent: *
 Allow: /
 Disallow: /api/
-Disallow: /_next/
 Disallow: /admin/
 
 # Sitemap locations
@@ -53,7 +52,6 @@ Allow: /articles/
 # Traditional Search Engines
 User-agent: Googlebot
 Allow: /
-Crawl-delay: 0
 
 User-agent: Slurp
 Allow: /

@@ -21,6 +21,7 @@ export async function generateMetadata({ searchParams }: SearchPageProps): Promi
       index: false,
       follow: true,
     },
+    alternates: { canonical: 'https://strainreport.com/search' },
   }
 }
 

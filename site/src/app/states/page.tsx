@@ -6,7 +6,7 @@ const baseUrl = 'https://strainreport.com'
 
 export const metadata: Metadata = {
   title: 'Cannabis Laws by State - Possession Limits & Legality | The Strain Report',
-  description: 'Current cannabis laws, possession limits, home-grow rules, and legal status for all 50 US states — updated for 2025.',
+  description: 'Current cannabis laws, possession limits, home-grow rules, and legal status for all 50 US states — kept up to date.',
   openGraph: {
     title: 'Cannabis Laws by State - The Strain Report',
     description: 'Current cannabis laws, possession limits, and legal status for all 50 US states.',
