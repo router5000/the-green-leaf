@@ -31,7 +31,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from research import research, bundle_for_prompt  # noqa: E402
+from research import research, bundle_for_prompt, ask_model_json, parse_pct, ModelJSONError  # noqa: E402
 from validate_facts import validate  # noqa: E402
 
 PRIORITY_CSV = ROOT / "data" / "thin_strains_priority.csv"
@@ -146,10 +146,7 @@ RESEARCH MATERIAL:
 <<<RESEARCH
 {bundle_for_prompt(bundle)}
 RESEARCH>>>"""
-    msg = client.messages.create(model=WRITER_MODEL, max_tokens=5000, timeout=180,
-                                 messages=[{"role": "user", "content": prompt}])
-    raw = msg.content[0].text
-    return json.loads(raw[raw.find("{"): raw.rfind("}") + 1])
+    return ask_model_json(client, WRITER_MODEL, prompt, expect=dict, max_tokens=5000, timeout=180)
 
 
 def as_article(name: str, draft: dict) -> dict:
@@ -261,7 +258,7 @@ def main(argv=None) -> int:
                 continue
             thc = [f for f in bundle.get("facts", []) if f["field"] == "thc_pct"]
             if thc and not any(c["field"] == "thc_pct" for c in bundle.get("conflicts", [])):
-                vals = [float(x) for x in thc[0]["value"].split("-")]
+                vals = parse_pct(thc[0]["value"])
                 draft["thc_reported"] = (min(vals), max(vals))
                 draft.setdefault("field_sources", []).append(
                     {"field": "thc", "url": thc[0]["evidence"][0]["url"], "quote": thc[0]["evidence"][0]["quote"]})
@@ -282,6 +279,10 @@ def main(argv=None) -> int:
                 st["status"] = "passed_dry_run"
                 report["passed_dry_run"].append({"slug": slug, "projected_words": draft["projected_words"]})
                 print(f"   ✅ passed (dry run, {draft['projected_words']} words)")
+        except ModelJSONError as e:
+            st["status"] = "blocked"
+            report["blocked"].append({"slug": slug, "reasons": [f"model JSON: {e}"[:300]]})
+            print(f"   ⛔ blocked: {e}")
         except Exception as e:
             st["status"] = "error"
             report["blocked"].append({"slug": slug, "reasons": [f"error: {type(e).__name__}: {e}"[:300]]})

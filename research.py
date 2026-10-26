@@ -32,6 +32,7 @@ import requests
 
 RESEARCH_DIR = Path("research")
 MIN_CORROBORATION = 2
+FALLBACK_RESULTS = 6
 USER_AGENT = (
     "Mozilla/5.0 (compatible; StrainReportResearchBot/1.0; +https://strainreport.com)"
 )
@@ -125,16 +126,175 @@ def base_domain(url: str) -> str:
     return ".".join(parts[-2:]) if len(parts) >= 2 else host
 
 
+def _strip_tags(fragment: str) -> str:
+    fragment = re.sub(r"<(script|style|noscript|svg)[^>]*>.*?</\1>", " ", fragment, flags=re.S | re.I)
+    fragment = re.sub(r"<br\s*/?>|</p>|</li>|</h\d>|</div>|</tr>|</section>", "\n", fragment, flags=re.I)
+    text = html.unescape(re.sub(r"<[^>]+>", " ", fragment)).replace("\xa0", " ")
+    text = re.sub(r"[ \t\r\f\v]+", " ", text)
+    return re.sub(r"\n\s*\n+", "\n", text).strip()
+
+
+def _top_names(d, n: int = 6, key: str = "score") -> list[str]:
+    if not isinstance(d, dict):
+        return []
+    items = [v for v in d.values() if isinstance(v, dict) and v.get("name")]
+    items.sort(key=lambda v: v.get(key) or 0, reverse=True)
+    return [v["name"] for v in items[:n]]
+
+
+def leafly_next_data_text(raw: str) -> str:
+    """Leafly strain pages are a Next.js app: the visible HTML around the
+    description is mostly cookie/nav chrome, but __NEXT_DATA__ carries the
+    strain record. Render the relevant fields as plain sentences."""
+    m = re.search(r'<script[^>]*id="__NEXT_DATA__"[^>]*>(.*?)</script>', raw, re.S)
+    if not m:
+        return ""
+    try:
+        st = json.loads(m.group(1))["props"]["pageProps"]["strain"]
+    except Exception:
+        return ""
+    if not isinstance(st, dict) or not st.get("name"):
+        return ""
+    name = st["name"]
+    out = [name]
+    if st.get("subtitle"):
+        out.append(f"{name} ({st['subtitle']}).")
+    if st.get("category"):
+        out.append(f"{name} is a {st['category'].lower()} strain.")
+    desc = st.get("descriptionPlain") or _strip_tags(st.get("description") or "")
+    if desc:
+        out.append(desc.replace("\xa0", " "))
+    parents = [p.get("name") for p in st.get("parents") or [] if isinstance(p, dict) and p.get("name")]
+    if len(parents) == 2:
+        out.append(f"{name} parents: {parents[0]} x {parents[1]}.")
+    thc = ((st.get("cannabinoids") or {}).get("thc") or {}).get("percentile50")
+    if thc:
+        out.append(f"{name} THC: {float(thc):g}%.")
+    for label, key in (("Top terpenes", "terps"), ("Reported effects", "effects"), ("Flavors", "flavors")):
+        names = _top_names(st.get(key), 3 if key == "flavors" else 6)
+        if names:
+            out.append(f"{label} of {name}: {', '.join(names)}.")
+    return "\n".join(out)
+
+
+def jsonld_text(raw: str) -> str:
+    """Pull descriptive prose (description/articleBody/FAQ answers) from JSON-LD."""
+    out: list[str] = []
+
+    def walk(o):
+        if isinstance(o, dict):
+            for k, v in o.items():
+                if k in ("description", "articleBody", "text") and isinstance(v, str) and len(v) > 40:
+                    t = _strip_tags(v)
+                    if t not in out:
+                        out.append(t)
+                elif k == "name" and o.get("@type") == "Question" and isinstance(v, str):
+                    out.append(v)
+                else:
+                    walk(v)
+        elif isinstance(o, list):
+            for x in o:
+                walk(x)
+
+    for blk in re.findall(r'<script[^>]*application/ld\+json[^>]*>(.*?)</script>', raw, re.S | re.I):
+        try:
+            walk(json.loads(blk))
+        except Exception:
+            continue
+    return "\n".join(out)
+
+
+_CHROME_TAGS = ("header", "nav", "footer", "aside", "form", "dialog", "button", "select")
+_CHROME_ATTR = re.compile(r"cookie|consent|gdpr|onetrust|banner|navbar|nav-|menu|footer|header|modal|"
+                          r"newsletter|age-gate|agegate|breadcrumb|sidebar|popup", re.I)
+
+
+def _drop_chrome(raw: str) -> str:
+    raw = re.sub(r"<(script|style|noscript|svg|template|iframe)[^>]*>.*?</\1>", " ", raw, flags=re.S | re.I)
+    raw = re.sub(r"<!--.*?-->", " ", raw, flags=re.S)
+    for tag in _CHROME_TAGS:
+        raw = re.sub(rf"<{tag}\b[^>]*>.*?</{tag}>", " ", raw, flags=re.S | re.I)
+    # Elements whose id/class marks them as chrome (innermost first, a few passes).
+    rx = re.compile(r"<(div|section|ul|p|span)\b([^>]*)>((?:(?!<\1\b).)*?)</\1>", re.S | re.I)
+    for _ in range(4):
+        new = rx.sub(lambda m: " " if re.search(r'(?:id|class)\s*=\s*"[^"]*(' + _CHROME_ATTR.pattern + r')',
+                                                 m.group(2), re.I) else m.group(0), raw)
+        if new == raw:
+            break
+        raw = new
+    return raw
+
+
+def main_content_text(raw: str) -> str:
+    """Readability-lite: drop chrome, prefer <article>/<main>, keep paragraph-ish lines."""
+    body = _drop_chrome(raw)
+    for tag in ("article", "main"):
+        blocks = re.findall(rf"<{tag}\b[^>]*>(.*?)</{tag}>", body, re.S | re.I)
+        if blocks:
+            body = max(blocks, key=len)
+            break
+    lines = [ln.strip() for ln in _strip_tags(body).split("\n")]
+    return "\n".join(ln for ln in lines if ln and not _BOILER_LINE.search(ln))
+
+
+_BOILER_LINE = re.compile(r"\b(accept (all )?cookies|cookie (policy|settings|preferences)|we use cookies|"
+                          r"privacy policy|terms of (use|service)|sign in|log in|subscribe|all rights reserved|"
+                          r"are you 21|21\+|skip to (main )?content)\b", re.I)
+
+
 def html_to_text(raw: str) -> tuple[str, str]:
     title_m = re.search(r"<title[^>]*>(.*?)</title>", raw, re.S | re.I)
     title = html.unescape(title_m.group(1).strip()) if title_m else ""
-    raw = re.sub(r"<(script|style|noscript|svg)[^>]*>.*?</\1>", " ", raw, flags=re.S | re.I)
-    raw = re.sub(r"<br\s*/?>|</p>|</li>|</h\d>|</div>", "\n", raw, flags=re.I)
-    text = re.sub(r"<[^>]+>", " ", raw)
-    text = html.unescape(text)
-    text = re.sub(r"[ \t\r\f\v]+", " ", text)
-    text = re.sub(r"\n\s*\n+", "\n", text)
+    parts = [p for p in (leafly_next_data_text(raw), jsonld_text(raw), main_content_text(raw)) if p]
+    text = "\n".join(dict.fromkeys(parts))
     return title, text.strip()[:MAX_TEXT_CHARS]
+
+
+def _subject_rx(subject: str) -> re.Pattern:
+    toks = [re.escape(t.rstrip("s")) for t in re.findall(r"[a-z0-9#]+", subject.lower())]
+    return re.compile(r"\b" + r"[\s\-]*".join(t + "s?" for t in toks) + r"\b", re.I)
+
+
+def mentions_subject(text: str, subject: str) -> bool:
+    """Case/plural/hyphen tolerant: 'Wedding Crashers' matches 'Wedding Crasher'."""
+    return bool(subject.strip()) and bool(_subject_rx(subject).search(text or ""))
+
+
+def parse_pct(value) -> list[float]:
+    """Parse a reported percentage like '25%', '18-22%', '18 – 22 %', '~20', '20.5 percent'
+    into 1-2 floats. Raises ValueError when no number is present."""
+    nums = re.findall(r"\d+(?:\.\d+)?", str(value))
+    if not nums:
+        raise ValueError(f"no number in {value!r}")
+    vals = [float(n) for n in nums[:2]]
+    if any(v > 100 for v in vals):
+        raise ValueError(f"not a percentage: {value!r}")
+    return vals
+
+
+def norm_pct(value) -> str:
+    vals = parse_pct(value)
+    return f"{vals[0]:g}" if len(vals) == 1 or vals[0] == vals[1] else f"{min(vals):g}-{max(vals):g}"
+
+
+MIN_CONTENT_WORDS = 80
+_COOKIE_WORDS = re.compile(r"cookie|consent|privacy|accept|preferences|sign in|log in|menu|subscribe", re.I)
+
+
+def boilerplate_reason(text: str, subject: str = "") -> str:
+    """Return why a page's text is unusable as a source ('' if it is fine).
+    Pages that are only cookie banners/navigation must not reach the writer:
+    the verifier would (correctly) reject every claim citing them."""
+    words_ = re.findall(r"[A-Za-z][\w'-]*", text or "")
+    if len(words_) < MIN_CONTENT_WORDS:
+        return f"too short ({len(words_)} words)"
+    lines = [ln for ln in (text or "").split("\n") if ln.strip()]
+    prose = [ln for ln in lines if len(ln.split()) >= 8 and not _COOKIE_WORDS.search(ln)]
+    if sum(len(ln.split()) for ln in prose) < MIN_CONTENT_WORDS // 2:
+        return "boilerplate only (no prose paragraphs)"
+    if subject and not mentions_subject(text, subject):
+        return "does not mention subject"
+    return ""
 
 
 Fetcher = Callable[[str], tuple[int, str]]
@@ -237,6 +397,54 @@ def pubmed_search(query: str, limit: int = 3, fetcher: Fetcher = http_fetch) -> 
     return [f"https://pubmed.ncbi.nlm.nih.gov/{i}/" for i in ids]
 
 
+# ── model JSON handling ──────────────────────────────────────────────────────
+
+class ModelJSONError(ValueError):
+    """A model response could not be parsed as the JSON we asked for."""
+
+
+def parse_model_json(raw: str, expect: type = dict):
+    """Parse JSON from a model reply: prefers a ```json fenced block, otherwise
+    the first balanced {...} / [...] value (string-aware). Raises ModelJSONError."""
+    raw = raw or ""
+    opener = "{" if expect is dict else "["
+    candidates = re.findall(r"```(?:json)?\s*(.*?)```", raw, re.S | re.I) + [raw]
+    last_err = "no JSON value found"
+    for cand in candidates:
+        dec = json.JSONDecoder()
+        i = cand.find(opener)
+        while i >= 0:
+            try:
+                val, _ = dec.raw_decode(cand, i)
+                if isinstance(val, expect):
+                    return val
+            except json.JSONDecodeError as e:
+                last_err = f"{e.msg} (line {e.lineno} col {e.colno})"
+            i = cand.find(opener, i + 1)
+    raise ModelJSONError(f"model returned invalid JSON: {last_err}")
+
+
+def ask_model_json(client, model: str, prompt: str, *, expect: type = dict, max_tokens: int = 2000,
+                   timeout: int = 120, retries: int = 1):
+    """Call the model and parse its JSON reply; on a parse failure retry once,
+    showing the model its error and asking for valid JSON only."""
+    messages = [{"role": "user", "content": prompt}]
+    for attempt in range(retries + 1):
+        msg = client.messages.create(model=model, max_tokens=max_tokens, timeout=timeout, messages=messages)
+        raw = msg.content[0].text
+        try:
+            return parse_model_json(raw, expect)
+        except ModelJSONError as e:
+            if attempt >= retries:
+                raise
+            kind = "object" if expect is dict else "array"
+            messages = messages[:1] + [
+                {"role": "assistant", "content": raw},
+                {"role": "user", "content": f"That reply was not valid JSON ({e}). Return the same content as "
+                                            f"ONE valid JSON {kind} only: no prose, no code fences, escape "
+                                            "double quotes inside strings."}]
+
+
 # ── candidate source lists ───────────────────────────────────────────────────
 
 def strain_candidate_urls(name: str, search: Callable[[str], list[str]] = web_search) -> list[tuple[str, str]]:
@@ -307,7 +515,7 @@ def extract_facts(src: Source, subject: str) -> list[Fact]:
     low = text.lower()
 
     for m in THC_RE.finditer(text):
-        if src.kind in ("strain_db", "breeder", "award") and subj not in low[max(0, m.start() - 200): m.end() + 40]:
+        if src.kind in ("strain_db", "breeder", "award", "search") and subj not in low[max(0, m.start() - 200): m.end() + 40]:
             continue
         lo = m.group(1)
         hi = m.group(2)
@@ -376,11 +584,7 @@ def llm_extract_facts(src: Source, subject: str, client=None) -> list[Fact]:
         f"URL: {src.url}\nTEXT:\n{src.text[:20000]}"
     )
     try:
-        msg = client.messages.create(model=EXTRACT_MODEL, max_tokens=2000, timeout=90,
-                                     messages=[{"role": "user", "content": prompt}])
-        raw = msg.content[0].text
-        raw = raw[raw.find("["): raw.rfind("]") + 1]
-        items = json.loads(raw) if raw else []
+        items = ask_model_json(client, EXTRACT_MODEL, prompt, expect=list, max_tokens=2000, timeout=90)
     except Exception as e:
         print(f"   research: llm extraction failed for {src.url}: {type(e).__name__}")
         return []
@@ -390,6 +594,11 @@ def llm_extract_facts(src: Source, subject: str, client=None) -> list[Fact]:
         if not isinstance(it, dict):
             continue
         q, fld, val = str(it.get("quote", "")), str(it.get("field", "")), str(it.get("value", ""))
+        if fld == "thc_pct":
+            try:
+                val = norm_pct(val)
+            except ValueError:
+                continue
         if fld in LLM_FIELDS and q and val and _ws(q) in hay:
             out.append(Fact(fld, _ws(val), q.strip(), src.url, src.domain))
     return out
@@ -397,8 +606,8 @@ def llm_extract_facts(src: Source, subject: str, client=None) -> list[Fact]:
 
 def _thc_overlaps(a: str, b: str, tol: float = 1.0) -> bool:
     def rng(v):
-        p = [float(x) for x in v.split("-")]
-        return (p[0], p[-1])
+        p = parse_pct(v)
+        return (min(p), max(p))
     (a1, a2), (b1, b2) = rng(a), rng(b)
     return a1 - tol <= b2 and b1 - tol <= a2
 
@@ -468,17 +677,45 @@ def research(subject: str, kind: str = "auto", fetcher: Fetcher = http_fetch,
 
     sources: list[Source] = []
     got_allbud = False
+    seen = {u for u, _ in candidates}
+
+    def fetch_one(url: str, k: str) -> Source:
+        s = fetch_source(url, k, fetcher)
+        # Soft-404s: a strain DB page must be about this strain.
+        if k == "strain_db" and s.status == 200 and not mentions_subject(s.title, subj):
+            s.status, s.error = 0, "title does not mention subject (soft 404)"
+        # Cookie-banner / nav-only pages are dropped, never passed to the writer.
+        if s.status == 200:
+            why = boilerplate_reason(s.text, subj if kind == "strain" else "")
+            if why:
+                s.status, s.error = 0, f"unusable page text: {why}"
+                print(f"   research: dropped {url}: {why}")
+        time.sleep(polite_delay)
+        return s
+
     for url, k in candidates:
         if "allbud.com" in url and got_allbud:
             continue
-        s = fetch_source(url, k, fetcher)
-        # Soft-404s: a strain DB page must be about this strain.
-        if k == "strain_db" and s.status == 200 and subj.lower() not in s.title.lower():
-            s.status, s.error = 0, "title does not mention subject (soft 404)"
+        s = fetch_one(url, k)
         if "allbud.com" in url and s.status == 200:
             got_allbud = True
         sources.append(s)
-        time.sleep(polite_delay)
+
+    # Fallback: if too few usable sources (or too few distinct domains for the
+    # 2-source agreement rule), pull more results from search (Brave et al.).
+    def usable_domains():
+        return {s.domain for s in sources if s.status == 200 and s.text}
+    if len(usable_domains()) < MIN_CORROBORATION + 1:
+        queries = ([f'"{strain_name}" strain', f'"{strain_name}" strain THC lineage review']
+                   if kind == "strain" else [subject])
+        for q in queries:
+            for u in search(q)[:FALLBACK_RESULTS]:
+                if u in seen or base_domain(u) in usable_domains() or not u.startswith("http"):
+                    continue
+                seen.add(u)
+                sources.append(fetch_one(u, "search"))
+            if len(usable_domains()) >= MIN_CORROBORATION + 1:
+                break
 
     all_facts: list[Fact] = []
     for s in sources:
