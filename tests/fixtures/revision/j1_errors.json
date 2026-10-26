@@ -1,0 +1,5 @@
+[
+  {"rule": "unsupported", "detail": "model: not supported by https://www.leafly.com/strains/j1 (Source describes J1 as a 'hybrid strain,' not 'sativa-dominant')", "claim": "J1 is a sativa-dominant hybrid with an energetic reputation."},
+  {"rule": "unsupported", "detail": "no source snippet supports this numeric claim (body)", "claim": "J1 takes 9 weeks to flower[[1]](#user-content-fn-1)."},
+  {"rule": "citations", "detail": "cited URL returned 404: https://x.example/a", "claim": ""}
+]
