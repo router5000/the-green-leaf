@@ -3,6 +3,10 @@
 Article Quality Assurance System
 Multi-dimensional evaluation, auto-refinement, and feedback logging
 Ensures articles are optimized for both search engines and LLM crawlers
+
+NOTE: the QA score is advisory (style/readability). It does NOT gate publishing;
+the blocking gate is scripts/validate_facts.py. The refine step must not add or
+change facts or sources.
 """
 
 import os
@@ -236,41 +240,18 @@ Rewrite the article to address ALL issues above while maintaining the original v
 
 **CRITICAL REQUIREMENTS:**
 
-1. **Clickable Citations Throughout Text**:
-   - Add CLICKABLE numbered citations that link to Sources section
-   - Format: "This is a fact[[1]](#user-content-fn-1)."
-   - Multiple citations: "Combined facts[[1]](#user-content-fn-1)[[2]](#user-content-fn-2)."
-   - Place citations at END of sentences, before the period
-   - Use 8-12 citations distributed naturally across sections
+1. **Facts and citations are FROZEN**:
+   - Do NOT add, remove, or change any factual claim, number, percentage, year,
+     award, lineage, or source. Facts come only from the research step and are
+     verified afterwards by scripts/validate_facts.py (the publish gate).
+   - Keep every existing numbered citation ([[n]](#user-content-fn-n)) and the
+     existing "## Sources" section exactly as they are. Never add homepage-only
+     sources and never invent new URLs.
+   - If a section is weak because it lacks facts, improve wording and structure
+     only; do not fill gaps from your own knowledge.
 
-2. **Diverse Sources Section with Anchor IDs**: Add "## Sources" at bottom with 4-6 DIVERSE credible references:
-   - At least 1 peer-reviewed or science source (PubMed/NCBI, Journal of Cannabis Research, NIH)
-   - At least 1 cannabis industry/consumer data source (Leafly, Weedmaps, Cannabis Business Times)
-   - At least 1 education/advocacy source (Project CBD, NORML, American Cannabis Nurses Association)
-   - At least 1 additional credible source relevant to the topic (lab testing orgs, state cannabis boards, etc.)
-   - Each source MUST have an anchor ID matching the citation links
-   - Format with anchor IDs:
-     ```
-     <a id="user-content-fn-1"></a>
-     1. [Organization Name](https://example.org) - Specific resource description
-     ```
-   - Use main domain URLs only (e.g., https://www.projectcbd.org) NOT deep links
-   - Example:
-     ## Sources
-
-     <a id="user-content-fn-1"></a>
-     1. [Leafly](https://www.leafly.com) - Cannabis strain database and consumer effects data
-
-     <a id="user-content-fn-2"></a>
-     2. [Project CBD](https://www.projectcbd.org) - Cannabinoid and terpene science research
-
-     <a id="user-content-fn-3"></a>
-     3. [National Institutes of Health](https://www.nih.gov) - Cannabis and cannabinoid clinical research
-
-     <a id="user-content-fn-4"></a>
-     4. [Journal of Cannabis Research](https://jcannabisresearch.biomedcentral.com) - Peer-reviewed cannabis studies
-   - IMPORTANT: Choose sources specifically relevant to this article's topic
-   - DO NOT reuse the same 4 sources every time - vary by topic
+2. **No medical claims**: remove any wording that says cannabis treats, cures,
+   or relieves a condition.
 
 3. **SEO Optimization**:
    - Include keyword in first 100 words

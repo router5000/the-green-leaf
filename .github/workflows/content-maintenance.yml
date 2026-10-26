@@ -1,0 +1,123 @@
+name: Content Maintenance (fact re-check, strain enrichment, weekly digest)
+
+on:
+  # Sundays 12:00 UTC (8am EDT / 7am EST), after the Mon/Wed content runs.
+  schedule:
+    - cron: '0 12 * * 0'
+  workflow_dispatch:
+    inputs:
+      recheck_limit:
+        description: 'Articles to re-check this run'
+        required: false
+        default: '15'
+      strain_count:
+        description: 'Thin strains to enrich this run'
+        required: false
+        default: '5'
+      apply_strains:
+        description: 'Write passing strain drafts to Supabase'
+        required: false
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+  actions: read   # download artifacts from recent content runs for the digest
+
+concurrency:
+  group: content-maintenance
+  cancel-in-progress: false
+
+jobs:
+  maintenance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Queue + rotation state persist between runs via the Actions cache
+      # (nothing is committed to main by this workflow).
+      - name: Restore maintenance state
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            content_fix_queue.json
+            data/recheck_state.json
+            data/strain_enrichment_state.json
+          key: content-maint-state-${{ github.run_id }}
+          restore-keys: content-maint-state-
+
+      - name: Download recent content-run reports
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p .logs/prev
+          since=$(date -u -d '8 days ago' +%Y-%m-%dT%H:%M:%SZ)
+          for id in $(gh run list --workflow weekly-content.yml --limit 10 \
+                        --json databaseId,createdAt --jq ".[] | select(.createdAt > \"$since\") | .databaseId"); do
+            gh run download "$id" -n pipeline-logs -D ".logs/prev/$id" || true
+          done
+
+      - name: Enrich thin strains from verified research
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          BRAVE_SEARCH_API_KEY: ${{ secrets.BRAVE_SEARCH_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+          APPLY: ${{ github.event_name == 'schedule' || github.event.inputs.apply_strains == 'true' }}
+          COUNT: ${{ github.event.inputs.strain_count || '5' }}
+        run: |
+          args="--count $COUNT"
+          if [ "$APPLY" = "true" ] && [ -n "$SUPABASE_URL" ] && [ -n "$SUPABASE_SECRET_KEY" ]; then
+            args="$args --apply"
+          else
+            echo "Supabase secrets missing or apply disabled — dry run only."
+          fi
+          python scripts/enrich_strains.py $args
+        continue-on-error: true
+
+      - name: Re-check published articles and strains
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+        run: python scripts/recheck_content.py --limit "${{ github.event.inputs.recheck_limit || '15' }}"
+        continue-on-error: true
+
+      - name: Weekly digest (exceptions only)
+        env:
+          NOTIFICATION_WEBHOOK_URL: ${{ secrets.NOTIFICATION_WEBHOOK_URL }}
+        run: python scripts/weekly_digest.py --days 7
+
+      - name: Save maintenance state
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            content_fix_queue.json
+            data/recheck_state.json
+            data/strain_enrichment_state.json
+          key: content-maint-state-${{ github.run_id }}
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: maintenance-reports
+          path: |
+            .logs/
+            content_fix_queue.json
+            data/strain_enrichment/
+            research/
+          retention-days: 60
+          if-no-files-found: ignore

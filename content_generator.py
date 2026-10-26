@@ -33,6 +33,10 @@ from seo_validator import (
 from rate_limiter import wait_for_claude, wait_for_runware
 from regenerate_images import IMAGE_SIZES, IMAGE_MODEL  # Central source of truth for image settings
 from cost_tracker import CostTracker, set_tracker, get_tracker, clear_tracker
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parent / "scripts"))
+from research import bundle_for_prompt, load_bundle  # noqa: E402
+from validate_facts import validate as validate_facts  # noqa: E402
 
 # Load environment variables from .env file
 load_dotenv()
@@ -1299,8 +1303,17 @@ def check_for_duplicate(keyword: str, threshold: float = 0.7):
     return None
 
 
-def generate_article(keyword: str, word_count: int = 900, enable_qa: bool = True, skip_duplicate_check: bool = False) -> dict:
-    """Generate a complete article with structured content and section for mid-article image"""
+def generate_article(keyword: str, word_count: int = 900, enable_qa: bool = True, skip_duplicate_check: bool = False,
+                     research_bundle: dict | None = None) -> dict:
+    """Generate a complete article ONLY from a research bundle (see research.py).
+
+    The model is given the fetched source texts and corroborated facts and must
+    not use outside knowledge. After generation the article goes through
+    scripts/validate_facts.py; on failure it is revised once from the error
+    list, then re-validated. `article["fact_check_passed"]` is the publish gate.
+    """
+    if not research_bundle or not research_bundle.get("sources"):
+        raise ValueError("No research bundle with fetched sources — refusing to write from model memory")
 
     # Check for duplicates before generating
     if not skip_duplicate_check:
@@ -1376,30 +1389,31 @@ COMPARISON TABLE (REQUIRED for this topic):
 
     strain_profile_instruction = """
 STRAIN PROFILE REQUIREMENTS (this is a named strain article):
-- Include a quick-reference strain card in this format near the top (after Quick Answer):
-  **Strain Overview**
-  | Attribute | Details |
-  |-----------|---------|
-  | Type | Indica / Sativa / Hybrid (and approximate split if known) |
-  | THC Range | XX–XX% (typical range) |
-  | CBD Range | <1% (or actual range) |
-  | Top Terpenes | Myrcene, Caryophyllene, Limonene (list top 3) |
-  | Lineage | Parent strains |
-  | Best For | Top 3 use cases |
-- Discuss: origin and genetics, appearance (bud structure, colors, trichomes), aroma and flavor profile, effects (onset, duration, intensity), medical uses, potential side effects, similar strains
-- Be specific with percentages and terpene data where known — readers want the numbers
+- Include a short "Strain Overview" table ONLY with rows you can fill from VERIFIED FACTS
+  (Type, Reported THC, Top Terpenes, Lineage). Omit any row you cannot source.
+- THC: write it only as "reported X%" or "reported X–Y%" naming the source
+  (e.g. "Leafly lists a reported 18% THC[[1]](#user-content-fn-1)"). Never estimate a range.
+- Lineage and awards: only if they appear in VERIFIED FACTS. If sources disagree
+  (see CONFLICTS), say so and cite both; never pick a side.
+- Discuss origin, aroma/flavor and commonly reported effects as reported by sources.
+  Never describe medical uses, symptoms, or conditions.
 """ if is_strain_profile else ""
 
     roundup_instruction = """
 ROUNDUP/BEST-OF REQUIREMENTS (this is a strain recommendation article):
-- Include a comparison table of the top 5-8 recommended strains:
-  | Strain | Type | THC% | Best For | Key Terpene |
-  |--------|------|------|----------|-------------|
-  | Blue Dream | Hybrid | 17–24% | Creativity, focus | Myrcene |
-- For each strain in the list, provide: type, THC range, top terpenes, why it fits the use case
-- Rank them in a logical order (most recommended first, or by intensity/use case)
-- Be specific — readers are choosing a product and need real data to decide
+- Include a comparison table (Strain | Type | Reported THC | Key Terpene) ONLY for
+  strains and values present in the source texts, each row cited.
+- Leave a cell as "—" rather than guessing a value.
 """ if is_roundup else ""
+
+    law_instruction = """
+LAW/LEGALITY REQUIREMENTS:
+- Every legal statement must cite an official .gov page from the source texts.
+- Add a line "Last checked: {today}" directly above the Sources section.
+- Do not give legal advice; describe what the official source says.
+""".replace("{today}", datetime.now().strftime("%Y-%m-%d")) if research_bundle.get("kind") == "law" else ""
+
+    research_material = bundle_for_prompt(research_bundle)
 
     prompt = f"""You are an expert cannabis strain and education writer for The Strain Report, a trusted cannabis information site focused on strain discovery, effects, terpenes, and helping consumers make informed choices.
 
@@ -1413,10 +1427,11 @@ Requirements:
 - Start with a "Quick Answer" section (2-3 sentences directly answering the question)
 - Include 3-5 "Key Takeaways" bullet points after the quick answer
 - Structure with clear H2 and H3 headings
-- Include specific, accurate data: THC/CBD percentages, terpene names, strain lineages
+- Use ONLY facts found in the RESEARCH MATERIAL below. If a detail is not there, leave it out.
+- Do not invent or estimate numbers, percentages, years, awards, or lineages
 - Write for cannabis consumers, patients, and curious beginners — not cultivators
 - IMPORTANT: Use proper markdown list syntax with hyphens (-), NOT bullet characters (•)
-- Do NOT make medical claims or recommend cannabis as a treatment for any condition
+- Do NOT make medical claims: no 'treats', 'cures', 'relieves pain/anxiety', 'helps with insomnia', 'therapeutic', 'patients'
 - Do NOT include cultivation, growing, or harvest advice
 - Do NOT put a year (e.g. 2024, 2025, 2026) in the title, H1, meta_description, or slug, even if the keyword contains one; keep titles evergreen. Only mention a year in the body when the fact is genuinely year-specific
 
@@ -1433,48 +1448,29 @@ Article Structure (IMPORTANT):
 4. Introduction paragraph
 5. Main content with 3-4 H2 sections (USE QUESTION FORMAT for headings)
 6. Conclusion with recommendation or next step for the reader
-7. Sources section (REQUIRED) — "## Sources" with 4-6 authoritative references
+7. Sources section (REQUIRED) — "## Sources" listing the research-set pages you cited
 
 NOTE: Do NOT include a "## Frequently Asked Questions" section — FAQs go in the JSON output field.
-{strain_profile_instruction}{roundup_instruction}{comparison_instruction}
+{strain_profile_instruction}{roundup_instruction}{comparison_instruction}{law_instruction}
 
 CRITICAL SOURCE REQUIREMENTS:
 
-1. Cite 4-6 DIVERSE, topic-specific credible sources:
-   - At least 1 peer-reviewed research source (PubMed, NCBI, Journal of Cannabis Research, Frontiers in Pharmacology)
-   - At least 1 cannabis industry or consumer data source (Leafly, Weedmaps, Cannabis Business Times, Headset data)
-   - At least 1 science or education source (Project CBD, NORML, American Cannabis Nurses Association, NIH)
-   - Additional sources relevant to the specific topic (terpene research, strain databases, etc.)
-
-2. Use CLICKABLE NUMBERED CITATIONS throughout the article text:
-   - Format: "This is a fact[[1]](#user-content-fn-1)."
-   - Place at the END of sentences, before the period
-   - Aim for 8-12 citations distributed naturally across the article
-
-3. End with "## Sources" section using anchor IDs:
-   ```
+1. Every factual sentence (numbers, years, awards, lineage, laws, study findings)
+   must end with a numbered citation: "This is a fact[[1]](#user-content-fn-1)."
+2. Cite ONLY the exact full page URLs listed under SOURCE TEXTS below. Never cite
+   a homepage, never cite a URL that is not in the list, never invent a URL.
+3. End with "## Sources" using anchor IDs, one entry per cited URL:
    <a id="user-content-fn-1"></a>
-   1. [Organization Name](https://example.org) - Specific resource description
-   ```
+   1. [Page title](exact URL from SOURCE TEXTS) - what it supports
+4. The FAQs, key_stat and tldr fields follow the same rule: only facts from the
+   research material, THC only as "reported", no medical claims.
+5. If the research material is too thin for a section, write a shorter article.
+   Accuracy beats length.
 
-Example Sources for strain/terpene topics:
-## Sources
-<a id="user-content-fn-1"></a>
-1. [Leafly](https://www.leafly.com) - Cannabis strain database and consumer effects data
-<a id="user-content-fn-2"></a>
-2. [Project CBD](https://www.projectcbd.org) - Cannabinoid and terpene science research
-<a id="user-content-fn-3"></a>
-3. [National Institutes of Health](https://www.nih.gov) - Cannabis and cannabinoid clinical research
-<a id="user-content-fn-4"></a>
-4. [Journal of Cannabis Research](https://jcannabisresearch.biomedcentral.com) - Peer-reviewed cannabis science
-<a id="user-content-fn-5"></a>
-5. [NORML](https://norml.org) - Cannabis consumer research and policy data
-
-IMPORTANT:
-- Use main domain URLs (e.g., https://www.leafly.com) NOT deep links that may 404
-- VARY sources by topic — terpene articles → terpene research; strain profiles → strain databases
-- DO NOT use inline citation links like "[Leafly](url) says..." — only numbered citations [1]
-- Choose sources genuinely relevant to the specific topic
+RESEARCH MATERIAL (the ONLY permitted source of facts):
+<<<RESEARCH
+{research_material}
+RESEARCH>>>
 
 Return the section title you recommend for the mid-article image in the JSON.
 
@@ -1493,8 +1489,8 @@ Output format (JSON):
         {{"question": "Third question users ask?", "answer": "Helpful response."}},
         {{"question": "Fourth question?", "answer": "Concise answer."}}
     ],
-    "key_stat": "Single most quotable statistic with specifics (e.g., 'Blue Dream typically tests at 17-24% THC with myrcene as its dominant terpene, accounting for its balanced cerebral and body effects.')",
-    "tldr": "One sentence summary of the article (e.g., 'Blue Dream is a sativa-dominant hybrid with 17-24% THC that delivers a balanced euphoric head high with gentle body relaxation, making it ideal for daytime use.')"
+    "key_stat": "Single most quotable fact taken from VERIFIED FACTS (THC only as 'reported X% per <source>')",
+    "tldr": "One sentence summary using only facts from the research material"
 }}
 
 Return ONLY valid JSON, no other text. All string values — especially "content" — must be valid JSON strings: escape any double quotes and newlines inside them so the entire response parses with a strict JSON parser."""
@@ -1727,6 +1723,11 @@ Return ONLY valid JSON, no other text. All string values — especially "content
         article_data["seo_validated"] = False
 
     # ============================================
+    # FACT GATE (blocking, runs after every content-mutating step): validate, revise once, re-validate
+    # ============================================
+    article_data = fact_gate(article_data, research_bundle)
+
+    # ============================================
     # YOUTUBE VIDEO SEARCH
     # ============================================
     print("\n📺 Searching for relevant YouTube videos...")
@@ -1776,9 +1777,86 @@ Return ONLY valid JSON, no other text. All string values — especially "content
     return article_data
 
 
+FACT_REVISE_MODEL = "claude-sonnet-4-6"
+
+
+def revise_for_facts(article_data: dict, research_bundle: dict, errors: list) -> dict:
+    """One revision pass: fix or delete every flagged sentence using only the
+    research material. Returns the updated article_data (content/faqs/key_stat/tldr)."""
+    issues = "\n".join(f"- [{e['rule']}] {e['detail']}" + (f" :: {e['claim']}" if e.get('claim') else "")
+                        for e in errors)
+    payload = {k: article_data.get(k) for k in ("title", "meta_description", "content", "faqs", "key_stat", "tldr")}
+    prompt = f"""The article below failed automated fact verification. Fix EVERY issue listed.
+For each flagged sentence either (a) rewrite it so it is directly supported by the research material and cited
+with an exact URL from SOURCE TEXTS, or (b) delete it. Do not add new facts. THC only as "reported X%" with a
+citation. Remove medical-claim language. Remove citations to homepages or URLs not in the research set.
+
+ISSUES:
+{issues}
+
+RESEARCH MATERIAL:
+<<<RESEARCH
+{bundle_for_prompt(research_bundle)}
+RESEARCH>>>
+
+ARTICLE JSON:
+{json.dumps(payload, ensure_ascii=False)}
+
+Return ONLY the corrected ARTICLE JSON with the same keys."""
+    wait_for_claude()
+    msg = client.messages.create(model=FACT_REVISE_MODEL, max_tokens=6000, timeout=CLAUDE_CALL_TIMEOUT * 2,
+                                 messages=[{"role": "user", "content": prompt}])
+    raw = msg.content[0].text
+    try:
+        fixed = json.loads(raw[raw.find("{"): raw.rfind("}") + 1])
+    except Exception:
+        from json_repair import repair_json
+        fixed = json.loads(repair_json(raw))
+    for k in payload:
+        if k in fixed and fixed[k]:
+            article_data[k] = fixed[k]
+    return article_data
+
+
+def fact_gate(article_data: dict, research_bundle: dict) -> dict:
+    """Run scripts/validate_facts.py; on failure revise once and re-check.
+    Sets fact_check_passed / fact_check / fact_check_revised on article_data."""
+    print("\n🔎 Fact verification (blocking gate)...")
+    result = validate_facts(article_data, research_bundle)
+    article_data["fact_check_revised"] = False
+    first_errors = result.errors
+    if not result.passed:
+        print(f"   ⚠️  {len(result.errors)} fact issue(s) — revising once")
+        for e in result.errors[:10]:
+            print(f"      • [{e['rule']}] {e['detail']}")
+        try:
+            article_data = revise_for_facts(article_data, research_bundle, result.errors)
+            article_data["fact_check_revised"] = True
+            result = validate_facts(article_data, research_bundle)
+        except Exception as e:
+            print(f"   ❌ Revision failed: {e}")
+    article_data["fact_check_passed"] = result.passed
+    article_data["fact_check"] = result.to_dict()
+    article_data["fact_check_initial_errors"] = first_errors
+    if result.passed:
+        print(f"   ✅ Fact gate passed ({result.claims_checked} claims, {result.urls_checked} URLs)"
+              + (" after one revision" if article_data["fact_check_revised"] else ""))
+    else:
+        print(f"   ⛔ Fact gate FAILED ({len(result.errors)} issues) — will not publish")
+    if research_bundle.get("kind") == "law":
+        article_data["last_checked"] = datetime.now().strftime("%Y-%m-%d")
+    return article_data
+
+
 def save_to_notion_format(article: dict, output_dir: str = "drafts"):
     """Save article in a format ready for review"""
     Path(output_dir).mkdir(exist_ok=True)
+
+    # Articles that failed the fact gate never land in drafts/ (which
+    # auto_publish promotes); they go to drafts/blocked/ for the weekly report.
+    if not article.get("fact_check_passed"):
+        output_dir = str(Path(output_dir) / "blocked")
+        Path(output_dir).mkdir(parents=True, exist_ok=True)
 
     # Create markdown file with frontmatter
     filename = f"{article['slug']}.md"
@@ -1839,6 +1917,14 @@ def save_to_notion_format(article: dict, output_dir: str = "drafts"):
         frontmatter_dict['qa_score'] = article['qa_evaluation']['scores']['overall']
         frontmatter_dict['qa_passed'] = article.get('qa_passed', False)
         frontmatter_dict['refinement_rounds'] = article.get('refinement_rounds', 0)
+
+    # Fact-gate metadata (auto_publish requires fact_check_passed: true)
+    frontmatter_dict['fact_check_passed'] = bool(article.get('fact_check_passed'))
+    frontmatter_dict['fact_checked_at'] = datetime.now().isoformat(timespec='seconds')
+    if article.get('last_checked'):
+        frontmatter_dict['last_checked'] = article['last_checked']
+    if article.get('research_path'):
+        frontmatter_dict['research_path'] = article['research_path']
 
     # Format frontmatter
     frontmatter = "---\n"
@@ -1922,7 +2008,10 @@ def generate_content_batch(count: int = 3, enable_qa: bool = True):
     for i, keyword in enumerate(keywords, 1):
         print(f"[{i}/{count}] Generating article for: {keyword}")
         try:
-            article = generate_article(keyword, enable_qa=enable_qa)
+            from research import research as _research, save_bundle as _save_bundle
+            _b = _research(keyword)
+            _save_bundle(_b)
+            article = generate_article(keyword, enable_qa=enable_qa, research_bundle=json.loads(_b.to_json()))
             save_to_notion_format(article)
             save_article_json(article)
             articles.append(article)
@@ -1970,6 +2059,7 @@ if __name__ == "__main__":
     parser.add_argument("--no-qa", action="store_true", help="Disable QA pipeline (faster, lower cost)")
     parser.add_argument("--force", action="store_true", help="Skip duplicate check and force generation")
     parser.add_argument("--publish", action="store_true", help="Auto-publish after generation (promote draft, commit, push)")
+    parser.add_argument("--research", type=str, help="Path to research/<slug>.json bundle (required with --keyword)")
 
     args = parser.parse_args()
 
@@ -1978,7 +2068,12 @@ if __name__ == "__main__":
 
     if args.keyword:
         print(f"Generating article for: {args.keyword}")
-        article = generate_article(args.keyword, enable_qa=enable_qa, skip_duplicate_check=args.force)
+        if not args.research:
+            parser.error("--research is required: articles are written only from a research bundle (run research.py)")
+        bundle = load_bundle(Path(args.research))
+        article = generate_article(args.keyword, enable_qa=enable_qa, skip_duplicate_check=args.force,
+                                   research_bundle=bundle)
+        article["research_path"] = args.research
         save_to_notion_format(article)
         save_article_json(article)
         print(f"✅ Generated: {article['title']}")
@@ -1990,9 +2085,11 @@ if __name__ == "__main__":
         _qa_eval = article.get('qa_evaluation') or {}
         _qa_score = _qa_eval.get('scores', {}).get('overall')
         print(f"PIPELINE_RESULT qa_passed={bool(article.get('qa_passed'))} "
-              f"qa_score={_qa_score if _qa_score is not None else ''}")
+              f"qa_score={_qa_score if _qa_score is not None else ''} "
+              f"fact_check={'passed' if article.get('fact_check_passed') else 'failed'} "
+              f"revised={bool(article.get('fact_check_revised'))} slug={article.get('slug', '')}")
 
-        if args.publish:
+        if args.publish and article.get("fact_check_passed"):
             from auto_publish import auto_publish
             slug = article.get('slug', '')
             print(f"\n📤 Auto-publishing: {slug}")

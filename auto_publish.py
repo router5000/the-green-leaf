@@ -12,7 +12,6 @@ Can be run standalone or imported by the pipeline.
 """
 
 import logging
-import os
 import subprocess
 import sys
 from datetime import datetime
@@ -131,7 +130,7 @@ def promote_all_drafts(skip_qa: bool = False) -> list[str]:
             _log(f"   Skipping {draft.name} — already in posts/")
             continue
 
-        if not skip_qa:
+        if True:  # fact gate is mandatory; skip_qa no longer bypasses it
             passed, reason = check_article_qa(draft)
             if not passed:
                 blocked.append(f"{draft.name}: {reason}")
@@ -149,6 +148,17 @@ def promote_all_drafts(skip_qa: bool = False) -> list[str]:
             _log(f"      {b}")
 
     return promoted
+
+
+def _changed_paths() -> set:
+    """Absolute paths of new/modified files according to git (porcelain)."""
+    ok, out = run_git_command(["status", "--porcelain", "--untracked-files=all"])
+    paths = set()
+    if ok:
+        for line in out.splitlines():
+            if len(line) > 3:
+                paths.add((REPO_ROOT / line[3:].strip().strip('"')).resolve())
+    return paths
 
 
 def check_git_status() -> dict:
@@ -204,33 +214,27 @@ def check_git_status() -> dict:
 
 def check_article_qa(md_file: Path, min_score: float = 8.0) -> tuple[bool, str]:
     """
-    Check if an article passes the auto-publish QA threshold.
-    Purely score-based — there is no manual-review state.
+    Publish gate for a draft. A draft is publishable ONLY if its frontmatter
+    records `fact_check_passed: true` (set by content_generator.fact_gate after
+    scripts/validate_facts.py). The style QA score is advisory and no longer
+    gates publishing. Drafts without frontmatter are blocked (fail closed).
+    `min_score` is kept for call-compatibility.
     Returns (passed, reason).
     """
     try:
         content = md_file.read_text(encoding='utf-8')
         if not content.startswith('---'):
-            return True, "No frontmatter (legacy article)"
+            return False, "No frontmatter — cannot confirm fact check (blocked)"
 
         parts = content.split('---', 2)
         if len(parts) < 3:
-            return True, "Malformed frontmatter"
+            return False, "Malformed frontmatter (blocked)"
 
-        fm = yaml.safe_load(parts[1])
-        if not fm:
-            return True, "Empty frontmatter"
+        fm = yaml.safe_load(parts[1]) or {}
+        if fm.get('fact_check_passed') is not True:
+            return False, "fact_check_passed is not true (blocked by validate_facts gate)"
 
-        qa_passed = fm.get('qa_passed')
-        qa_score = fm.get('qa_score', 0)
-
-        if qa_passed is False:
-            return False, f"QA below threshold (score: {qa_score})"
-
-        if qa_score and float(qa_score) < min_score:
-            return False, f"QA score {qa_score} below threshold {min_score}"
-
-        return True, f"QA passed (score: {qa_score or 'N/A'})"
+        return True, f"Fact gate passed (style QA score: {fm.get('qa_score', 'N/A')}, advisory)"
     except Exception as e:
         return False, f"QA check error (blocking publish): {e}"
 
@@ -243,11 +247,16 @@ def stage_content_files(skip_qa: bool = False) -> tuple[bool, list[str]]:
     """
     staged = []
     blocked = []
+    changed = _changed_paths()
 
+    # The fact gate always applies; `skip_qa` only ever skipped the advisory
+    # style QA and can no longer bypass publishing checks.
     # Stage general markdown files with QA validation
     if CONTENT_PATH.exists():
         for md_file in CONTENT_PATH.glob("*.md"):
-            if not skip_qa:
+            if md_file.resolve() not in changed:
+                continue
+            if True:
                 passed, reason = check_article_qa(md_file)
                 if not passed:
                     blocked.append(f"{md_file.name}: {reason}")
@@ -263,7 +272,9 @@ def stage_content_files(skip_qa: bool = False) -> tuple[bool, list[str]]:
         for state_dir in STATES_CONTENT_PATH.iterdir():
             if state_dir.is_dir():
                 for md_file in state_dir.glob("*.md"):
-                    if not skip_qa:
+                    if md_file.resolve() not in changed:
+                        continue
+                    if True:
                         passed, reason = check_article_qa(md_file)
                         if not passed:
                             blocked.append(f"{state_dir.name}/{md_file.name}: {reason}")
@@ -278,7 +289,7 @@ def stage_content_files(skip_qa: bool = False) -> tuple[bool, list[str]]:
         print(f"\n   ⚠️  {len(blocked)} article(s) blocked by QA validation")
 
     # Stage images only for articles that passed (avoids orphaned image commits)
-    if skip_qa:
+    if False:  # images are always tied to an article that passed the fact gate
         # QA skipped — stage all images unconditionally
         if IMAGES_PATH.exists():
             success, _ = run_git_command(["add", str(IMAGES_PATH)])

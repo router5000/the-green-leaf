@@ -66,3 +66,11 @@ reports/
 
 # Google OAuth credentials (never commit these)
 client_secret*.json
+
+# Fact-quality pipeline outputs (uploaded as CI artifacts, not committed)
+research/
+drafts/blocked/
+data/strain_enrichment/
+data/strain_enrichment_state.json
+data/recheck_state.json
+content_fix_queue.json
