@@ -257,10 +257,9 @@ def model_support_check(items: list[dict]) -> list[dict]:
             "detail not in the source, it is NOT supported.\n\n" + listing +
             '\n\nReturn ONLY JSON: [{"i": 0, "supported": true|false, "reason": "short"}]'
         )
-        msg = client.messages.create(model=SUPPORT_MODEL, max_tokens=1500, timeout=90,
-                                     messages=[{"role": "user", "content": prompt}])
-        raw = msg.content[0].text
-        data = json.loads(raw[raw.find("["): raw.rfind("]") + 1])
+        sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+        from research import ask_model_json
+        data = ask_model_json(client, SUPPORT_MODEL, prompt, expect=list, max_tokens=1500, timeout=90)
         by_i = {d.get("i"): d for d in data if isinstance(d, dict)}
         for i in range(len(chunk)):
             d = by_i.get(i, {"supported": False, "reason": "no verdict returned"})
