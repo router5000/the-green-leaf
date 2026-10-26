@@ -6,8 +6,42 @@ import { Showcase2 } from '@/components/ui/Showcase2'
 import { getSortedPostsData, type PostData } from '@/lib/posts'
 import type { Metadata } from 'next'
 
+const HOME_DESCRIPTION =
+  'Look up cannabis strain effects, terpenes, and lineage, compare strains side by side, and check state cannabis laws. Every fact is sourced and cross-checked.'
+
+const HERO_LINKS = [
+  { href: '/strains', label: 'Strains' },
+  { href: '/strains/compare', label: 'Compare' },
+  { href: '/terpenes', label: 'Terpenes' },
+  { href: '/states', label: 'State Laws' },
+] as const
+
 export const metadata: Metadata = {
+  title: 'The Strain Report - Cannabis Strain Effects, Terpenes & State Laws',
+  description: HOME_DESCRIPTION,
   alternates: { canonical: 'https://strainreport.com' },
+  openGraph: {
+    title: 'The Strain Report - Cannabis Strain Effects, Terpenes & State Laws',
+    description: HOME_DESCRIPTION,
+    url: 'https://strainreport.com',
+    siteName: 'The Strain Report',
+    locale: 'en_US',
+    type: 'website',
+    images: [
+      {
+        url: 'https://strainreport.com/images/default-leaf-hero.jpg',
+        width: 1792,
+        height: 1024,
+        alt: 'The Strain Report - Cannabis strain effects, terpenes, and state laws',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'The Strain Report - Cannabis Strain Effects, Terpenes & State Laws',
+    description: HOME_DESCRIPTION,
+    images: ['https://strainreport.com/images/default-leaf-hero.jpg'],
+  },
 }
 
 /** Keep in sync with SHOWCASE_ITEMS in Showcase2.tsx */
@@ -166,22 +200,31 @@ export default function Home() {
               className="font-serif font-bold text-white leading-[1.06] tracking-tight mb-7"
               style={{ fontSize: 'clamp(2.4rem, 6.5vw, 4.5rem)' }}
             >
-              Strain guides, grow tips{' '}
-              <span className="text-green-300">&amp; wellness</span>
+              Look up any cannabis strain:{' '}
+              <span className="text-green-300">effects, terpenes, and lineage</span>,
               <br className="hidden sm:block" />{' '}
-              — grow smarter, consume confidently.
+              all sourced.
             </h1>
             <p className="text-white/55 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed mb-12">
-              Expert cannabis education covering strain genetics, cultivation,
-              consumption methods, and wellness insights — so you can learn with
-              confidence.
+              Compare strains side by side, learn what terpenes do, and check the
+              cannabis laws in your state. Every fact is cross-checked against at
+              least two sources, with links so you can verify it yourself.
             </p>
-            <Link
-              href="/topics"
-              className="inline-block px-9 py-4 bg-white text-[#0d2106] rounded-full font-semibold text-base hover:bg-green-50 transition-colors no-underline shadow-2xl"
-            >
-              Explore Topics
-            </Link>
+            <nav aria-label="Start exploring" className="flex flex-wrap justify-center gap-3">
+              {HERO_LINKS.map((link, i) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={
+                    i === 0
+                      ? 'inline-block px-7 py-3 bg-white text-[#0d2106] rounded-full font-semibold text-base hover:bg-green-50 transition-colors no-underline shadow-2xl'
+                      : 'inline-block px-7 py-3 border border-white/40 text-white rounded-full font-semibold text-base hover:bg-white/10 transition-colors no-underline'
+                  }
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
           </div>
         </section>
       </div>
