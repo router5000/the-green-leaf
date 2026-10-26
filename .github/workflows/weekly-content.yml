@@ -30,7 +30,7 @@ on:
           - winter
           - evergreen
       skip_qa:
-        description: 'Skip QA evaluation (faster)'
+        description: 'Skip advisory style QA (the fact gate always runs)'
         required: false
         default: false
         type: boolean
@@ -124,11 +124,18 @@ jobs:
           fi
 
       - name: Upload logs as artifact
+        # .logs/run_reports/*.json is read by the weekly digest
+        # (content-maintenance.yml); research/ and drafts/blocked/ hold the
+        # evidence for every published/blocked decision.
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: pipeline-logs
-          path: .logs/
+          path: |
+            .logs/
+            research/
+            drafts/blocked/
+            drafts/json/
           retention-days: 30
           if-no-files-found: ignore
 

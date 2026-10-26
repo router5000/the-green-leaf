@@ -2,6 +2,11 @@
 """
 Seed the Supabase strains database with cannabis strain data generated via Claude.
 
+DEPRECATED for content: this writes model-memory data with no sources. New
+strain content must come from scripts/enrich_strains.py (research + fact gate).
+Running this now requires --allow-unsourced, inserts rows unpublished, and
+never writes effect_type='medical'.
+
 Requirements: pip install anthropic supabase
 Usage:        python seed_strains.py
 Env vars:     ANTHROPIC_API_KEY, SUPABASE_URL (or NEXT_PUBLIC_SUPABASE_URL), SUPABASE_SECRET_KEY
@@ -136,7 +141,7 @@ Return a JSON array with one object per strain. Each object must include ALL of 
   "thc_max": number,
   "cbd_min": number,
   "cbd_max": number,
-  "description": string,                   // 300-400 words, SEO-optimized, factual, unique
+  "description": string,                   // 300-400 words; no THC numbers, awards or medical claims
   "short_description": string,             // 2-3 sentences
   "flavors": string[],                     // 3-5 items, lowercase
   "aromas": string[],                      // 3-5 items, lowercase
@@ -149,7 +154,7 @@ Return a JSON array with one object per strain. Each object must include ALL of 
   "height_outdoor": string,               // e.g. "150-200cm"
   "origin_country": string,
   "effects": [                             // 5-8 effects total
-    {{"effect_name": string, "effect_type": "positive"|"negative"|"medical", "intensity": 1-5}}
+    {{"effect_name": string, "effect_type": "positive"|"negative", "intensity": 1-5}}
   ],
   "terpenes": [                            // 3-5 terpenes, percentages summing ~1.0-2.5
     {{"terpene_name": string, "percentage": number}}
@@ -196,10 +201,11 @@ def insert_strain(sb: Client, data: dict) -> bool:
         "name":                data["name"],
         "aka":                 data.get("aka", []),
         "strain_type":         data["strain_type"],
-        "thc_min":             data.get("thc_min"),
-        "thc_max":             data.get("thc_max"),
-        "cbd_min":             data.get("cbd_min"),
-        "cbd_max":             data.get("cbd_max"),
+        # THC/CBD are only written from sourced research (enrich_strains.py).
+        "thc_min":             None,
+        "thc_max":             None,
+        "cbd_min":             None,
+        "cbd_max":             None,
         "description":         data.get("description"),
         "short_description":   data.get("short_description"),
         "flavors":             data.get("flavors", []),
@@ -212,16 +218,20 @@ def insert_strain(sb: Client, data: dict) -> bool:
         "height_indoor":       data.get("height_indoor"),
         "height_outdoor":      data.get("height_outdoor"),
         "origin_country":      data.get("origin_country"),
-        "published":           True,
+        # Unsourced rows are never published directly; enrich_strains.py
+        # publishes them once they pass the fact gate.
+        "published":           False,
     }
 
     result = sb.table("strains").insert(strain_row).execute()
     strain_id = result.data[0]["id"]
 
     if effects := data.get("effects"):
-        sb.table("effects").insert([
-            {"strain_id": strain_id, **e} for e in effects
-        ]).execute()
+        effects = [e for e in effects if e.get("effect_type") in ("positive", "negative")]
+        if effects:
+            sb.table("effects").insert([
+                {"strain_id": strain_id, **e} for e in effects
+            ]).execute()
 
     if terpenes := data.get("terpenes"):
         sb.table("terpenes").insert([
@@ -244,6 +254,9 @@ def insert_strain(sb: Client, data: dict) -> bool:
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
+    if "--allow-unsourced" not in sys.argv:
+        sys.exit("seed_strains.py writes unsourced model data. Use scripts/enrich_strains.py instead, "
+                 "or pass --allow-unsourced to insert UNPUBLISHED placeholder rows.")
     supabase_url = os.environ.get("SUPABASE_URL") or os.environ.get("NEXT_PUBLIC_SUPABASE_URL")
     supabase_key = os.environ.get("SUPABASE_SECRET_KEY")
     anthropic_key = os.environ.get("ANTHROPIC_API_KEY")

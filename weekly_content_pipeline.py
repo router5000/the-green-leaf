@@ -4,8 +4,11 @@ Weekly Content Pipeline for The Strain Report Content Engine
 
 Orchestrates the full automated content workflow:
 1. Keyword Research - Find best topic to write about
-2. Content Generation - Create article with images, videos, QA
-3. Auto-Publish - Commit and push to trigger deployment
+2. Source Research  - research.py fetches sources, keeps facts corroborated by 2+
+3. Content Generation - writes ONLY from the research bundle
+4. Fact Gate - scripts/validate_facts.py (blocking); auto-revise once, else block
+5. Auto-Publish - only items that passed the fact gate (no human gate)
+6. Run report - .logs/run_reports/<ts>.json (published / blocked / corrected)
 
 Can be run manually or via GitHub Actions cron job.
 """
@@ -32,11 +35,12 @@ load_dotenv()
 CONTENT_GENERATOR_PATH = Path("content_generator.py")
 LOG_PATH = Path(".logs")
 
-# Auto-publish QA threshold. An article scoring >= this is published with no
-# human gate, ever. Below it, generation is retried once (fresh); if the retry
-# also falls short the keyword is skipped for the run (no manual-review state).
-# Keep in sync with article_qa.QUALITY_THRESHOLDS['overall'].
-PUBLISH_THRESHOLD = 8.0
+# Publishing is gated ONLY by the automated fact gate (validate_facts.py).
+# There is intentionally no per-article human review; exceptions surface in the
+# weekly run report / digest. The style QA score is advisory.
+PUBLISH_THRESHOLD = 8.0  # advisory style score, kept for logging only
+MIN_RESEARCH_SOURCES = 2
+RUN_REPORT_DIR = LOG_PATH / "run_reports"
 
 
 def log_pipeline_run(status: str, keyword: str, details: dict):
@@ -57,8 +61,53 @@ def log_pipeline_run(status: str, keyword: str, details: dict):
     print(f"📋 Logged to {log_file}")
 
 
+def run_research(keyword: str) -> tuple[Optional[Path], dict]:
+    """Run research.py for a keyword; returns (bundle_path, bundle)."""
+    from research import research, save_bundle
+    bundle = research(keyword)
+    path = save_bundle(bundle)
+    data = json.loads(bundle.to_json())
+    print(f"   🔬 Research: {len(data['sources'])} sources, {len(data['facts'])} corroborated facts, "
+          f"{len(data['conflicts'])} conflicts → {path}")
+    return path, data
+
+
+def _parse_fact_result(stdout: str) -> dict:
+    out = {"fact_check": None, "revised": False, "slug": ""}
+    for line in stdout.splitlines():
+        if line.startswith("PIPELINE_RESULT"):
+            m = re.search(r"fact_check=(\w+)", line)
+            if m:
+                out["fact_check"] = m.group(1)
+            out["revised"] = "revised=True" in line
+            m = re.search(r"slug=(\S+)", line)
+            if m:
+                out["slug"] = m.group(1)
+    return out
+
+
+def _fact_errors(slug: str) -> list:
+    p = Path("drafts/json") / f"{slug}.json"
+    if not p.exists():
+        return []
+    try:
+        data = json.loads(p.read_text())
+        return (data.get("fact_check") or {}).get("errors", [])
+    except Exception:
+        return []
+
+
+def write_run_report(report: dict) -> Path:
+    RUN_REPORT_DIR.mkdir(parents=True, exist_ok=True)
+    path = RUN_REPORT_DIR / f"content_{datetime.now().strftime('%Y%m%dT%H%M%S')}.json"
+    path.write_text(json.dumps(report, indent=2))
+    (LOG_PATH / "run_report_latest.json").write_text(json.dumps(report, indent=2))
+    print(f"🧾 Run report: {path}")
+    return path
+
+
 def run_content_generator(
-    keyword: str, no_qa: bool = False, force: bool = False
+    keyword: str, no_qa: bool = False, force: bool = False, research_path: Optional[Path] = None
 ) -> tuple[bool, str, Optional[bool], Optional[float]]:
     """
     Run the content generator script with the given keyword.
@@ -78,6 +127,8 @@ def run_content_generator(
         return False, f"Content generator not found at {CONTENT_GENERATOR_PATH}", None, None
 
     cmd = [sys.executable, str(CONTENT_GENERATOR_PATH), "--keyword", keyword]
+    if research_path:
+        cmd += ["--research", str(research_path)]
     if no_qa:
         cmd.append("--no-qa")
     if force:
@@ -207,15 +258,17 @@ def run_weekly_pipeline(
     if dry_run:
         print("\n🔍 DRY RUN MODE - No changes will be made\n")
     
-    generated_articles = []
-    failed_keywords = []
-    skipped_keywords = []  # generated but scored below threshold on both attempts
-    
+    generated_articles = []   # passed the fact gate → publish
+    failed_keywords = []      # hard errors
+    skipped_keywords = []     # blocked by the fact gate / research (reasons logged)
+    corrected = []            # passed only after the one automatic revision
+    report_items = []
+
     # Step 1: Keyword Research
     print("\n" + "─" * 40)
     print("STEP 1: KEYWORD RESEARCH")
     print("─" * 40)
-    
+
     if keyword:
         keywords = [{"keyword": keyword, "season": force_season or "manual", "score": 1.0}]
         print(f"📝 Using provided keyword: {keyword}")
@@ -225,64 +278,72 @@ def run_weekly_pipeline(
             print("❌ No suitable keywords found")
             log_pipeline_run("failed", "none", {"error": "No keywords found"})
             return False
-    
-    # Step 2: Content Generation
+
+    # Step 2: Research → Generate → Fact gate
     print("\n" + "─" * 40)
-    print("STEP 2: CONTENT GENERATION")
+    print("STEP 2: RESEARCH → GENERATE → FACT GATE")
     print("─" * 40)
-    
+
     for i, kw_data in enumerate(keywords, 1):
         kw = kw_data["keyword"]
         print(f"\n📄 Article {i}/{len(keywords)}: \"{kw}\"")
-        
+
         if dry_run:
-            print(f"   Would generate article for: {kw}")
-            generated_articles.append(kw)
+            print(f"   Would research, generate and fact-check: {kw}")
+            report_items.append({"keyword": kw, "status": "dry_run"})
             continue
-        
-        # Generate, gating purely on the QA score. An article scoring
-        # >= PUBLISH_THRESHOLD is accepted for publishing. If it falls short,
-        # regenerate ONCE from scratch (fresh attempt, --force to bypass the
-        # duplicate check on the draft the first attempt wrote). If the retry
-        # also falls short, log both scores and skip the keyword — no third
-        # attempt, no manual-review fallback.
-        attempt_scores = []
-        outcome = None  # "published" | "skipped" | "failed"
-        for attempt in range(2):  # initial attempt + one fresh retry
-            if attempt > 0:
-                print(f"   🔄 Score below {PUBLISH_THRESHOLD} — regenerating once (fresh attempt)...")
 
+        try:
+            research_path, bundle = run_research(kw)
+        except Exception as e:
+            failed_keywords.append(kw)
+            report_items.append({"keyword": kw, "status": "error", "reasons": [f"research error: {e}"]})
+            continue
+        if len(bundle.get("sources", [])) < MIN_RESEARCH_SOURCES:
+            reason = f"only {len(bundle.get('sources', []))} usable sources (< {MIN_RESEARCH_SOURCES})"
+            skipped_keywords.append({"keyword": kw, "reasons": [reason]})
+            report_items.append({"keyword": kw, "status": "blocked", "reasons": [reason],
+                                 "research": str(research_path)})
+            print(f"   ⏭️  Blocked: {reason}")
+            continue
+
+        # One retry only for hard generation errors (timeouts, API errors).
+        # A fact-gate failure is NOT retried here: the generator already revised
+        # once; a second failure means block and log.
+        result = None
+        for attempt in range(2):
             success, output, qa_passed, qa_score = run_content_generator(
-                kw, no_qa=no_qa, force=(attempt > 0)
-            )
-
-            if not success:
-                print(f"   ⚠️ Generation error: {output[:200]}")
-                attempt_scores.append(None)
-                continue
-
-            attempt_scores.append(qa_score)
-
-            if no_qa or qa_passed:
-                outcome = "published"
-                generated_articles.append(kw)
-                label = f"QA score: {qa_score}" if qa_score is not None else "QA skipped"
-                print(f"   ✅ Accepted for publish ({label})")
+                kw, no_qa=no_qa, force=(attempt > 0), research_path=research_path)
+            if success:
+                result = (output, qa_score)
                 break
+            print(f"   ⚠️ Generation error: {output[:200]}")
 
-            print(f"   ⚠️ QA score {qa_score} below threshold {PUBLISH_THRESHOLD}")
+        if result is None:
+            failed_keywords.append(kw)
+            report_items.append({"keyword": kw, "status": "error", "reasons": ["generation failed twice"]})
+            continue
 
-        if outcome != "published":
-            if any(s is not None for s in attempt_scores):
-                # Generated both times but never cleared the bar — skip, don't fail.
-                skipped_keywords.append({"keyword": kw, "scores": attempt_scores})
-                print(f"   ⏭️  Skipping '{kw}' — QA scores {attempt_scores} below "
-                      f"{PUBLISH_THRESHOLD}. Not published; no manual review (none exists).")
-            else:
-                # Hard generation error on both attempts.
-                failed_keywords.append(kw)
-                print(f"   ❌ Generation failed for '{kw}' after retry")
-    
+        output, qa_score = result
+        fr = _parse_fact_result(output)
+        item = {"keyword": kw, "slug": fr["slug"], "qa_score_advisory": qa_score,
+                "research": str(research_path), "conflicts": bundle.get("conflicts", [])}
+        if fr["fact_check"] == "passed":
+            generated_articles.append(kw)
+            item["status"] = "published" if not no_publish else "passed_not_published"
+            if fr["revised"]:
+                corrected.append(kw)
+                item["corrected"] = True
+            print(f"   ✅ Fact gate passed{' after revision' if fr['revised'] else ''}")
+        else:
+            errs = _fact_errors(fr["slug"])
+            reasons = [f"[{e['rule']}] {e['detail']}" + (f" :: {e['claim'][:140]}" if e.get('claim') else "")
+                       for e in errs] or ["fact gate failed (no details)"]
+            skipped_keywords.append({"keyword": kw, "reasons": reasons})
+            item.update(status="blocked", reasons=reasons)
+            print(f"   ⛔ Blocked by fact gate ({len(errs)} issues) — draft in drafts/blocked/")
+        report_items.append(item)
+
     # Step 3: Auto-Publish
     print("\n" + "─" * 40)
     print("STEP 3: AUTO-PUBLISH")
@@ -306,7 +367,8 @@ def run_weekly_pipeline(
     print("PIPELINE SUMMARY")
     print("=" * 60)
     print(f"✅ Published: {len(generated_articles)} articles")
-    print(f"⏭️  Skipped (below {PUBLISH_THRESHOLD}): {len(skipped_keywords)} articles")
+    print(f"⏭️  Blocked by fact gate / research: {len(skipped_keywords)} articles")
+    print(f"🛠️  Corrected (passed after one revision): {len(corrected)}")
     print(f"❌ Failed (errors): {len(failed_keywords)} articles")
 
     if generated_articles:
@@ -315,9 +377,9 @@ def run_weekly_pipeline(
             print(f"  • {kw}")
 
     if skipped_keywords:
-        print("\nSkipped keywords (scored below threshold on both attempts):")
+        print("\nBlocked keywords:")
         for item in skipped_keywords:
-            print(f"  • {item['keyword']} — scores: {item['scores']}")
+            print(f"  • {item['keyword']} — {item['reasons'][:3]}")
 
     if failed_keywords:
         print("\nFailed keywords (generation errors):")
@@ -328,6 +390,17 @@ def run_weekly_pipeline(
     # the run. (A run that publishes nothing because nothing cleared the bar is
     # not an error; there is no human review to fall back to.)
     overall_success = len(failed_keywords) == 0
+
+    write_run_report({
+        "kind": "content",
+        "run_at": datetime.now().isoformat(timespec="seconds"),
+        "dry_run": dry_run,
+        "published": [r for r in report_items if r.get("status") == "published"],
+        "blocked": [r for r in report_items if r.get("status") == "blocked"],
+        "corrected": [r for r in report_items if r.get("corrected")],
+        "errors": [r for r in report_items if r.get("status") == "error"],
+        "items": report_items,
+    })
 
     log_pipeline_run(
         status="success" if overall_success else "failed",
@@ -346,13 +419,13 @@ def run_weekly_pipeline(
         if not overall_success:
             title = "⚠️ Weekly Pipeline: generation errors"
         elif not generated_articles:
-            title = f"⚠️ Weekly Pipeline: 0 published, {len(skipped_keywords)} skipped (below {PUBLISH_THRESHOLD})"
+            title = f"⚠️ Weekly Pipeline: 0 published, {len(skipped_keywords)} blocked by fact gate"
         else:
             title = "🌿 Weekly Content Pipeline Complete"
         send_notification(
             title=title,
             message=(f"Published {len(generated_articles)}, "
-                     f"skipped {len(skipped_keywords)} (below {PUBLISH_THRESHOLD}), "
+                     f"blocked {len(skipped_keywords)} by fact gate, corrected {len(corrected)}, "
                      f"{len(failed_keywords)} errored"),
             success=overall_success
         )
