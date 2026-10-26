@@ -1,0 +1,9 @@
+{
+  "short_description": "J1 is a sativa-dominant hybrid with an energetic reputation.",
+  "description": "Leafly describes J1 as a hybrid strain. Users report feeling energetic and focused. It helps with depression and stress relief for many patients. Leafly lists a reported 18% THC. J1 takes 9 weeks to flower. The aroma is described as skunky and sweet.",
+  "flavors": ["sweet"], "aromas": ["skunk"],
+  "effects": [{"effect_name": "Energetic", "effect_type": "positive", "intensity": 3},
+              {"effect_name": "Depression", "effect_type": "medical", "intensity": 3}],
+  "claims": [{"sentence": "Leafly describes J1 as a hybrid strain.", "url": "https://www.leafly.com/strains/j1"},
+             {"sentence": "J1 takes 9 weeks to flower.", "url": "https://www.leafly.com/strains/j1"}]
+}
