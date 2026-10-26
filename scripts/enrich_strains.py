@@ -196,7 +196,7 @@ def load_state() -> dict:
 
 def next_batch(n: int, state: dict) -> list[dict]:
     rows = list(csv.DictReader(PRIORITY_CSV.open()))
-    rows.sort(key=lambda r: (int(r["tier"]), rows.index(r)))
+    rows = [r for _, r in sorted(enumerate(rows), key=lambda ir: (int(ir[1]["tier"]), ir[0]))]
     out = []
     for r in rows:
         st = state.get(r["slug"], {})
