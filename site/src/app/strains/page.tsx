@@ -1,6 +1,9 @@
 import StrainsListing from '@/components/StrainsListing'
 import { getSupabase } from '@/lib/supabase'
 import type { Metadata } from 'next'
+import PopularStrainsBlock from '@/components/PopularStrainsBlock'
+import { getStrainCatalogSafe } from '@/lib/strainCatalog'
+import { getPopularStrains } from '@/lib/strainComparisons'
 
 export const dynamic = 'force-dynamic'
 
@@ -82,5 +85,19 @@ export default async function StrainsPage({
   searchParams: Promise<SearchParams>
 }) {
   const sp = await searchParams
-  return <StrainsListing searchParams={sp} />
+  // Unfiltered page 1 gets a crawlable popular-strains block so top strains
+  // (Blue Dream, OG Kush, ...) are linked from /strains, not only from the
+  // alphabetical page they fall on.
+  const isHubLanding = !sp.q && !sp.type && !sp.compare && (!sp.page || sp.page === '1')
+  const popular = isHubLanding ? getPopularStrains(await getStrainCatalogSafe(), 16) : []
+  return (
+    <>
+      {isHubLanding && popular.length > 0 && (
+        <div className="bg-[#f0f0f0] px-4 sm:px-6 md:px-[160px] pt-8">
+          <PopularStrainsBlock strains={popular} title="Popular strains" headingId="hub-popular-strains" />
+        </div>
+      )}
+      <StrainsListing searchParams={sp} />
+    </>
+  )
 }
