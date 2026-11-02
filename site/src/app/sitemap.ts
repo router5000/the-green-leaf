@@ -1,8 +1,9 @@
 import { MetadataRoute } from 'next'
 import { getSortedPostsData } from '@/lib/posts'
-import { getStrainCatalogSafe, isThinStrain, STATIC_CONTENT_LASTMOD } from '@/lib/strainCatalog'
+import { getStrainCatalogSafe, isThinStrain } from '@/lib/strainCatalog'
 import { topicClusters, matchesCluster } from '@/app/topics/topicClusters'
-import { COMPARISON_PAIRS } from '@/data/strainComparisonPairs'
+import { getAllComparisonPairs } from '@/lib/strainComparisons'
+import { templateDate, latestDate } from '@/lib/contentDates'
 import { TERPENE_SLUGS } from '@/lib/terpenes'
 import { statesData } from '@/data/statesData'
 
@@ -21,26 +22,32 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const last = p.last_updated ? new Date(p.last_updated) : null
     return last && last > gen ? last : gen
   }
-  const maxDate = (dates: Date[], fallback = STATIC_CONTENT_LASTMOD) => {
+  // A page changes when its data changes OR its template changes (git date
+  // of the template files, computed at build — see src/lib/contentDates.ts).
+  const strainTpl = templateDate('strain')
+  const hubTpl = templateDate('strainHub')
+  const compareTpl = templateDate('compare')
+  const statesTpl = templateDate('states')
+  const maxDate = (dates: Date[], fallback: Date) => {
     const valid = dates.filter((d) => !isNaN(d.getTime()))
     return valid.length ? new Date(Math.max(...valid.map((d) => d.getTime()))) : fallback
   }
-  const latestPost = maxDate(posts.map(postDate))
-  const latestStrain = maxDate(catalog.map((s) => new Date(s.updated_at ?? '')))
+  const latestPost = maxDate(posts.map(postDate), templateDate('articles'))
+  const latestStrain = maxDate([hubTpl, ...catalog.map((s) => new Date(s.updated_at ?? ''))], hubTpl)
   const latestStrainOfType = (t: string) =>
-    maxDate(catalog.filter((s) => s.strain_type === t).map((s) => new Date(s.updated_at ?? '')))
+    maxDate([hubTpl, ...catalog.filter((s) => s.strain_type === t).map((s) => new Date(s.updated_at ?? ''))], hubTpl)
 
   // Static pages
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
-      lastModified: latestPost,
+      lastModified: latestDate(latestPost, templateDate('home')),
       changeFrequency: 'daily',
       priority: 1.0,
     },
     {
       url: `${baseUrl}/articles`,
-      lastModified: latestPost,
+      lastModified: latestDate(latestPost, templateDate('articles')),
       changeFrequency: 'daily',
       priority: 0.9,
     },
@@ -70,38 +77,38 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${baseUrl}/strains/compare`,
-      lastModified: STATIC_CONTENT_LASTMOD,
+      lastModified: compareTpl,
       changeFrequency: 'weekly',
       priority: 0.6,
     },
     {
       url: `${baseUrl}/terpenes`,
-      lastModified: STATIC_CONTENT_LASTMOD,
+      lastModified: templateDate('terpenes'),
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     ...TERPENE_SLUGS.map((slug) => ({
       url: `${baseUrl}/terpenes/${slug}`,
-      lastModified: STATIC_CONTENT_LASTMOD,
+      lastModified: templateDate('terpenes'),
       changeFrequency: 'monthly' as const,
       priority: 0.7,
     })),
     {
       url: `${baseUrl}/videos`,
-      lastModified: latestPost,
+      lastModified: latestDate(latestPost, templateDate('videos')),
       changeFrequency: 'daily',
       priority: 0.8,
     },
     {
       url: `${baseUrl}/topics`,
-      lastModified: latestPost,
+      lastModified: latestDate(latestPost, templateDate('topics')),
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     // Topic hubs (hub-and-spoke into articles)
     ...topicClusters.map((c) => ({
       url: `${baseUrl}/topics/${c.id}`,
-      lastModified: maxDate(posts.filter((p) => matchesCluster(p, c)).map(postDate), latestPost),
+      lastModified: latestDate(maxDate(posts.filter((p) => matchesCluster(p, c)).map(postDate), latestPost), templateDate('topics')),
       changeFrequency: 'weekly' as const,
       priority: 0.8,
     })),
@@ -113,31 +120,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${baseUrl}/about`,
-      lastModified: new Date('2025-12-01'),
+      lastModified: templateDate('about'),
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
       url: `${baseUrl}/contact`,
-      lastModified: new Date('2026-10-19'),
+      lastModified: templateDate('contact'),
       changeFrequency: 'yearly',
       priority: 0.4,
     },
     {
       url: `${baseUrl}/privacy-policy`,
-      lastModified: new Date('2025-12-01'),
+      lastModified: templateDate('privacy'),
       changeFrequency: 'yearly',
       priority: 0.3,
     },
     {
       url: `${baseUrl}/terms-of-service`,
-      lastModified: new Date('2025-12-01'),
+      lastModified: templateDate('terms'),
       changeFrequency: 'yearly',
       priority: 0.3,
     },
     {
       url: `${baseUrl}/affiliate-disclosure`,
-      lastModified: new Date('2025-12-01'),
+      lastModified: templateDate('affiliate'),
       changeFrequency: 'yearly',
       priority: 0.3,
     },
@@ -146,7 +153,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Article pages — use last_updated when it exists and is newer than generated_at
   const articlePages: MetadataRoute.Sitemap = posts.map((post) => ({
     url: `${baseUrl}/articles/${post.slug}`,
-    lastModified: postDate(post),
+    lastModified: latestDate(postDate(post), templateDate('articles')),
     changeFrequency: 'weekly',
     priority: 0.8,
   }))
@@ -157,34 +164,38 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .filter((s) => !isThinStrain(s))
     .map((s) => ({
       url: `${baseUrl}/strains/${s.slug}`,
-      ...(s.updated_at ? { lastModified: new Date(s.updated_at) } : {}),
+      lastModified: latestDate(s.updated_at, strainTpl),
       changeFrequency: 'weekly',
       priority: 0.7,
     }))
 
-  // Curated comparison pages
-  const comparisonPages: MetadataRoute.Sitemap = COMPARISON_PAIRS.map(([a, b]) => ({
-    url: `${baseUrl}/strains/compare/${a}-vs-${b}`,
-    lastModified: STATIC_CONTENT_LASTMOD,
+  // Comparison pages: curated pairs + auto pairs (same set the strain pages
+  // link to). lastmod = newest of the template and both strains' data.
+  const updatedAt = new Map(catalog.map((s) => [s.slug, s.updated_at]))
+  const comparisonPages: MetadataRoute.Sitemap = getAllComparisonPairs(catalog).map((p) => ({
+    url: `${baseUrl}/strains/compare/${p.slug}`,
+    lastModified: latestDate(compareTpl, updatedAt.get(p.a), updatedAt.get(p.b)),
     changeFrequency: 'monthly',
     priority: 0.5,
   }))
 
-  // State pages (static data, no lastmod source — omit rather than guess)
+  // State pages: static data files, dated by their last git change.
   const statePages: MetadataRoute.Sitemap = [
     {
       url: `${baseUrl}/states`,
+      lastModified: statesTpl,
       changeFrequency: 'monthly',
       priority: 0.6,
     },
     {
       url: `${baseUrl}/states/compare`,
-      lastModified: new Date('2026-10-19'),
+      lastModified: statesTpl,
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     ...statesData.map((s) => ({
       url: `${baseUrl}/states/${s.slug}`,
+      lastModified: statesTpl,
       changeFrequency: 'monthly' as const,
       priority: 0.5,
     })),
