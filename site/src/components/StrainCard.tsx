@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { CompareButton } from '@/components/CompareNav'
+import { formatPctRange } from '@/lib/formatRange'
 
 type StrainCardData = {
   id: string
@@ -42,7 +43,7 @@ export default function StrainCard({ strain, terpenePercentage, compare }: Props
   const topFlavors = strain.flavors?.slice(0, 2) ?? []
   const thcRange =
     strain.thc_min != null && strain.thc_max != null
-      ? `THC ${strain.thc_min}–${strain.thc_max}%`
+      ? `THC ${formatPctRange(strain.thc_min, strain.thc_max)}`
       : strain.thc_max != null
         ? `THC up to ${strain.thc_max}%`
         : null

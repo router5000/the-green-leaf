@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import CompareAnotherStrain from '@/components/CompareAnotherStrain'
 import type { Metadata } from 'next'
+import { formatPctRange } from '@/lib/formatRange'
 
 export const dynamic = 'force-dynamic'
 
@@ -384,7 +385,7 @@ function ChipList({ items }: { items: string[] }) {
 // ── Utilities ──────────────────────────────────────────────────────────────
 
 function range(min: number | null, max: number | null, suffix: string): string {
-  if (min != null && max != null) return `${min}–${max}${suffix}`
+  if (min != null && max != null) return formatPctRange(min, max, { suffix })!
   if (max != null) return `up to ${max}${suffix}`
   return '—'
 }
@@ -398,8 +399,8 @@ function winner(a: number | null, b: number | null): 'a' | 'b' | null {
 
 function buildStrainSchema(s: Strain) {
   const props: Record<string, string>[] = []
-  if (s.thc_min != null && s.thc_max != null) props.push({ name: 'THC', value: `${s.thc_min}-${s.thc_max}%` })
-  if (s.cbd_min != null && s.cbd_max != null) props.push({ name: 'CBD', value: `${s.cbd_min}-${s.cbd_max}%` })
+  if (s.thc_min != null && s.thc_max != null) props.push({ name: 'THC', value: formatPctRange(s.thc_min, s.thc_max, { sep: '-' })! })
+  if (s.cbd_min != null && s.cbd_max != null) props.push({ name: 'CBD', value: formatPctRange(s.cbd_min, s.cbd_max, { sep: '-' })! })
   if (s.flowering_time_days)                  props.push({ name: 'Flowering Time', value: `${s.flowering_time_days} days` })
   if (s.difficulty)                           props.push({ name: 'Difficulty', value: s.difficulty })
 
