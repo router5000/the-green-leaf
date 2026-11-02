@@ -5,6 +5,12 @@ import CTASection from '@/components/CTASection'
 import { Showcase2 } from '@/components/ui/Showcase2'
 import { getSortedPostsData, type PostData } from '@/lib/posts'
 import type { Metadata } from 'next'
+import PopularStrainsBlock from '@/components/PopularStrainsBlock'
+import { getStrainCatalogSafe } from '@/lib/strainCatalog'
+import { getPopularStrains } from '@/lib/strainComparisons'
+
+// Popular-strains block reads the strain catalog; refresh daily.
+export const revalidate = 86400
 
 const HOME_DESCRIPTION =
   'Look up cannabis strain effects, terpenes, and lineage, compare strains side by side, and check state cannabis laws. Every fact is sourced and cross-checked.'
@@ -150,7 +156,8 @@ function MoreGuides({ posts }: { posts: PostData[] }) {
   )
 }
 
-export default function Home() {
+export default async function Home() {
+  const popularStrains = getPopularStrains(await getStrainCatalogSafe(), 12)
   const moreGuides = pickMoreGuides(getSortedPostsData(), 10)
 
   return (
@@ -214,6 +221,13 @@ export default function Home() {
 
       {/* ── MORE GUIDES (crawlable inventory beyond featured five) ───── */}
       <MoreGuides posts={moreGuides} />
+
+      {/* ── POPULAR STRAINS + HUB LINKS (crawlable) ──────────────────── */}
+      <div className="bg-[#f0f0f0] px-4 sm:px-6 lg:px-8 pb-16">
+        <div className="max-w-[1400px] mx-auto">
+          <PopularStrainsBlock strains={popularStrains} title="Popular cannabis strains" headingId="home-popular-strains" />
+        </div>
+      </div>
 
       <CTASection />
     </>

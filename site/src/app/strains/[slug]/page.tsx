@@ -15,6 +15,8 @@ import {
   buildNameIndex,
   resolveStrainSlug,
 } from '@/lib/strainCatalog'
+import { getComparisonPairsForStrain, getPopularStrains } from '@/lib/strainComparisons'
+import PopularStrainsBlock from '@/components/PopularStrainsBlock'
 
 // ISR: profiles are pre-rendered from the catalog and refreshed daily.
 // Unknown/new slugs still render on demand (dynamicParams defaults to true).
@@ -128,6 +130,17 @@ export default async function StrainDetailPage({
   const nameIndex = buildNameIndex(catalog)
   const catalogSelf = catalog.find((c) => c.slug === s.slug)
   const relatedStrains = catalogSelf ? getRelatedStrains(catalogSelf, catalog) : []
+  const nameBySlug = new Map(catalog.map((c) => [c.slug, c.name]))
+  const comparePairs = getComparisonPairsForStrain(s.slug, catalog)
+    .map((p) => {
+      const other = p.a === s.slug ? p.b : p.a
+      return { href: `/strains/compare/${p.slug}`, otherName: nameBySlug.get(other) }
+    })
+    .filter((p): p is { href: string; otherName: string } => !!p.otherName)
+  const relatedSlugs = new Set(relatedStrains.map((r) => r.slug))
+  const popularStrains = getPopularStrains(catalog)
+    .filter((p) => p.slug !== s.slug && !relatedSlugs.has(p.slug))
+    .slice(0, 8)
   const effectsByType = (s.effects ?? []).reduce<Record<string, Effect[]>>((acc, e) => {
     ;(acc[e.effect_type] ??= []).push(e)
     return acc
@@ -414,6 +427,32 @@ export default async function StrainDetailPage({
                   <Link href="/strains/a-z" className="text-leaf-700 hover:text-leaf-800">All strains A–Z →</Link>
                 </p>
               </Section>
+            )}
+
+            {/* Comparisons (crawlable links to this strain's compare pages) */}
+            {comparePairs.length > 0 && (
+              <Section title={`Compare ${s.name}`}>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {comparePairs.map((p) => (
+                    <li key={p.href}>
+                      <Link
+                        href={p.href}
+                        className="block bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 font-medium hover:border-leaf-300 no-underline transition-colors"
+                      >
+                        {s.name} vs {p.otherName}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-4 text-sm">
+                  <Link href="/strains/compare" className="text-leaf-700 hover:text-leaf-800">All strain comparisons →</Link>
+                </p>
+              </Section>
+            )}
+
+            {/* Popular strains + hubs */}
+            {popularStrains.length > 0 && (
+              <PopularStrainsBlock strains={popularStrains} title="Popular strains" />
             )}
           </div>
 
