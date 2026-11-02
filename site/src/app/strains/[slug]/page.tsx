@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { hasTerpeneHub } from '@/lib/terpenes'
 import { findArticlesForStrain } from '@/lib/strainArticleLinks'
 import RelatedArticlesForStrain from '@/components/RelatedArticlesForStrain'
+import { formatPctRange, describePctRange } from '@/lib/formatRange'
 export { generateMetadata } from '@/lib/strainMetaDescription'
 
 import { StrainCompareButton } from '@/components/CompareNav'
@@ -139,8 +140,8 @@ export default async function StrainDetailPage({
   const topTerpenes     = [...(s.terpenes ?? [])].sort((a, b) => (b.percentage ?? 0) - (a.percentage ?? 0)).slice(0, 5)
 
   const productProps: { name: string; value: string }[] = []
-  if (s.thc_min != null && s.thc_max != null) productProps.push({ name: 'THC', value: `${s.thc_min}-${s.thc_max}%` })
-  if (s.cbd_min != null && s.cbd_max != null) productProps.push({ name: 'CBD', value: `${s.cbd_min}-${s.cbd_max}%` })
+  if (s.thc_min != null && s.thc_max != null) productProps.push({ name: 'THC', value: formatPctRange(s.thc_min, s.thc_max, { sep: '-' })! })
+  if (s.cbd_min != null && s.cbd_max != null) productProps.push({ name: 'CBD', value: formatPctRange(s.cbd_min, s.cbd_max, { sep: '-' })! })
   if (s.flowering_time_days)                  productProps.push({ name: 'Flowering Time', value: `${s.flowering_time_days} days` })
   if (s.difficulty)                           productProps.push({ name: 'Difficulty', value: s.difficulty })
   if (s.origin_country)                       productProps.push({ name: 'Origin', value: s.origin_country })
@@ -171,11 +172,11 @@ export default async function StrainDetailPage({
     })
   if (s.thc_min != null && s.thc_max != null) {
     const cbdPart = (s.cbd_min != null && s.cbd_max != null)
-      ? ` CBD typically falls between ${s.cbd_min}% and ${s.cbd_max}%.`
+      ? ` CBD is typically ${describePctRange(s.cbd_min, s.cbd_max)}.`
       : ''
     faqEntries.push({
       name: `How strong is ${s.name}?`,
-      text: `${s.name} has THC levels ranging from ${s.thc_min}% to ${s.thc_max}%.${cbdPart}`,
+      text: `${s.name} has reported THC levels of ${describePctRange(s.thc_min, s.thc_max)}.${cbdPart}`,
     })
   }
   faqEntries.push({
@@ -252,10 +253,10 @@ export default async function StrainDetailPage({
         {/* THC / CBD pills */}
         <div className="flex flex-wrap gap-3 mb-6">
           {s.thc_min != null && s.thc_max != null && (
-            <StatPill label="THC" value={`${s.thc_min}–${s.thc_max}%`} />
+            <StatPill label="THC" value={formatPctRange(s.thc_min, s.thc_max)!} />
           )}
           {s.cbd_min != null && s.cbd_max != null && (
-            <StatPill label="CBD" value={`${s.cbd_min}–${s.cbd_max}%`} />
+            <StatPill label="CBD" value={formatPctRange(s.cbd_min, s.cbd_max)!} />
           )}
           {s.origin_country && (
             <StatPill label="Origin" value={s.origin_country} />

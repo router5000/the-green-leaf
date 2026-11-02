@@ -98,6 +98,8 @@ def sb_apply(strain: dict, draft: dict, sources: list[dict]) -> None:
     sid = strain["id"]
     patch = {k: draft[k] for k in ("short_description", "description", "aka", "flavors", "aromas", "colors")
              if draft.get(k)}
+    if draft.get("strain_type") and not strain.get("strain_type"):
+        patch["strain_type"] = draft["strain_type"]   # only fills an empty type, from sourced research
     if draft.get("origin_country"):
         patch["origin_country"] = draft["origin_country"]
     if draft.get("thc_reported"):
@@ -118,6 +120,57 @@ def sb_apply(strain: dict, draft: dict, sources: list[dict]) -> None:
     if sources:
         requests.post(f"{url}/rest/v1/strain_sources", json=[{"strain_id": sid, **s} for s in sources],
                       headers=h, timeout=30).raise_for_status()
+
+
+# ── type consistency ─────────────────────────────────────────────────────────
+
+TYPE_CONFLICT = "type conflict"
+_TYPE_RX = re.compile(r"\b(indica|sativa|hybrid)(?:[- ]dominant)?\b", re.I)
+
+
+def stated_types(text: str) -> set[str]:
+    """Strain types the prose asserts. "sativa-dominant hybrid" counts as hybrid;
+    a bare "indica-dominant"/"sativa-dominant" (no "hybrid") counts as hybrid too."""
+    out = set()
+    for m in _TYPE_RX.finditer(text or ""):
+        word, whole = m.group(1).lower(), m.group(0).lower()
+        tail = (text or "")[m.end(): m.end() + 12].lower()
+        if word == "hybrid" or "dominant" in whole or "hybrid" in tail:
+            out.add("hybrid")
+        else:
+            out.add(word)
+    return out
+
+
+def sourced_type(bundle: dict) -> str | None:
+    """The single type corroborated by research (None if absent or the sources conflict)."""
+    if any(c["field"] == "type" for c in bundle.get("conflicts", [])):
+        return None
+    types = {f["value"].lower() for f in bundle.get("facts", []) if f["field"] == "type"}
+    return types.pop() if len(types) == 1 else None
+
+
+def check_type_consistency(stored: str | None, draft: dict, bundle: dict) -> tuple[str | None, list[str]]:
+    """Generated text must agree with the strain type we show in the badge.
+
+    Returns (type_to_write, reasons). type_to_write is the sourced type when the stored
+    type is empty; it is never used to silently overwrite a different stored type --
+    any disagreement between stored type, sourced type and the prose is returned as a
+    "type conflict" reason so the strain is blocked for human review."""
+    stored = (stored or "").lower() or None
+    src = sourced_type(bundle)
+    text = " ".join(str(draft.get(k) or "") for k in ("short_description", "description"))
+    said = stated_types(text)
+    reasons = []
+    if stored and src and stored != src:
+        reasons.append(f"{TYPE_CONFLICT}: stored '{stored}' but sources say '{src}'")
+    expected = stored or src
+    if said and expected and said != {expected}:
+        reasons.append(f"{TYPE_CONFLICT}: text says {'/'.join(sorted(said))} but "
+                       f"{'stored' if stored else 'sourced'} type is '{expected}'")
+    if len(said) > 1 and not expected:
+        reasons.append(f"{TYPE_CONFLICT}: text states several types ({'/'.join(sorted(said))})")
+    return (src if not stored and not reasons else None), reasons
 
 
 # ── drafting ─────────────────────────────────────────────────────────────────
@@ -481,6 +534,14 @@ def main(argv=None) -> int:
                 draft, gate_reasons, glog = gate(name, current, draft, bundle)
                 reasons += gate_reasons
                 print(f"   revisions: {glog['revisions']}, pruned sentences: {len(glog['pruned'])}")
+                set_type, type_reasons = check_type_consistency(current.get("strain_type"), draft, bundle)
+                reasons += type_reasons
+                if type_reasons:
+                    report.setdefault("type_conflicts", []).append(
+                        {"slug": slug, "stored": current.get("strain_type"), "sourced": sourced_type(bundle),
+                         "reasons": type_reasons})
+                if set_type:
+                    draft["strain_type"] = set_type
             (OUT_DIR / f"{slug}.json").write_text(json.dumps(
                 {"slug": slug, "draft": draft, "reasons": reasons, "conflicts": bundle.get("conflicts", []),
                  "revision_log": glog},
@@ -502,6 +563,8 @@ def main(argv=None) -> int:
             thc = [f for f in bundle.get("facts", []) if f["field"] == "thc_pct"]
             if thc and not any(c["field"] == "thc_pct" for c in bundle.get("conflicts", [])):
                 vals = parse_pct(thc[0]["value"])
+                # A single reported value is stored as min == max (schema has both columns);
+                # the site renders min == max as one number ("21%", not "21–21%").
                 draft["thc_reported"] = (min(vals), max(vals))
                 draft.setdefault("field_sources", []).append(
                     {"field": "thc", "url": thc[0]["evidence"][0]["url"], "quote": thc[0]["evidence"][0]["quote"]})
