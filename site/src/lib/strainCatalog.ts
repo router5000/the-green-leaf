@@ -1,4 +1,5 @@
 import { getSupabase } from '@/lib/supabase'
+import { hideUnsourced, SOURCES_EMBED } from '@/lib/sourcedFields'
 
 /**
  * Site-wide strain catalog used for internal linking (related strains, linked
@@ -44,7 +45,7 @@ const SELECT = `id, name, slug, aka, strain_type, description, short_description
   flavors, aromas, colors, origin_country, difficulty, yield_indoor, yield_outdoor,
   height_indoor, height_outdoor, updated_at,
   effects(effect_name, effect_type), terpenes(terpene_name, percentage),
-  genetics(parent_strain_name, parent_type)`
+  genetics(parent_strain_name, parent_type), ${SOURCES_EMBED}`
 
 const TTL_MS = 10 * 60 * 1000
 let memo: { at: number; p: Promise<CatalogStrain[]> } | null = null
@@ -58,7 +59,7 @@ export function getStrainCatalog(): Promise<CatalogStrain[]> {
       .eq('published', true)
       .order('name', { ascending: true })
     if (error) throw error
-    return (data as unknown as CatalogStrain[]) ?? []
+    return ((data as unknown as CatalogStrain[]) ?? []).map(hideUnsourced)
   })()
   memo = { at: Date.now(), p }
   p.catch(() => { memo = null })

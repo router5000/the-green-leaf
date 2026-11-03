@@ -5,6 +5,7 @@ import BlinkingSquares from '@/components/ui/BlinkingSquares'
 import StrainCard from '@/components/StrainCard'
 import { getTerpene } from '@/lib/terpenes'
 import type { Metadata } from 'next'
+import { hasSourcedTerpenePct, sourcedFieldSet, SOURCES_EMBED } from '@/lib/sourcedFields'
 
 export const dynamic = 'force-dynamic'
 
@@ -68,11 +69,13 @@ export default async function TerpeneHubPage({
   try {
     const { data } = await getSupabase()
       .from('terpenes')
-      .select('percentage, strains!inner(slug, name, strain_type, thc_min, thc_max, short_description, flavors, published)')
+      .select('percentage, strains!inner(slug, name, strain_type, thc_min, thc_max, short_description, flavors, published, ' + SOURCES_EMBED + ')')
       .eq('terpene_name', terpene.displayName)
       .eq('strains.published', true)
       .order('percentage', { ascending: false })
-    rows = (data as unknown as StrainRow[]) ?? []
+    rows = ((data as unknown as (StrainRow & { strains: { strain_sources?: { field: string }[] | null } })[]) ?? [])
+      // #57: show a percentage only when a strain_sources row backs terpene %
+      .map((r) => (hasSourcedTerpenePct(sourcedFieldSet(r.strains)) ? r : { ...r, percentage: null }))
   } catch {
     // env unavailable during build
   }
