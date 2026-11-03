@@ -5,6 +5,7 @@ import { hasTerpeneHub } from '@/lib/terpenes'
 import { findArticlesForStrain } from '@/lib/strainArticleLinks'
 import RelatedArticlesForStrain from '@/components/RelatedArticlesForStrain'
 import { formatPctRange, describePctRange } from '@/lib/formatRange'
+import { hideUnsourced, SOURCES_EMBED } from '@/lib/sourcedFields'
 export { generateMetadata } from '@/lib/strainMetaDescription'
 
 import { StrainCompareButton } from '@/components/CompareNav'
@@ -112,7 +113,8 @@ export default async function StrainDetailPage({
         strain_seo(*),
         effects(*),
         terpenes(*),
-        genetics(*)
+        genetics(*),
+        ${SOURCES_EMBED}
       `)
       .eq('slug', slug)
       .eq('published', true)
@@ -124,7 +126,7 @@ export default async function StrainDetailPage({
 
   if (!strain) notFound()
 
-  const s = strain as unknown as Strain
+  const s = hideUnsourced(strain as unknown as Strain)
   const relatedArticles = findArticlesForStrain(s.slug)
   const catalog = await getStrainCatalogSafe()
   const nameIndex = buildNameIndex(catalog)

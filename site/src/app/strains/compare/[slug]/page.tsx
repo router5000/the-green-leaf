@@ -4,6 +4,7 @@ import Link from 'next/link'
 import CompareAnotherStrain from '@/components/CompareAnotherStrain'
 import type { Metadata } from 'next'
 import { formatPctRange } from '@/lib/formatRange'
+import { hideUnsourced, SOURCES_EMBED } from '@/lib/sourcedFields'
 
 export const dynamic = 'force-dynamic'
 
@@ -89,11 +90,11 @@ async function fetchPair(slugA: string, slugB: string): Promise<[Strain, Strain]
   try {
     const { data } = await getSupabase()
       .from('strains')
-      .select('id, name, slug, strain_type, thc_min, thc_max, cbd_min, cbd_max, description, short_description, flavors, difficulty, flowering_time_days, yield_indoor, yield_outdoor, effects(*), terpenes(*)')
+      .select('id, name, slug, strain_type, thc_min, thc_max, cbd_min, cbd_max, description, short_description, flavors, difficulty, flowering_time_days, yield_indoor, yield_outdoor, effects(*), terpenes(*), ' + SOURCES_EMBED)
       .in('slug', [slugA, slugB])
       .eq('published', true)
     if (!data || data.length !== 2) return null
-    const items = data as unknown as Strain[]
+    const items = (data as unknown as Strain[]).map(hideUnsourced)
     const a = items.find((s) => s.slug === slugA)
     const b = items.find((s) => s.slug === slugB)
     if (!a || !b) return null

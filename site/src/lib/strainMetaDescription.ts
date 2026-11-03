@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { getSupabase } from '@/lib/supabase'
 import { getStrainCatalogSafe, isThinStrain } from '@/lib/strainCatalog'
 import { buildStrainDescription, buildStrainTitle, DESC_MIN, DESC_MAX } from '@/lib/strainSeoText'
+import { hideUnsourced, SOURCES_EMBED } from '@/lib/sourcedFields'
 
 const baseUrl = 'https://strainreport.com'
 
@@ -50,10 +51,11 @@ export async function generateMetadata({
   try {
     const result = await getSupabase()
       .from('strains')
-      .select('name, strain_type, short_description, thc_min, thc_max, flavors, effects(effect_name, effect_type), terpenes(terpene_name, percentage), strain_seo(meta_title, meta_description)')
+      .select('name, strain_type, short_description, thc_min, thc_max, flavors, effects(effect_name, effect_type), terpenes(terpene_name, percentage), strain_seo(meta_title, meta_description), ' + SOURCES_EMBED)
       .eq('slug', slug)
       .single()
-    data = result.data as unknown as StrainMetaRow
+    const row = (result as unknown as { data: StrainMetaRow | null }).data
+    data = row ? hideUnsourced(row) : null
   } catch {
     // env vars unavailable during static build
   }

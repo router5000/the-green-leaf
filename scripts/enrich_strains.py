@@ -14,6 +14,10 @@ Default is a DRY RUN that writes data/strain_enrichment/<slug>.json only.
 --apply needs SUPABASE_URL (or NEXT_PUBLIC_SUPABASE_URL) + SUPABASE_SECRET_KEY
 and the strain_sources table (site/supabase/migrations/004_strain_sources.sql).
 
+--from-file DRAFTS.json gates pre-made drafts (schema in scripts/README.md): every
+new fact needs a strain_sources-style source or the strain is rejected.
+--correct-types lets a sourced strain_type correction through (2+ domains).
+
 Never writes effect_type='medical'. Existing grow fields are left untouched.
 """
 from __future__ import annotations
@@ -91,21 +95,53 @@ def sb_get_strain(slug: str) -> dict | None:
     return rows[0] if rows else None
 
 
+def to_source_rows(strain: dict, sources: list[dict]) -> list[dict]:
+    """Map pipeline source dicts onto strain_sources columns (migration 004)."""
+    rows = []
+    for s in sources:
+        url = s.get("source_url") or s.get("url")
+        rows.append({
+            "strain_id": strain["id"], "slug": strain["slug"], "field": s["field"],
+            "value": None if s.get("value") is None else str(s["value"])[:2000],
+            "source_url": url, "source_name": s.get("source_name") or source_name(url),
+            "quote": (s.get("quote") or None) and s["quote"][:300],
+            **({"retrieved_at": s.get("retrieved_at") or s.get("fetched_at")}
+               if (s.get("retrieved_at") or s.get("fetched_at")) else {}),
+        })
+    return rows
+
+
+def source_name(url: str) -> str:
+    host = re.sub(r"^www\.", "", re.sub(r"^https?://", "", url or "").split("/")[0])
+    return KNOWN_SOURCES.get(host, host)
+
+
+KNOWN_SOURCES = {"leafly.com": "Leafly", "allbud.com": "AllBud", "leafist.com": "Leafist",
+                 "seedfinder.eu": "SeedFinder", "weedmaps.com": "Weedmaps"}
+
+
 def sb_apply(strain: dict, draft: dict, sources: list[dict]) -> None:
+    """Write a gated draft. Callers must have run require_sources() first; this
+    refuses to write anything without source rows."""
+    if not sources:
+        raise ValueError("refusing to apply a draft with no strain_sources rows")
     url, key = sb_conf()
     h = {"apikey": key, "Authorization": f"Bearer {key}", "Content-Type": "application/json",
          "Prefer": "return=minimal"}
     sid = strain["id"]
     patch = {k: draft[k] for k in ("short_description", "description", "aka", "flavors", "aromas", "colors")
              if draft.get(k)}
-    if draft.get("strain_type") and not strain.get("strain_type"):
-        patch["strain_type"] = draft["strain_type"]   # only fills an empty type, from sourced research
+    if draft.get("strain_type"):
+        stored = (strain.get("strain_type") or "").lower()
+        if not stored or draft.get("strain_type_correction"):
+            patch["strain_type"] = draft["strain_type"]   # fill empty, or a sourced correction
     if draft.get("origin_country"):
         patch["origin_country"] = draft["origin_country"]
     if draft.get("thc_reported"):
         patch["thc_min"], patch["thc_max"] = draft["thc_reported"]
-    requests.patch(f"{url}/rest/v1/strains", params={"id": f"eq.{sid}"}, json=patch, headers=h,
-                   timeout=30).raise_for_status()
+    if patch:
+        requests.patch(f"{url}/rest/v1/strains", params={"id": f"eq.{sid}"}, json=patch, headers=h,
+                       timeout=30).raise_for_status()
     # Replace child rows only when the draft provides sourced values.
     for table, rows in (("effects", draft.get("effects")), ("terpenes", draft.get("terpenes")),
                         ("genetics", draft.get("genetics"))):
@@ -117,9 +153,126 @@ def sb_apply(strain: dict, draft: dict, sources: list[dict]) -> None:
     # Medical effect rows are never kept.
     requests.delete(f"{url}/rest/v1/effects", params={"strain_id": f"eq.{sid}", "effect_type": "eq.medical"},
                     headers=h, timeout=30).raise_for_status()
-    if sources:
-        requests.post(f"{url}/rest/v1/strain_sources", json=[{"strain_id": sid, **s} for s in sources],
-                      headers=h, timeout=30).raise_for_status()
+    requests.post(f"{url}/rest/v1/strain_sources", json=to_source_rows(strain, sources),
+                  params={"on_conflict": "strain_id,field,source_url"},
+                  headers={**h, "Prefer": "return=minimal,resolution=ignore-duplicates"},
+                  timeout=30).raise_for_status()
+
+
+# ── source requirement ───────────────────────────────────────────────────────
+
+# draft key -> strain_sources.field values that can back it
+FACT_FIELDS = {
+    "short_description": ("short_description", "description"),
+    "description": ("description",),
+    "aka": ("aka",), "flavors": ("flavors",), "aromas": ("aromas",), "colors": ("colors",),
+    "effects": ("effects",), "terpenes": ("terpenes",), "genetics": ("genetics",),
+    "origin_country": ("origin_country",), "strain_type": ("strain_type", "type"),
+    "thc_reported": ("thc",),
+}
+HOMEPAGE_RX = re.compile(r"^https?://[^/]+/?$")
+PARENT_TYPES = {"mother", "father"}
+
+
+def require_sources(draft: dict, sources: list[dict]) -> list[str]:
+    """Every new fact in the draft needs >= 1 source row for its field (deep URL).
+    Returns rejection reasons; empty list means the draft may be applied."""
+    reasons = []
+    backed = {}
+    for s in sources:
+        u = s.get("source_url") or s.get("url") or ""
+        if not s.get("field"):
+            reasons.append(f"source missing field: {u or s}")
+        elif not re.match(r"^https?://", u) or HOMEPAGE_RX.match(u):
+            reasons.append(f"source for '{s['field']}' is not a page URL: {u!r}")
+        else:
+            backed.setdefault(s["field"], []).append(u)
+    for key, fields in FACT_FIELDS.items():
+        if draft.get(key) and not any(f in backed for f in fields):
+            reasons.append(f"unsourced fact: '{key}' has no source (needs field {'/'.join(fields)})")
+    for g in draft.get("genetics") or []:
+        if g.get("parent_type") not in PARENT_TYPES:
+            reasons.append(f"genetics parent_type must be mother|father, got {g.get('parent_type')!r}")
+    if draft.get("strain_type") and draft["strain_type"] not in ("indica", "sativa", "hybrid"):
+        reasons.append(f"invalid strain_type {draft['strain_type']!r}")
+    return reasons
+
+
+# ── --from-file drafts ───────────────────────────────────────────────────────
+
+DRAFT_KEYS = set(FACT_FIELDS) | {"claims", "field_sources", "projected_words"}
+
+
+def load_draft_file(path: str) -> list[dict]:
+    """Read draft JSON (see scripts/README.md). Accepts a list of entries, a
+    single entry, or {"drafts": [...]}."""
+    data = json.loads(Path(path).read_text())
+    if isinstance(data, dict):
+        data = data.get("drafts", [data])
+    out = []
+    for e in data:
+        if not isinstance(e, dict) or not e.get("slug") or not isinstance(e.get("draft"), dict):
+            raise ValueError(f"draft entry needs 'slug' and object 'draft': {str(e)[:120]}")
+        unknown = set(e["draft"]) - DRAFT_KEYS
+        if unknown:
+            raise ValueError(f"{e['slug']}: unknown draft keys {sorted(unknown)}")
+        out.append(e)
+    return out
+
+
+def type_correction(stored: str | None, draft: dict, sources: list[dict]) -> tuple[bool, list[str]]:
+    """A draft strain_type that differs from the stored one is a correction. It is
+    allowed only when backed by >= 2 strain_type sources on distinct domains and
+    the draft prose does not contradict it."""
+    new = draft.get("strain_type")
+    stored = (stored or "").lower() or None
+    if not new or not stored or new == stored:
+        return False, []
+    urls = [s.get("source_url") or s.get("url") or "" for s in sources if s.get("field") in ("strain_type", "type")]
+    domains = {source_name(u) for u in urls if u}
+    reasons = []
+    if len(domains) < 2:
+        reasons.append(f"{TYPE_CONFLICT}: correction {stored}->{new} needs strain_type sources on 2 domains "
+                       f"(have {len(domains)})")
+    said = stated_types(" ".join(str(draft.get(k) or "") for k in ("short_description", "description")))
+    if said and said != {new}:
+        reasons.append(f"{TYPE_CONFLICT}: text says {'/'.join(sorted(said))} but correction is '{new}'")
+    return not reasons, reasons
+
+
+def run_from_file(path: str, apply: bool) -> int:
+    entries = load_draft_file(path)
+    report = {"kind": "strain_enrichment_from_file", "file": str(path), "apply": apply,
+              "run_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+              "applied": [], "passed_dry_run": [], "blocked": []}
+    for e in entries:
+        slug, draft, sources = e["slug"], dict(e["draft"]), list(e.get("sources") or [])
+        print(f"\n🌿 {slug} (from file)")
+        current = sb_get_strain(slug) if all(sb_conf()) else None
+        reasons = require_sources(draft, sources)
+        stored = (current or {}).get("strain_type") or e.get("stored_strain_type")
+        corr, corr_reasons = type_correction(stored, draft, sources)
+        reasons += corr_reasons
+        if corr:
+            draft["strain_type_correction"] = True
+        if apply and not current:
+            reasons.append("strain not found in Supabase")
+        if reasons:
+            report["blocked"].append({"slug": slug, "reasons": reasons[:20]})
+            print(f"   ⛔ rejected: {reasons[:3]}")
+            continue
+        if apply:
+            sb_apply(current, draft, sources)
+            report["applied"].append({"slug": slug, "sources": len(sources), "type_corrected": corr})
+            print(f"   ✅ applied ({len(sources)} source rows{', type corrected' if corr else ''})")
+        else:
+            report["passed_dry_run"].append({"slug": slug, "sources": len(sources), "type_correction": corr})
+            print("   ✅ passed (dry run)")
+    REPORT_DIR.mkdir(parents=True, exist_ok=True)
+    p = REPORT_DIR / f"strains_from_file_{datetime.now().strftime('%Y%m%dT%H%M%S')}.json"
+    p.write_text(json.dumps(report, indent=2))
+    print(f"\n🧾 {p}")
+    return 1 if report["blocked"] else 0
 
 
 # ── type consistency ─────────────────────────────────────────────────────────
@@ -498,11 +651,18 @@ def main(argv=None) -> int:
     ap.add_argument("--count", type=int, default=5)
     ap.add_argument("--slug", action="append", help="specific slug(s) instead of the queue")
     ap.add_argument("--apply", action="store_true", help="write passing drafts to Supabase")
+    ap.add_argument("--from-file", metavar="DRAFTS.json",
+                    help="gate + (with --apply) write pre-made drafts instead of researching (schema: scripts/README.md)")
+    ap.add_argument("--correct-types", action="store_true",
+                    help="research mode: when stored type disagrees with >=2 sourced domains and the prose, "
+                         "correct it (recorded in strain_sources) instead of blocking")
     a = ap.parse_args(argv)
 
     if a.apply and not all(sb_conf()):
         print("❌ --apply needs SUPABASE_URL and SUPABASE_SECRET_KEY")
         return 2
+    if a.from_file:
+        return run_from_file(a.from_file, a.apply)
     state = load_state()
     batch = [{"slug": s} for s in a.slug] if a.slug else next_batch(a.count, state)
     OUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -535,6 +695,15 @@ def main(argv=None) -> int:
                 reasons += gate_reasons
                 print(f"   revisions: {glog['revisions']}, pruned sentences: {len(glog['pruned'])}")
                 set_type, type_reasons = check_type_consistency(current.get("strain_type"), draft, bundle)
+                src_type = sourced_type(bundle)
+                if a.correct_types and type_reasons and src_type and stated_types(
+                        " ".join(str(draft.get(k) or "") for k in ("short_description", "description"))) <= {src_type}:
+                    type_ev = [ev for f in bundle.get("facts", []) if f["field"] == "type" for ev in f.get("evidence", [])]
+                    if len({source_name(ev["url"]) for ev in type_ev}) >= 2:
+                        set_type, type_reasons = src_type, []
+                        draft["strain_type_correction"] = True
+                        report.setdefault("type_corrections", []).append(
+                            {"slug": slug, "from": current.get("strain_type"), "to": src_type})
                 reasons += type_reasons
                 if type_reasons:
                     report.setdefault("type_conflicts", []).append(
@@ -576,6 +745,22 @@ def main(argv=None) -> int:
             sources += [{"field": fs["field"], "url": fs["url"], "quote": fs.get("quote", "")[:300],
                          "fetched_at": fetched.get(fs["url"])} for fs in draft.get("field_sources", [])
                         if fs.get("url") in fetched]
+            if draft.get("strain_type"):
+                for f in bundle.get("facts", []):
+                    if f["field"] == "type" and f["value"].lower() == draft["strain_type"]:
+                        sources += [{"field": "strain_type", "url": ev["url"], "value": draft["strain_type"],
+                                     "quote": (ev.get("quote") or "")[:300], "fetched_at": fetched.get(ev["url"])}
+                                    for ev in f.get("evidence", [])]
+            for k, fld in (("thc_reported", "thc"),):
+                for s in sources:
+                    if s["field"] == fld and draft.get(k):
+                        s["value"] = "-".join(str(v) for v in draft[k])
+            src_reasons = require_sources(draft, sources)
+            if src_reasons:
+                st["status"] = "blocked"
+                report["blocked"].append({"slug": slug, "reasons": src_reasons[:15], "status": "blocked"})
+                print(f"   ⛔ rejected (unsourced): {src_reasons[:3]}")
+                continue
             if a.apply and current.get("id"):
                 sb_apply(current, draft, sources)
                 st["status"] = "applied"
