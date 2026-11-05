@@ -256,7 +256,7 @@ export const statesData: StateData[] = [
     slug: 'massachusetts',
     name: 'Massachusetts',
     legalStatus: 'recreational',
-    possessionLimit: '1 oz in public; up to 10 oz at home',
+    possessionLimit: '2 oz (or product equivalent) in public; up to 10 oz at home',
     homeGrow: 'Up to 6 plants per person, 12 per household',
     purchaseAge: 21,
     dispensaries: true,

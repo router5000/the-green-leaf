@@ -7,7 +7,7 @@ export interface StateContent {
   recentChanges?: string
 }
 
-export const STATES_LAST_REVIEWED = 'October 2026'
+export const STATES_LAST_REVIEWED = 'November 2026'
 
 export const statesContent: Record<string, StateContent> = {
   alabama: {
@@ -64,7 +64,7 @@ export const statesContent: Record<string, StateContent> = {
     overview:
       'Idaho has some of the strictest cannabis laws in the country. It has no medical program, no adult-use program, and no decriminalization. Possession of any amount of marijuana is a misdemeanor, and larger amounts can bring felony charges. Hemp products are subject to strict state THC rules. Bordering states such as Washington, Oregon, Nevada, and Montana have legal markets, and bringing their products into Idaho is illegal.',
     recentChanges:
-      'Voters will decide HJR 4 on the November 3, 2026 ballot. It would amend the state constitution to give the Legislature sole authority to legalize marijuana and other covered substances, which would remove citizen initiatives as a route. A 2026 medical-cannabis initiative did not qualify.',
+      'On November 3, 2026, voters rejected House Joint Resolution 4 by about 66% to 34% (unofficial Idaho Secretary of State results). The amendment would have given the Legislature exclusive authority to legalize marijuana and other psychoactive substances. The constitution is unchanged, so citizen initiatives remain available; marijuana itself remains illegal. A 2026 medical-cannabis initiative did not qualify for the ballot. Results become official after State Board of Canvassers certification (scheduled for November 24, 2026).',
   },
   illinois: {
     overview:
@@ -102,9 +102,9 @@ export const statesContent: Record<string, StateContent> = {
   },
   massachusetts: {
     overview:
-      'Massachusetts legalized adult-use cannabis by ballot in 2016, and sales began in 2018. Adults 21+ may carry up to one ounce in public, keep up to ten ounces at home, and grow up to six plants per person, with a cap of 12 per household. The Cannabis Control Commission licenses retailers and runs the medical program. Local communities may limit or ban retail businesses.',
+      'Massachusetts legalized adult-use cannabis by ballot in 2016, and sales began in 2018. Adults 21+ may possess up to two ounces of marijuana or the equivalent in products in public, keep up to ten ounces at home, and grow up to six plants per person, with a cap of 12 per household. The Cannabis Control Commission licenses retailers and runs the medical program. Local communities may limit or ban retail businesses.',
     recentChanges:
-      'Question 8 is on the November 3, 2026 ballot. It would repeal legal adult-use retail sales starting January 1, 2028, keep medical marijuana, and change possession penalties. If it fails, current law stays in place. Check the Secretary of the Commonwealth for official ballot information.',
+      'On November 3, 2026, voters rejected Question 8 by about 76% to 24% (AP called; unofficial results with most votes counted). The measure would have repealed regulated adult-use retail sales starting January 1, 2028; adult-use sales, home cultivation, and current possession rules remain in place. Official certified results from the Secretary of the Commonwealth typically follow later in November or December. Separately, An Act Modernizing the Commonwealth\'s Cannabis Laws (effective April 19, 2026) raised adult possession and gift limits from one ounce to two ounces or product equivalents set by the Commission.',
   },
   michigan: {
     overview:
@@ -170,7 +170,7 @@ export const statesContent: Record<string, StateContent> = {
     overview:
       'Ohio voters approved adult-use cannabis through Issue 2 in November 2023, and licensed adult-use sales began in August 2024. Adults 21+ may possess up to 2.5 ounces of plant material and 15 grams of extract, counting both homegrown and purchased cannabis. Home grow is allowed up to six plants per adult, with a cap of 12 per residence, kept secure and out of public view. The Division of Cannabis Control regulates the adult-use and medical markets.',
     recentChanges:
-      'SB 56 took effect March 20, 2026 and revised the voter-approved law. It kept the 2.5-ounce and 15-gram possession limits and the home-grow caps. It added restrictions on growing in certain residences, such as childcare facilities, and where a lease prohibits it. It also prohibits smoking, combustion, and vaping in public outside qualifying private property. Hemp-derived intoxicating products face separate state and federal changes.',
+      'SB 56 took effect March 20, 2026 and revised the voter-approved law. It kept the 2.5-ounce and 15-gram possession limits and the home-grow caps. It added restrictions on growing in certain residences, such as childcare facilities, and where a lease prohibits it. It also prohibits smoking, combustion, and vaping in public outside qualifying private property. Hemp-derived intoxicating products face separate state rules plus federal hemp redefinition on November 12 and December 11, 2026.',
   },
   oklahoma: {
     overview:
@@ -202,13 +202,13 @@ export const statesContent: Record<string, StateContent> = {
   },
   tennessee: {
     overview:
-      'Tennessee has no medical or adult-use cannabis program. Possessing up to half an ounce is a Class A misdemeanor punishable by up to a year in jail. A narrow law lets certain patients possess low-THC cannabis oil obtained legally elsewhere. Hemp-derived products are sold under state rules that the Legislature has tightened in recent sessions. Federal changes to the definition of hemp may further restrict intoxicating hemp products.',
+      'Tennessee has no medical or adult-use cannabis program. Possessing up to half an ounce is a Class A misdemeanor punishable by up to a year in jail. A narrow law lets certain patients possess low-THC cannabis oil obtained legally elsewhere. Hemp-derived products are sold under state rules that the Legislature has tightened in recent sessions. Federal hemp redefinition dates also apply: cannabinoids not naturally produced by the cannabis plant lose hemp status on November 12, 2026, and most other new federal hemp limits take effect December 11, 2026.',
   },
   texas: {
     overview:
-      'Texas does not have a full medical marijuana program. Its Compassionate Use Program (TCUP), regulated by the Department of Public Safety, lets registered patients with qualifying conditions buy low-THC cannabis prescribed by registered physicians. Possessing two ounces or less of marijuana outside the program is a Class B misdemeanor. Some cities have approved local decriminalization ordinances, which the state has challenged in court. Adult-use cannabis is illegal.',
+      'Texas does not have a full medical marijuana program. Its Compassionate Use Program (TCUP), regulated by the Department of Public Safety, lets registered patients with qualifying conditions buy low-THC cannabis prescribed by registered physicians. Possessing two ounces or less of marijuana outside the program is a Class B misdemeanor. Some cities have approved local lowest-enforcement or decriminalization measures, which the state has challenged in court. Adult-use cannabis is illegal statewide.',
     recentChanges:
-      'HB 46 expanded TCUP. It added qualifying conditions, allowed approved non-smoked inhalation, replaced the old 1% THC-by-weight cap with a limit of 10 mg THC per dose and 1 gram per package, and authorized up to 15 dispensing organizations. In 2026 DPS conditionally selected new licensees, which may not operate until approved. State rules also limit consumable hemp products, and smokable hemp is effectively banned.',
+      'HB 46 expanded TCUP. It added qualifying conditions, allowed approved non-smoked inhalation, replaced the old 1% THC-by-weight cap with a limit of 10 mg THC per dose and 1 gram per package, and authorized up to 15 dispensing organizations. In 2026 DPS conditionally selected new licensees, which may not operate until approved. State rules also limit consumable hemp products, and smokable hemp is effectively banned. On November 3, 2026, Houston voters approved Proposition A (the Houston Freedom Act) by roughly 70%+, making misdemeanor marijuana possession the Houston Police Department\'s lowest enforcement priority and barring no-knock warrants; possession remains illegal under Texas law, and similar city measures have faced state challenges.',
   },
   utah: {
     overview:
