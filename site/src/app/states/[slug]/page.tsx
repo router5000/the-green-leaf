@@ -318,8 +318,10 @@ export default async function StateDetailPage({
                   also prohibited on federal land, in national parks, and at airports under TSA jurisdiction. In 2026 the federal
                   government moved FDA-approved products and state-licensed medical marijuana to Schedule III, but
                   adult-use marijuana remains a Schedule I substance, and rescheduling does not legalize interstate
-                  transport. Separate federal changes to the legal definition of hemp take effect in late 2026 and
-                  will restrict many intoxicating hemp-derived THC products.
+                  transport. Federal hemp redefinition also applies: cannabinoids not naturally produced by the
+                  cannabis plant lose hemp status on November 12, 2026, and most other new limits (total THC including
+                  THCA at 0.3% dry weight, a 0.4 mg per-container finished-product cap, and cannabinoids made outside
+                  the plant) take effect December 11, 2026 under P.L. 119-37 as delayed by P.L. 119-103.
                 </p>
               </div>
 
