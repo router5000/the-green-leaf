@@ -139,9 +139,12 @@ def sb_apply(strain: dict, draft: dict, sources: list[dict]) -> None:
         patch["origin_country"] = draft["origin_country"]
     if draft.get("thc_reported"):
         patch["thc_min"], patch["thc_max"] = draft["thc_reported"]
-    if patch:
-        requests.patch(f"{url}/rest/v1/strains", params={"id": f"eq.{sid}"}, json=patch, headers=h,
-                       timeout=30).raise_for_status()
+    # Always stamp updated_at on apply. The site only shows Updated / dateModified
+    # / sitemap lastmod when updated_at is after created_at, so every enrich write
+    # must set it (DB trigger also bumps on UPDATE; we set it explicitly too).
+    patch["updated_at"] = datetime.now(timezone.utc).isoformat()
+    requests.patch(f"{url}/rest/v1/strains", params={"id": f"eq.{sid}"}, json=patch, headers=h,
+                   timeout=30).raise_for_status()
     # Replace child rows only when the draft provides sourced values.
     for table, rows in (("effects", draft.get("effects")), ("terpenes", draft.get("terpenes")),
                         ("genetics", draft.get("genetics"))):

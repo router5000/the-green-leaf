@@ -5,6 +5,7 @@ import { hasTerpeneHub } from '@/lib/terpenes'
 import { findArticlesForStrain } from '@/lib/strainArticleLinks'
 import RelatedArticlesForStrain from '@/components/RelatedArticlesForStrain'
 import { formatPctRange, describePctRange } from '@/lib/formatRange'
+import { strainContentUpdatedAt, formatContentDate } from '@/lib/contentDates'
 import { hideUnsourced, SOURCES_EMBED } from '@/lib/sourcedFields'
 export { generateMetadata } from '@/lib/strainMetaDescription'
 
@@ -88,6 +89,7 @@ type Strain = {
   height_indoor: string | null
   height_outdoor: string | null
   origin_country: string | null
+  created_at: string | null
   updated_at: string | null
   strain_seo: StrainSeo[]
   effects: Effect[]
@@ -127,6 +129,7 @@ export default async function StrainDetailPage({
   if (!strain) notFound()
 
   const s = hideUnsourced(strain as unknown as Strain)
+  const contentUpdatedAt = strainContentUpdatedAt(s)
   const relatedArticles = findArticlesForStrain(s.slug)
   const catalog = await getStrainCatalogSafe()
   const nameIndex = buildNameIndex(catalog)
@@ -169,6 +172,8 @@ export default async function StrainDetailPage({
     description: s.short_description ?? s.description ?? `${s.name} cannabis strain profile`,
     url: `${baseUrl}/strains/${s.slug}`,
     additionalProperty: productProps.map((p) => ({ '@type': 'PropertyValue', ...p })),
+    ...(s.created_at ? { datePublished: s.created_at } : {}),
+    ...(contentUpdatedAt ? { dateModified: contentUpdatedAt } : {}),
   }
 
   // FAQ Q&As (skip any with no source data)
@@ -283,11 +288,11 @@ export default async function StrainDetailPage({
           <StrainCompareButton slug={s.slug} />
         </div>
 
-        {s.updated_at && (
+        {contentUpdatedAt && (
           <p className="text-sm text-gray-500 mb-3">
             Updated{' '}
-            <time dateTime={s.updated_at}>
-              {new Date(s.updated_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })}
+            <time dateTime={contentUpdatedAt}>
+              {formatContentDate(contentUpdatedAt)}
             </time>
           </p>
         )}

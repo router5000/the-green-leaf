@@ -3,7 +3,7 @@ import { getSortedPostsData } from '@/lib/posts'
 import { getStrainCatalogSafe, isThinStrain } from '@/lib/strainCatalog'
 import { topicClusters, matchesCluster } from '@/app/topics/topicClusters'
 import { getAllComparisonPairs } from '@/lib/strainComparisons'
-import { templateDate, latestDate } from '@/lib/contentDates'
+import { templateDate, latestDate, strainContentUpdatedAt } from '@/lib/contentDates'
 import { TERPENE_SLUGS } from '@/lib/terpenes'
 import { statesData } from '@/data/statesData'
 
@@ -33,9 +33,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return valid.length ? new Date(Math.max(...valid.map((d) => d.getTime()))) : fallback
   }
   const latestPost = maxDate(posts.map(postDate), templateDate('articles'))
-  const latestStrain = maxDate([hubTpl, ...catalog.map((s) => new Date(s.updated_at ?? ''))], hubTpl)
+  const contentDates = catalog.map((s) => strainContentUpdatedAt(s)).filter(Boolean).map((iso) => new Date(iso!))
+  const latestStrain = maxDate([hubTpl, ...contentDates], hubTpl)
   const latestStrainOfType = (t: string) =>
-    maxDate([hubTpl, ...catalog.filter((s) => s.strain_type === t).map((s) => new Date(s.updated_at ?? ''))], hubTpl)
+    maxDate([
+      hubTpl,
+      ...catalog.filter((s) => s.strain_type === t).map((s) => strainContentUpdatedAt(s)).filter(Boolean).map((iso) => new Date(iso!)),
+    ], hubTpl)
 
   // Static pages
   const staticPages: MetadataRoute.Sitemap = [
@@ -162,19 +166,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // only lists URLs we actually want indexed.
   const strainPages: MetadataRoute.Sitemap = catalog
     .filter((s) => !isThinStrain(s))
-    .map((s) => ({
-      url: `${baseUrl}/strains/${s.slug}`,
-      lastModified: latestDate(s.updated_at, strainTpl),
-      changeFrequency: 'weekly',
-      priority: 0.7,
-    }))
+    .map((s) => {
+      // Same timestamp as the visible Updated label and JSON-LD dateModified.
+      // Seed-only rows have no trustworthy content date — fall back to the
+      // template git date rather than advertising the insert time as a refresh.
+      const contentAt = strainContentUpdatedAt(s)
+      return {
+        url: `${baseUrl}/strains/${s.slug}`,
+        lastModified: contentAt ? new Date(contentAt) : strainTpl,
+        changeFrequency: 'weekly' as const,
+        priority: 0.7,
+      }
+    })
 
   // Comparison pages: curated pairs + auto pairs (same set the strain pages
   // link to). lastmod = newest of the template and both strains' data.
-  const updatedAt = new Map(catalog.map((s) => [s.slug, s.updated_at]))
+  const contentAtBySlug = new Map(catalog.map((s) => [s.slug, strainContentUpdatedAt(s)]))
   const comparisonPages: MetadataRoute.Sitemap = getAllComparisonPairs(catalog).map((p) => ({
     url: `${baseUrl}/strains/compare/${p.slug}`,
-    lastModified: latestDate(compareTpl, updatedAt.get(p.a), updatedAt.get(p.b)),
+    lastModified: latestDate(compareTpl, contentAtBySlug.get(p.a), contentAtBySlug.get(p.b)),
     changeFrequency: 'monthly',
     priority: 0.5,
   }))
