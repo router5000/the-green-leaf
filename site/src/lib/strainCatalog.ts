@@ -35,6 +35,7 @@ export type CatalogStrain = {
   yield_outdoor: string | null
   height_indoor: string | null
   height_outdoor: string | null
+  created_at: string | null
   updated_at: string | null
   effects: { effect_name: string; effect_type: string }[] | null
   terpenes: { terpene_name: string; percentage: number | null }[] | null
@@ -43,7 +44,7 @@ export type CatalogStrain = {
 
 const SELECT = `id, name, slug, aka, strain_type, description, short_description,
   flavors, aromas, colors, origin_country, difficulty, yield_indoor, yield_outdoor,
-  height_indoor, height_outdoor, updated_at,
+  height_indoor, height_outdoor, created_at, updated_at,
   effects(effect_name, effect_type), terpenes(terpene_name, percentage),
   genetics(parent_strain_name, parent_type), ${SOURCES_EMBED}`
 

@@ -37,3 +37,37 @@ export function latestDate(...inputs: (Date | string | null | undefined)[]): Dat
   const ds = inputs.map((x) => (x instanceof Date ? x : toDate(x))).filter((d): d is Date => !!d && !isNaN(d.getTime()))
   return ds.length ? new Date(Math.max(...ds.map((d) => d.getTime()))) : BUILD
 }
+
+/** Strain row fields needed to decide a trustworthy content-change date. */
+export type StrainDateFields = {
+  created_at?: string | null
+  updated_at?: string | null
+}
+
+/**
+ * Real last-content-change timestamp for a strain, or null when we only have
+ * the seed insert (created_at ≈ updated_at). Never invents freshness: seed-only
+ * rows return null so the UI can hide "Updated" and JSON-LD can omit
+ * dateModified. Pipeline writes bump updated_at via the strains trigger (and
+ * an explicit patch), so enriched pages return that ISO time.
+ */
+export function strainContentUpdatedAt(s: StrainDateFields): string | null {
+  const updated = toDate(s.updated_at)
+  if (!updated) return null
+  const created = toDate(s.created_at)
+  // Insert sets both columns to now(); ignore sub-minute trigger jitter.
+  if (created && updated.getTime() - created.getTime() <= 60_000) return null
+  return updated.toISOString()
+}
+
+/** Deterministic UTC label so SSR and hydration agree. */
+export function formatContentDate(iso: string): string {
+  const d = new Date(iso)
+  if (Number.isNaN(d.getTime())) return ''
+  return d.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'UTC',
+  })
+}
