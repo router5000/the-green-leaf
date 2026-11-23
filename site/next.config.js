@@ -54,6 +54,13 @@ const nextConfig = {
       { source: '/((?!api/|_next/).*)', headers: [{ key: 'Vary', value: 'Accept' }] },
     ]
   },
+  async redirects() {
+    return [
+      // Typo/nickname 404 that still ranks for "thunder clap strain".
+      // Confirmed live: /strains/alaskan-thunder-fuck is 200; /strains/thunder-clap is 404.
+      { source: '/strains/thunder-clap', destination: '/strains/alaskan-thunder-fuck', statusCode: 301 },
+    ]
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
