@@ -6,6 +6,7 @@ import StrainCard from '@/components/StrainCard'
 import { getTerpene } from '@/lib/terpenes'
 import type { Metadata } from 'next'
 import { hasSourcedTerpenePct, sourcedFieldSet, SOURCES_EMBED } from '@/lib/sourcedFields'
+import { getStrainCatalogSafe, isThinStrain } from '@/lib/strainCatalog'
 
 export const dynamic = 'force-dynamic'
 
@@ -78,6 +79,14 @@ export default async function TerpeneHubPage({
       .map((r) => (hasSourcedTerpenePct(sourcedFieldSet(r.strains)) ? r : { ...r, percentage: null }))
   } catch {
     // env unavailable during build
+  }
+
+  // Reuse the same noindex predicate as sitemap / strain meta. If the catalog
+  // fails to load, keep the terpene rows (fail open) rather than emptying the hub.
+  const catalog = await getStrainCatalogSafe()
+  if (catalog.length > 0) {
+    const indexable = new Set(catalog.filter((s) => !isThinStrain(s)).map((s) => s.slug))
+    rows = rows.filter((r) => indexable.has(r.strains.slug))
   }
 
   const breadcrumbSchema = {
