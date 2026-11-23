@@ -1,10 +1,11 @@
 import { getSupabase } from '@/lib/supabase'
-import { notFound } from 'next/navigation'
+import { notFound, permanentRedirect } from 'next/navigation'
 import Link from 'next/link'
 import CompareAnotherStrain from '@/components/CompareAnotherStrain'
 import type { Metadata } from 'next'
 import { formatPctRange } from '@/lib/formatRange'
 import { hideUnsourced, SOURCES_EMBED } from '@/lib/sourcedFields'
+import { parseCompareSlug, canonicalizeCompareSlug } from '@/lib/compareSlug'
 
 export const dynamic = 'force-dynamic'
 
@@ -50,14 +51,6 @@ type Strain = {
 }
 
 // ── Helpers ────────────────────────────────────────────────────────────────
-
-function parseSlugPair(slug: string): [string, string] | null {
-  const parts = slug.split('-vs-')
-  if (parts.length !== 2) return null
-  const [a, b] = parts
-  if (!a || !b || a === b) return null
-  return [a, b]
-}
 
 function parseYieldMax(s: string | null): number | null {
   if (!s) return null
@@ -112,25 +105,30 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
   const { slug } = await params
-  const pair = parseSlugPair(slug)
+  const pair = parseCompareSlug(slug)
   if (!pair) return {}
+  const canonical = canonicalizeCompareSlug(slug)
+  if (canonical && canonical !== slug) {
+    permanentRedirect(`${baseUrl}/strains/compare/${canonical}`)
+  }
   const fetched = await fetchPair(pair[0], pair[1])
   if (!fetched) return {}
   const [a, b] = fetched
   const title = `${a.name} vs ${b.name} — Cannabis Strain Comparison | The Strain Report`
   const description = `Side-by-side comparison of ${a.name} and ${b.name}: THC%, CBD%, effects, terpenes, growing info, and more.`
+  const url = `${baseUrl}/strains/compare/${canonical ?? slug}`
   return {
     title,
     description,
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/strains/compare/${slug}`,
+      url,
       siteName: 'The Strain Report',
       type: 'website',
     },
     twitter: { card: 'summary_large_image', title, description },
-    alternates: { canonical: `${baseUrl}/strains/compare/${slug}` },
+    alternates: { canonical: url },
   }
 }
 
@@ -142,8 +140,12 @@ export default async function CompareStrainsPage({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  const pair = parseSlugPair(slug)
+  const pair = parseCompareSlug(slug)
   if (!pair) notFound()
+  const canonical = canonicalizeCompareSlug(slug)
+  if (canonical && canonical !== slug) {
+    permanentRedirect(`/strains/compare/${canonical}`)
+  }
 
   const fetched = await fetchPair(pair[0], pair[1])
   if (!fetched) notFound()

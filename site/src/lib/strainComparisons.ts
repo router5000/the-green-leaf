@@ -1,5 +1,6 @@
 import { COMPARISON_PAIRS } from '@/data/strainComparisonPairs'
 import { isThinStrain, getRelatedStrainsMap, type CatalogStrain } from '@/lib/strainCatalog'
+import { canonicalCompareSlug } from '@/lib/compareSlug'
 
 /**
  * Single source of truth for which /strains/compare/<a>-vs-<b> URLs we link
@@ -69,7 +70,7 @@ export function getAllComparisonPairs(catalog: CatalogStrain[]): ComparisonPair[
     const k = pairKey(a, b)
     if (seen.has(k)) return false
     seen.add(k)
-    out.push({ a, b, slug: `${a}-vs-${b}`, curated })
+    out.push({ a, b, slug: canonicalCompareSlug(a, b), curated })
     return true
   }
   const bySlug = new Map(catalog.map((s) => [s.slug, s]))

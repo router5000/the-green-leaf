@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { CompareButton } from '@/components/CompareNav'
 import { formatPctRange } from '@/lib/formatRange'
+import { comparePath } from '@/lib/compareSlug'
 
 type StrainCardData = {
   id: string
@@ -81,7 +82,7 @@ export default function StrainCard({ strain, terpenePercentage, compare }: Props
       classes = 'bg-amber-100 text-amber-800 border border-amber-300 hover:bg-amber-200'
       aria = `Cancel ${strain.name} selection`
     } else {
-      href = `/strains/compare/${compareSlug}-vs-${strain.slug}`
+      href = comparePath(compareSlug, strain.slug)
       label = 'Compare with this'
       classes = 'bg-leaf-600 text-white hover:bg-leaf-700'
       aria = `Compare ${compareSlug} with ${strain.name}`

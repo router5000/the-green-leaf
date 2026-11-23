@@ -2,6 +2,7 @@ import { getSupabase } from '@/lib/supabase'
 import Link from 'next/link'
 import CompareAnotherStrain from '@/components/CompareAnotherStrain'
 import { COMPARISON_PAIRS } from '@/data/strainComparisonPairs'
+import { comparePath } from '@/lib/compareSlug'
 import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
@@ -87,8 +88,8 @@ export default async function CompareLandingPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {popularPairs.map((p) => (
               <Link
-                key={`${p.slugA}-vs-${p.slugB}`}
-                href={`/strains/compare/${p.slugA}-vs-${p.slugB}`}
+                key={comparePath(p.slugA, p.slugB)}
+                href={comparePath(p.slugA, p.slugB)}
                 className="bg-white rounded-xl border border-gray-200 p-5 flex flex-col gap-3 hover:border-[#2D5016]/30 hover:shadow-sm transition-all no-underline"
               >
                 <p className="text-base font-medium text-gray-900">
