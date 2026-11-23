@@ -23,6 +23,8 @@ import ShareButtons from '@/components/ShareButtons'
 import ReadingProgress from '@/components/ReadingProgress'
 import RelatedStrainCard from '@/components/RelatedStrainCard'
 import { getStrainLinkForArticle } from '@/lib/strainArticleLinks'
+import { articleDocumentTitle } from '@/lib/articleTitle'
+import { toIso8601WithOffset } from '@/lib/isoDate'
 
 // YouTube Video Embed Component with optional collapsible insights
 function YouTubeEmbed({
@@ -121,7 +123,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       : `${baseUrl}/images/default-leaf-hero.jpg`
 
     return {
-      title: `${post.title} - The Strain Report`,
+      title: articleDocumentTitle(post.title),
       description: post.meta_description,
       keywords: post.tags?.join(', '),
       authors: [{ name: 'The Strain Report' }],
@@ -282,7 +284,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     name: video.title,
     description: `${video.title} by ${video.channel}`,
     thumbnailUrl: `https://img.youtube.com/vi/${video.id}/maxresdefault.jpg`,
-    uploadDate: post.generated_at,
+    uploadDate: toIso8601WithOffset(post.generated_at),
     embedUrl: `https://www.youtube.com/embed/${video.id}`,
     contentUrl: `https://www.youtube.com/watch?v=${video.id}`,
     publisher: {
