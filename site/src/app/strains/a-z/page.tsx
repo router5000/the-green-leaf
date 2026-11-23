@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
-import { getStrainCatalogSafe } from '@/lib/strainCatalog'
+import { getStrainCatalogSafe, isThinStrain } from '@/lib/strainCatalog'
 
 export const revalidate = 86400
 
@@ -25,8 +25,12 @@ function letterOf(name: string): string {
 
 export default async function StrainsAZPage() {
   const catalog = await getStrainCatalogSafe()
+  // Same thin-page gate as sitemap.xml and strain robots: noindex strains are
+  // omitted so they are not linked. Once a profile crosses the word threshold,
+  // isThinStrain flips and it appears here automatically (daily revalidate).
+  const listed = catalog.filter((s) => !isThinStrain(s))
   const groups = new Map<string, { name: string; slug: string; strain_type: string }[]>()
-  for (const s of [...catalog].sort((a, b) => a.name.localeCompare(b.name))) {
+  for (const s of [...listed].sort((a, b) => a.name.localeCompare(b.name))) {
     const l = letterOf(s.name)
     if (!groups.has(l)) groups.set(l, [])
     groups.get(l)!.push(s)
@@ -43,7 +47,7 @@ export default async function StrainsAZPage() {
         <span className="text-gray-700 font-medium">A–Z</span>
       </nav>
       <h1 className="font-serif text-4xl md:text-5xl text-gray-900 mb-3">All Strains A–Z</h1>
-      <p className="text-gray-600 mb-8">{catalog.length} strain profiles, alphabetically.</p>
+      <p className="text-gray-600 mb-8">{listed.length} strain profiles, alphabetically.</p>
 
       <nav className="flex flex-wrap gap-2 mb-10" aria-label="Jump to letter">
         {letters.map((l) => (
