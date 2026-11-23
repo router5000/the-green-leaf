@@ -73,8 +73,9 @@ export async function generateMetadata({
       description: 'Browse our comprehensive cannabis strain database.',
     },
     alternates: { canonical },
-    // Compare-selection state is a UI mode, not a page: keep it out of the index.
-    ...(sp.compare ? { robots: { index: false, follow: true } } : {}),
+    // Compare-selection and ?type= filters are not indexable. Type hubs live at
+    // /strains/indica, /sativa, /hybrid; filter URLs should not compete with them.
+    ...(sp.compare || sp.type ? { robots: { index: false, follow: true } } : {}),
     other: otherLinks,
   }
 }

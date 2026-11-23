@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server'
+import { canonicalizeCompareSlug } from '@/lib/compareSlug'
 
 /**
  * Markdown for Agents: requests that prefer text/markdown (or end in .md)
@@ -22,6 +23,21 @@ function wantsMarkdown(accept: string): boolean {
 export function proxy(req: NextRequest) {
   if (req.headers.get('x-agent-md') === '1') return NextResponse.next()
   const { pathname } = req.nextUrl
+
+  // One canonical direction per compare pair (alphabetical slugs). 301 the reverse
+  // so GSC stops seeing A-vs-B and B-vs-A as two indexable URLs.
+  const compareMatch = pathname.match(/^\/strains\/compare\/([^/]+?)(\.md)?$/)
+  if (compareMatch) {
+    const raw = compareMatch[1]
+    const ext = compareMatch[2] ?? ''
+    const canonical = canonicalizeCompareSlug(raw)
+    if (canonical && canonical !== raw) {
+      const url = req.nextUrl.clone()
+      url.pathname = `/strains/compare/${canonical}${ext}`
+      return NextResponse.redirect(url, 301)
+    }
+  }
+
   const isMdPath = pathname.endsWith('.md') && pathname !== '/.md'
   if (isMdPath || wantsMarkdown(req.headers.get('accept') || '')) {
     let target = isMdPath ? pathname.slice(0, -3) : pathname

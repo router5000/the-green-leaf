@@ -1,6 +1,7 @@
 'use client'
 
 import { useRouter, useSearchParams } from 'next/navigation'
+import { comparePath } from '@/lib/compareSlug'
 import { Suspense } from 'react'
 
 /**
@@ -70,7 +71,7 @@ function StrainCompareInner({ slug }: { slug: string }) {
   const active = other && other !== slug
   return (
     <CompareButton
-      to={active ? `/strains/compare/${other}-vs-${slug}` : `/strains?compare=${slug}`}
+      to={active && other ? comparePath(other, slug) : `/strains?compare=${slug}`}
       className={STRAIN_COMPARE_CLASS}
     >
       {active ? `Compare with ${other} →` : 'Compare with another strain →'}

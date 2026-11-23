@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { comparePath } from '@/lib/compareSlug'
 
 type Props = {
   slugs: { slug: string; name: string }[]
@@ -30,7 +31,7 @@ export default function CompareAnotherStrain({ slugs, currentSlugA = '', current
     const sa = resolveSlug(a)
     const sb = resolveSlug(b)
     if (!sa || !sb || sa === sb) return
-    router.push(`/strains/compare/${sa}-vs-${sb}`)
+    router.push(comparePath(sa, sb))
   }
 
   return (
